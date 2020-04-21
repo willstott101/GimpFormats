@@ -11,28 +11,25 @@ from .gimpGpbBrush import *
 from .gimpGtpToolPreset import *
 from .gimpPatPattern import *
 from .gimpVbrBrush import *
-
-
-register=False
+register = False
 
 
 class GimpFormatPlugin:
 	pass
-	
+
 
 # ========= automatically add format info for pyformatgenie =========
 if register:
 	try:
 		# will run this every time this module is loaded
 		import pyformatgenie
-		pfg=pyformatgenie.PyFormatGenie()
+		pfg = pyformatgenie.PyFormatGenie()
 		pfg.add(GimpFormatPlugin)
 		# and the most important part...
 		pfg.save()
 	except ImportError as e:
 		# pyformatgenie is not installed (yet?). Continue with whatever you came here for.
 		pass
-
 
 if __name__ == '__main__':
 	import sys
@@ -44,62 +41,62 @@ if __name__ == '__main__':
 		psyco.full() # accelerate this program
 	except ImportError:
 		pass
-	printhelp=False
-	if len(sys.argv)<2:
-		printhelp=True
+	printhelp = False
+	if len(sys.argv) < 2:
+		printhelp = True
 	else:
-		g=None
+		g = None
 		for arg in sys.argv[1:]:
 			if arg.startswith('-'):
-				arg=[a.strip() for a in arg.split('=',1)]
-				if arg[0] in ['-h','--help']:
-					printhelp=True
-				elif arg[0]=='--dump':
+				arg = [a.strip() for a in arg.split('=', 1)]
+				if arg[0] in ['-h', '--help']:
+					printhelp = True
+				elif arg[0] == '--dump':
 					print(g)
-				elif arg[0]=='--showLayer':
-					if arg[1]=='*':
+				elif arg[0] == '--showLayer':
+					if arg[1] == '*':
 						for n in range(len(g.layers)):
-							i=g.layers[n].image
+							i = g.layers[n].image
 							if i is None:
-								print('No image for layer',n)
+								print('No image for layer', n)
 							else:
-								print('showing layer',n)
+								print('showing layer', n)
 								i.show()
 					else:
-						i=g.layers[int(arg[1])].image
+						i = g.layers[int(arg[1])].image
 						if i is None:
-							print('No image for layer',int(arg[1]))
+							print('No image for layer', int(arg[1]))
 						else:
-							print('showing layer',arg[1])
+							print('showing layer', arg[1])
 							i.show()
-				elif arg[0]=='--saveLayer':
-					layer=arg[1].split(',',1)
-					if len(layer)>1:
-						filename=layer[1]
+				elif arg[0] == '--saveLayer':
+					layer = arg[1].split(',', 1)
+					if len(layer) > 1:
+						filename = layer[1]
 					else:
-						filename='layer *.png'
-					layer=arg[1][0]
-					if layer=='*':
-						if filename.find('*')<0:
-							filename='.'.join(filename.split('.',1).insert(1,'*'))
+						filename = 'layer *.png'
+					layer = arg[1][0]
+					if layer == '*':
+						if filename.find('*') < 0:
+							filename = '.'.join(filename.split('.', 1).insert(1, '*'))
 						for n in range(len(g.layers)):
-							i=g.layers[n].image
+							i = g.layers[n].image
 							if i is None:
-								print('No image for layer',n)
+								print('No image for layer', n)
 							else:
-								fn2=filename.replace('*',str(n))
-								print('saving layer',fn2)
+								fn2 = filename.replace('*', str(n))
+								print('saving layer', fn2)
 								i.save(fn2)
 					else:
-						i=g.layers[int(layer)].image
+						i = g.layers[int(layer)].image
 						if i is None:
-							print('No image for layer',layer)
+							print('No image for layer', layer)
 						else:
-							i.save(filename.replace('*',layer))
+							i.save(filename.replace('*', layer))
 				else:
-					print('ERR: unknown argument "'+arg[0]+'"')
+					print('ERR: unknown argument "' + arg[0] + '"')
 			else:
-				g=GimpDocument(arg)
+				g = GimpDocument(arg)
 	if printhelp:
 		print('Usage:')
 		print('  gimpFormat.py file.xcf [options]')
