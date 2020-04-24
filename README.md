@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/github/license/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](/LICENSE.md)
 [![Commit activity](https://img.shields.io/github/commit-activity/m/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](../../commits/master)
 [![Last commit](https://img.shields.io/github/last-commit/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](../../commits/master)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/gimpformats_unofficial.svg?style=for-the-badge)](https://pypi.org/project/gimpformats_unofficial/)
+[![PyPI Version](https://img.shields.io/pypi/v/gimpformats_unofficial.svg?style=for-the-badge)](https://pypi.org/project/gimpformats_unofficial/)
 
 <!-- omit in TOC -->
 # GimpFormats
@@ -26,6 +28,7 @@ GIMP files using Python.
 - [Currently supports](#currently-supports)
 - [Testing/unstable](#testingunstable)
 - [Not implemented](#not-implemented)
+- [Install With PIP](#install-with-pip)
 - [Language information](#language-information)
 	- [Built for](#built-for)
 - [Install Python on Windows](#install-python-on-windows)
@@ -119,6 +122,13 @@ Background is a Layer
 The home for this project is on my website, here:
 https://theheadlesssourceman.wordpress.com/2019/05/10/gimpformats/
 
+## Install With PIP
+
+```python
+pip install gimpformats_unofficial
+```
+
+Head to https://pypi.org/project/gimpformats_unofficial/ for more info
 
 ## Language information
 ### Built for
