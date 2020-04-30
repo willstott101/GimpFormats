@@ -138,7 +138,7 @@ class GimpIOBase:
 		return io.u32
 
 	def _pointerEncode_(self, ptr, io=None):
-		if type(ptr) is not int:
+		if not isinstance(ptr, int):
 			raise Exception('pointer is wrong type = ' + str(type(ptr)))
 		if io is None:
 			io = IO()
@@ -295,7 +295,8 @@ class GimpIOBase:
 		decode a set of user-defined measurement units
 		"""
 		u = GimpUserUnits()
-		u._decode_(data)
+		#u._decode_(data)
+		u.fromBytes(data)
 		self.userUnits = u
 
 	def _samplePointsDecode_(self, data):
@@ -357,7 +358,7 @@ class GimpIOBase:
 		elif propertyType == self.PROP_COMPRESSION:
 			self.compression = io.byte
 		elif propertyType == self.PROP_GUIDES:
-			self._guidelinesDecode_(self, data)
+			self._guidelinesDecode_(data)
 		elif propertyType == self.PROP_RESOLUTION:
 			self.horizontalResolution = io.float32
 			self.verticalResolution = io.float32
@@ -440,7 +441,7 @@ class GimpIOBase:
 				io.u32 = self.PROP_FLOATING_SELECTION
 				io.u32 = self.selectionAttachedTo
 		elif propertyType == self.PROP_OPACITY:
-			if self.opacity is not None and type(self.opacity) != float:
+			if self.opacity is not None and not isinstance(self.opacity, float):
 				io.u32 = self.PROP_OPACITY
 				io.u32 = self.opacity
 		elif propertyType == self.PROP_MODE:
@@ -480,8 +481,9 @@ class GimpIOBase:
 				io.i32 = self.xOffset
 				io.i32 = self.yOffset
 		elif propertyType == self.PROP_COLOR:
-			if self.color is not None and type(self.color[0]) != float and type(
-			self.color[1]) != float and type(self.color[2]) != float:
+			if self.color is not None and not isinstance(self.color[0],
+			float) and not isinstance(self.color[1], float) and not type(
+				self.color[2], float):
 				io.u32 = self.PROP_COLOR
 				io.byte = self.color[0]
 				io.byte = self.color[1]
@@ -550,7 +552,7 @@ class GimpIOBase:
 				io.u32 = self.PROP_LOCK_POSITION
 				io.bool = self.positionLocked
 		elif propertyType == self.PROP_FLOAT_OPACITY:
-			if self.opacity is not None and type(self.opacity) == float:
+			if self.opacity is not None and isinstance(self.opacity, float):
 				io.u32 = self.PROP_FLOAT_OPACITY
 				io.float32 = self.opacity
 		elif propertyType == self.PROP_COLOR_TAG:
