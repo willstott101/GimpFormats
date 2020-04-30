@@ -2,14 +2,9 @@
 
 Forked from https://github.com/TheHeadlessSourceMan/gimpFormats
 
-A pure python implementation of the GIMP xcf image format.
+A pure python implementation of the GIMP XCF image format.
 
-This was created primarily to serve as a file conversion tool for my smartimage
-library (coming soon).  The idea is you can "upgrade" from a GIMP document to a
-smartimage.
-
-That being said, it should be generally useful to those who want to fiddle with
-GIMP files using Python.
+Use this to interact with GIMP image formats
 """
 from .gimpFormat import *
 from .gimpGbrBrush import *
