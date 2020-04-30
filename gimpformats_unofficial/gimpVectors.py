@@ -1,11 +1,10 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Stuff related to vectors/paths within a gimp document
 """
 from .gimpIOBase import GimpIOBase
-from .binaryIO import *
-
+from .binaryIO import IO
+from .gimpParasites import GimpParasite
 
 class GimpVector(GimpIOBase):
 	"""

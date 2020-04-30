@@ -1,5 +1,4 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Run unit tests
 
@@ -8,63 +7,69 @@ See:
 """
 import unittest
 import os
-from gimpFormats import *
-from smartimage.imgTools import *
+import sys
+from pathlib import Path
+PROJECTDIR = str(Path(__file__).resolve().parent.parent)
+sys.path.insert(0, os.path.dirname(PROJECTDIR))
+from imgcompare import imgcompare
+from gimpformats_unofficial import GimpPatPattern
+
+__HERE__ = os.path.abspath(__file__).rsplit(os.sep, 1)[0] + os.sep
 
 
-__HERE__=os.path.abspath(__file__).rsplit(os.sep,1)[0]+os.sep
 class Test(unittest.TestCase):
 	"""
 	Run unit test
 	"""
-
 	def setUp(self):
-		self.dut=GimpPatPattern()
-		
+		self.dut = GimpPatPattern()
+
 	def tearDown(self):
 		pass
-		
-	def test3dgreen(self):
-		self.dut.load(__HERE__+'3dgreen.pat')
-		# test image saving (implicit)
-		self.dut.save(__HERE__+'actualOutput_3dgreen.png')
-		# test for image match
-		same=compareImage(self.dut.image,__HERE__+'desiredOutput_3dgreen.png')
-		assert same
-		os.remove(__HERE__+'actualOutput_3dgreen.png')
-		# test round-trip compatibility
-		self.dut.save(__HERE__+'actualOutput_3dgreen.pat')
-		original=open(__HERE__+'3dgreen.pat','rb').read()
-		actual=open(__HERE__+'actualOutput_3dgreen.pat','rb').read()
-		assert actual==original
-		os.remove(__HERE__+'actualOutput_3dgreen.pat')
-		
-	def testLeopard(self):
-		self.dut.load(__HERE__+'leopard.pat')
-		# test image saving (explicit)
-		self.dut.image.save(__HERE__+'actualOutput_leopard.png')
-		# test for image match
-		same=compareImage(self.dut.image,__HERE__+'desiredOutput_leopard.png')
-		assert same
-		os.remove(__HERE__+'actualOutput_leopard.png')
-		# test round-trip compatibility
-		self.dut.save(__HERE__+'actualOutput_leopard.pat')
-		original=open(__HERE__+'leopard.pat','rb').read()
-		actual=open(__HERE__+'actualOutput_leopard.pat','rb').read()
-		assert actual==original
-		os.remove(__HERE__+'actualOutput_leopard.pat')
 
-		
+	def test3dgreen(self):
+		self.dut.load(__HERE__ + '3dgreen.pat')
+		# test image saving (implicit)
+		self.dut.save(__HERE__ + 'actualOutput_3dgreen.png')
+		# test for image match
+		assert imgcompare.is_equal(self.dut.image, __HERE__ + 'desiredOutput_3dgreen.png', tolerance=1)
+		os.remove(__HERE__ + 'actualOutput_3dgreen.png')
+		# test round-trip compatibility
+		self.dut.save(__HERE__ + 'actualOutput_3dgreen.pat')
+		original = open(__HERE__ + '3dgreen.pat', 'rb')
+		actual = open(__HERE__ + 'actualOutput_3dgreen.pat', 'rb')
+		assert actual.read() == original.read()
+		original.close()
+		actual.close()
+		os.remove(__HERE__ + 'actualOutput_3dgreen.pat')
+
+	def testLeopard(self):
+		self.dut.load(__HERE__ + 'leopard.pat')
+		# test image saving (explicit)
+		self.dut.image.save(__HERE__ + 'actualOutput_leopard.png')
+		# test for image match
+		assert imgcompare.is_equal(self.dut.image, __HERE__ + 'desiredOutput_leopard.png', tolerance=1)
+		os.remove(__HERE__ + 'actualOutput_leopard.png')
+		# test round-trip compatibility
+		self.dut.save(__HERE__ + 'actualOutput_leopard.pat')
+		original = open(__HERE__ + 'leopard.pat', 'rb')
+		actual = open(__HERE__ + 'actualOutput_leopard.pat', 'rb')
+		assert actual.read() == original.read()
+		original.close()
+		actual.close()
+		os.remove(__HERE__ + 'actualOutput_leopard.pat')
+
+
 def testSuite():
 	"""
 	Combine unit tests into an entire suite
 	"""
-	testSuite = unittest.TestSuite()
-	testSuite.addTest(Test("test3dgreen"))
-	testSuite.addTest(Test("testLeopard"))
-	return testSuite
-		
-		
+	varTestSuite = unittest.TestSuite()
+	varTestSuite.addTest(Test("test3dgreen"))
+	varTestSuite.addTest(Test("testLeopard"))
+	return varTestSuite
+
+
 if __name__ == '__main__':
 	"""
 	Run all the test suites in the standard way.

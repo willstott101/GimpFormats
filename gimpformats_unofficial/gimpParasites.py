@@ -1,5 +1,4 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Parasites are arbitrary (meta)data strings that can be attached to a document tree item
 
@@ -8,7 +7,7 @@ They are used to store things like last-used plugin settings, gamma adjuetments,
 Format of known parasites:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
 """
-from .binaryIO import *
+from .binaryIO import IO
 
 #TODO: how to best use these for our puproses??
 KNOWN_DOCUMENT_PARASITES = [
@@ -22,7 +21,7 @@ KNOWN_IMAGE_PARASITES = [
 KNOWN_LAYER_PARASITES = ["gimp-text-layer", "gfig"]
 
 
-class GimpParasite(object):
+class GimpParasite:
 	"""
 	Parasites are arbitrary (meta)data strings that can be attached to a document tree item
 

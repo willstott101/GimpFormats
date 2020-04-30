@@ -1,9 +1,8 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Gimp color gradient
 """
-from .binaryIO import *
+import argparse
 
 
 class GradientSegment:
@@ -157,13 +156,14 @@ class GimpGgrGradient:
 			ret.append(segment.toBytes())
 		return ('\n'.join(ret) + '\n').encode('utf-8')
 
-	def save(self, toFilename=None, toExtension=None):
+	def save(self, toFilename=None):
 		"""
 		save this gimp image to a file
 		"""
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
 		f.write(self.toBytes())
+		f.close()
 
 	def getColor(self, percent):
 		"""
@@ -186,35 +186,13 @@ class GimpGgrGradient:
 
 
 if __name__ == '__main__':
-	import sys
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
-	printhelp = False
-	if len(sys.argv) < 2:
-		printhelp = True
-	else:
-		g = None
-		for arg in sys.argv[1:]:
-			if arg.startswith('-'):
-				arg = [a.strip() for a in arg.split('=', 1)]
-				if arg[0] in ['-h', '--help']:
-					printhelp = True
-				elif arg[0] == '--dump':
-					print(g)
-				else:
-					print('ERR: unknown argument "' + arg[0] + '"')
-			else:
-				g = GimpGgrGradient(arg)
-	if printhelp:
-		print('Usage:')
-		print('  gimpGgrGradient.py file.xcf [options]')
-		print('Options:')
-		print('   -h, --help ............ this help screen')
-		print('   --dump ................ dump info about this file')
-		print('   --register ............ register this extension')
+	""" CLI Entry Point """
+	parser = argparse.ArgumentParser("gimpGgrGradient.py")
+	parser.add_argument("xcfdocument", action="store",
+	help="xcf file to act on")
+	parser.add_argument("--dump", action="store_true",
+	help="dump info about this file")
+	args = parser.parse_args()
+	gimpGgrGradient = GimpGgrGradient(args.xcfdocument)
+	if args.dump:
+		print(gimpGgrGradient)

@@ -1,16 +1,14 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Pure python implementation of the OLD gimp gpb brush format
 """
-import struct
-import PIL.Image
-from .binaryIO import *
-from .gimpGbrBrush import *
-from .gimpPatPattern import *
+import argparse
+from .binaryIO import IO
+from .gimpGbrBrush import GimpGbrBrush
+from .gimpPatPattern import GimpPatPattern
 
 
-class GimpGpbBrush(object):
+class GimpGpbBrush:
 	"""
 	Pure python implementation of the OLD gimp gpb brush format
 
@@ -20,6 +18,10 @@ class GimpGpbBrush(object):
 	def __init__(self, filename):
 		self.brush = GimpGbrBrush()
 		self.pattern = GimpPatPattern()
+		if hasattr(filename, 'read'):
+			self.filename = filename.name
+		else:
+			self.filename = filename
 
 	def load(self, filename):
 		"""
@@ -45,30 +47,24 @@ class GimpGpbBrush(object):
 		:param index: index within the buffer to start at
 		"""
 		index = self.brush._decode_(data, index)
-		index = self.pattern._decode_(data, index)
+		#index = self.pattern._decode_(data, index)
 		return index
 
 	def toBytes(self):
-		"""
-		encode this object to a byte array
-		"""
+		""" encode this object to a byte array """
 		io = IO()
 		io.addBytes(self.brush.toBytes())
 		io.addBytes(self.pattern.toBytes())
 		return io.data
 
-	def save(self, toFilename=None, toExtension=None):
-		"""
-		save this gimp image to a file
-		"""
+	def save(self, toFilename=None):
+		""" save this gimp image to a file """
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
 		f.write(self.toBytes())
 
 	def __repr__(self, indent=''):
-		"""
-		Get a textual representation of this object
-		"""
+		""" Get a textual representation of this object """
 		ret = []
 		if self.filename is not None:
 			ret.append('Filename: ' + self.filename)
@@ -78,35 +74,15 @@ class GimpGpbBrush(object):
 
 
 if __name__ == '__main__':
-	import sys
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
-	printhelp = False
-	if len(sys.argv) < 2:
-		printhelp = True
-	else:
-		g = None
-		for arg in sys.argv[1:]:
-			if arg.startswith('-'):
-				arg = [a.strip() for a in arg.split('=', 1)]
-				if arg[0] in ['-h', '--help']:
-					printhelp = True
-				elif arg[0] == '--dump':
-					print(g)
-				else:
-					print('ERR: unknown argument "' + arg[0] + '"')
-			else:
-				g = GimGpbBrush(arg)
-	if printhelp:
-		print('Usage:')
-		print('  gimpGpbBrush.py file.xcf [options]')
-		print('Options:')
-		print('   -h, --help ............ this help screen')
-		print('   --dump ................ dump info about this file')
-		print('   --register ............ register this extension')
+	""" CLI Entry Point """
+	parser = argparse.ArgumentParser("gimpGbrBrush.py")
+	parser.add_argument("xcfdocument", action="store",
+	help="xcf file to act on")
+	parser.add_argument("--dump", action="store_true",
+	help="dump info about this file")
+	args = parser.parse_args()
+
+	gimpDocument = GimpGbrBrush(args.xcfdocument)
+
+	if args.dump:
+		print(gimpDocument)

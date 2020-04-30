@@ -1,14 +1,12 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Pure python implementation of the gimp gbr brush format
 """
-import struct
+import argparse
 import PIL.Image
-from .binaryIO import *
+from .binaryIO import IO
 
-
-class GimpGbrBrush(object):
+class GimpGbrBrush:
 	"""
 	Pure python implementation of the gimp gbr brush format
 
@@ -65,8 +63,8 @@ class GimpGbrBrush(object):
 		self.mode = self.COLOR_MODES[self.bpp]
 		magic = io.getBytes(4)
 		if magic.decode('ascii') != 'GIMP':
-			raise Exception('"' + magic.decode('ascii') + '" ' + str(index))
-			raise Exception('File format error.  Magic value mismatch.')
+			raise Exception('"' + magic.decode('ascii') + '" ' + str(index) +
+		" File format error.  Magic value mismatch.")
 		self.spacing = io.u32
 		nameLen = headerSize - io.index
 		self.name = io.getBytes(nameLen).decode('UTF-8')
@@ -91,21 +89,18 @@ class GimpGbrBrush(object):
 
 	@property
 	def size(self):
+		""" Get the size """
 		return (self.width, self.height)
 
 	@property
 	def image(self):
-		"""
-		get a final, compiled image
-		"""
+		"""	get a final, compiled image """
 		if self.rawImage is None:
 			return None
 		return PIL.Image.frombytes(self.mode, self.size, self.rawImage, decoder_name='raw')
 
 	def save(self, toFilename=None, toExtension=None):
-		"""
-		save this gimp image to a file
-		"""
+		"""	save this gimp image to a file """
 		asImage = False
 		if toExtension is None:
 			if toFilename is not None:
@@ -118,15 +113,15 @@ class GimpGbrBrush(object):
 			asImage = True
 		if asImage:
 			self.image.save(toFilename)
+			self.image.close()
 		else:
 			if not hasattr(toFilename, 'write'):
 				f = open(toFilename, 'wb')
 			f.write(self.toBytes())
+			f.close()
 
 	def __repr__(self, indent=''):
-		"""
-		Get a textual representation of this object
-		"""
+		"""	Get a textual representation of this object """
 		ret = []
 		if self.filename is not None:
 			ret.append('Filename: ' + self.filename)
@@ -140,41 +135,24 @@ class GimpGbrBrush(object):
 
 
 if __name__ == '__main__':
-	import sys
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
-	printhelp = False
-	if len(sys.argv) < 2:
-		printhelp = True
-	else:
-		g = None
-		for arg in sys.argv[1:]:
-			if arg.startswith('-'):
-				arg = [a.strip() for a in arg.split('=', 1)]
-				if arg[0] in ['-h', '--help']:
-					printhelp = True
-				elif arg[0] == '--dump':
-					print(g)
-				elif arg[0] == '--show':
-					g.image.show()
-				elif arg[0] == '--save':
-					g.image.save(arg[1])
-				else:
-					print('ERR: unknown argument "' + arg[0] + '"')
-			else:
-				g = GimpGbrBrush(arg)
-	if printhelp:
-		print('Usage:')
-		print('  gimpGbrBrush.py file.xcf [options]')
-		print('Options:')
-		print('   -h, --help ............ this help screen')
-		print('   --dump ................ dump info about this file')
-		print('   --show ................ show the brush image')
-		print('   --save=out.jpg ........ save out the brush image')
-		print('   --register ............ register this extension')
+	""" CLI Entry Point """
+	parser = argparse.ArgumentParser("gimpGbrBrush.py")
+	parser.add_argument("xcfdocument", action="store",
+	help="xcf file to act on")
+	group = parser.add_mutually_exclusive_group()
+	group.add_argument("--dump", action="store_true",
+	help="dump info about this file")
+	group.add_argument("--show", action="store_true",
+	help="show the brush image")
+	group.add_argument("--save", action="store",
+	help="save out the brush image")
+	args = parser.parse_args()
+
+	gimpDocument = GimpGbrBrush(args.xcfdocument)
+
+	if args.dump:
+		print(gimpDocument)
+	if args.show:
+		gimpDocument.image.show()
+	if args.save:
+		gimpDocument.image.save(args.save)

@@ -1,5 +1,4 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Base binary I/O helper.
 
@@ -8,7 +7,7 @@ Does boilerplate things like reading the next uint32 from the document
 import struct
 
 
-class IO(object):
+class IO:
 	"""
 	Class to handle i/o to a byte buffer or file-like object
 	"""
@@ -31,10 +30,12 @@ class IO(object):
 
 	@property
 	def data(self):
+		""" return data """
 		return self._data
 
 	@data.setter
 	def data(self, data):
+		""" set data """
 		if not hasattr(data, "__getitem__"):
 			raise Exception('ERR: incorrect type for data buffer' + str(type(data)))
 		self._data = data
@@ -44,13 +45,13 @@ class IO(object):
 		Start a new context where the index can be changed all you want,
 		and when endContext() is called, it will be restored to the current position
 		"""
-		self.contexts.append(newIndex)
+		self._contexts.append(newIndex)
 
 	def endContext(self):
 		"""
 		Restore the index to the previous location where it was when beginContext() was called
 		"""
-		self.index = self.contexts.pop()
+		self.index = self._contexts.pop()
 
 	def _write(self, size, fmt, data):
 		"""
@@ -62,12 +63,11 @@ class IO(object):
 			struct.pack_into(fmt, self.data, self.index, data)
 			self.index += size
 		except struct.error as e:
-			raise Exception(type(data), fmt, size)
-			print(data)
-			raise e
+			raise Exception(type(data), fmt, size, data)
 
 	@property
 	def bool(self):
+		""" return bool """
 		if self.boolSize == 8:
 			return self.bool8
 		if self.boolSize == 16:
@@ -79,100 +79,122 @@ class IO(object):
 		raise Exception("Unknown bool size " + str(self.boolSize))
 
 	@bool.setter
-	def bool(self, bool):
+	def bool(self, ioBool):
+		""" set bool """
 		if self.boolSize == 8:
-			self.bool8 = bool
+			self.bool8 = ioBool
 		elif self.boolSize == 16:
-			self.bool16 = bool
+			self.bool16 = ioBool
 		elif self.boolSize == 32:
-			self.bool32 = bool
+			self.bool32 = ioBool
 		elif self.boolSize == 64:
-			self.bool64 = bool
+			self.bool64 = ioBool
 		else:
 			raise Exception("Unknown bool size " + str(self.boolSize))
 
 	@property
 	def bool8(self):
+		""" get bool8 """
 		return self.u8 != 0
 
 	@bool8.setter
-	def bool8(self, bool):
-		self.u8 = bool
+	def bool8(self, ioBool):
+		""" set a bool8 """
+		self.u8 = ioBool
 
 	@property
 	def bool16(self):
+		""" get bool16 """
 		return self.u16 != 0
 
 	@bool16.setter
-	def bool16(self, bool):
-		self.u16 = bool
+	def bool16(self, ioBool):
+		""" set bool16 """
+		self.u16 = ioBool
 
 	@property
 	def bool32(self):
+		""" get bool32 """
 		return self.u32 != 0
 
 	@bool32.setter
-	def bool32(self, bool):
-		self.u32 = bool
+	def bool32(self, ioBool):
+		""" set bool32 """
+		self.u32 = ioBool
 
 	@property
 	def bool64(self):
+		""" get bool64 """
 		return self.u64 != 0
 
 	@bool64.setter
-	def bool64(self, bool):
-		self.u64 = bool
+	def bool64(self, ioBool):
+		""" set bool64 """
+		self.u64 = ioBool
 
 	@property
 	def byte(self):
+		""" get byte """
 		return self.i8
 
 	@byte.setter
 	def byte(self, byte):
+		""" set byte """
 		self.i8 = byte
 
 	@property
 	def unsignedByte(self):
+		""" get unsigned byte """
 		return self.u8
 
 	@unsignedByte.setter
 	def unsignedByte(self, byte):
+		""" set unsigned byte """
 		self.u8 = byte
 
 	@property
 	def word(self):
+		""" get a word """
 		return self.i16
 
 	@word.setter
 	def word(self, word):
+		""" set a word """
 		self.i16 = word
 
 	@property
 	def unsignedWord(self):
+		""" get an unsigned word """
 		return self.u16
 
 	@unsignedWord.setter
 	def unsignedWord(self, unsignedWord):
+		""" set an unsigned word """
 		self.u16 = unsignedWord
 
 	@property
 	def dword(self):
+		""" get a dword """
 		return self.i32
 
 	@dword.setter
 	def dword(self, dword):
+		""" set a dword """
 		self.i32 = dword
 
 	@property
 	def unsignedDword(self):
+		""" get a unsigned dword """
 		return self.u32
 
 	@unsignedDword.setter
 	def unsignedDword(self, unsignedDword):
+		""" set an unsigned dword """
 		self.u32 = unsignedDword
 
 	@property
 	def qword(self):
+		""" get a qword """
 		return self.i64
 
 	@qword.setter
@@ -181,6 +203,7 @@ class IO(object):
 
 	@property
 	def unsignedQword(self):
+		""" set an unsigned qword """
 		return self.u64
 
 	@unsignedQword.setter
@@ -189,12 +212,14 @@ class IO(object):
 
 	@property
 	def i8(self):
+		""" get an int8 """
 		if self.littleEndian:
 			return self.i8le
 		return self.i8be
 
 	@i8.setter
 	def i8(self, i8):
+		""" set an int8 """
 		if self.littleEndian:
 			self.i8le = i8
 		else:
@@ -202,12 +227,14 @@ class IO(object):
 
 	@property
 	def u8(self):
+		""" get an unsigned int """
 		if self.littleEndian:
 			return self.u8le
 		return self.u8be
 
 	@u8.setter
 	def u8(self, u8):
+		""" set an unsigned int """
 		if self.littleEndian:
 			self.u8le = u8
 		else:
@@ -215,12 +242,14 @@ class IO(object):
 
 	@property
 	def i16(self):
+		""" get an int16 """
 		if self.littleEndian:
 			return self.i16le
 		return self.i16be
 
 	@i16.setter
 	def i16(self, i16):
+		""" set an int16 """
 		if self.littleEndian:
 			self.i16le = i16
 		else:
@@ -228,12 +257,14 @@ class IO(object):
 
 	@property
 	def u16(self):
+		""" get an uint16 """
 		if self.littleEndian:
 			return self.i16le
 		return self.i16be
 
 	@u16.setter
 	def u16(self, u16):
+		""" set an unint16 """
 		if self.littleEndian:
 			self.u16le = u16
 		else:
@@ -241,12 +272,14 @@ class IO(object):
 
 	@property
 	def i32(self):
+		""" get an int32 """
 		if self.littleEndian:
 			return self.i32le
 		return self.i32be
 
 	@i32.setter
 	def i32(self, i32):
+		"""set an int32 """
 		if self.littleEndian:
 			self.i32le = i32
 		else:
@@ -254,12 +287,14 @@ class IO(object):
 
 	@property
 	def u32(self):
+		""" get a uint32 """
 		if self.littleEndian:
 			return self.i32le
 		return self.i32be
 
 	@u32.setter
 	def u32(self, u32):
+		""" set a unint32 """
 		if self.littleEndian:
 			self.u32le = u32
 		else:
@@ -267,12 +302,14 @@ class IO(object):
 
 	@property
 	def i64(self):
+		""" get an int64 """
 		if self.littleEndian:
 			return self.i64le
 		return self.i64be
 
 	@i64.setter
 	def i64(self, i64):
+		""" set an int64 """
 		if self.littleEndian:
 			self.i64le = i64
 		else:
@@ -280,12 +317,14 @@ class IO(object):
 
 	@property
 	def u64(self):
+		""" get a uint64 """
 		if self.littleEndian:
 			return self.i64le
 		return self.i64be
 
 	@u64.setter
 	def u64(self, u64):
+		""" set a uint64 """
 		if self.littleEndian:
 			self.u64le = u64
 		else:
@@ -293,12 +332,14 @@ class IO(object):
 
 	@property
 	def float32(self):
+		""" get a float32 """
 		if self.littleEndian:
 			return self.float32le
 		return self.float32be
 
 	@float32.setter
 	def float32(self, float32):
+		""" set a float32 """
 		if self.littleEndian:
 			self.float32le = float32
 		else:
@@ -306,12 +347,14 @@ class IO(object):
 
 	@property
 	def float64(self):
+		""" get a float64 """
 		if self.littleEndian:
 			return self.float64le
 		return self.float64be
 
 	@float64.setter
 	def float64(self, float64):
+		""" set a float64 """
 		if self.littleEndian:
 			self.float64le = float64
 		else:
@@ -328,6 +371,7 @@ class IO(object):
 
 	@u8be.setter
 	def u8be(self, u8be):
+		""" set the uint8 """
 		self._write(1, '>B', u8be)
 
 	@property
@@ -341,6 +385,7 @@ class IO(object):
 
 	@u8le.setter
 	def u8le(self, u8le):
+		""" set the uint8 """
 		self._write(1, '<B', u8le)
 
 	@property
@@ -354,6 +399,7 @@ class IO(object):
 
 	@i8le.setter
 	def i8le(self, i8le):
+		""" set the int8 """
 		self._write(1, '<b', i8le)
 
 	@property
@@ -367,6 +413,7 @@ class IO(object):
 
 	@i8be.setter
 	def i8be(self, i8be):
+		""" set the int8 """
 		self._write(1, '>b', i8be)
 
 	@property
@@ -380,6 +427,7 @@ class IO(object):
 
 	@u16be.setter
 	def u16be(self, u16be):
+		""" set the uint16 """
 		self._write(2, '>H', u16be)
 
 	@property
@@ -393,6 +441,7 @@ class IO(object):
 
 	@u16le.setter
 	def u16le(self, u16le):
+		""" set the uint16 """
 		self._write(2, '<H', u16le)
 
 	@property
@@ -406,6 +455,7 @@ class IO(object):
 
 	@i16le.setter
 	def i16le(self, i16le):
+		""" set the int16 """
 		self._write(2, '<h', i16le)
 
 	@property
@@ -419,6 +469,7 @@ class IO(object):
 
 	@i16be.setter
 	def i16be(self, i16be):
+		""" set the int16 """
 		self._write(2, '>h', i16be)
 
 	@property
@@ -432,6 +483,7 @@ class IO(object):
 
 	@u32be.setter
 	def u32be(self, u32be):
+		""" set the uint32 """
 		self._write(4, '>I', int(u32be))
 
 	@property
@@ -445,6 +497,7 @@ class IO(object):
 
 	@u32le.setter
 	def u32le(self, u32le):
+		""" set the uint32 """
 		self._write(4, '<I', u32le)
 
 	@property
@@ -458,6 +511,7 @@ class IO(object):
 
 	@i32le.setter
 	def i32le(self, i32le):
+		""" set the int32 """
 		self._write(4, '<i', i32le)
 
 	@property
@@ -467,7 +521,7 @@ class IO(object):
 		"""
 		try:
 			d = struct.unpack('>i', self.data[self.index:self.index + 4])[0]
-		except Exception as e:
+		except Exception as _e:
 			raise Exception(
 			str(self.index) + ' ' + str(len(self.data)) + ' ' +
 			str(self.data[self.index:self.index + 4]))
@@ -476,6 +530,7 @@ class IO(object):
 
 	@i32be.setter
 	def i32be(self, i32be):
+		""" set the int32 """
 		self._write(4, '>i', int(i32be))
 
 	@property
@@ -489,6 +544,7 @@ class IO(object):
 
 	@u64be.setter
 	def u64be(self, u64be):
+		""" set the uint64 """
 		self._write(8, '>Q', u64be)
 
 	@property
@@ -502,6 +558,7 @@ class IO(object):
 
 	@u64le.setter
 	def u64le(self, u64le):
+		""" set the uint64 """
 		self._write(8, '<Q', u64le)
 
 	@property
@@ -515,6 +572,7 @@ class IO(object):
 
 	@i64le.setter
 	def i64le(self, i64le):
+		""" set the int64 """
 		self._write(8, '<q', i64le)
 		self.index += 8
 
@@ -529,22 +587,27 @@ class IO(object):
 
 	@i64be.setter
 	def i64be(self, i64be):
+		""" set the int64 """
 		self._write(8, '>q', i64be)
 
 	@property
 	def float(self):
+		""" get a float """
 		return self.float32
 
 	@float.setter
 	def float(self, f):
+		""" set a float """
 		self.float32 = f
 
 	@property
 	def double(self):
+		""" get a double """
 		return self.float64
 
 	@double.setter
 	def double(self, f):
+		""" set a double """
 		self.float64 = f
 
 	@property
@@ -558,6 +621,7 @@ class IO(object):
 
 	@float32be.setter
 	def float32be(self, float32be):
+		""" set a 32 bit float """
 		self._write(4, '>f', float32be)
 
 	@property
@@ -571,6 +635,7 @@ class IO(object):
 
 	@float32le.setter
 	def float32le(self, float32le):
+		""" set a 32 bit float """
 		self._write(4, '<f', float32le)
 
 	@property
@@ -584,6 +649,7 @@ class IO(object):
 
 	@float64be.setter
 	def float64be(self, float64be):
+		""" set a 64 bit float """
 		self._write(8, '>d', float64be)
 
 	@property
@@ -597,6 +663,7 @@ class IO(object):
 
 	@float64le.setter
 	def float64le(self, float64le):
+		""" set a 64 bit float """
 		self._write(8, '<d', float64le)
 
 	def getBytes(self, nbytes):
@@ -607,7 +674,7 @@ class IO(object):
 		self.index += nbytes
 		return d
 
-	def addBytes(self, bytes):
+	def addBytes(self, ioBytes):
 		"""
 		add some raw bytes and advance the index
 
@@ -615,28 +682,28 @@ class IO(object):
 
 		:param bytes: can be a string, bytearray, or another IO object
 		"""
-		self.setBytes(bytes)
+		self.setBytes(ioBytes)
 
-	def setBytes(self, bytes):
+	def setBytes(self, ioBytes):
 		"""
 		add some raw bytes and advance the index
 
 		alias for addBytes()
 
-		:param bytes: can be a string, bytearray, or another IO object
+		:param ioBytes: can be a string, bytearray, or another IO object
 		"""
-		if isinstance(bytes, IO):
-			bytes = bytes.data
-		if type(bytes) == str:
-			bytes = bytearray(bytes, encoding="utf-8")
+		if isinstance(ioBytes, IO):
+			ioBytes = ioBytes.data
+		if isinstance(ioBytes, str):
+			ioBytes = bytearray(ioBytes, encoding="utf-8")
 		if self.index >= len(self.data):
 			# if we're at the end, simply extend the buffer
-			self.data.extend(bytes)
-			self.index += len(bytes)
+			self.data.extend(ioBytes)
+			self.index += len(ioBytes)
 		else:
-			if self.index + len(bytes) >= len(self.data):
-				self.data.extend(bytearray((self.index + len(bytes)) - len(self.data)))
-			for b in bytes:
+			if self.index + len(ioBytes) >= len(self.data):
+				self.data.extend(bytearray((self.index + len(ioBytes)) - len(self.data)))
+			for b in ioBytes:
 				self.data[self.index] = b
 				self.index += 1
 
@@ -663,41 +730,50 @@ class IO(object):
 			return d.decode('UTF-16', errors='replace')
 		raise Exception()
 
-	def _sz754set(self, sz754, encoding):
+	def _sz754set(self, sz754, _encoding):
+		'''_sz754set'''
 		self.u32 = len(sz754)
 		self.setBytes(sz754)
 		self.u8 = 0
 
 	@property
 	def sz754(self):
+		'''sz754'''
 		return self._sz754(self.stringEncoding)
 
 	@sz754.setter
 	def sz754(self, sz754):
+		'''set sz754'''
 		return self._sz754set(sz754, self.stringEncoding)
 
 	@property
 	def sz754A(self):
+		'''sz754A'''
 		return self._sz754('A')
 
 	@sz754A.setter
 	def sz754A(self, sz754):
+		'''set sz754A'''
 		return self._sz754set(sz754, 'A')
 
 	@property
 	def sz754W(self):
+		'''sz754W'''
 		return self._sz754('W')
 
 	@sz754W.setter
 	def sz754W(self, sz754):
+		'''set sz754W'''
 		return self._sz754set(sz754, 'W')
 
 	@property
 	def sz754U(self):
+		'''sz754U'''
 		return self._sz754('U')
 
 	@sz754U.setter
 	def sz754U(self, sz754):
+		'''set sz754U'''
 		return self._sz754set(sz754, 'U')
 
 	def _readUntil(self, until, encoding='A'):
@@ -728,88 +804,112 @@ class IO(object):
 
 	@property
 	def textLine(self):
+		'''textLine'''
 		ret = self._readUntil('\n', self.stringEncoding)
 		if ret[-1] == '\r':
 			ret = ret[-1]
 		return ret
 
+	'''
 	@textLine.setter
 	def textLine(self, text):
 		setBytes(text)
 		if text[-1] != '\n':
 			setBytes('\n')
+	'''
 
 	@property
 	def textLineA(self):
+		'''textLineA'''
 		ret = self._readUntil('\n', 'A')
 		if ret[-1] == '\r':
 			ret = ret[-1]
 		return ret
 
+	'''
 	@textLineA.setter
 	def textLineA(self, text):
 		setBytes(text)
 		if text[-1] != '\n':
 			setBytes('\n')
+	'''
 
 	@property
 	def textLineW(self):
+		'''textLineW'''
 		ret = self._readUntil('\n', 'W')
 		if ret[-1] == '\r':
 			ret = ret[-1]
 		return ret
 
+	'''
 	@textLineW.setter
 	def textLineW(self, text):
 		setBytes(text)
 		if text[-1] != '\n':
 			setBytes('\0\n')
+	'''
 
 	@property
 	def textLineU(self):
+		'''textLineU'''
 		ret = self._readUntil('\n', 'U')
 		if ret[-1] == '\r':
 			ret = ret[-1]
 		return ret
 
+	'''
 	@textLineU.setter
 	def textLineU(self, text):
 		setBytes(text)
 		if text[-1] != '\n':
 			setBytes('\n')
+	'''
 
 	@property
 	def cString(self):
+		'''cString'''
 		return self._readUntil('\0', self.stringEncoding)
 
+	'''
 	@cString.setter
 	def cString(self, text):
 		setBytes(text)
 		setBytes('\0')
+	'''
 
 	@property
 	def cStringA(self):
+		'''cStringA'''
 		return self._readUntil('\0', 'A')
 
+	'''
 	@cString.setter
 	def cString(self, text):
 		setBytes(text)
 		setBytes('\0')
+	'''
 
 	@property
 	def cStringW(self):
+		'''cStringW'''
 		return self._readUntil('\0', 'W')
 
+	'''
 	@cString.setter
 	def cString(self, text):
 		setBytes(text)
 		setBytes('\0\0')
+	'''
 
 	@property
 	def cStringU(self):
+		'''cStringU'''
 		return self._readUntil('\0', 'U')
 
+	'''
 	@cString.setter
 	def cString(self, text):
 		setBytes(text)
 		setBytes('\0')
+	'''

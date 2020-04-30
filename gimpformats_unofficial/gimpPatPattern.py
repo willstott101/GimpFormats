@@ -1,10 +1,10 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Pure python implementation of a gimp pattern file
 """
+import argparse
 import PIL.Image
-from .binaryIO import *
+from .binaryIO import IO
 
 
 class GimpPatPattern:
@@ -133,6 +133,7 @@ class GimpPatPattern:
 			if not hasattr(toFilename, 'write'):
 				f = open(toFilename, 'wb')
 			f.write(self.toBytes())
+			f.close()
 
 	def __repr__(self, indent=''):
 		"""
@@ -150,41 +151,24 @@ class GimpPatPattern:
 
 
 if __name__ == '__main__':
-	import sys
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
-	printhelp = False
-	if len(sys.argv) < 2:
-		printhelp = True
-	else:
-		g = None
-		for arg in sys.argv[1:]:
-			if arg.startswith('-'):
-				arg = [a.strip() for a in arg.split('=', 1)]
-				if arg[0] in ['-h', '--help']:
-					printhelp = True
-				elif arg[0] == '--dump':
-					print(g)
-				elif arg[0] == '--show':
-					g.image.show()
-				elif arg[0] == '--save':
-					g.image.save(arg[1])
-				else:
-					print('ERR: unknown argument "' + arg[0] + '"')
-			else:
-				g = GimpPatPattern(arg)
-	if printhelp:
-		print('Usage:')
-		print('  gimpPatPattern.py file.xcf [options]')
-		print('Options:')
-		print('   -h, --help ............ this help screen')
-		print('   --dump ................ dump info about this file')
-		print('   --show ................ show the pattern image')
-		print('   --save=out.jpg ........ save out the pattern image')
-		print('   --register ............ register this extension')
+	""" CLI Entry Point """
+	parser = argparse.ArgumentParser("gimpPatPattern.py")
+	parser.add_argument("xcfdocument", action="store",
+	help="xcf file to act on")
+	group = parser.add_mutually_exclusive_group()
+	group.add_argument("--dump", action="store_true",
+	help="dump info about this file")
+	group.add_argument("--show", action="store_true",
+	help="show the image")
+	group.add_argument("--save", action="store",
+	help="save out the image")
+	args = parser.parse_args()
+
+	gimpPatPattern = GimpPatPattern(args.xcfdocument)
+
+	if args.dump:
+		print(gimpPatPattern)
+	if args.show:
+		gimpPatPattern.image.show()
+	if args.save:
+		gimpPatPattern.image.save(args.save)

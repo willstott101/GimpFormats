@@ -1,6 +1,7 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
+TODO: THIS IS BROKEN
+
 Run unit tests
 
 See:
@@ -8,41 +9,47 @@ See:
 """
 import unittest
 import os
-from gimpFormats import *
-from smartimage.imgTools import *
+import sys
+from pathlib import Path
+PROJECTDIR = str(Path(__file__).resolve().parent.parent)
+sys.path.insert(0, os.path.dirname(PROJECTDIR))
+from gimpformats_unofficial import GimpGtpToolPreset
+
+__HERE__ = os.path.abspath(__file__).rsplit(os.sep, 1)[0] + os.sep
 
 
-__HERE__=os.path.abspath(__file__).rsplit(os.sep,1)[0]+os.sep
 class Test(unittest.TestCase):
 	"""
 	Run unit test
 	"""
-
 	def setUp(self):
-		self.dut=GimpGtpToolPreset()
-		
+		self.dut = GimpGtpToolPreset()
+
 	def tearDown(self):
 		pass
-		
-	def testSmudgeRough(self):
-		self.dut.load(__HERE__+'Smudge-Rough.gtp')
-		# test round-trip compatibility
-		self.dut.save(__HERE__+'actualOutput_Smudge-Rough.gtp')
-		original=open(__HERE__+'Smudge-Rough.gtp','rb').read()
-		actual=open(__HERE__+'actualOutput_Smudge-Rough.gtp','rb').read()
-		assert actual==original
-		os.remove(__HERE__+'actualOutput_Smudge-Rough.gtp')
 
-		
+	def testSmudgeRough(self):
+		""" test smudge rough """
+		self.dut.load(__HERE__ + 'Smudge-Rough.gtp')
+		# test round-trip compatibility
+		self.dut.save(__HERE__ + 'actualOutput_Smudge-Rough.gtp')
+		original = open(__HERE__ + 'Smudge-Rough.gtp', 'rb')
+		actual = open(__HERE__ + 'actualOutput_Smudge-Rough.gtp', 'rb')
+		assert actual.read() == original.read()
+		original.close()
+		actual.close()
+		os.remove(__HERE__ + 'actualOutput_Smudge-Rough.gtp')
+
+
 def testSuite():
 	"""
 	Combine unit tests into an entire suite
 	"""
-	testSuite = unittest.TestSuite()
-	testSuite.addTest(Test("testSmudgeRough"))
-	return testSuite
-		
-		
+	varTestSuite = unittest.TestSuite()
+	varTestSuite.addTest(Test("testSmudgeRough"))
+	return varTestSuite
+
+
 if __name__ == '__main__':
 	"""
 	Run all the test suites in the standard way.

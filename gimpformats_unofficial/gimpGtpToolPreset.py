@@ -1,9 +1,9 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Pure python implementation of the gimp gtp tool preset format
 """
 
+import argparse
 
 class ParenFileValue:
 	"""
@@ -29,9 +29,7 @@ class ParenFileValue:
 				raise Exception('What kind of value is "' + bufArray + '"?')
 
 	def __repr__(self, indent=''):
-		"""
-		Get a textual representation of this object
-		"""
+		""" Get a textual representation of this object """
 		ret = []
 		ret.append('Value Type: ' + str(self.name))
 		for v in self.values:
@@ -51,9 +49,7 @@ def parenFileDecode(data, index=0):
 	maxIndex = len(data)
 
 	def pDec(data, index=0):
-		"""
-		helper routine to parse a single value
-		"""
+		""" helper routine to parse a single value """
 		pval = ParenFileValue()
 		ws = [' ', '\t', '\r', '\n']
 		if index == 0:
@@ -154,8 +150,8 @@ class GimpGtpToolPreset:
 			self.filename = filename
 			f = open(filename, 'rb')
 		data = f.read()
-		f.close()
 		self._decode_(data)
+		f.close()
 
 	def _decode_(self, data, index=0):
 		"""
@@ -177,7 +173,6 @@ class GimpGtpToolPreset:
 		"""
 		save this gimp tool preset to a file
 		"""
-		asImage = False
 		if toExtension is None:
 			if toFilename is not None:
 				toExtension = toFilename.rsplit('.', 1)
@@ -188,6 +183,7 @@ class GimpGtpToolPreset:
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
 		f.write(self.toBytes())
+		f.close()
 
 	def __repr__(self, indent=''):
 		"""
@@ -200,35 +196,15 @@ class GimpGtpToolPreset:
 
 
 if __name__ == '__main__':
-	import sys
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
-	printhelp = False
-	if len(sys.argv) < 2:
-		printhelp = True
-	else:
-		g = None
-		for arg in sys.argv[1:]:
-			if arg.startswith('-'):
-				arg = [a.strip() for a in arg.split('=', 1)]
-				if arg[0] in ['-h', '--help']:
-					printhelp = True
-				elif arg[0] == '--dump':
-					print(g)
-				else:
-					print('ERR: unknown argument "' + arg[0] + '"')
-			else:
-				g = GimpGtpToolPreset(arg)
-	if printhelp:
-		print('Usage:')
-		print('  gimpGtpToolPreset.py file.xcf [options]')
-		print('Options:')
-		print('   -h, --help ............ this help screen')
-		print('   --dump ................ dump info about this file')
-		print('   --register ............ register this extension')
+	""" CLI Entry Point """
+	parser = argparse.ArgumentParser("gimpGtpToolPreset.py")
+	parser.add_argument("xcfdocument", action="store",
+	help="xcf file to act on")
+	parser.add_argument("--dump", action="store_true",
+	help="dump info about this file")
+	args = parser.parse_args()
+
+	gimpGtpToolPreset = GimpGtpToolPreset(args.xcfdocument)
+
+	if args.dump:
+		print(gimpGtpToolPreset)

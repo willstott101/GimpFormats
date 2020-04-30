@@ -1,22 +1,15 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Pure python implementation of the gimp file formats
 """
-from .gimpXcfDocument import *
-from .gimpGbrBrush import *
-from .gimpGgrGradient import *
-from .gimpGihBrushSet import *
-from .gimpGpbBrush import *
-from .gimpGtpToolPreset import *
-from .gimpPatPattern import *
-from .gimpVbrBrush import *
+import argparse
+from .gimpXcfDocument import GimpDocument
 register = False
 
-
 class GimpFormatPlugin:
-	pass
-
+	"""
+	Pure python implementation of the gimp file formats
+	"""
 
 # ========= automatically add format info for pyformatgenie =========
 if register:
@@ -31,78 +24,64 @@ if register:
 		# pyformatgenie is not installed (yet?). Continue with whatever you came here for.
 		pass
 
+
 if __name__ == '__main__':
-	import sys
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
-	printhelp = False
-	if len(sys.argv) < 2:
-		printhelp = True
+	""" CLI Entry Point """
+	parser = argparse.ArgumentParser("gimpFormat.py")
+	parser.add_argument("xcfdocument", action="store",
+	help="xcf file to act on")
+	group = parser.add_mutually_exclusive_group()
+	group.add_argument("--dump", action="store_true",
+	help="dump info about this file")
+	group.add_argument("--showLayer", action="store",
+	help="show layer(s) (use * for all)")
+	group.add_argument("--saveLayer", action="store",
+	help="n,out.jpg save layer(s) out to file")
+	args = parser.parse_args()
+
+	gimpDocument = GimpDocument(args.xcfdocument)
+
+	if args.dump:
+		print(gimpDocument)
+	if args.showLayer:
+		if args.showLayer == '*':
+			for layer in range(len(gimpDocument.layers)):
+				iterationM = gimpDocument.layers[layer].image
+				showLayer(iterationM, layer)
+		else:
+			iterationM = gimpDocument.layers[int(args.showLayer)].image
+			showLayer(iterationM, int(args.showLayer))
+	if args.saveLayer:
+		layer = args.saveLayer.split(',', 1)
+		if len(layer) > 1:
+			filenameM = layer[1]
+		else:
+			filenameM = 'layer *.png'
+		layer = args.saveLayer[0]
+		if layer == '*':
+			if filenameM.find('*') < 0:
+				filenameM = '.'.join(filenameM.split('.', 1).insert(1, '*'))
+			for layer in range(len(gimpDocument.layers)):
+				saveLayer(gimpDocument, layer, filenameM)
+		else:
+			saveLayer(gimpDocument, layer, filenameM)
+
+
+def showLayer(iteration, l):
+	""" show a layer """
+	if iteration is None:
+		print('No image for layer', l)
 	else:
-		g = None
-		for arg in sys.argv[1:]:
-			if arg.startswith('-'):
-				arg = [a.strip() for a in arg.split('=', 1)]
-				if arg[0] in ['-h', '--help']:
-					printhelp = True
-				elif arg[0] == '--dump':
-					print(g)
-				elif arg[0] == '--showLayer':
-					if arg[1] == '*':
-						for n in range(len(g.layers)):
-							i = g.layers[n].image
-							if i is None:
-								print('No image for layer', n)
-							else:
-								print('showing layer', n)
-								i.show()
-					else:
-						i = g.layers[int(arg[1])].image
-						if i is None:
-							print('No image for layer', int(arg[1]))
-						else:
-							print('showing layer', arg[1])
-							i.show()
-				elif arg[0] == '--saveLayer':
-					layer = arg[1].split(',', 1)
-					if len(layer) > 1:
-						filename = layer[1]
-					else:
-						filename = 'layer *.png'
-					layer = arg[1][0]
-					if layer == '*':
-						if filename.find('*') < 0:
-							filename = '.'.join(filename.split('.', 1).insert(1, '*'))
-						for n in range(len(g.layers)):
-							i = g.layers[n].image
-							if i is None:
-								print('No image for layer', n)
-							else:
-								fn2 = filename.replace('*', str(n))
-								print('saving layer', fn2)
-								i.save(fn2)
-					else:
-						i = g.layers[int(layer)].image
-						if i is None:
-							print('No image for layer', layer)
-						else:
-							i.save(filename.replace('*', layer))
-				else:
-					print('ERR: unknown argument "' + arg[0] + '"')
-			else:
-				g = GimpDocument(arg)
-	if printhelp:
-		print('Usage:')
-		print('  gimpFormat.py file.xcf [options]')
-		print('Options:')
-		print('   -h, --help ............ this help screen')
-		print('   --dump ................ dump info about this file')
-		print('   --showLayer=n ......... show layer(s) (use * for all)')
-		print('   --saveLayer=n,out.jpg . save layer(s) out to file')
-		print('   --register ............ register this extension')
+		print('Showing layer', l)
+		iteration.show()
+
+
+def saveLayer(gimpDoc, l, filename):
+	""" save a layer """
+	iteration = gimpDoc.layers[l].image
+	if iteration is None:
+		print('No image for layer', l)
+	else:
+		fn2 = filename.replace('*', str(l))
+		print('saving layer', fn2)
+		iteration.save(fn2)

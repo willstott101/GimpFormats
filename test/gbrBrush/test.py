@@ -1,5 +1,4 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Run unit tests
 
@@ -8,63 +7,70 @@ See:
 """
 import unittest
 import os
-from gimpFormats import *
-from smartimage.imgTools import *
+import sys
+from pathlib import Path
+PROJECTDIR = str(Path(__file__).resolve().parent.parent)
+sys.path.insert(0, os.path.dirname(PROJECTDIR))
+from imgcompare import imgcompare
+from gimpformats_unofficial import GimpGbrBrush
+__HERE__ = os.path.abspath(__file__).rsplit(os.sep, 1)[0] + os.sep
 
 
-__HERE__=os.path.abspath(__file__).rsplit(os.sep,1)[0]+os.sep
 class Test(unittest.TestCase):
 	"""
 	Run unit test
 	"""
-
 	def setUp(self):
-		self.dut=GimpGbrBrush()
-		
+		self.dut = GimpGbrBrush()
+
 	def tearDown(self):
 		pass
-		
-	def testPepper(self):
-		self.dut.load(__HERE__+'pepper.gbr')
-		# test image saving (implicit)
-		self.dut.save(__HERE__+'actualOutput_pepper.png')
-		# test for image match
-		same=compareImage(self.dut.image,__HERE__+'desiredOutput_pepper.png')
-		assert same
-		os.remove(__HERE__+'actualOutput_pepper.png')
-		# test round-trip compatibility
-		self.dut.save(__HERE__+'actualOutput_pepper.gbr')
-		original=open(__HERE__+'pepper.gbr','rb').read()
-		actual=open(__HERE__+'actualOutput_pepper.gbr','rb').read()
-		assert actual==original
-		os.remove(__HERE__+'actualOutput_pepper.gbr')
-		
-	def testDunes(self):
-		self.dut.load(__HERE__+'dunes.gbr')
-		# test image saving (explicit)
-		self.dut.image.save(__HERE__+'actualOutput_dunes.png')
-		# test for image match
-		same=compareImage(self.dut.image,__HERE__+'desiredOutput_dunes.png')
-		assert same
-		os.remove(__HERE__+'actualOutput_dunes.png')
-		# test round-trip compatibility
-		self.dut.save(__HERE__+'actualOutput_dunes.gbr')
-		original=open(__HERE__+'dunes.gbr','rb').read()
-		actual=open(__HERE__+'actualOutput_dunes.gbr','rb').read()
-		assert actual==original
-		os.remove(__HERE__+'actualOutput_dunes.gbr')
 
-		
+	def testPepper(self):
+		''' test pepper '''
+		self.dut.load(__HERE__ + 'pepper.gbr')
+		# test image saving (implicit)
+		self.dut.save(__HERE__ + 'actualOutput_pepper.png')
+		# test for image match
+		assert imgcompare.is_equal(self.dut.image, __HERE__ + 'desiredOutput_pepper.png', tolerance=1)
+		os.remove(__HERE__ + 'actualOutput_pepper.png')
+		# test round-trip compatibility
+		self.dut.save(__HERE__ + 'actualOutput_pepper.gbr')
+		original = open(__HERE__ + 'pepper.gbr', 'rb')
+		actual = open(__HERE__ + 'actualOutput_pepper.gbr', 'rb')
+		assert actual.read() == original.read()
+		original.close()
+		actual.close()
+		os.remove(__HERE__ + 'actualOutput_pepper.gbr')
+
+	def testDunes(self):
+		''' test dunes '''
+		self.dut.load(__HERE__ + 'dunes.gbr')
+		# test image saving (explicit)
+		self.dut.image.save(__HERE__ + 'actualOutput_dunes.png')
+		# test for image match
+		assert imgcompare.is_equal(self.dut.image, __HERE__ + 'desiredOutput_dunes.png', tolerance=1)
+		os.remove(__HERE__ + 'actualOutput_dunes.png')
+		# test round-trip compatibility
+		self.dut.save(__HERE__ + 'actualOutput_dunes.gbr')
+		original = open(__HERE__ + 'dunes.gbr', 'rb')
+		actual = open(__HERE__ + 'actualOutput_dunes.gbr', 'rb')
+		assert actual.read() == original.read()
+		original.close()
+		actual.close()
+		os.remove(__HERE__ + 'actualOutput_dunes.gbr')
+
+
 def testSuite():
 	"""
 	Combine unit tests into an entire suite
 	"""
-	testSuite = unittest.TestSuite()
-	testSuite.addTest(Test("testDunes"))
-	testSuite.addTest(Test("testPepper"))
-	return testSuite
-		
-		
+	varTestSuite = unittest.TestSuite()
+	varTestSuite.addTest(Test("testDunes"))
+	varTestSuite.addTest(Test("testPepper"))
+	return varTestSuite
+
+
 if __name__ == '__main__':
 	"""
 	Run all the test suites in the standard way.

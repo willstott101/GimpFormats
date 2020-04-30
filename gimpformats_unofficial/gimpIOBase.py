@@ -1,14 +1,13 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 A specialized binary file base for Gimp files
 """
 import struct
-from .binaryIO import *
-from .gimpParasites import *
+from .binaryIO import IO
+from .gimpParasites import GimpParasite
 
 
-class GimpIOBase(object):
+class GimpIOBase:
 	"""
 	A specialized binary file base for Gimp files
 	"""

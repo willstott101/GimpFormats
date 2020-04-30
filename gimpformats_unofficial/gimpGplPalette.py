@@ -1,14 +1,12 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Pure python implementation of the gimp gpl palette format
 """
 
+import argparse
 
 class GimpGplPalette:
-	"""
-	Pure python implementation of the gimp gpl palette format
-	"""
+	""" Pure python implementation of the gimp gpl palette format """
 	def __init__(self, filename=None):
 		self.name = ''
 		self.columns = 16
@@ -58,9 +56,7 @@ class GimpGplPalette:
 				self.colorNames.append(None)
 
 	def toBytes(self):
-		"""
-		encode to a raw data stream
-		"""
+		""" encode to a raw data stream """
 		data = []
 		data.append("GIMP Palette")
 		data.append('Name: ' + str(self.name))
@@ -76,9 +72,7 @@ class GimpGplPalette:
 		return ('\n'.join(data) + '\n').encode('utf-8')
 
 	def save(self, toFilename=None, toExtension=None):
-		"""
-		save this gimp image to a file
-		"""
+		""" save this gimp image to a file """
 		if toExtension is None:
 			if toFilename is not None:
 				toExtension = toFilename.rsplit('.', 1)
@@ -89,11 +83,10 @@ class GimpGplPalette:
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
 		f.write(self.toBytes())
+		f.close()
 
 	def __repr__(self, indent=''):
-		"""
-		Get a textual representation of this object
-		"""
+		""" Get a textual representation of this object """
 		ret = []
 		if self.filename is not None:
 			ret.append('Filename: ' + self.filename)
@@ -108,9 +101,7 @@ class GimpGplPalette:
 		return '\n'.join(ret)
 
 	def __eq__(self, other):
-		"""
-		perform a comparison
-		"""
+		""" perform a comparison """
 		if other.name != self.name:
 			return False
 		if other.columns != self.columns:
@@ -124,37 +115,17 @@ class GimpGplPalette:
 				return False
 		return True
 
-
 if __name__ == '__main__':
-	import sys
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
-	printhelp = False
-	if len(sys.argv) < 2:
-		printhelp = True
-	else:
-		g = None
-		for arg in sys.argv[1:]:
-			if arg.startswith('-'):
-				arg = [a.strip() for a in arg.split('=', 1)]
-				if arg[0] in ['-h', '--help']:
-					printhelp = True
-				elif arg[0] == '--dump':
-					print(g)
-				else:
-					print('ERR: unknown argument "' + arg[0] + '"')
-			else:
-				g = GimpVbrBrush(arg)
-	if printhelp:
-		print('Usage:')
-		print('  gimpGplPalette.py palette.gpl [options]')
-		print('Options:')
-		print('   -h, --help ............ this help screen')
-		print('   --dump ................ dump info about this file')
-		print('   --register ............ register this extension')
+	""" CLI Entry Point """
+	parser = argparse.ArgumentParser("gimpVbrBrush.py")
+	parser.add_argument("xcfdocument", action="store",
+	help="xcf file to act on")
+	group = parser.add_mutually_exclusive_group()
+	group.add_argument("--dump", action="store_true",
+	help="dump info about this file")
+	args = parser.parse_args()
+
+	gimpGplPalette = GimpGplPalette(args.xcfdocument)
+
+	if args.dump:
+		print(gimpGplPalette)

@@ -1,9 +1,9 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Pure python implementation of the gimp vbr brush format
 """
 
+import argparse
 
 class GimpVbrBrush:
 	"""
@@ -171,35 +171,15 @@ class GimpVbrBrush:
 
 
 if __name__ == '__main__':
-	import sys
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
-	printhelp = False
-	if len(sys.argv) < 2:
-		printhelp = True
-	else:
-		g = None
-		for arg in sys.argv[1:]:
-			if arg.startswith('-'):
-				arg = [a.strip() for a in arg.split('=', 1)]
-				if arg[0] in ['-h', '--help']:
-					printhelp = True
-				elif arg[0] == '--dump':
-					print(g)
-				else:
-					print('ERR: unknown argument "' + arg[0] + '"')
-			else:
-				g = GimpVbrBrush(arg)
-	if printhelp:
-		print('Usage:')
-		print('  gimpVbrBrush.py file.xcf [options]')
-		print('Options:')
-		print('   -h, --help ............ this help screen')
-		print('   --dump ................ dump info about this file')
-		print('   --register ............ register this extension')
+	""" CLI Entry Point """
+	parser = argparse.ArgumentParser("gimpVbrBrush.py")
+	parser.add_argument("xcfdocument", action="store",
+	help="xcf file to act on")
+	parser.add_argument("--dump", action="store_true",
+	help="dump info about this file")
+	args = parser.parse_args()
+
+	gimpVbrBrush = GimpVbrBrush(args.xcfdocument)
+
+	if args.dump:
+		print(gimpVbrBrush)

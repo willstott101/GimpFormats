@@ -1,5 +1,4 @@
-#!/usr/bin/env
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 """
 Contains stuff around the internal image storage mechaanism
 of gimp files.
@@ -8,8 +7,9 @@ Generally speaking, the user should not care about anything
 in this file.
 """
 import zlib
+from math import floor
 import PIL.Image
-from .gimpIOBase import *
+from .gimpIOBase import IO, GimpIOBase
 
 
 class GimpChannel(GimpIOBase):
@@ -198,7 +198,7 @@ class GimpImageHierarchy(GimpIOBase):
 		return self.levels[0].image
 
 	@image.setter
-	def image(self):
+	def image(self, image):
 		"""
 		set the image
 		"""
@@ -463,12 +463,12 @@ class GimpImageLevel(GimpIOBase):
 		"""
 		get a final, compiled image
 		"""
-		if self._image == None:
+		if self._image is None:
 			self._image = PIL.Image.new(self.mode, (self.width, self.height), color=None)
 			tileNum = 0
 			for y in range(0, self.height, 64):
 				for x in range(0, self.width, 64):
-					subImage = self.tiles[tileNum]
+					subImage = self._tiles[tileNum]
 					tileNum += 1
 					self._image.paste(subImage, (x, y))
 			self._tiles = None # TODO: do I want to keep the tiles for any reason??
