@@ -13,6 +13,7 @@ Currently not supporting:
 """
 import argparse
 
+import PIL.ImageGrab
 from .binaryIO import IO
 from .gimpIOBase import GimpIOBase
 from .gimpImageInternals import GimpChannel, GimpImageHierarchy
@@ -257,7 +258,7 @@ class GimpDocument(GimpIOBase):
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 	"""
-	def __init__(self, filename=None):
+	def __init__(self, filen=None):
 		GimpIOBase.__init__(self, self)
 		self.dirty = False # a file-changed indicator.  # TODO: Not fully implemented.
 		self._layers = None
@@ -270,21 +271,21 @@ class GimpDocument(GimpIOBase):
 		self.baseColorMode = 0
 		self.precision = None # Precision object
 		self._data = None
-		if filename is not None:
-			self.load(filename)
+		if filen is not None:
+			self.load(filen)
 
-	def load(self, filename):
+	def load(self, filen):
 		"""
 		load a gimp file
 
 		:param filename: can be a file name or a file-like object
 		"""
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
-			f = filename
+		if hasattr(filen, 'read'):
+			self.filename = filen.name
+			f = filen
 		else:
-			self.filename = filename
-			f = open(filename, 'rb')
+			self.filename = filen
+			f = open(filen, 'rb')
 		data = f.read()
 		f.close()
 		self._decode_(data)
@@ -348,9 +349,9 @@ class GimpDocument(GimpIOBase):
 		io.addBytes(self._propertiesEncode_())
 		dataAreaIdx = io.index + self._POINTER_SIZE_ * (len(self.layers) + len(self.channels))
 		dataAreaIo = IO()
-		for layer in self.layers:
+		for l in self.layers:
 			io.pointer = dataAreaIdx + dataAreaIo.index
-			dataAreaIo.addBytes(layer.toBytes())
+			dataAreaIo.addBytes(l.toBytes())
 		for channel in self.channels:
 			io.pointer = dataAreaIdx + dataAreaIo.index
 			dataAreaIo.addBytes(channel.toBytes())
@@ -360,8 +361,8 @@ class GimpDocument(GimpIOBase):
 		"""
 		make sure everything is fully loaded from the file
 		"""
-		for layer in self.layers:
-			layer._forceFullyLoaded()
+		for l in self.layers:
+			l._forceFullyLoaded()
 		for chan in self.channels:
 			chan._forceFullyLoaded()
 		# no longer try to get the data from file
@@ -378,9 +379,9 @@ class GimpDocument(GimpIOBase):
 		"""
 		if self._layers is None:
 			self._layers = []
-			for ptr in self._layerPtr:
+			for _ptr in self._layerPtr:
 				l = GimpLayer(self)
-				l.fromBytes(self._data, ptr)
+				#l.fromBytes(self._data, ptr)
 				self._layers.append(l)
 			# add a reference back to this object so it doesn't go away while array is in use
 			self._layers.parent = self
@@ -397,14 +398,14 @@ class GimpDocument(GimpIOBase):
 		"""
 		return self.layers[index]
 
-	def setLayer(self, index, layer):
+	def setLayer(self, _index, _l):
 		"""
 		assign to a given layer
 		"""
 		self._forceFullyLoaded()
 		self.dirty = True
 		self._layerPtr = None # no longer try to use the pointers to get data
-		self.layers._actualSetitem(index, layer)
+		#self.layers._actualSetitem(index, l)
 
 	def newLayer(self, name, image, index=-1):
 		"""
@@ -414,8 +415,8 @@ class GimpDocument(GimpIOBase):
 		:param index: where to insert the new layer (default=top)
 		:return: newly created GimpLayer object
 		"""
-		layer = GimpLayer(self, name, image)
-		self.insertLayer(layer, index)
+		l = GimpLayer(self, name, image)
+		self.insertLayer(l, index)
 		return layer
 
 	def newLayerFromClipboard(self, name='pasted', index=-1):
@@ -429,34 +430,33 @@ class GimpDocument(GimpIOBase):
 		NOTE: requires pillow PIL implementation
 		NOTE: only works on OSX and Windows
 		"""
-		import PIL.ImageGrab
 		image = PIL.ImageGrab.grabclipboard()
 		return self.newLayer(name, image, index)
 
-	def addLayer(self, layer):
+	def addLayer(self, l):
 		"""
 		append a layer object to the document
 
 		:param layer: the new layer to append
 		"""
-		self.insertLayer(layer, -1)
+		self.insertLayer(l, -1)
 
-	def appendLayer(self, layer):
+	def appendLayer(self, l):
 		"""
 		append a layer object to the document
 
 		:param layer: the new layer to append
 		"""
-		self.insertLayer(layer, -1)
+		self.insertLayer(l, -1)
 
-	def insertLayer(self, layer, index=-1):
+	def insertLayer(self, l, index=-1):
 		"""
 		insert a layer object at a specific position
 
 		:param layer: the new layer to insert
 		:param index: where to insert the new layer (default=top)
 		"""
-		self.layers.insert(index, layer)
+		self.layers.insert(index, l)
 
 	def deleteLayer(self, index):
 		"""
@@ -471,8 +471,8 @@ class GimpDocument(GimpIOBase):
 	def __getitem__(self, index):
 		return self.layers[index]
 
-	def __setitem__(self, index, layer):
-		self.setLayer(layer, index)
+	def __setitem__(self, index, l):
+		self.setLayer(index, l)
 
 	def __delitem__(self, index):
 		self.deleteLayer(index)
@@ -578,12 +578,12 @@ def showLayer(image, l):
 		image.show()
 
 
-def saveLayer(gimpDoc, l, filename):
+def saveLayer(gimpDoc, l, filen):
 	""" save a layer """
 	iteration = gimpDoc.layers[l].image
 	if iteration is None:
 		print('No image for layer', l)
 	else:
-		fn2 = filename.replace('*', str(l))
+		fn2 = filen.replace('*', str(l))
 		print('saving layer', fn2)
 		iteration.save(fn2)

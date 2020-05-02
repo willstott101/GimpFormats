@@ -118,8 +118,8 @@ class GimpStroke(GimpIOBase):
 		io = IO(boolSize=32)
 		io.u32 = self.strokeType
 		io.bool = self.closedShape
-		io.u32 = numFloatsPerPoint
-		io.u32 = numPoints
+		#io.u32 = numFloatsPerPoint
+		#io.u32 = numPoints
 		for gp in self.points:
 			io.addBytes(gp.toBytes())
 		return io.data

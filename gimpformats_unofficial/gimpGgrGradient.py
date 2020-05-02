@@ -34,12 +34,11 @@ class GradientSegment:
 		"""
 		raise NotImplementedError()
 
-	def _decode_(self, data, index=0):
+	def _decode_(self, data):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
-		:param index: index within the buffer to start at
 		"""
 		data = data.split(' ')
 		if len(data) < 11 or len(data) > 15:
@@ -99,7 +98,7 @@ class GradientSegment:
 
 class GimpGgrGradient:
 	"""
-	Gimp golor gradient
+	Gimp color gradient
 
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/ggr.txt

@@ -51,12 +51,11 @@ class GimpVbrBrush:
 		"""
 		raise NotImplementedError() # TODO:
 
-	def _decode_(self, data, index=0):
+	def _decode_(self, data):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
-		:param index: index within the buffer to start at
 		"""
 		data = [s.strip() for s in data.split('\n')]
 		if data[0] != "GIMP-VBR":
