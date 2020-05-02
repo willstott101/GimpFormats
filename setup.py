@@ -64,5 +64,7 @@ setup(
         "test.vbrBrush": ["*.vbr"],
         "test.withPaths": ["*.xcf"]
     },
-    install_requires=['numpy==1.*,>=1.18.3', 'pillow==7.*,>=7.1.1'],
+    install_requires=[
+        'brackettree==0.*,>=0.2.5', 'numpy==1.*,>=1.18.3', 'pillow==7.*,>=7.1.1'
+    ],
 )

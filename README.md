@@ -61,41 +61,48 @@ project = GimpDocument("image.xcf")
 Iterate the image and report the contents of each group followed by the first
 level children of the image
 ```python
+"""List data on groups followed by the direct children of a gimp xcf document
+"""
 layers = project.layers
 index = 0
+print("## Group info...")
 while index < len(layers):
 	layerOrGroup = layers[index]
 	if layerOrGroup.isGroup:
 		index += 1
 		while layers[index].itemPath is not None:
-			print("Group " + layerOrGroup.name + " contains Layer " + layers[index].name)
+			print("Group \"" + layerOrGroup.name + "\" contains Layer \"" + layers[index].name + "\"")
 			layers.pop(index)
 	else:
 		index += 1
 
+print("## Document direct children...")
 for layerOrGroup in layers:
-	print(layerOrGroup.name + " is a " + ("Group" if layerOrGroup.isGroup else "Layer"))
+	print("\"" + layerOrGroup.name + "\" is a " + ("Group" if layerOrGroup.isGroup else "Layer"))
+
 ```
 
 Example output:
 
 ```none
-Group Layer Group contains Layer Layer
-Group Layer Group contains Layer Layer2
-bg #1 is a Layer
-bg is a Layer
-bg #2 is a Layer
-Transformation is a Layer
-Layer Group is a Group
-Background is a Layer
+## Group info...
+Group "Layer Group" contains Layer "Layer"
+Group "Layer Group" contains Layer "Layer2"
+## Document direct children...
+"bg #1" is a Layer
+"bg" is a Layer
+"bg #2" is a Layer
+"Transformation" is a Layer
+"Layer Group" is a Group
+"Background" is a Layer
 ```
 
 ## Next tasks (see below)
 - Generate a flattened image
 - Add new layers
+- Add blending mode as string function to layer
 
 ## Currently supports
-
 - Loading xcf files (up to current GIMP version 2.10)
 - Getting image hierarchy and info
 - Getting image for each layer (PIL image)
@@ -109,14 +116,15 @@ Background is a Layer
 - Saving
 - Alter documents (add layer, etc)
 - .ggr gradients - reads/saves fine, but I need to come up with a way to get the
-- actual colours
+actual colours
 - .gih brush sets - BUG: seems to have more image data per brush than what's
-- expected
+expected
 - .gpb brush - should work, but I need some test files
 
 ## Not implemented
 - Rendering a final, compositied image
-- Exported paths in .svg format. - Reading should be easy enough, but I need to ensure I don't get a full-blown svg in the mix
+- Exported paths in .svg format. - Reading should be easy enough, but I need to
+ensure I don't get a full-blown svg in the mix
 - Standard "parasites"
 
 ## Install With PIP
