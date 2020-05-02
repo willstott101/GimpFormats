@@ -100,7 +100,6 @@ Group "Layer Group" contains Layer "Layer2"
 ## Next tasks (see below)
 - Generate a flattened image
 - Add new layers
-- Add blending mode as string function to layer
 
 ## Currently supports
 - Loading xcf files (up to current GIMP version 2.10)

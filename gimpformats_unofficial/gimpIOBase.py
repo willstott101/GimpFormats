@@ -118,6 +118,31 @@ class GimpIOBase:
 		self.activeVectorIndex = 0
 		self.paths = []
 
+	def getBlendMode(self):
+		""" return the blend mode as a string """
+		return self.BLEND_MODES[self.blendMode]
+
+	def getCompression(self):
+		""" return the compression as a string """
+		return self.COMPRESSION_MODES[self.compression]
+
+	def getUnits(self):
+		""" return the units as a string """
+		return self.UNITS[self.units]
+
+	def getTagColours(self):
+		""" return the tag colours as a string """
+		return self.TAG_COLORS[self.colorTag]
+
+	def getCompositeModes(self):
+		""" return the composite mode as a string """
+		return self.COMPOSITE_MODES[abs(self.compositeMode)]
+
+	def getCompositeSpaces(self):
+		""" return the composite spaces as a string """
+		return self.COMPOSITE_SPACES[abs(self.compositeSpace)]
+
+
 	@property
 	def _POINTER_SIZE_(self):
 		"""
@@ -626,7 +651,7 @@ class GimpIOBase:
 		if self.selectionAttachedTo is not None:
 			ret.append('Selection Attached To: ' + str(self.selectionAttachedTo))
 		if self.blendMode is not None:
-			ret.append('Blend Mode: ' + self.BLEND_MODES[self.blendMode])
+			ret.append('Blend Mode: ' + self.getBlendMode())
 		if self.visible is not None:
 			ret.append('Visible: ' + str(self.visible))
 		if self.isLinked is not None:
@@ -644,14 +669,14 @@ class GimpIOBase:
 		if self.xOffset is not None:
 			ret.append('Offset: ' + str(self.xOffset) + ' x ' + str(self.yOffset))
 		if self.compression is not None:
-			ret.append('Compression: ' + self.COMPRESSION_MODES[self.compression])
+			ret.append('Compression: ' + self.getCompression())
 		if self.horizontalResolution is not None:
 			res = str(self.horizontalResolution) + 'ppi x ' + str(self.verticalResolution) + 'ppi'
 			ret.append('Resolution: ' + res)
 		if self.uniqueId is not None:
 			ret.append('Unique ID (tattoo): ' + str(self.uniqueId))
 		if self.units is not None:
-			ret.append('Units: ' + self.UNITS[self.units])
+			ret.append('Units: ' + self.getUnits())
 		if self.textLayerFlags is not None:
 			ret.append('Text Layer Flags: ' + str(self.textLayerFlags))
 		if self.locked is not None:
@@ -665,14 +690,14 @@ class GimpIOBase:
 		if self.opacity is not None:
 			ret.append('Opacity: ' + str(self.opacity))
 		if self.colorTag is not None:
-			ret.append('Tag Color: ' + self.TAG_COLORS[self.colorTag])
+			ret.append('Tag Color: ' + self.getTagColours())
 		if self.compositeMode is not None:
 			auto = ('Auto ' if self.compositeMode < 0 else '') # negative values are "Auto"
-			ret.append('Composite Mode: ' + auto + self.COMPOSITE_MODES[abs(self.compositeMode)])
+			ret.append('Composite Mode: ' + auto + self.compositeMode())
 		if self.compositeSpace is not None:
 			auto = ('Auto ' if self.compositeSpace < 0 else '') # negative values are "Auto"
 			ret.append('Composite Space: ' + auto +
-			self.COMPOSITE_SPACES[abs(self.compositeSpace)])
+			self.getCompositeSpaces())
 		if self.blendSpace is not None:
 			ret.append('Blend Space: ' + str(self.blendSpace))
 		if self.color is not None:
