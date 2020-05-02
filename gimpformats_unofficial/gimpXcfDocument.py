@@ -35,8 +35,8 @@ class GimpLayer(GimpIOBase):
 		self.height = 0
 		self.colorMode = 0
 		self.name = name
-		self._imageHeierarchy = None
-		self._imageHeierarchyPtr = None
+		self._imageHierarchy = None
+		self._imageHierarchyPtr = None
 		self._mask = None
 		self._maskPtr = None
 		self._data = None
@@ -57,7 +57,7 @@ class GimpLayer(GimpIOBase):
 		self.colorMode = io.u32 # one of self.COLOR_MODES
 		self.name = io.sz754
 		self._propertiesDecode_(io)
-		self._imageHeierarchyPtr = self._pointerDecode_(io)
+		self._imageHierarchyPtr = self._pointerDecode_(io)
 		self._maskPtr = self._pointerDecode_(io)
 		self._mask = None
 		self._data = data
@@ -132,10 +132,10 @@ class GimpLayer(GimpIOBase):
 
 		NOTE: can return None if it has been fully read into an image
 		"""
-		if self._imageHeierarchy is None and self._imageHeierarchyPtr > 0:
-			self._imageHeierarchy = GimpImageHierarchy(self)
-			self._imageHeierarchy.fromBytes(self._data, self._imageHeierarchyPtr)
-		return self._imageHeierarchy
+		if self._imageHierarchy is None and self._imageHierarchyPtr > 0:
+			self._imageHierarchy = GimpImageHierarchy(self)
+			self._imageHierarchy.fromBytes(self._data, self._imageHierarchyPtr)
+		return self._imageHierarchy
 
 	def _forceFullyLoaded(self):
 		"""
@@ -144,7 +144,7 @@ class GimpLayer(GimpIOBase):
 		if self.mask is not None:
 			self.mask._forceFullyLoaded()
 		_ = self.image # make sure the image is loaded so we can delete the hierarchy nonsense
-		self._imageHeierarchy = None
+		self._imageHierarchy = None
 		self._data = None
 
 	def __repr__(self, indent=''):
@@ -258,7 +258,7 @@ class GimpDocument(GimpIOBase):
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 	"""
-	def __init__(self, filen=None):
+	def __init__(self, fileName=None):
 		GimpIOBase.__init__(self, self)
 		self.dirty = False # a file-changed indicator.  # TODO: Not fully implemented.
 		self._layers = None
@@ -271,21 +271,21 @@ class GimpDocument(GimpIOBase):
 		self.baseColorMode = 0
 		self.precision = None # Precision object
 		self._data = None
-		if filen is not None:
-			self.load(filen)
+		if fileName is not None:
+			self.load(fileName)
 
-	def load(self, filen):
+	def load(self, fileName):
 		"""
 		load a gimp file
 
 		:param filename: can be a file name or a file-like object
 		"""
-		if hasattr(filen, 'read'):
-			self.filename = filen.name
-			f = filen
+		if hasattr(fileName, 'read'):
+			self.filename = fileName.name
+			f = fileName
 		else:
-			self.filename = filen
-			f = open(filen, 'rb')
+			self.filename = fileName
+			f = open(fileName, 'rb')
 		data = f.read()
 		f.close()
 		self._decode_(data)
@@ -578,12 +578,12 @@ def showLayer(image, l):
 		image.show()
 
 
-def saveLayer(gimpDoc, l, filen):
+def saveLayer(gimpDoc, l, fileName):
 	""" save a layer """
 	iteration = gimpDoc.layers[l].image
 	if iteration is None:
 		print('No image for layer', l)
 	else:
-		fn2 = filen.replace('*', str(l))
+		fn2 = fileName.replace('*', str(l))
 		print('saving layer', fn2)
 		iteration.save(fn2)

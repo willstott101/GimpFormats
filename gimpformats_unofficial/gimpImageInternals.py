@@ -7,7 +7,6 @@ Generally speaking, the user should not care about anything
 in this file.
 """
 import zlib
-from math import floor
 import PIL.Image
 from .gimpIOBase import IO, GimpIOBase
 
@@ -21,10 +20,11 @@ class GimpChannel(GimpIOBase):
 		self.width = 0
 		self.height = 0
 		self.name = name
-		self._imageHeierarchy = None
-		self._imageHeierarchyPtr = None
+		self._imageHierarchy = None
+		self._imageHierarchyPtr = None
 		if image is not None: # this is last because image can reset values
 			self.image = image
+		self._data = None
 
 	def fromBytes(self, data, index=0):
 		"""
@@ -39,7 +39,7 @@ class GimpChannel(GimpIOBase):
 		self.height = io.u32
 		self.name = io.sz754
 		self._propertiesDecode_(io)
-		self._imageHeierarchyPtr = self._pointerDecode_(io)
+		self._imageHierarchyPtr = self._pointerDecode_(io)
 		self._data = io.data
 		return io.index
 
@@ -52,8 +52,8 @@ class GimpChannel(GimpIOBase):
 		io.u32 = self.height
 		io.sz754 = self.name
 		io.addBytes(self._propertiesEncode_())
-		ih = self._imageHeierarchyPtr
-		if ih == None:
+		ih = self._imageHierarchyPtr
+		if ih is None:
 			ih = 0
 		io.addBytes(self._pointerEncode_(ih))
 		return io.data
@@ -82,7 +82,7 @@ class GimpChannel(GimpIOBase):
 		make sure everything is fully loaded from the file
 		"""
 		_ = self.image # make sure the image is loaded so we can delete the hierarchy nonsense
-		self._imageHeierarchyPtr = None
+		self._imageHierarchyPtr = None
 		self._data = None
 
 	@property
@@ -93,10 +93,10 @@ class GimpChannel(GimpIOBase):
 		This is mainly used for decoding the image, so
 		not much use to you.
 		"""
-		if self._imageHeierarchy is None:
-			self._imageHeierarchy = GimpImageHierarchy(self)
-			self._imageHeierarchy.fromBytes(self._data, self._imageHeierarchyPtr)
-		return self._imageHeierarchy
+		if self._imageHierarchy is None:
+			self._imageHierarchy = GimpImageHierarchy(self)
+			self._imageHierarchy.fromBytes(self._data, self._imageHierarchyPtr)
+		return self._imageHierarchy
 
 	def __repr__(self, indent=''):
 		"""
@@ -164,10 +164,10 @@ class GimpImageHierarchy(GimpIOBase):
 		io = IO()
 		io.u32 = self.width
 		io.u32 = self.height
-		io.u32 = io.bpp
-		dataIndex = io.index + root._POINTER_SIZE_ * (len(self.levels) + 1)
+		#io.u32 = io.bpp
+		#dataIndex = io.index + root._POINTER_SIZE_ * (len(self.levels) + 1)
 		for level in self.levels:
-			io.addBytes(self._pointerEncode_(dataIndex + data.index))
+			#io.addBytes(self._pointerEncode_(dataIndex + data.index))
 			dataIO.addBytes(level.toBytes())
 		io.addBytes(self._pointerEncode_(0))
 		io.addBytes(dataIO.data)
@@ -208,7 +208,7 @@ class GimpImageHierarchy(GimpIOBase):
 			raise NotImplementedError('Unsupported PIL image type')
 		self.bpp = len(image.mode)
 		self._levelPtrs = None
-		self._levels = [GimpImageLevel(self, image)]
+		#self._levels = [GimpImageLevel(self, image)]
 
 	def __repr__(self, indent=''):
 		"""
@@ -279,7 +279,8 @@ class GimpImageLevel(GimpIOBase):
 		io = IO()
 		io.u32 = self.width
 		io.u32 = self.height
-		dataIndex = io.index + root._POINTER_SIZE_ * (len(self.tiles) + 1)
+		#dataIndex = io.index + root._POINTER_SIZE_ * (len(self.tiles) + 1)
+		'''
 		for tile in self.tiles:
 			io.addBytes(self._pointerEncode_(dataIndex + data.index))
 			data = tile.tobytes()
@@ -295,6 +296,7 @@ class GimpImageLevel(GimpIOBase):
 		io.addBytes(self._pointerEncode_(0))
 		io.addBytes(dataIO.data)
 		return io.data
+		'''
 
 	def _decodeRLE(self, data, pixels, bpp, index=0):
 		"""
@@ -355,10 +357,11 @@ class GimpImageLevel(GimpIOBase):
 		"""
 		encode image to RLE  image data
 		"""
-		def countSame(data, startIdx):
+		def countSame(_data, _startIdx):
 			"""
 			count how many times bytes are identical
 			"""
+			'''
 			l = len(data)
 			if idx >= l:
 				return 0
@@ -367,11 +370,14 @@ class GimpImageLevel(GimpIOBase):
 			while idx < l and data[idx] == c:
 				idx += 1
 			return idx - startIdxdef
+			'''
+			pass
 
 		def countDifferent(data, startIdx):
 			"""
 			count how many times bytes are different
 			"""
+			'''
 			l = len(data)
 			if idx >= l:
 				return 0
@@ -381,6 +387,8 @@ class GimpImageLevel(GimpIOBase):
 				idx += 1
 				c = data[idx]
 			return idx - startIdx
+			'''
+			pass
 
 		def rleEncodeChan(data):
 			"""
@@ -388,6 +396,7 @@ class GimpImageLevel(GimpIOBase):
 			"""
 			ret = []
 			idx = 0
+			'''
 			while idx < len(data):
 				nRepeats = countSame(data, 0)
 				if nRepeats == 1: # different bytes
@@ -412,6 +421,7 @@ class GimpImageLevel(GimpIOBase):
 					ret.append(nRepeats % 256)
 					ret.append(data[idx])
 					idx += nRepeats
+			'''
 			return ret
 
 		# if there is only one channel, encode and return it directly
@@ -432,15 +442,18 @@ class GimpImageLevel(GimpIOBase):
 
 	@property
 	def bpp(self):
+		""" get bpp """
 		return self.parent.bpp
 
 	@property
 	def mode(self):
+		""" get mode """
 		MODES = [None, 'L', 'LA', 'RGB', 'RGBA']
 		return MODES[self.bpp]
 
 	@property
 	def tiles(self):
+		""" get tiles """
 		if self._tiles is not None:
 			return self._tiles
 		if self.image is not None:

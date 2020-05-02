@@ -126,7 +126,7 @@ class GimpGgrGradient:
 		f.close()
 		self._decode_(data)
 
-	def _decode_(self, data, index=0):
+	def _decode_(self, data):
 		"""
 		decode a byte buffer
 
