@@ -122,7 +122,6 @@ expected
 - .gpb brush - should work, but I need some test files
 
 ## Not implemented
-- Rendering a final, compositied image
 - Exported paths in .svg format. - Reading should be easy enough, but I need to
 ensure I don't get a full-blown svg in the mix
 - Standard "parasites"
