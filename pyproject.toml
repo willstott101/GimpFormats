@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "gimpformats_unofficial"
-version = "0.1"
+name = "gimpformats"
+version = "2020.1"
 description = "Pure python implementation of the gimp file format(s)"
 authors = ["TheHeadlessSourceMan"]
 license = "lgplv3"

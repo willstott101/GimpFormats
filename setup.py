@@ -20,8 +20,8 @@ if os.path.exists(readme_path):
 
 setup(
     long_description=readme,
-    name='gimpformats_unofficial',
-    version='0.1',
+    name='gimpformats',
+    version='2020.1',
     description='Pure python implementation of the gimp file format(s)',
     python_requires='==3.*,>=3.5.0',
     project_urls={
@@ -42,28 +42,9 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Operating System :: OS Independent'
     ],
-    packages=[
-        'gimpformats_unofficial', 'test.exportedPaths', 'test.gbrBrush',
-        'test.ggrGradient', 'test.gihBrushSet', 'test.gpbBrush',
-        'test.gplPalette', 'test.gtpToolPreset', 'test.layerGroups',
-        'test.patPattern', 'test.simpleXcfRead', 'test.twoLayers',
-        'test.vbrBrush', 'test.withPaths'
-    ],
+    packages=['gimpFormats'],
     package_dir={"": "."},
-    package_data={
-        "test.exportedPaths": ["*.svg", "*.txt"],
-        "test.gbrBrush": ["*.gbr", "*.png"],
-        "test.ggrGradient": ["*.ggr"],
-        "test.gihBrushSet": ["*.gih"],
-        "test.gplPalette": ["*.gpl"],
-        "test.gtpToolPreset": ["*.gtp"],
-        "test.layerGroups": ["*.png", "*.xcf"],
-        "test.patPattern": ["*.pat", "*.png"],
-        "test.simpleXcfRead": ["*.png", "*.xcf"],
-        "test.twoLayers": ["*.xcf"],
-        "test.vbrBrush": ["*.vbr"],
-        "test.withPaths": ["*.xcf"]
-    },
+    package_data={},
     install_requires=[
         'brackettree==0.*,>=0.2.5', 'numpy==1.*,>=1.18.3', 'pillow==7.*,>=7.1.1'
     ],

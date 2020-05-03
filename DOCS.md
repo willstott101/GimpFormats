@@ -1,7 +1,7 @@
-<a name=".gimpformats_unofficial"></a>
-## gimpformats\_unofficial
+<a name=".gimpformats"></a>
+## gimpformats
 
-gimpformats_unofficial
+gimpformats
 
 Forked from https://github.com/TheHeadlessSourceMan/gimpFormats
 
@@ -9,14 +9,14 @@ A pure python implementation of the GIMP XCF image format.
 
 Use this to interact with GIMP image formats
 
-<a name=".gimpformats_unofficial.binaryIO"></a>
-## gimpformats\_unofficial.binaryIO
+<a name=".gimpformats.binaryIO"></a>
+## gimpformats.binaryIO
 
 Base binary I/O helper.
 
 Does boilerplate things like reading the next uint32 from the document
 
-<a name=".gimpformats_unofficial.binaryIO.IO"></a>
+<a name=".gimpformats.binaryIO.IO"></a>
 ### IO
 
 ```python
@@ -25,7 +25,7 @@ class IO()
 
 Class to handle i/o to a byte buffer or file-like object
 
-<a name=".gimpformats_unofficial.binaryIO.IO.__init__"></a>
+<a name=".gimpformats.binaryIO.IO.__init__"></a>
 #### \_\_init\_\_
 
 ```python
@@ -40,7 +40,7 @@ Class to handle i/o to a byte buffer or file-like object
 - `boolSize`: how many default bits to use for a bool (8,16,32,or 64)
 - `stringEncoding`: default string encoding A=Ascii, U=UTF-8, W-Unicode wide
 
-<a name=".gimpformats_unofficial.binaryIO.IO.data"></a>
+<a name=".gimpformats.binaryIO.IO.data"></a>
 #### data
 
 ```python
@@ -50,7 +50,7 @@ Class to handle i/o to a byte buffer or file-like object
 
 set data
 
-<a name=".gimpformats_unofficial.binaryIO.IO.beginContext"></a>
+<a name=".gimpformats.binaryIO.IO.beginContext"></a>
 #### beginContext
 
 ```python
@@ -60,7 +60,7 @@ set data
 Start a new context where the index can be changed all you want,
 and when endContext() is called, it will be restored to the current position
 
-<a name=".gimpformats_unofficial.binaryIO.IO.endContext"></a>
+<a name=".gimpformats.binaryIO.IO.endContext"></a>
 #### endContext
 
 ```python
@@ -69,7 +69,7 @@ and when endContext() is called, it will be restored to the current position
 
 Restore the index to the previous location where it was when beginContext() was called
 
-<a name=".gimpformats_unofficial.binaryIO.IO.bool"></a>
+<a name=".gimpformats.binaryIO.IO.bool"></a>
 #### bool
 
 ```python
@@ -79,7 +79,7 @@ Restore the index to the previous location where it was when beginContext() was 
 
 set bool
 
-<a name=".gimpformats_unofficial.binaryIO.IO.bool8"></a>
+<a name=".gimpformats.binaryIO.IO.bool8"></a>
 #### bool8
 
 ```python
@@ -89,7 +89,7 @@ set bool
 
 set a bool8
 
-<a name=".gimpformats_unofficial.binaryIO.IO.bool16"></a>
+<a name=".gimpformats.binaryIO.IO.bool16"></a>
 #### bool16
 
 ```python
@@ -99,7 +99,7 @@ set a bool8
 
 set bool16
 
-<a name=".gimpformats_unofficial.binaryIO.IO.bool32"></a>
+<a name=".gimpformats.binaryIO.IO.bool32"></a>
 #### bool32
 
 ```python
@@ -109,7 +109,7 @@ set bool16
 
 set bool32
 
-<a name=".gimpformats_unofficial.binaryIO.IO.bool64"></a>
+<a name=".gimpformats.binaryIO.IO.bool64"></a>
 #### bool64
 
 ```python
@@ -119,7 +119,7 @@ set bool32
 
 set bool64
 
-<a name=".gimpformats_unofficial.binaryIO.IO.byte"></a>
+<a name=".gimpformats.binaryIO.IO.byte"></a>
 #### byte
 
 ```python
@@ -129,7 +129,7 @@ set bool64
 
 set byte
 
-<a name=".gimpformats_unofficial.binaryIO.IO.unsignedByte"></a>
+<a name=".gimpformats.binaryIO.IO.unsignedByte"></a>
 #### unsignedByte
 
 ```python
@@ -139,7 +139,7 @@ set byte
 
 set unsigned byte
 
-<a name=".gimpformats_unofficial.binaryIO.IO.word"></a>
+<a name=".gimpformats.binaryIO.IO.word"></a>
 #### word
 
 ```python
@@ -149,7 +149,7 @@ set unsigned byte
 
 set a word
 
-<a name=".gimpformats_unofficial.binaryIO.IO.unsignedWord"></a>
+<a name=".gimpformats.binaryIO.IO.unsignedWord"></a>
 #### unsignedWord
 
 ```python
@@ -159,7 +159,7 @@ set a word
 
 set an unsigned word
 
-<a name=".gimpformats_unofficial.binaryIO.IO.dword"></a>
+<a name=".gimpformats.binaryIO.IO.dword"></a>
 #### dword
 
 ```python
@@ -169,7 +169,7 @@ set an unsigned word
 
 set a dword
 
-<a name=".gimpformats_unofficial.binaryIO.IO.unsignedDword"></a>
+<a name=".gimpformats.binaryIO.IO.unsignedDword"></a>
 #### unsignedDword
 
 ```python
@@ -179,7 +179,7 @@ set a dword
 
 set an unsigned dword
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i8"></a>
+<a name=".gimpformats.binaryIO.IO.i8"></a>
 #### i8
 
 ```python
@@ -189,7 +189,7 @@ set an unsigned dword
 
 set an int8
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u8"></a>
+<a name=".gimpformats.binaryIO.IO.u8"></a>
 #### u8
 
 ```python
@@ -199,7 +199,7 @@ set an int8
 
 set an unsigned int
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i16"></a>
+<a name=".gimpformats.binaryIO.IO.i16"></a>
 #### i16
 
 ```python
@@ -209,7 +209,7 @@ set an unsigned int
 
 set an int16
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u16"></a>
+<a name=".gimpformats.binaryIO.IO.u16"></a>
 #### u16
 
 ```python
@@ -219,7 +219,7 @@ set an int16
 
 set an unint16
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i32"></a>
+<a name=".gimpformats.binaryIO.IO.i32"></a>
 #### i32
 
 ```python
@@ -229,7 +229,7 @@ set an unint16
 
 set an int32
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u32"></a>
+<a name=".gimpformats.binaryIO.IO.u32"></a>
 #### u32
 
 ```python
@@ -239,7 +239,7 @@ set an int32
 
 set a unint32
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i64"></a>
+<a name=".gimpformats.binaryIO.IO.i64"></a>
 #### i64
 
 ```python
@@ -249,7 +249,7 @@ set a unint32
 
 set an int64
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u64"></a>
+<a name=".gimpformats.binaryIO.IO.u64"></a>
 #### u64
 
 ```python
@@ -259,7 +259,7 @@ set an int64
 
 set a uint64
 
-<a name=".gimpformats_unofficial.binaryIO.IO.float32"></a>
+<a name=".gimpformats.binaryIO.IO.float32"></a>
 #### float32
 
 ```python
@@ -269,7 +269,7 @@ set a uint64
 
 set a float32
 
-<a name=".gimpformats_unofficial.binaryIO.IO.float64"></a>
+<a name=".gimpformats.binaryIO.IO.float64"></a>
 #### float64
 
 ```python
@@ -279,7 +279,7 @@ set a float32
 
 set a float64
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u8be"></a>
+<a name=".gimpformats.binaryIO.IO.u8be"></a>
 #### u8be
 
 ```python
@@ -289,7 +289,7 @@ set a float64
 
 set the uint8
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u8le"></a>
+<a name=".gimpformats.binaryIO.IO.u8le"></a>
 #### u8le
 
 ```python
@@ -299,7 +299,7 @@ set the uint8
 
 set the uint8
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i8le"></a>
+<a name=".gimpformats.binaryIO.IO.i8le"></a>
 #### i8le
 
 ```python
@@ -309,7 +309,7 @@ set the uint8
 
 set the int8
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i8be"></a>
+<a name=".gimpformats.binaryIO.IO.i8be"></a>
 #### i8be
 
 ```python
@@ -319,7 +319,7 @@ set the int8
 
 set the int8
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u16be"></a>
+<a name=".gimpformats.binaryIO.IO.u16be"></a>
 #### u16be
 
 ```python
@@ -329,7 +329,7 @@ set the int8
 
 set the uint16
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u16le"></a>
+<a name=".gimpformats.binaryIO.IO.u16le"></a>
 #### u16le
 
 ```python
@@ -339,7 +339,7 @@ set the uint16
 
 set the uint16
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i16le"></a>
+<a name=".gimpformats.binaryIO.IO.i16le"></a>
 #### i16le
 
 ```python
@@ -349,7 +349,7 @@ set the uint16
 
 set the int16
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i16be"></a>
+<a name=".gimpformats.binaryIO.IO.i16be"></a>
 #### i16be
 
 ```python
@@ -359,7 +359,7 @@ set the int16
 
 set the int16
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u32be"></a>
+<a name=".gimpformats.binaryIO.IO.u32be"></a>
 #### u32be
 
 ```python
@@ -369,7 +369,7 @@ set the int16
 
 set the uint32
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u32le"></a>
+<a name=".gimpformats.binaryIO.IO.u32le"></a>
 #### u32le
 
 ```python
@@ -379,7 +379,7 @@ set the uint32
 
 set the uint32
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i32le"></a>
+<a name=".gimpformats.binaryIO.IO.i32le"></a>
 #### i32le
 
 ```python
@@ -389,7 +389,7 @@ set the uint32
 
 set the int32
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i32be"></a>
+<a name=".gimpformats.binaryIO.IO.i32be"></a>
 #### i32be
 
 ```python
@@ -399,7 +399,7 @@ set the int32
 
 set the int32
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u64be"></a>
+<a name=".gimpformats.binaryIO.IO.u64be"></a>
 #### u64be
 
 ```python
@@ -409,7 +409,7 @@ set the int32
 
 set the uint64
 
-<a name=".gimpformats_unofficial.binaryIO.IO.u64le"></a>
+<a name=".gimpformats.binaryIO.IO.u64le"></a>
 #### u64le
 
 ```python
@@ -419,7 +419,7 @@ set the uint64
 
 set the uint64
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i64le"></a>
+<a name=".gimpformats.binaryIO.IO.i64le"></a>
 #### i64le
 
 ```python
@@ -429,7 +429,7 @@ set the uint64
 
 set the int64
 
-<a name=".gimpformats_unofficial.binaryIO.IO.i64be"></a>
+<a name=".gimpformats.binaryIO.IO.i64be"></a>
 #### i64be
 
 ```python
@@ -439,7 +439,7 @@ set the int64
 
 set the int64
 
-<a name=".gimpformats_unofficial.binaryIO.IO.float"></a>
+<a name=".gimpformats.binaryIO.IO.float"></a>
 #### float
 
 ```python
@@ -449,7 +449,7 @@ set the int64
 
 set a float
 
-<a name=".gimpformats_unofficial.binaryIO.IO.double"></a>
+<a name=".gimpformats.binaryIO.IO.double"></a>
 #### double
 
 ```python
@@ -459,7 +459,7 @@ set a float
 
 set a double
 
-<a name=".gimpformats_unofficial.binaryIO.IO.float32be"></a>
+<a name=".gimpformats.binaryIO.IO.float32be"></a>
 #### float32be
 
 ```python
@@ -469,7 +469,7 @@ set a double
 
 set a 32 bit float
 
-<a name=".gimpformats_unofficial.binaryIO.IO.float32le"></a>
+<a name=".gimpformats.binaryIO.IO.float32le"></a>
 #### float32le
 
 ```python
@@ -479,7 +479,7 @@ set a 32 bit float
 
 set a 32 bit float
 
-<a name=".gimpformats_unofficial.binaryIO.IO.float64be"></a>
+<a name=".gimpformats.binaryIO.IO.float64be"></a>
 #### float64be
 
 ```python
@@ -489,7 +489,7 @@ set a 32 bit float
 
 set a 64 bit float
 
-<a name=".gimpformats_unofficial.binaryIO.IO.float64le"></a>
+<a name=".gimpformats.binaryIO.IO.float64le"></a>
 #### float64le
 
 ```python
@@ -499,7 +499,7 @@ set a 64 bit float
 
 set a 64 bit float
 
-<a name=".gimpformats_unofficial.binaryIO.IO.getBytes"></a>
+<a name=".gimpformats.binaryIO.IO.getBytes"></a>
 #### getBytes
 
 ```python
@@ -508,7 +508,7 @@ set a 64 bit float
 
 grab some raw bytes and advance the index
 
-<a name=".gimpformats_unofficial.binaryIO.IO.addBytes"></a>
+<a name=".gimpformats.binaryIO.IO.addBytes"></a>
 #### addBytes
 
 ```python
@@ -523,7 +523,7 @@ alias for setBytes()
 
 - `bytes`: can be a string, bytearray, or another IO object
 
-<a name=".gimpformats_unofficial.binaryIO.IO.setBytes"></a>
+<a name=".gimpformats.binaryIO.IO.setBytes"></a>
 #### setBytes
 
 ```python
@@ -538,7 +538,7 @@ alias for addBytes()
 
 - `ioBytes`: can be a string, bytearray, or another IO object
 
-<a name=".gimpformats_unofficial.binaryIO.IO.sz754"></a>
+<a name=".gimpformats.binaryIO.IO.sz754"></a>
 #### sz754
 
 ```python
@@ -548,7 +548,7 @@ alias for addBytes()
 
 set sz754
 
-<a name=".gimpformats_unofficial.binaryIO.IO.sz754A"></a>
+<a name=".gimpformats.binaryIO.IO.sz754A"></a>
 #### sz754A
 
 ```python
@@ -558,7 +558,7 @@ set sz754
 
 set sz754A
 
-<a name=".gimpformats_unofficial.binaryIO.IO.sz754W"></a>
+<a name=".gimpformats.binaryIO.IO.sz754W"></a>
 #### sz754W
 
 ```python
@@ -568,7 +568,7 @@ set sz754A
 
 set sz754W
 
-<a name=".gimpformats_unofficial.binaryIO.IO.sz754U"></a>
+<a name=".gimpformats.binaryIO.IO.sz754U"></a>
 #### sz754U
 
 ```python
@@ -578,7 +578,7 @@ set sz754W
 
 set sz754U
 
-<a name=".gimpformats_unofficial.binaryIO.IO.textLine"></a>
+<a name=".gimpformats.binaryIO.IO.textLine"></a>
 #### textLine
 
 ```python
@@ -588,7 +588,7 @@ set sz754U
 
 textLine
 
-<a name=".gimpformats_unofficial.binaryIO.IO.textLineA"></a>
+<a name=".gimpformats.binaryIO.IO.textLineA"></a>
 #### textLineA
 
 ```python
@@ -598,7 +598,7 @@ textLine
 
 textLineA
 
-<a name=".gimpformats_unofficial.binaryIO.IO.textLineW"></a>
+<a name=".gimpformats.binaryIO.IO.textLineW"></a>
 #### textLineW
 
 ```python
@@ -608,7 +608,7 @@ textLineA
 
 textLineW
 
-<a name=".gimpformats_unofficial.binaryIO.IO.textLineU"></a>
+<a name=".gimpformats.binaryIO.IO.textLineU"></a>
 #### textLineU
 
 ```python
@@ -618,7 +618,7 @@ textLineW
 
 textLineU
 
-<a name=".gimpformats_unofficial.binaryIO.IO.cString"></a>
+<a name=".gimpformats.binaryIO.IO.cString"></a>
 #### cString
 
 ```python
@@ -628,7 +628,7 @@ textLineU
 
 cString
 
-<a name=".gimpformats_unofficial.binaryIO.IO.cStringA"></a>
+<a name=".gimpformats.binaryIO.IO.cStringA"></a>
 #### cStringA
 
 ```python
@@ -638,7 +638,7 @@ cString
 
 cStringA
 
-<a name=".gimpformats_unofficial.binaryIO.IO.cStringW"></a>
+<a name=".gimpformats.binaryIO.IO.cStringW"></a>
 #### cStringW
 
 ```python
@@ -648,7 +648,7 @@ cStringA
 
 cStringW
 
-<a name=".gimpformats_unofficial.binaryIO.IO.cStringU"></a>
+<a name=".gimpformats.binaryIO.IO.cStringU"></a>
 #### cStringU
 
 ```python
@@ -658,12 +658,12 @@ cStringW
 
 cStringU
 
-<a name=".gimpformats_unofficial.gimpFormat"></a>
-## gimpformats\_unofficial.gimpFormat
+<a name=".gimpformats.gimpFormat"></a>
+## gimpformats.gimpFormat
 
 Pure python implementation of the gimp file formats
 
-<a name=".gimpformats_unofficial.gimpFormat.GimpFormatPlugin"></a>
+<a name=".gimpformats.gimpFormat.GimpFormatPlugin"></a>
 ### GimpFormatPlugin
 
 ```python
@@ -672,7 +672,7 @@ class GimpFormatPlugin()
 
 Pure python implementation of the gimp file formats
 
-<a name=".gimpformats_unofficial.gimpFormat.showLayer"></a>
+<a name=".gimpformats.gimpFormat.showLayer"></a>
 #### showLayer
 
 ```python
@@ -681,7 +681,7 @@ showLayer(iteration, l)
 
 show a layer
 
-<a name=".gimpformats_unofficial.gimpFormat.saveLayer"></a>
+<a name=".gimpformats.gimpFormat.saveLayer"></a>
 #### saveLayer
 
 ```python
@@ -690,12 +690,12 @@ saveLayer(gimpDoc, l, filename)
 
 save a layer
 
-<a name=".gimpformats_unofficial.gimpGbrBrush"></a>
-## gimpformats\_unofficial.gimpGbrBrush
+<a name=".gimpformats.gimpGbrBrush"></a>
+## gimpformats.gimpGbrBrush
 
 Pure python implementation of the gimp gbr brush format
 
-<a name=".gimpformats_unofficial.gimpGbrBrush.GimpGbrBrush"></a>
+<a name=".gimpformats.gimpGbrBrush.GimpGbrBrush"></a>
 ### GimpGbrBrush
 
 ```python
@@ -708,7 +708,7 @@ Pure python implementation of the gimp gbr brush format
 See:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/gbr.txt
 
-<a name=".gimpformats_unofficial.gimpGbrBrush.GimpGbrBrush.load"></a>
+<a name=".gimpformats.gimpGbrBrush.GimpGbrBrush.load"></a>
 #### load
 
 ```python
@@ -721,7 +721,7 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpGbrBrush.GimpGbrBrush._decode_"></a>
+<a name=".gimpformats.gimpGbrBrush.GimpGbrBrush._decode_"></a>
 #### \_decode\_
 
 ```python
@@ -735,7 +735,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpGbrBrush.GimpGbrBrush.toBytes"></a>
+<a name=".gimpformats.gimpGbrBrush.GimpGbrBrush.toBytes"></a>
 #### toBytes
 
 ```python
@@ -744,7 +744,7 @@ decode a byte buffer
 
 encode this object to byte array
 
-<a name=".gimpformats_unofficial.gimpGbrBrush.GimpGbrBrush.size"></a>
+<a name=".gimpformats.gimpGbrBrush.GimpGbrBrush.size"></a>
 #### size
 
 ```python
@@ -754,7 +754,7 @@ encode this object to byte array
 
 Get the size
 
-<a name=".gimpformats_unofficial.gimpGbrBrush.GimpGbrBrush.image"></a>
+<a name=".gimpformats.gimpGbrBrush.GimpGbrBrush.image"></a>
 #### image
 
 ```python
@@ -764,7 +764,7 @@ Get the size
 
 get a final, compiled image
 
-<a name=".gimpformats_unofficial.gimpGbrBrush.GimpGbrBrush.save"></a>
+<a name=".gimpformats.gimpGbrBrush.GimpGbrBrush.save"></a>
 #### save
 
 ```python
@@ -773,7 +773,7 @@ get a final, compiled image
 
 save this gimp image to a file
 
-<a name=".gimpformats_unofficial.gimpGbrBrush.GimpGbrBrush.__repr__"></a>
+<a name=".gimpformats.gimpGbrBrush.GimpGbrBrush.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -782,12 +782,12 @@ save this gimp image to a file
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpGgrGradient"></a>
-## gimpformats\_unofficial.gimpGgrGradient
+<a name=".gimpformats.gimpGgrGradient"></a>
+## gimpformats.gimpGgrGradient
 
 Gimp color gradient
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GradientSegment"></a>
+<a name=".gimpformats.gimpGgrGradient.GradientSegment"></a>
 ### GradientSegment
 
 ```python
@@ -797,7 +797,7 @@ class GradientSegment():
 
 Single segment within a gradient
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GradientSegment.getColor"></a>
+<a name=".gimpformats.gimpGgrGradient.GradientSegment.getColor"></a>
 #### getColor
 
 ```python
@@ -807,11 +807,11 @@ Single segment within a gradient
 given a decimal percent (1.0 = 100%) retrieve
 the appropriate color for this point in the gradient
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GradientSegment._decode_"></a>
+<a name=".gimpformats.gimpGgrGradient.GradientSegment._decode_"></a>
 #### \_decode\_
 
 ```python
- | _decode_(data, index=0)
+ | _decode_(data)
 ```
 
 decode a byte buffer
@@ -819,9 +819,8 @@ decode a byte buffer
 **Arguments**:
 
 - `data`: data buffer to decode
-- `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GradientSegment.toBytes"></a>
+<a name=".gimpformats.gimpGgrGradient.GradientSegment.toBytes"></a>
 #### toBytes
 
 ```python
@@ -830,7 +829,7 @@ decode a byte buffer
 
 encode this to a byte array
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GradientSegment.__repr__"></a>
+<a name=".gimpformats.gimpGgrGradient.GradientSegment.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -839,7 +838,7 @@ encode this to a byte array
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GimpGgrGradient"></a>
+<a name=".gimpformats.gimpGgrGradient.GimpGgrGradient"></a>
 ### GimpGgrGradient
 
 ```python
@@ -847,12 +846,12 @@ class GimpGgrGradient():
  |  GimpGgrGradient(filename=None)
 ```
 
-Gimp golor gradient
+Gimp color gradient
 
 See:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/ggr.txt
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GimpGgrGradient.load"></a>
+<a name=".gimpformats.gimpGgrGradient.GimpGgrGradient.load"></a>
 #### load
 
 ```python
@@ -865,11 +864,11 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GimpGgrGradient._decode_"></a>
+<a name=".gimpformats.gimpGgrGradient.GimpGgrGradient._decode_"></a>
 #### \_decode\_
 
 ```python
- | _decode_(data, index=0)
+ | _decode_(data)
 ```
 
 decode a byte buffer
@@ -879,7 +878,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GimpGgrGradient.toBytes"></a>
+<a name=".gimpformats.gimpGgrGradient.GimpGgrGradient.toBytes"></a>
 #### toBytes
 
 ```python
@@ -888,7 +887,7 @@ decode a byte buffer
 
 encode this to a byte array
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GimpGgrGradient.save"></a>
+<a name=".gimpformats.gimpGgrGradient.GimpGgrGradient.save"></a>
 #### save
 
 ```python
@@ -897,7 +896,7 @@ encode this to a byte array
 
 save this gimp image to a file
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GimpGgrGradient.getColor"></a>
+<a name=".gimpformats.gimpGgrGradient.GimpGgrGradient.getColor"></a>
 #### getColor
 
 ```python
@@ -907,7 +906,7 @@ save this gimp image to a file
 given a decimal percent (1.0 = 100%) retrieve
 the appropriate color for this point in the gradient
 
-<a name=".gimpformats_unofficial.gimpGgrGradient.GimpGgrGradient.__repr__"></a>
+<a name=".gimpformats.gimpGgrGradient.GimpGgrGradient.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -916,15 +915,15 @@ the appropriate color for this point in the gradient
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpGihBrushSet"></a>
-## gimpformats\_unofficial.gimpGihBrushSet
+<a name=".gimpformats.gimpGihBrushSet"></a>
+## gimpformats.gimpGihBrushSet
 
 Gimp Image Pipe Format
 
 The gih format is use to store a series of brushes, and some extra info
 for how to use them.
 
-<a name=".gimpformats_unofficial.gimpGihBrushSet.GimpGihBrushSet"></a>
+<a name=".gimpformats.gimpGihBrushSet.GimpGihBrushSet"></a>
 ### GimpGihBrushSet
 
 ```python
@@ -940,7 +939,7 @@ for how to use them.
 See:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/gih.txt
 
-<a name=".gimpformats_unofficial.gimpGihBrushSet.GimpGihBrushSet.load"></a>
+<a name=".gimpformats.gimpGihBrushSet.GimpGihBrushSet.load"></a>
 #### load
 
 ```python
@@ -953,7 +952,7 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpGihBrushSet.GimpGihBrushSet._decode_"></a>
+<a name=".gimpformats.gimpGihBrushSet.GimpGihBrushSet._decode_"></a>
 #### \_decode\_
 
 ```python
@@ -967,7 +966,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpGihBrushSet.GimpGihBrushSet.toBytes"></a>
+<a name=".gimpformats.gimpGihBrushSet.GimpGihBrushSet.toBytes"></a>
 #### toBytes
 
 ```python
@@ -976,7 +975,7 @@ decode a byte buffer
 
 encode this object to a byte array
 
-<a name=".gimpformats_unofficial.gimpGihBrushSet.GimpGihBrushSet.save"></a>
+<a name=".gimpformats.gimpGihBrushSet.GimpGihBrushSet.save"></a>
 #### save
 
 ```python
@@ -985,7 +984,7 @@ encode this object to a byte array
 
 save this gimp image to a file
 
-<a name=".gimpformats_unofficial.gimpGihBrushSet.GimpGihBrushSet.__repr__"></a>
+<a name=".gimpformats.gimpGihBrushSet.GimpGihBrushSet.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -994,12 +993,12 @@ save this gimp image to a file
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpGpbBrush"></a>
-## gimpformats\_unofficial.gimpGpbBrush
+<a name=".gimpformats.gimpGpbBrush"></a>
+## gimpformats.gimpGpbBrush
 
 Pure python implementation of the OLD gimp gpb brush format
 
-<a name=".gimpformats_unofficial.gimpGpbBrush.GimpGpbBrush"></a>
+<a name=".gimpformats.gimpGpbBrush.GimpGpbBrush"></a>
 ### GimpGpbBrush
 
 ```python
@@ -1012,7 +1011,7 @@ Pure python implementation of the OLD gimp gpb brush format
 See:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/vbr.txt
 
-<a name=".gimpformats_unofficial.gimpGpbBrush.GimpGpbBrush.load"></a>
+<a name=".gimpformats.gimpGpbBrush.GimpGpbBrush.load"></a>
 #### load
 
 ```python
@@ -1025,7 +1024,7 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpGpbBrush.GimpGpbBrush._decode_"></a>
+<a name=".gimpformats.gimpGpbBrush.GimpGpbBrush._decode_"></a>
 #### \_decode\_
 
 ```python
@@ -1039,7 +1038,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpGpbBrush.GimpGpbBrush.toBytes"></a>
+<a name=".gimpformats.gimpGpbBrush.GimpGpbBrush.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1048,7 +1047,7 @@ decode a byte buffer
 
 encode this object to a byte array
 
-<a name=".gimpformats_unofficial.gimpGpbBrush.GimpGpbBrush.save"></a>
+<a name=".gimpformats.gimpGpbBrush.GimpGpbBrush.save"></a>
 #### save
 
 ```python
@@ -1057,7 +1056,7 @@ encode this object to a byte array
 
 save this gimp image to a file
 
-<a name=".gimpformats_unofficial.gimpGpbBrush.GimpGpbBrush.__repr__"></a>
+<a name=".gimpformats.gimpGpbBrush.GimpGpbBrush.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1066,12 +1065,12 @@ save this gimp image to a file
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpGplPalette"></a>
-## gimpformats\_unofficial.gimpGplPalette
+<a name=".gimpformats.gimpGplPalette"></a>
+## gimpformats.gimpGplPalette
 
 Pure python implementation of the gimp gpl palette format
 
-<a name=".gimpformats_unofficial.gimpGplPalette.GimpGplPalette"></a>
+<a name=".gimpformats.gimpGplPalette.GimpGplPalette"></a>
 ### GimpGplPalette
 
 ```python
@@ -1081,7 +1080,7 @@ class GimpGplPalette():
 
 Pure python implementation of the gimp gpl palette format
 
-<a name=".gimpformats_unofficial.gimpGplPalette.GimpGplPalette.load"></a>
+<a name=".gimpformats.gimpGplPalette.GimpGplPalette.load"></a>
 #### load
 
 ```python
@@ -1094,11 +1093,11 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpGplPalette.GimpGplPalette._decode_"></a>
+<a name=".gimpformats.gimpGplPalette.GimpGplPalette._decode_"></a>
 #### \_decode\_
 
 ```python
- | _decode_(data, index=0)
+ | _decode_(data)
 ```
 
 decode a byte buffer
@@ -1106,9 +1105,8 @@ decode a byte buffer
 **Arguments**:
 
 - `data`: data buffer to decode
-- `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpGplPalette.GimpGplPalette.toBytes"></a>
+<a name=".gimpformats.gimpGplPalette.GimpGplPalette.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1117,7 +1115,7 @@ decode a byte buffer
 
 encode to a raw data stream
 
-<a name=".gimpformats_unofficial.gimpGplPalette.GimpGplPalette.save"></a>
+<a name=".gimpformats.gimpGplPalette.GimpGplPalette.save"></a>
 #### save
 
 ```python
@@ -1126,7 +1124,7 @@ encode to a raw data stream
 
 save this gimp image to a file
 
-<a name=".gimpformats_unofficial.gimpGplPalette.GimpGplPalette.__repr__"></a>
+<a name=".gimpformats.gimpGplPalette.GimpGplPalette.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1135,7 +1133,7 @@ save this gimp image to a file
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpGplPalette.GimpGplPalette.__eq__"></a>
+<a name=".gimpformats.gimpGplPalette.GimpGplPalette.__eq__"></a>
 #### \_\_eq\_\_
 
 ```python
@@ -1144,12 +1142,12 @@ Get a textual representation of this object
 
 perform a comparison
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset"></a>
-## gimpformats\_unofficial.gimpGtpToolPreset
+<a name=".gimpformats.gimpGtpToolPreset"></a>
+## gimpformats.gimpGtpToolPreset
 
 Pure python implementation of the gimp gtp tool preset format
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.ParenFileValue"></a>
+<a name=".gimpformats.gimpGtpToolPreset.ParenFileValue"></a>
 ### ParenFileValue
 
 ```python
@@ -1160,7 +1158,7 @@ class ParenFileValue():
 A parentheses-based file format
 (possibly "scheme" language?)
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.ParenFileValue.__repr__"></a>
+<a name=".gimpformats.gimpGtpToolPreset.ParenFileValue.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1169,7 +1167,7 @@ A parentheses-based file format
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.parenFileDecode"></a>
+<a name=".gimpformats.gimpGtpToolPreset.parenFileDecode"></a>
 #### parenFileDecode
 
 ```python
@@ -1179,7 +1177,7 @@ parenFileDecode(data)
 Decode a parentheses-based file format
 (possibly "scheme" language?)
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.walkTree"></a>
+<a name=".gimpformats.gimpGtpToolPreset.walkTree"></a>
 #### walkTree
 
 ```python
@@ -1188,7 +1186,7 @@ walkTree(items)
 
 walk the tree
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.parenFileEncode"></a>
+<a name=".gimpformats.gimpGtpToolPreset.parenFileEncode"></a>
 #### parenFileEncode
 
 ```python
@@ -1197,7 +1195,7 @@ parenFileEncode(values)
 
 encode a values tree to a buffer
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.GimpGtpToolPreset"></a>
+<a name=".gimpformats.gimpGtpToolPreset.GimpGtpToolPreset"></a>
 ### GimpGtpToolPreset
 
 ```python
@@ -1207,7 +1205,7 @@ class GimpGtpToolPreset():
 
 Pure python implementation of the gimp gtp tool preset format
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.GimpGtpToolPreset.load"></a>
+<a name=".gimpformats.gimpGtpToolPreset.GimpGtpToolPreset.load"></a>
 #### load
 
 ```python
@@ -1220,7 +1218,7 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.GimpGtpToolPreset._decode_"></a>
+<a name=".gimpformats.gimpGtpToolPreset.GimpGtpToolPreset._decode_"></a>
 #### \_decode\_
 
 ```python
@@ -1233,7 +1231,7 @@ decode a byte buffer
 
 - `data`: data buffer to decode
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.GimpGtpToolPreset.toBytes"></a>
+<a name=".gimpformats.gimpGtpToolPreset.GimpGtpToolPreset.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1242,7 +1240,7 @@ decode a byte buffer
 
 encode to a byte array
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.GimpGtpToolPreset.save"></a>
+<a name=".gimpformats.gimpGtpToolPreset.GimpGtpToolPreset.save"></a>
 #### save
 
 ```python
@@ -1251,7 +1249,7 @@ encode to a byte array
 
 save this gimp tool preset to a file
 
-<a name=".gimpformats_unofficial.gimpGtpToolPreset.GimpGtpToolPreset.__repr__"></a>
+<a name=".gimpformats.gimpGtpToolPreset.GimpGtpToolPreset.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1260,16 +1258,16 @@ save this gimp tool preset to a file
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpImageInternals"></a>
-## gimpformats\_unofficial.gimpImageInternals
+<a name=".gimpformats.gimpImageInternals"></a>
+## gimpformats.gimpImageInternals
 
-Contains stuff around the internal image storage mechaanism
+Contains stuff around the internal image storage mechanism
 of gimp files.
 
 Generally speaking, the user should not care about anything
 in this file.
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpChannel"></a>
+<a name=".gimpformats.gimpImageInternals.GimpChannel"></a>
 ### GimpChannel
 
 ```python
@@ -1279,7 +1277,7 @@ class GimpChannel(GimpIOBase):
 
 Represents a single channel or mask in a gimp image
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpChannel.fromBytes"></a>
+<a name=".gimpformats.gimpImageInternals.GimpChannel.fromBytes"></a>
 #### fromBytes
 
 ```python
@@ -1293,7 +1291,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpChannel.toBytes"></a>
+<a name=".gimpformats.gimpImageInternals.GimpChannel.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1302,7 +1300,7 @@ decode a byte buffer
 
 encode this object to a byte buffer
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpChannel.image"></a>
+<a name=".gimpformats.gimpImageInternals.GimpChannel.image"></a>
 #### image
 
 ```python
@@ -1312,7 +1310,7 @@ encode this object to a byte buffer
 
 get a final, compiled image
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpChannel.imageHierarchy"></a>
+<a name=".gimpformats.gimpImageInternals.GimpChannel.imageHierarchy"></a>
 #### imageHierarchy
 
 ```python
@@ -1325,7 +1323,7 @@ Get teh image hierarchy
 This is mainly used for decoding the image, so
 not much use to you.
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpChannel.__repr__"></a>
+<a name=".gimpformats.gimpImageInternals.GimpChannel.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1334,7 +1332,7 @@ not much use to you.
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageHierarchy"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageHierarchy"></a>
 ### GimpImageHierarchy
 
 ```python
@@ -1348,7 +1346,7 @@ NOTE: This was originally designed to be a hierarchy, like
 	an image pyramid, through in practice they only use the
 	top level of the pyramid (64x64) and ignore the rest.
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageHierarchy.fromBytes"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageHierarchy.fromBytes"></a>
 #### fromBytes
 
 ```python
@@ -1362,7 +1360,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageHierarchy.toBytes"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageHierarchy.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1371,7 +1369,7 @@ decode a byte buffer
 
 encode this object to a byte buffer
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageHierarchy.levels"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageHierarchy.levels"></a>
 #### levels
 
 ```python
@@ -1384,7 +1382,7 @@ Get the levels within this hierarchy
 Presently hierarchy is not really used by gimp,
 so this returns an array of one item
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageHierarchy.image"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageHierarchy.image"></a>
 #### image
 
 ```python
@@ -1394,7 +1392,7 @@ so this returns an array of one item
 
 set the image
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageHierarchy.__repr__"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageHierarchy.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1403,7 +1401,7 @@ set the image
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageLevel"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageLevel"></a>
 ### GimpImageLevel
 
 ```python
@@ -1415,7 +1413,7 @@ Gets packed pixels from a gimp image
 
 This represents a single level in an imageHierarchy
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageLevel.fromBytes"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageLevel.fromBytes"></a>
 #### fromBytes
 
 ```python
@@ -1429,7 +1427,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageLevel.toBytes"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageLevel.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1438,7 +1436,37 @@ decode a byte buffer
 
 encode this object to a byte buffer
 
-<a name=".gimpformats_unofficial.gimpImageInternals.GimpImageLevel.__repr__"></a>
+<a name=".gimpformats.gimpImageInternals.GimpImageLevel.bpp"></a>
+#### bpp
+
+```python
+ | @property
+ | bpp()
+```
+
+get bpp
+
+<a name=".gimpformats.gimpImageInternals.GimpImageLevel.mode"></a>
+#### mode
+
+```python
+ | @property
+ | mode()
+```
+
+get mode
+
+<a name=".gimpformats.gimpImageInternals.GimpImageLevel.tiles"></a>
+#### tiles
+
+```python
+ | @property
+ | tiles()
+```
+
+get tiles
+
+<a name=".gimpformats.gimpImageInternals.GimpImageLevel.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1447,12 +1475,12 @@ encode this object to a byte buffer
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpIOBase"></a>
-## gimpformats\_unofficial.gimpIOBase
+<a name=".gimpformats.gimpIOBase"></a>
+## gimpformats.gimpIOBase
 
 A specialized binary file base for Gimp files
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase"></a>
 ### GimpIOBase
 
 ```python
@@ -1462,7 +1490,61 @@ class GimpIOBase():
 
 A specialized binary file base for Gimp files
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._POINTER_SIZE_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase.getBlendMode"></a>
+#### getBlendMode
+
+```python
+ | getBlendMode()
+```
+
+return the blend mode as a string
+
+<a name=".gimpformats.gimpIOBase.GimpIOBase.getCompression"></a>
+#### getCompression
+
+```python
+ | getCompression()
+```
+
+return the compression as a string
+
+<a name=".gimpformats.gimpIOBase.GimpIOBase.getUnits"></a>
+#### getUnits
+
+```python
+ | getUnits()
+```
+
+return the units as a string
+
+<a name=".gimpformats.gimpIOBase.GimpIOBase.getTagColours"></a>
+#### getTagColours
+
+```python
+ | getTagColours()
+```
+
+return the tag colours as a string
+
+<a name=".gimpformats.gimpIOBase.GimpIOBase.getCompositeModes"></a>
+#### getCompositeModes
+
+```python
+ | getCompositeModes()
+```
+
+return the composite mode as a string
+
+<a name=".gimpformats.gimpIOBase.GimpIOBase.getCompositeSpaces"></a>
+#### getCompositeSpaces
+
+```python
+ | getCompositeSpaces()
+```
+
+return the composite spaces as a string
+
+<a name=".gimpformats.gimpIOBase.GimpIOBase._POINTER_SIZE_"></a>
 #### \_POINTER\_SIZE\_
 
 ```python
@@ -1477,7 +1559,7 @@ NOTE: prior to version 11, it was 32-bit,
 	since then it is 64-bit, thus supporting
 	larger image files
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase.doc"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase.doc"></a>
 #### doc
 
 ```python
@@ -1487,7 +1569,7 @@ NOTE: prior to version 11, it was 32-bit,
 
 Get the main document object
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase.root"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase.root"></a>
 #### root
 
 ```python
@@ -1498,7 +1580,7 @@ Get the main document object
 Get the root of the file object tree
 (Which is the same as self.doc)
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase.tattoo"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase.tattoo"></a>
 #### tattoo
 
 ```python
@@ -1508,7 +1590,7 @@ Get the root of the file object tree
 
 This is the gimp nomenclature for the item's unique id
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._parasitesDecode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._parasitesDecode_"></a>
 #### \_parasitesDecode\_
 
 ```python
@@ -1517,7 +1599,7 @@ This is the gimp nomenclature for the item's unique id
 
 decode list of parasites
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._parasitesEncode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._parasitesEncode_"></a>
 #### \_parasitesEncode\_
 
 ```python
@@ -1526,7 +1608,7 @@ decode list of parasites
 
 encode list of parasites
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._guidelinesDecode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._guidelinesDecode_"></a>
 #### \_guidelinesDecode\_
 
 ```python
@@ -1535,7 +1617,7 @@ encode list of parasites
 
 decode guidelines
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._itemPathDecode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._itemPathDecode_"></a>
 #### \_itemPathDecode\_
 
 ```python
@@ -1544,16 +1626,7 @@ decode guidelines
 
 decode item path
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._vectorsDecode_"></a>
-#### \_vectorsDecode\_
-
-```python
- | _vectorsDecode_(data)
-```
-
-decode vectors
-
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase.activeVector"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase.activeVector"></a>
 #### activeVector
 
 ```python
@@ -1563,7 +1636,7 @@ decode vectors
 
 get the vector that is currently active
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase.expanded"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase.expanded"></a>
 #### expanded
 
 ```python
@@ -1573,7 +1646,7 @@ get the vector that is currently active
 
 is the group layer expanded
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._colormapDecode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._colormapDecode_"></a>
 #### \_colormapDecode\_
 
 ```python
@@ -1586,7 +1659,7 @@ is the group layer expanded
 
 decode colormap/palette
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._userUnitsDecode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._userUnitsDecode_"></a>
 #### \_userUnitsDecode\_
 
 ```python
@@ -1595,7 +1668,7 @@ decode colormap/palette
 
 decode a set of user-defined measurement units
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._samplePointsDecode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._samplePointsDecode_"></a>
 #### \_samplePointsDecode\_
 
 ```python
@@ -1604,7 +1677,7 @@ decode a set of user-defined measurement units
 
 decode a series of points
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._propertyDecode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._propertyDecode_"></a>
 #### \_propertyDecode\_
 
 ```python
@@ -1613,7 +1686,7 @@ decode a series of points
 
 decode a single property
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._propertyEncode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._propertyEncode_"></a>
 #### \_propertyEncode\_
 
 ```python
@@ -1624,7 +1697,7 @@ encode a single property
 
 If the property is the same as the default, or not specified, returns empty array
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._propertiesDecode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._propertiesDecode_"></a>
 #### \_propertiesDecode\_
 
 ```python
@@ -1633,7 +1706,7 @@ If the property is the same as the default, or not specified, returns empty arra
 
 decode a list of properties
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase._propertiesEncode_"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase._propertiesEncode_"></a>
 #### \_propertiesEncode\_
 
 ```python
@@ -1642,7 +1715,7 @@ decode a list of properties
 
 encode a list of properties
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpIOBase.__repr__"></a>
+<a name=".gimpformats.gimpIOBase.GimpIOBase.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1651,7 +1724,7 @@ encode a list of properties
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpUserUnits"></a>
+<a name=".gimpformats.gimpIOBase.GimpUserUnits"></a>
 ### GimpUserUnits
 
 ```python
@@ -1661,7 +1734,7 @@ class GimpUserUnits():
 
 user-defined measurement units
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpUserUnits.fromBytes"></a>
+<a name=".gimpformats.gimpIOBase.GimpUserUnits.fromBytes"></a>
 #### fromBytes
 
 ```python
@@ -1675,7 +1748,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpUserUnits.toBytes"></a>
+<a name=".gimpformats.gimpIOBase.GimpUserUnits.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1684,7 +1757,7 @@ decode a byte buffer
 
 convert this object to raw bytes
 
-<a name=".gimpformats_unofficial.gimpIOBase.GimpUserUnits.__repr__"></a>
+<a name=".gimpformats.gimpIOBase.GimpUserUnits.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1693,8 +1766,8 @@ convert this object to raw bytes
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpParasites"></a>
-## gimpformats\_unofficial.gimpParasites
+<a name=".gimpformats.gimpParasites"></a>
+## gimpformats.gimpParasites
 
 Parasites are arbitrary (meta)data strings that can be attached to a document tree item
 
@@ -1703,7 +1776,7 @@ They are used to store things like last-used plugin settings, gamma adjuetments,
 Format of known parasites:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
 
-<a name=".gimpformats_unofficial.gimpParasites.GimpParasite"></a>
+<a name=".gimpformats.gimpParasites.GimpParasite"></a>
 ### GimpParasite
 
 ```python
@@ -1718,7 +1791,7 @@ They are used to store things like last-used plugin settings, gamma adjuetments,
 Format of known parasites:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
 
-<a name=".gimpformats_unofficial.gimpParasites.GimpParasite.fromBytes"></a>
+<a name=".gimpformats.gimpParasites.GimpParasite.fromBytes"></a>
 #### fromBytes
 
 ```python
@@ -1732,7 +1805,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpParasites.GimpParasite.toBytes"></a>
+<a name=".gimpformats.gimpParasites.GimpParasite.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1746,7 +1819,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpParasites.GimpParasite.__repr__"></a>
+<a name=".gimpformats.gimpParasites.GimpParasite.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1755,12 +1828,12 @@ decode a byte buffer
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpPatPattern"></a>
-## gimpformats\_unofficial.gimpPatPattern
+<a name=".gimpformats.gimpPatPattern"></a>
+## gimpformats.gimpPatPattern
 
 Pure python implementation of a gimp pattern file
 
-<a name=".gimpformats_unofficial.gimpPatPattern.GimpPatPattern"></a>
+<a name=".gimpformats.gimpPatPattern.GimpPatPattern"></a>
 ### GimpPatPattern
 
 ```python
@@ -1773,7 +1846,7 @@ Pure python implementation of a gimp pattern file
 See:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/pat.txt
 
-<a name=".gimpformats_unofficial.gimpPatPattern.GimpPatPattern.load"></a>
+<a name=".gimpformats.gimpPatPattern.GimpPatPattern.load"></a>
 #### load
 
 ```python
@@ -1786,7 +1859,7 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpPatPattern.GimpPatPattern._decode_"></a>
+<a name=".gimpformats.gimpPatPattern.GimpPatPattern._decode_"></a>
 #### \_decode\_
 
 ```python
@@ -1800,7 +1873,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpPatPattern.GimpPatPattern.toBytes"></a>
+<a name=".gimpformats.gimpPatPattern.GimpPatPattern.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1809,7 +1882,7 @@ decode a byte buffer
 
 encode to a byte buffer
 
-<a name=".gimpformats_unofficial.gimpPatPattern.GimpPatPattern.size"></a>
+<a name=".gimpformats.gimpPatPattern.GimpPatPattern.size"></a>
 #### size
 
 ```python
@@ -1819,7 +1892,7 @@ encode to a byte buffer
 
 the size of the pattern
 
-<a name=".gimpformats_unofficial.gimpPatPattern.GimpPatPattern.save"></a>
+<a name=".gimpformats.gimpPatPattern.GimpPatPattern.save"></a>
 #### save
 
 ```python
@@ -1828,7 +1901,7 @@ the size of the pattern
 
 save this gimp image to a file
 
-<a name=".gimpformats_unofficial.gimpPatPattern.GimpPatPattern.__repr__"></a>
+<a name=".gimpformats.gimpPatPattern.GimpPatPattern.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1837,12 +1910,12 @@ save this gimp image to a file
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpVbrBrush"></a>
-## gimpformats\_unofficial.gimpVbrBrush
+<a name=".gimpformats.gimpVbrBrush"></a>
+## gimpformats.gimpVbrBrush
 
 Pure python implementation of the gimp vbr brush format
 
-<a name=".gimpformats_unofficial.gimpVbrBrush.GimpVbrBrush"></a>
+<a name=".gimpformats.gimpVbrBrush.GimpVbrBrush"></a>
 ### GimpVbrBrush
 
 ```python
@@ -1855,7 +1928,7 @@ Pure python implementation of the gimp vbr brush format
 See:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/vbr.txt
 
-<a name=".gimpformats_unofficial.gimpVbrBrush.GimpVbrBrush.load"></a>
+<a name=".gimpformats.gimpVbrBrush.GimpVbrBrush.load"></a>
 #### load
 
 ```python
@@ -1868,7 +1941,7 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpVbrBrush.GimpVbrBrush.image"></a>
+<a name=".gimpformats.gimpVbrBrush.GimpVbrBrush.image"></a>
 #### image
 
 ```python
@@ -1878,11 +1951,11 @@ load a gimp file
 
 this parametric brush converted to a useable PIL image
 
-<a name=".gimpformats_unofficial.gimpVbrBrush.GimpVbrBrush._decode_"></a>
+<a name=".gimpformats.gimpVbrBrush.GimpVbrBrush._decode_"></a>
 #### \_decode\_
 
 ```python
- | _decode_(data, index=0)
+ | _decode_(data)
 ```
 
 decode a byte buffer
@@ -1890,9 +1963,8 @@ decode a byte buffer
 **Arguments**:
 
 - `data`: data buffer to decode
-- `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpVbrBrush.GimpVbrBrush.toBytes"></a>
+<a name=".gimpformats.gimpVbrBrush.GimpVbrBrush.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1901,7 +1973,7 @@ decode a byte buffer
 
 encode to a raw data stream
 
-<a name=".gimpformats_unofficial.gimpVbrBrush.GimpVbrBrush.save"></a>
+<a name=".gimpformats.gimpVbrBrush.GimpVbrBrush.save"></a>
 #### save
 
 ```python
@@ -1910,7 +1982,7 @@ encode to a raw data stream
 
 save this gimp image to a file
 
-<a name=".gimpformats_unofficial.gimpVbrBrush.GimpVbrBrush.__repr__"></a>
+<a name=".gimpformats.gimpVbrBrush.GimpVbrBrush.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1919,7 +1991,7 @@ save this gimp image to a file
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpVbrBrush.GimpVbrBrush.__eq__"></a>
+<a name=".gimpformats.gimpVbrBrush.GimpVbrBrush.__eq__"></a>
 #### \_\_eq\_\_
 
 ```python
@@ -1928,12 +2000,12 @@ Get a textual representation of this object
 
 perform a comparison
 
-<a name=".gimpformats_unofficial.gimpVectors"></a>
-## gimpformats\_unofficial.gimpVectors
+<a name=".gimpformats.gimpVectors"></a>
+## gimpformats.gimpVectors
 
 Stuff related to vectors/paths within a gimp document
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpVector"></a>
+<a name=".gimpformats.gimpVectors.GimpVector"></a>
 ### GimpVector
 
 ```python
@@ -1943,7 +2015,7 @@ class GimpVector(GimpIOBase):
 
 A gimp brush stroke vector
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpVector.fromBytes"></a>
+<a name=".gimpformats.gimpVectors.GimpVector.fromBytes"></a>
 #### fromBytes
 
 ```python
@@ -1957,7 +2029,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpVector.toBytes"></a>
+<a name=".gimpformats.gimpVectors.GimpVector.toBytes"></a>
 #### toBytes
 
 ```python
@@ -1966,7 +2038,7 @@ decode a byte buffer
 
 encode to binary data
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpVector.__repr__"></a>
+<a name=".gimpformats.gimpVectors.GimpVector.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -1975,7 +2047,7 @@ encode to binary data
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpStroke"></a>
+<a name=".gimpformats.gimpVectors.GimpStroke"></a>
 ### GimpStroke
 
 ```python
@@ -1985,7 +2057,7 @@ class GimpStroke(GimpIOBase):
 
 A single stroke within a vector
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpStroke.fromBytes"></a>
+<a name=".gimpformats.gimpVectors.GimpStroke.fromBytes"></a>
 #### fromBytes
 
 ```python
@@ -1999,7 +2071,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpStroke.toBytes"></a>
+<a name=".gimpformats.gimpVectors.GimpStroke.toBytes"></a>
 #### toBytes
 
 ```python
@@ -2008,7 +2080,7 @@ decode a byte buffer
 
 encode to binary data
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpStroke.__repr__"></a>
+<a name=".gimpformats.gimpVectors.GimpStroke.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -2017,7 +2089,7 @@ encode to binary data
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpPoint"></a>
+<a name=".gimpformats.gimpVectors.GimpPoint"></a>
 ### GimpPoint
 
 ```python
@@ -2027,7 +2099,7 @@ class GimpPoint(GimpIOBase):
 
 A single point within a stroke
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpPoint.fromBytes"></a>
+<a name=".gimpformats.gimpVectors.GimpPoint.fromBytes"></a>
 #### fromBytes
 
 ```python
@@ -2044,7 +2116,7 @@ decode a byte buffer
 how many different brush dynamic measurements are
 inside each point
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpPoint.toBytes"></a>
+<a name=".gimpformats.gimpVectors.GimpPoint.toBytes"></a>
 #### toBytes
 
 ```python
@@ -2053,7 +2125,7 @@ inside each point
 
 encode to binary data
 
-<a name=".gimpformats_unofficial.gimpVectors.GimpPoint.__repr__"></a>
+<a name=".gimpformats.gimpVectors.GimpPoint.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -2062,8 +2134,8 @@ encode to binary data
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpXcfDocument"></a>
-## gimpformats\_unofficial.gimpXcfDocument
+<a name=".gimpformats.gimpXcfDocument"></a>
+## gimpformats.gimpXcfDocument
 
 Pure python implementation of the gimp xcf file format
 
@@ -2076,7 +2148,7 @@ Currently not supporting:
 	Programatically alter documents (add layer, etc)
 	Rendering a final, compositied image
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpLayer"></a>
 ### GimpLayer
 
 ```python
@@ -2086,7 +2158,7 @@ class GimpLayer(GimpIOBase):
 
 Represents a single layer in a gimp image
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpLayer._decode_"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpLayer._decode_"></a>
 #### \_decode\_
 
 ```python
@@ -2100,7 +2172,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpLayer.toBytes"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpLayer.toBytes"></a>
 #### toBytes
 
 ```python
@@ -2109,7 +2181,7 @@ decode a byte buffer
 
 encode to byte array
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpLayer.mask"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpLayer.mask"></a>
 #### mask
 
 ```python
@@ -2119,7 +2191,7 @@ encode to byte array
 
 Get the layer mask
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpLayer.image"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpLayer.image"></a>
 #### image
 
 ```python
@@ -2131,7 +2203,7 @@ set the layer image
 
 NOTE: resets layer width, height, and colorMode
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpLayer.imageHierarchy"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpLayer.imageHierarchy"></a>
 #### imageHierarchy
 
 ```python
@@ -2146,7 +2218,7 @@ of little use to you, the user.
 
 NOTE: can return None if it has been fully read into an image
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpLayer.__repr__"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpLayer.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -2155,7 +2227,7 @@ NOTE: can return None if it has been fully read into an image
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.Precision"></a>
+<a name=".gimpformats.gimpXcfDocument.Precision"></a>
 ### Precision
 
 ```python
@@ -2166,7 +2238,7 @@ class Precision():
 Since the precision code is so unusual, I decided to create a class
 to parse it.
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.Precision.decode"></a>
+<a name=".gimpformats.gimpXcfDocument.Precision.decode"></a>
 #### decode
 
 ```python
@@ -2175,7 +2247,7 @@ to parse it.
 
 decode the precision code from the file
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.Precision.encode"></a>
+<a name=".gimpformats.gimpXcfDocument.Precision.encode"></a>
 #### encode
 
 ```python
@@ -2186,7 +2258,7 @@ encode this to the file
 
 NOTE: will not mess with development versions 5 or 6
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.Precision.requiredGimpVersion"></a>
+<a name=".gimpformats.gimpXcfDocument.Precision.requiredGimpVersion"></a>
 #### requiredGimpVersion
 
 ```python
@@ -2195,12 +2267,12 @@ NOTE: will not mess with development versions 5 or 6
 
 return the lowest gimp version that supports this precision
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument"></a>
 ### GimpDocument
 
 ```python
 class GimpDocument(GimpIOBase):
- |  GimpDocument(filename=None)
+ |  GimpDocument(fileName=None)
 ```
 
 Pure python implementation of the gimp file format
@@ -2208,11 +2280,11 @@ Pure python implementation of the gimp file format
 See:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.load"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.load"></a>
 #### load
 
 ```python
- | load(filename)
+ | load(fileName)
 ```
 
 load a gimp file
@@ -2221,7 +2293,7 @@ load a gimp file
 
 - `filename`: can be a file name or a file-like object
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument._decode_"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument._decode_"></a>
 #### \_decode\_
 
 ```python
@@ -2235,7 +2307,7 @@ decode a byte buffer
 - `data`: data buffer to decode
 - `index`: index within the buffer to start at
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.toBytes"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.toBytes"></a>
 #### toBytes
 
 ```python
@@ -2244,7 +2316,7 @@ decode a byte buffer
 
 encode to a byte array
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.layers"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.layers"></a>
 #### layers
 
 ```python
@@ -2256,7 +2328,7 @@ Decode the image's layers if necessary
 
 TODO: need to do the same thing with self.Channels
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.getLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.getLayer"></a>
 #### getLayer
 
 ```python
@@ -2265,16 +2337,16 @@ TODO: need to do the same thing with self.Channels
 
 return a given layer
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.setLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.setLayer"></a>
 #### setLayer
 
 ```python
- | setLayer(index, layer)
+ | setLayer(_index, _l)
 ```
 
 assign to a given layer
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.newLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.newLayer"></a>
 #### newLayer
 
 ```python
@@ -2292,7 +2364,7 @@ create a new layer based on a PIL image
 
 newly created GimpLayer object
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.newLayerFromClipboard"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.newLayerFromClipboard"></a>
 #### newLayerFromClipboard
 
 ```python
@@ -2313,11 +2385,11 @@ newly created GimpLayer object
 NOTE: requires pillow PIL implementation
 NOTE: only works on OSX and Windows
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.addLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.addLayer"></a>
 #### addLayer
 
 ```python
- | addLayer(layer)
+ | addLayer(l)
 ```
 
 append a layer object to the document
@@ -2326,11 +2398,11 @@ append a layer object to the document
 
 - `layer`: the new layer to append
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.appendLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.appendLayer"></a>
 #### appendLayer
 
 ```python
- | appendLayer(layer)
+ | appendLayer(l)
 ```
 
 append a layer object to the document
@@ -2339,11 +2411,11 @@ append a layer object to the document
 
 - `layer`: the new layer to append
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.insertLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.insertLayer"></a>
 #### insertLayer
 
 ```python
- | insertLayer(layer, index=-1)
+ | insertLayer(l, index=-1)
 ```
 
 insert a layer object at a specific position
@@ -2353,7 +2425,7 @@ insert a layer object at a specific position
 - `layer`: the new layer to insert
 - `index`: where to insert the new layer (default=top)
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.deleteLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.deleteLayer"></a>
 #### deleteLayer
 
 ```python
@@ -2362,7 +2434,7 @@ insert a layer object at a specific position
 
 delete a layer
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.image"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.image"></a>
 #### image
 
 ```python
@@ -2372,7 +2444,7 @@ delete a layer
 
 get a final, compiled image
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.save"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.save"></a>
 #### save
 
 ```python
@@ -2381,7 +2453,7 @@ get a final, compiled image
 
 save this gimp image to a file
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.GimpDocument.__repr__"></a>
+<a name=".gimpformats.gimpXcfDocument.GimpDocument.__repr__"></a>
 #### \_\_repr\_\_
 
 ```python
@@ -2390,7 +2462,71 @@ save this gimp image to a file
 
 Get a textual representation of this object
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.showLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.blendModeLookup"></a>
+#### blendModeLookup
+
+```python
+blendModeLookup(blendmode, blendLookup, default=BlendType.NORMAL)
+```
+
+Get the blendmode from a lookup table
+
+<a name=".gimpformats.gimpXcfDocument.rasterImageOffset"></a>
+#### rasterImageOffset
+
+```python
+rasterImageOffset(image, size, offsets=(0, 0))
+```
+
+Rasterise an image with offset to a given size
+
+<a name=".gimpformats.gimpXcfDocument.flattenLayerOrGroup"></a>
+#### flattenLayerOrGroup
+
+```python
+flattenLayerOrGroup(layerOrGroup, imageDimensions, flattenedSoFar=None, ignoreHidden=True)
+```
+
+Flatten a layer or group on to an image of what has already been
+flattened
+
+**Arguments**:
+
+- `layerOrGroup` _Layer|Group_ - A layer or a group of layers
+  imageDimensions ((int, int)): size of the image
+- `flattenedSoFar` _PIL.Image, optional_ - the image of what has already
+  been flattened. Defaults to None.
+- `ignoreHidden` _bool, optional_ - ignore layers that are hidden. Defaults
+  to True.
+
+**Returns**:
+
+- `PIL.Image` - Flattened image
+
+<a name=".gimpformats.gimpXcfDocument.flattenAll"></a>
+#### flattenAll
+
+```python
+flattenAll(layers, imageDimensions, ignoreHidden=True)
+```
+
+Flatten a list of layers and groups
+
+Note the bottom layer is at the end of the list
+
+**Arguments**:
+
+- `layers` _[Layer|Group]_ - A list of layers and groups
+  imageDimensions ((int, int)): size of the image
+  been flattened. Defaults to None.
+- `ignoreHidden` _bool, optional_ - ignore layers that are hidden. Defaults
+  to True.
+
+**Returns**:
+
+- `PIL.Image` - Flattened image
+
+<a name=".gimpformats.gimpXcfDocument.showLayer"></a>
 #### showLayer
 
 ```python
@@ -2399,11 +2535,11 @@ showLayer(image, l)
 
 show a layer
 
-<a name=".gimpformats_unofficial.gimpXcfDocument.saveLayer"></a>
+<a name=".gimpformats.gimpXcfDocument.saveLayer"></a>
 #### saveLayer
 
 ```python
-saveLayer(gimpDoc, l, filename)
+saveLayer(gimpDoc, l, fileName)
 ```
 
 save a layer

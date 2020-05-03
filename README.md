@@ -5,8 +5,8 @@
 [![License](https://img.shields.io/github/license/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](/LICENSE.md)
 [![Commit activity](https://img.shields.io/github/commit-activity/m/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](../../commits/master)
 [![Last commit](https://img.shields.io/github/last-commit/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](../../commits/master)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/gimpformats_unofficial.svg?style=for-the-badge)](https://pypi.org/project/gimpformats_unofficial/)
-[![PyPI Version](https://img.shields.io/pypi/v/gimpformats_unofficial.svg?style=for-the-badge)](https://pypi.org/project/gimpformats_unofficial/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/gimpformats.svg?style=for-the-badge)](https://pypi.org/project/gimpformats/)
+[![PyPI Version](https://img.shields.io/pypi/v/gimpformats.svg?style=for-the-badge)](https://pypi.org/project/gimpformats/)
 
 <!-- omit in TOC -->
 # GimpFormats
@@ -15,11 +15,12 @@
 
 Forked from https://github.com/TheHeadlessSourceMan/gimpFormats
 
-A pure python implementation of the GIMP XCF image format.
-
-Use this to interact with GIMP image formats
+A pure python implementation of the GIMP XCF image format. Use this to interact
+with GIMP image formats
 
 Issues and contributions very much wanted/ needed :smile:
+
+Previously under `gimpformats_unofficial` now under `gimpformats`
 
 - [Getting started](#getting-started)
 - [Next tasks (see below)](#next-tasks-see-below)
@@ -54,7 +55,7 @@ Issues and contributions very much wanted/ needed :smile:
 
 Read an image
 ```python
-from gimpformats_unofficial.gimpXcfDocument import GimpDocument
+from gimpformats.gimpXcfDocument import GimpDocument
 project = GimpDocument("image.xcf")
 ```
 
@@ -98,7 +99,6 @@ Group "Layer Group" contains Layer "Layer2"
 ```
 
 ## Next tasks (see below)
-- Generate a flattened image
 - Add new layers
 
 ## Currently supports
@@ -110,6 +110,7 @@ Group "Layer Group" contains Layer "Layer2"
 - .gpl palette files
 - .pat pattern files
 - .gtp tool presets
+- Generate a flattened image
 
 ## In progress but results in crashes and tests failing
 - Saving
@@ -129,10 +130,10 @@ ensure I don't get a full-blown svg in the mix
 ## Install With PIP
 
 ```python
-pip install gimpformats_unofficial
+pip install gimpformats
 ```
 
-Head to https://pypi.org/project/gimpformats_unofficial/ for more info
+Head to https://pypi.org/project/gimpformats/ for more info
 
 ## Language information
 ### Built for

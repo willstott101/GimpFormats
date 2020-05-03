@@ -700,7 +700,7 @@ class GimpIOBase:
 			ret.append('Tag Color: ' + self.getTagColours())
 		if self.compositeMode is not None:
 			auto = ('Auto ' if self.compositeMode < 0 else '') # negative values are "Auto"
-			ret.append('Composite Mode: ' + auto + self.compositeMode())
+			ret.append('Composite Mode: ' + auto + self.getCompositeModes())
 		if self.compositeSpace is not None:
 			auto = ('Auto ' if self.compositeSpace < 0 else '') # negative values are "Auto"
 			ret.append('Composite Space: ' + auto +

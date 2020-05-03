@@ -1,7 +1,7 @@
 """List data on groups followed by the direct children of a gimp xcf document
 """
 
-from gimpformats_unofficial.gimpXcfDocument import GimpDocument
+from gimpformats.gimpXcfDocument import GimpDocument
 
 project = GimpDocument("base24.xcf")
 

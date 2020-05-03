@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Contains stuff around the internal image storage mechaanism
+Contains stuff around the internal image storage mechanism
 of gimp files.
 
 Generally speaking, the user should not care about anything
@@ -164,10 +164,10 @@ class GimpImageHierarchy(GimpIOBase):
 		io = IO()
 		io.u32 = self.width
 		io.u32 = self.height
-		#io.u32 = io.bpp
-		#dataIndex = io.index + root._POINTER_SIZE_ * (len(self.levels) + 1)
+		io.u32 = self.bpp
+		dataIndex = io.index + GimpIOBase._POINTER_SIZE_ * (len(self.levels) + 1)
 		for level in self.levels:
-			#io.addBytes(self._pointerEncode_(dataIndex + data.index))
+			io.addBytes(self._pointerEncode_(dataIndex + dataIO.index)) # TODO: This may be incorrect
 			dataIO.addBytes(level.toBytes())
 		io.addBytes(self._pointerEncode_(0))
 		io.addBytes(dataIO.data)

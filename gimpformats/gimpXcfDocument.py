@@ -12,8 +12,11 @@ Currently not supporting:
 	Rendering a final, compositied image
 """
 import argparse
+import copy
 
 import PIL.ImageGrab
+from PIL import Image
+from blendmodes.blend import blendLayers, BlendType
 from .binaryIO import IO
 from .gimpIOBase import GimpIOBase
 from .gimpImageInternals import GimpChannel, GimpImageHierarchy
@@ -486,7 +489,30 @@ class GimpDocument(GimpIOBase):
 		"""
 		get a final, compiled image
 		"""
-		raise NotImplementedError()
+		# We need to preprocess the layers to sort them into a list of layers
+		# and groups. Where a group is a list of layers
+
+		# Example Layers [layer, layer, group, layer]
+		# Example Group [Layer(Group), [layer, layer, ...]]
+		layers = self.layers[:] # Copy the attribute rather than write to it
+		layersOut = []
+		index = 0
+		while index < len(layers):
+			layerOrGroup = layers[index]
+			if layerOrGroup.isGroup:
+				elem = [layerOrGroup, []]
+				index += 1
+				while layers[index].itemPath is not None:
+					layerCopy = copy.deepcopy(layers[index])
+					layerCopy.xOffset -= layerOrGroup.xOffset
+					layerCopy.yOffset -= layerOrGroup.yOffset
+					elem[1].append(layerCopy)
+					layers.pop(index)
+				layersOut.append(elem)
+			else:
+				layersOut.append(layerOrGroup)
+				index += 1
+		return flattenAll(layersOut, (self.width, self.height))
 
 	def save(self, toFilename=None):
 		"""
@@ -521,6 +547,99 @@ class GimpDocument(GimpIOBase):
 			for ch in self.channels:
 				ret.append(ch.__repr__('\t'))
 		return '\n'.join(ret)
+
+def blendModeLookup(blendmode, blendLookup, default=BlendType.NORMAL):
+	""" Get the blendmode from a lookup table """
+	if blendmode not in blendLookup:
+		print("WARNING " + str(blendmode) + " is not currently supported!")
+		return default
+	return blendLookup[blendmode]
+
+def rasterImageOffset(image, size, offsets=(0, 0)):
+	""" Rasterise an image with offset to a given size"""
+	imageOffset = Image.new("RGBA", size)
+	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
+	return imageOffset
+
+def flattenLayerOrGroup(layerOrGroup, imageDimensions, flattenedSoFar=None,
+ignoreHidden=True):
+	"""Flatten a layer or group on to an image of what has already been
+	flattened
+	Args:
+		layerOrGroup (Layer|Group): A layer or a group of layers
+		imageDimensions ((int, int)): size of the image
+		flattenedSoFar (PIL.Image, optional): the image of what has already
+		been flattened. Defaults to None.
+		ignoreHidden (bool, optional): ignore layers that are hidden. Defaults
+		to True.
+	Returns:
+		PIL.Image: Flattened image
+	"""
+	blendLookup = {0: BlendType.NORMAL, 3: BlendType.MULTIPLY,
+	4: BlendType.SCREEN, 5: BlendType.OVERLAY, 6: BlendType.DIFFERENCE,
+	7: BlendType.ADDITIVE, 8: BlendType.NEGATION, 9: BlendType.DARKEN,
+	10: BlendType.LIGHTEN, 11: BlendType.HUE, 12: BlendType.SATURATION,
+	13: BlendType.COLOUR, 14: BlendType.LUMINOSITY, 15: BlendType.DIVIDE,
+	16: BlendType.COLOURDODGE, 17: BlendType.COLOURBURN,
+	18: BlendType.HARDLIGHT, 19: BlendType.SOFTLIGHT, 20: BlendType.GRAINEXTRACT,
+	21: BlendType.GRAINMERGE, 23: BlendType.OVERLAY, 24: BlendType.HUE,
+	25: BlendType.SATURATION, 26: BlendType.COLOUR, 27: BlendType.LUMINOSITY,
+	28: BlendType.NORMAL, 30: BlendType.MULTIPLY, 31: BlendType.SCREEN,
+	32: BlendType.DIFFERENCE, 33: BlendType.ADDITIVE, 34: BlendType.NEGATION,
+	35: BlendType.DARKEN, 36: BlendType.LIGHTEN, 37: BlendType.HUE,
+	38: BlendType.SATURATION, 39: BlendType.COLOUR, 40: BlendType.LUMINOSITY,
+	41: BlendType.DIVIDE, 42: BlendType.COLOURDODGE,
+	43: BlendType.COLOURBURN, 44: BlendType.HARDLIGHT, 45: BlendType.SOFTLIGHT,
+	46: BlendType.GRAINEXTRACT, 47: BlendType.GRAINMERGE,
+	48: BlendType.VIVIDLIGHT, 49: BlendType.PINLIGHT, 52: BlendType.EXCLUSION}
+
+	if isinstance(layerOrGroup, list):
+		if ignoreHidden and not layerOrGroup[0].visible:
+			foregroundRaster = Image.new("RGBA", imageDimensions)
+		else: # A group is a list of layers
+			# (see flattenAll)
+			foregroundRaster = rasterImageOffset(flattenAll(layerOrGroup[1],
+			imageDimensions, ignoreHidden), imageDimensions, (layerOrGroup[0].xOffset,
+			layerOrGroup[0].yOffset))
+		if flattenedSoFar is None:
+			return foregroundRaster
+		return blendLayers(flattenedSoFar, foregroundRaster,
+		blendModeLookup(layerOrGroup[0].blendMode, blendLookup),
+		layerOrGroup[0].opacity)
+
+	if ignoreHidden and not layerOrGroup.visible:
+		foregroundRaster = Image.new("RGBA", imageDimensions)
+	else:
+		# Get a raster image and apply blending
+		foregroundRaster = rasterImageOffset(layerOrGroup.image, imageDimensions,
+		(layerOrGroup.xOffset, layerOrGroup.yOffset))
+	if flattenedSoFar is None:
+		return foregroundRaster
+	return blendLayers(flattenedSoFar, foregroundRaster,
+	blendModeLookup(layerOrGroup.blendMode, blendLookup),
+	layerOrGroup.opacity)
+
+
+def flattenAll(layers, imageDimensions, ignoreHidden=True):
+	"""Flatten a list of layers and groups
+
+	Note the bottom layer is at the end of the list
+
+	Args:
+		layers ([Layer|Group]): A list of layers and groups
+		imageDimensions ((int, int)): size of the image
+		been flattened. Defaults to None.
+		ignoreHidden (bool, optional): ignore layers that are hidden. Defaults
+		to True.
+	Returns:
+		PIL.Image: Flattened image
+	"""
+	end = len(layers) - 1
+	flattenedSoFar = flattenLayerOrGroup(layers[end], imageDimensions, ignoreHidden=ignoreHidden)
+	for l in range(end - 1, -1, -1):
+		flattenedSoFar = flattenLayerOrGroup(layers[l], imageDimensions,
+		flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden)
+	return flattenedSoFar
 
 
 if __name__ == '__main__':

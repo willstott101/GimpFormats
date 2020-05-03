@@ -14,7 +14,7 @@ from pathlib import Path
 PROJECTDIR = str(Path(__file__).resolve().parent.parent)
 sys.path.insert(0, os.path.dirname(PROJECTDIR))
 from imgcompare import imgcompare
-from gimpformats_unofficial import GimpGihBrushSet
+from gimpformats import GimpGihBrushSet
 
 __HERE__ = os.path.abspath(__file__).rsplit(os.sep, 1)[0] + os.sep
 
