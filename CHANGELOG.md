@@ -2,6 +2,9 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2020.1.1 - 2020/05/04
+- Update author
+
 ## 2020.1 - 2020/05/03
 - Attempted some fixes to gimpImageInternals.py
 - Fix gimpIOBase.py

@@ -1,5 +1,5 @@
 [![GitHub top language](https://img.shields.io/github/languages/top/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](../../)
-[![Codacy grade](https://img.shields.io/codacy/grade/fc44ef973e9048f3840deaa85a1975d9.svg?style=for-the-badge)](https://www.codacy.com/manual/FHPythonUtils/GimpFormats)
+[![Codacy grade](https://img.shields.io/codacy/grade/fc44ef973e9048f3840deaa85a1975d9.svg?style=for-the-badge)](https://www.codacy.com/gh/FHPythonUtils/GimpFormats)
 [![Repository size](https://img.shields.io/github/repo-size/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](../../)
 [![Issues](https://img.shields.io/github/issues/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](../../issues)
 [![License](https://img.shields.io/github/license/FHPythonUtils/GimpFormats.svg?style=for-the-badge)](/LICENSE.md)

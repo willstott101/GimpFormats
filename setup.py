@@ -21,7 +21,7 @@ if os.path.exists(readme_path):
 setup(
     long_description=readme,
     name='gimpformats',
-    version='2020.1',
+    version='2020.1.1',
     description='Pure python implementation of the gimp file format(s)',
     python_requires='==3.*,>=3.5.0',
     project_urls={
@@ -32,7 +32,7 @@ setup(
         "repository":
             "https://github.com/FHPythonUtils/GimpFormats"
     },
-    author='TheHeadlessSourceMan',
+    author='FredHappyface',
     license='lgplv3',
     classifiers=[
         'Development Status :: 3 - Alpha',
