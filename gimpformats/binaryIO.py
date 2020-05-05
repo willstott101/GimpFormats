@@ -779,6 +779,7 @@ class IO:
 	def _readUntil(self, until, encoding='A'):
 		"""
 		:param until: must be within the ascii character set
+		:param encoding: one of A (ascii), U (UTF-8) or W (UCS-2)
 		"""
 		d = []
 		if encoding == 'A':
@@ -810,13 +811,11 @@ class IO:
 			ret = ret[-1]
 		return ret
 
-	'''
 	@textLine.setter
 	def textLine(self, text):
-		setBytes(text)
+		self.setBytes(text)
 		if text[-1] != '\n':
-			setBytes('\n')
-	'''
+			self.setBytes('\n')
 
 	@property
 	def textLineA(self):
@@ -826,13 +825,11 @@ class IO:
 			ret = ret[-1]
 		return ret
 
-	'''
 	@textLineA.setter
 	def textLineA(self, text):
-		setBytes(text)
+		self.setBytes(text)
 		if text[-1] != '\n':
-			setBytes('\n')
-	'''
+			self.setBytes('\n')
 
 	@property
 	def textLineW(self):
@@ -842,13 +839,11 @@ class IO:
 			ret = ret[-1]
 		return ret
 
-	'''
 	@textLineW.setter
 	def textLineW(self, text):
-		setBytes(text)
+		self.setBytes(text)
 		if text[-1] != '\n':
-			setBytes('\0\n')
-	'''
+			self.setBytes('\0\n')
 
 	@property
 	def textLineU(self):
@@ -858,58 +853,48 @@ class IO:
 			ret = ret[-1]
 		return ret
 
-	'''
 	@textLineU.setter
 	def textLineU(self, text):
-		setBytes(text)
+		self.setBytes(text)
 		if text[-1] != '\n':
-			setBytes('\n')
-	'''
+			self.setBytes('\n')
 
 	@property
 	def cString(self):
 		'''cString'''
 		return self._readUntil('\0', self.stringEncoding)
 
-	'''
 	@cString.setter
 	def cString(self, text):
-		setBytes(text)
-		setBytes('\0')
-	'''
+		self.setBytes(text)
+		self.setBytes('\0')
 
 	@property
 	def cStringA(self):
 		'''cStringA'''
 		return self._readUntil('\0', 'A')
 
-	'''
 	@cString.setter
-	def cString(self, text):
-		setBytes(text)
-		setBytes('\0')
-	'''
+	def cStringA(self, text):
+		self.setBytes(text)
+		self.setBytes('\0')
 
 	@property
 	def cStringW(self):
 		'''cStringW'''
 		return self._readUntil('\0', 'W')
 
-	'''
 	@cString.setter
 	def cString(self, text):
-		setBytes(text)
-		setBytes('\0\0')
-	'''
+		self.setBytes(text)
+		self.setBytes('\0\0')
 
 	@property
 	def cStringU(self):
 		'''cStringU'''
 		return self._readUntil('\0', 'U')
 
-	'''
 	@cString.setter
 	def cString(self, text):
-		setBytes(text)
-		setBytes('\0')
-	'''
+		self.setBytes(text)
+		self.setBytes('\0')
