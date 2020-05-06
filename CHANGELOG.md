@@ -2,6 +2,12 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2020.1.2 - 2020/05/06
+- Updated classifiers
+- Added notes for development
+- Added copy of xcf spec for dev
+- Fix previously broken parts of binaryIO
+
 ## 2020.1.1 - 2020/05/04
 - Update author
 

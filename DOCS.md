@@ -578,66 +578,6 @@ set sz754W
 
 set sz754U
 
-<a name=".gimpformats.binaryIO.IO.textLine"></a>
-#### textLine
-
-```python
- | @property
- | textLine()
-```
-
-textLine
-
-<a name=".gimpformats.binaryIO.IO.textLineA"></a>
-#### textLineA
-
-```python
- | @property
- | textLineA()
-```
-
-textLineA
-
-<a name=".gimpformats.binaryIO.IO.textLineW"></a>
-#### textLineW
-
-```python
- | @property
- | textLineW()
-```
-
-textLineW
-
-<a name=".gimpformats.binaryIO.IO.textLineU"></a>
-#### textLineU
-
-```python
- | @property
- | textLineU()
-```
-
-textLineU
-
-<a name=".gimpformats.binaryIO.IO.cString"></a>
-#### cString
-
-```python
- | @property
- | cString()
-```
-
-cString
-
-<a name=".gimpformats.binaryIO.IO.cStringA"></a>
-#### cStringA
-
-```python
- | @property
- | cStringA()
-```
-
-cStringA
-
 <a name=".gimpformats.binaryIO.IO.cStringW"></a>
 #### cStringW
 
