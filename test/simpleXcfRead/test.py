@@ -12,7 +12,7 @@ from pathlib import Path
 PROJECTDIR = str(Path(__file__).resolve().parent.parent)
 sys.path.insert(0, os.path.dirname(PROJECTDIR))
 from imgcompare import imgcompare
-from gimpformats import GimpDocument
+from gimpformats.gimpXcfDocument import GimpDocument
 
 __HERE__ = os.path.abspath(__file__).rsplit(os.sep, 1)[0] + os.sep
 
@@ -38,7 +38,7 @@ class Test(unittest.TestCase):
 		""" test an image """
 		self.dut.load(__HERE__ + 'base24.xcf')
 		self.dut.image.save(__HERE__ + 'base24.png')
-		assert imgcompare.is_equal(self.dut.image, __HERE__ + 'expectedNoHidden.png', tolerance=1)
+		assert imgcompare.is_equal(self.dut.image, __HERE__ + 'expected.png', tolerance=1)
 
 
 def testSuite():

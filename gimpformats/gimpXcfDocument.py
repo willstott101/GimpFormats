@@ -17,281 +17,39 @@ import copy
 import PIL.ImageGrab
 from PIL import Image
 from blendmodes.blend import blendLayers, BlendType
-from .binaryIO import IO
-from .gimpIOBase import GimpIOBase
-from .gimpImageInternals import GimpChannel, GimpImageHierarchy
-
-
-class GimpLayer(GimpIOBase):
-	"""
-	Represents a single layer in a gimp image
-	"""
-
-	COLOR_MODES = [
-	'RGB color without alpha', 'RGB color with alpha', 'Grayscale without alpha',
-	'Grayscale with alpha', 'Indexed without alpha', 'Indexed with alpha']
-	PIL_MODE_TO_LAYER_MODE = {'L': 2, 'LA': 3, 'RGB': 0, 'RGBA': 1}
-
-	def __init__(self, parent, name=None, image=None):
-		GimpIOBase.__init__(self, parent)
-		self.width = 0
-		self.height = 0
-		self.colorMode = 0
-		self.name = name
-		self._imageHierarchy = None
-		self._imageHierarchyPtr = None
-		self._mask = None
-		self._maskPtr = None
-		self._data = None
-		if image is not None:
-			self.image = image # done last as it resets some of the above defaults
-
-	def _decode_(self, data, index=0):
-		"""
-		decode a byte buffer
-
-		Steps:
-		Create a new IO buffer (array of binary values)
-		Grab attributes as outlined in the spec
-		List of properties
-		Get the image hierarchy and mask pointers
-		Return the offset
-
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
-		"""
-		# Create a new IO buffer (array of binary values)
-		io = IO(data, index)
-		# Grab attributes as outlined in the spec
-		self.width = io.u32
-		self.height = io.u32
-		self.colorMode = io.u32 # one of self.COLOR_MODES
-		self.name = io.sz754
-		# List of properties
-		self._propertiesDecode_(io)
-		# Get the image hierarchy and mask pointers
-		self._imageHierarchyPtr = self._pointerDecode_(io)
-		self._maskPtr = self._pointerDecode_(io)
-		self._mask = None
-		self._data = data
-		# Return the offset
-		return io.index
-
-	def toBytes(self):
-		"""
-		encode to byte array
-
-		Steps:
-		Create a new IO buffer (array of binary values)
-		Set attributes as outlined in the spec
-		List of properties
-		Set the image hierarchy and mask pointers
-		Return the data
-
-		"""
-		# Create a new IO buffer (array of binary values)
-		dataAreaIO = IO()
-		io = IO()
-		# Set attributes as outlined in the spec
-		io.u32 = self.width
-		io.u32 = self.height
-		io.u32 = self.colorMode
-		io.sz754 = self.name
-		# Set the image hierarchy and mask pointers
-		dataAreaIndex = io.index + self._POINTER_SIZE_ * 2
-		io.addBytes(self._pointerEncode_(dataAreaIndex))
-		dataAreaIO.addBytes(self._propertiesEncode_())
-		io.addBytes(self._pointerEncode_(dataAreaIndex))
-		if self.mask is not None:
-			dataAreaIO.addBytes(self.mask.toBytes())
-		io.addBytes(self._pointerEncode_(dataAreaIndex + dataAreaIO.index))
-		io.addBytes(dataAreaIO)
-		# Return the data
-		return io.data
-
-	@property
-	def mask(self):
-		"""
-		Get the layer mask
-		"""
-		if self._mask is None and self._maskPtr is not None and self._maskPtr != 0:
-			self._mask = GimpChannel(self)
-			self._mask.fromBytes(self._data, self._maskPtr)
-		return self._mask
-
-	@property
-	def image(self):
-		"""
-		get the layer image
-
-		NOTE: can return None!
-		"""
-		if self.imageHierarchy is None:
-			return None
-		return self.imageHierarchy.image
-
-	@image.setter
-	def image(self, image):
-		"""
-		set the layer image
-
-		NOTE: resets layer width, height, and colorMode
-		"""
-		self.height = image.height
-		self.width = image.width
-		if image.mode not in self.PIL_MODE_TO_LAYER_MODE:
-			raise NotImplementedError('No way of handlng PIL image mode "' + image.mode + '"')
-		self.colorMode = self.PIL_MODE_TO_LAYER_MODE[image.mode]
-		if not self.name and isinstance(image, str):
-			# try to use a filename as the name
-			self.name = image.rsplit('\\', 1)[-1].rsplit('/', 1)[-1]
-		self.imageHierarchy = GimpImageHierarchy(self)
-		self.imageHierarchy.image = image
-
-	@property
-	def imageHierarchy(self):
-		"""
-		Get the image hierarchy objects
-
-		This is mainly needed for deciphering image, and therefore,
-		of little use to you, the user.
-
-		NOTE: can return None if it has been fully read into an image
-		"""
-		if self._imageHierarchy is None and self._imageHierarchyPtr > 0:
-			self._imageHierarchy = GimpImageHierarchy(self)
-			self._imageHierarchy.fromBytes(self._data, self._imageHierarchyPtr)
-		return self._imageHierarchy
-
-	def _forceFullyLoaded(self):
-		"""
-		make sure everything is fully loaded from the file
-		"""
-		if self.mask is not None:
-			self.mask._forceFullyLoaded()
-		_ = self.image # make sure the image is loaded so we can delete the hierarchy nonsense
-		self._imageHierarchy = None
-		self._data = None
-
-	def __repr__(self, indent=''):
-		"""
-		Get a textual representation of this object
-		"""
-		ret = []
-		ret.append('Name: ' + str(self.name))
-		ret.append('Size: ' + str(self.width) + ' x ' + str(self.height))
-		ret.append('colorMode: ' + self.COLOR_MODES[self.colorMode])
-		ret.append(GimpIOBase.__repr__(self, indent))
-		m = self.mask
-		if m is not None:
-			ret.append('Mask:')
-			ret.append(m.__repr__(indent + '\t'))
-		return indent + (('\n' + indent).join(ret))
-
-
-class Precision:
-	"""
-	Since the precision code is so unusual, I decided to create a class
-	to parse it.
-	"""
-	def __init__(self):
-		self.bits = 8
-		self.gamma = True
-		self.numberFormat = int
-
-	def decode(self, gimpVersion, io):
-		"""
-		decode the precision code from the file
-		"""
-		if gimpVersion < 4:
-			self.bits = 8
-			self.gamma = True
-			self.numberFormat = int
-		else:
-			code = io.u32
-			if gimpVersion == 4:
-				self.gamma = (True, True, False, False, False)[code]
-				self.bits = (8, 16, 32, 16, 32)[code]
-				self.numberFormat = (int, int, int, float, float)[code]
-			elif gimpVersion in (5, 6):
-				self.gamma = (code % 100 != 0)
-				code = int(code / 100)
-				self.bits = (8, 16, 32, 16, 32)[code]
-				self.numberFormat = (int, int, int, float, float)[code]
-			else: # gimpVersion 7 or above
-				self.gamma = (code % 100 != 0)
-				code = int(code / 100)
-				self.bits = (8, 16, 32, 16, 32, 64)[code]
-				self.numberFormat = (int, int, int, float, float, float)[code]
-
-	def encode(self, gimpVersion, io):
-		"""
-		encode this to the file
-
-		NOTE: will not mess with development versions 5 or 6
-		"""
-		if gimpVersion < 4:
-			if self.bits != 8 or not (self.gamma) or self.numberFormat != int:
-				raise Exception('Illegal precision (' + str(self) + ') for gimp version ' +
-				str(gimpVersion))
-		else:
-			if gimpVersion == 4:
-				if self.bits == 64:
-					raise Exception('Illegal precision (' + str(self) + ') for gimp version ' +
-					str(gimpVersion))
-				if self.numberFormat == int:
-					code = (8, 16, 32).index(self.bits)
-				else:
-					code = (16, 32).index(self.bits) + 2
-				code = code * 100
-				if self.gamma:
-					code += 50
-			elif gimpVersion in (5, 6):
-				raise NotImplementedError('Cannot save to gimp developer version ' +
-				str(gimpVersion))
-			else: # version 7 or above
-				if self.numberFormat == int:
-					code = (8, 16, 32).index(self.bits)
-				else:
-					code = (16, 32, 64).index(self.bits) + 2
-				code = code * 100
-				if self.gamma:
-					code += 50
-			io.u32 = code
-
-	def requiredGimpVersion(self):
-		"""
-		return the lowest gimp version that supports this precision
-		"""
-		if self.bits == 8 and self.gamma and self.numberFormat == int:
-			return 0
-		if self.bits == 64:
-			return 7
-		return 4
-
-	def __repr__(self):
-		ret = []
-		ret.append(str(self.bits) + "-bit")
-		ret.append('gamma' if self.gamma else 'linear')
-		ret.append('integer' if self.numberFormat is int else float)
-		return ' '.join(ret)
-
+from .BinaryIO import IO
+from .GimpIOBase import GimpIOBase
+#from .GimpImageHierarchy import GimpImageHierarchy
+from .GimpPrecision import Precision
+from .GimpLayer import GimpLayer
+from .GimpChannel import GimpChannel
 
 class GimpDocument(GimpIOBase):
 	"""
 	Pure python implementation of the gimp file format
+
+	Has a series of attributes including the following:
+	self._layers = None
+	self._layerPtr = []
+	self._channels = []
+	self._channelPtr = []
+	self.version = None
+	self.width = 0
+	self.height = 0
+	self.baseColorMode = 0
+	self.precision = None # Precision object
+	self._data = None
 
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 	"""
 	def __init__(self, fileName=None):
 		GimpIOBase.__init__(self, self)
-		self.dirty = False # a file-changed indicator.  # TODO: Not fully implemented.
-		self._layers = None
+		self._layers = []
 		self._layerPtr = []
-		self.channels = []
+		self._channels = []
 		self._channelPtr = []
-		self.version = None
+		self.version = 11 # This is the most recent version
 		self.width = 0
 		self.height = 0
 		self.baseColorMode = 0
@@ -315,9 +73,9 @@ class GimpDocument(GimpIOBase):
 			f = open(fileName, 'rb')
 		data = f.read()
 		f.close()
-		self._decode_(data)
+		self.decode_(data)
 
-	def _decode_(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -352,7 +110,7 @@ class GimpDocument(GimpIOBase):
 		self.baseColorMode = io.u32
 		# Get precision data using the class and io buffer
 		self.precision = Precision()
-		self.precision.decode(self.version, io)
+		self.precision.decode_(self.version, io)
 		# List of properties
 		self._propertiesDecode_(io)
 		self._layerPtr = []
@@ -364,23 +122,23 @@ class GimpDocument(GimpIOBase):
 				break
 			self._layerPtr.append(ptr)
 			l = GimpLayer(self)
-			l._decode_(io.data, ptr)
+			l.decode_(io.data, ptr)
 			self._layers.append(l)
 		# Get the channels and add the pointers to them
 		self._channelPtr = []
-		self.channels = []
+		self._channels = []
 		while True:
 			ptr = self._pointerDecode_(io)
 			if ptr == 0:
 				break
 			self._channelPtr.append(ptr)
 			c = GimpChannel(self)
-			c.fromBytes(io.data, ptr)
-			self.channels.append(c)
+			c.decode_(io.data, ptr)
+			self._channels.append(c)
 		# Return the offset
 		return io.index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode to a byte array
 
@@ -401,7 +159,7 @@ class GimpDocument(GimpIOBase):
 		# The file is a valid gimp xcf
 		io.addBytes("gimp xcf ")
 		# Set the file version
-		io.addBytes(str(self.version) + '\0')
+		io.addBytes("v{0:03d}".format(self.version) + '\0')
 		# Set other attributes as outlined in the spec
 		io.u32 = self.width
 		io.u32 = self.height
@@ -409,19 +167,20 @@ class GimpDocument(GimpIOBase):
 		# Set precision data using the class and io buffer
 		if self.precision is None:
 			self.precision = Precision()
-		self.precision.encode(self.version, io)
+		self.precision.encode_(self.version, io)
 		# List of properties
 		io.addBytes(self._propertiesEncode_())
-		dataAreaIdx = io.index + self._POINTER_SIZE_ * (len(self.layers) + len(self.channels))
+		dataAreaIdx = io.index + self._POINTER_SIZE_ * (len(self.layers) + len(self._channels))
 		dataAreaIo = IO()
 		# Set the layers and add the pointers to them
 		for l in self.layers:
 			io.pointer = dataAreaIdx + dataAreaIo.index
-			dataAreaIo.addBytes(l.toBytes())
+			dataAreaIo.addBytes(l.encode_())
 		# Set the channels and add the pointers to them
-		for channel in self.channels:
+		for channel in self._channels:
 			io.pointer = dataAreaIdx + dataAreaIo.index
-			dataAreaIo.addBytes(channel.toBytes())
+			dataAreaIo.addBytes(channel.encode_())
+		io.addBytes(dataAreaIo)
 		# Return the data
 		return io.data
 
@@ -431,7 +190,7 @@ class GimpDocument(GimpIOBase):
 		"""
 		for l in self.layers:
 			l._forceFullyLoaded()
-		for chan in self.channels:
+		for chan in self._channels:
 			chan._forceFullyLoaded()
 		# no longer try to get the data from file
 		self._layerPtr = None
@@ -445,11 +204,11 @@ class GimpDocument(GimpIOBase):
 
 		TODO: need to do the same thing with self.Channels
 		"""
-		if self._layers is None:
+		if len(self._layers) == 0:
 			self._layers = []
-			for _ptr in self._layerPtr:
+			for ptr in self._layerPtr:
 				l = GimpLayer(self)
-				#l.fromBytes(self._data, ptr)
+				l.decode_(self._data, ptr)
 				self._layers.append(l)
 			# add a reference back to this object so it doesn't go away while array is in use
 			self._layers.parent = self
@@ -471,7 +230,6 @@ class GimpDocument(GimpIOBase):
 		assign to a given layer
 		"""
 		self._forceFullyLoaded()
-		self.dirty = True
 		self._layerPtr = None # no longer try to use the pointers to get data
 		#self.layers._actualSetitem(index, l)
 
@@ -485,7 +243,7 @@ class GimpDocument(GimpIOBase):
 		"""
 		l = GimpLayer(self, name, image)
 		self.insertLayer(l, index)
-		return layer
+		return l
 
 	def newLayerFromClipboard(self, name='pasted', index=-1):
 		"""
@@ -524,7 +282,7 @@ class GimpDocument(GimpIOBase):
 		:param layer: the new layer to insert
 		:param index: where to insert the new layer (default=top)
 		"""
-		self.layers.insert(index, l)
+		self._layers.insert(index, l)
 
 	def deleteLayer(self, index):
 		"""
@@ -588,8 +346,17 @@ class GimpDocument(GimpIOBase):
 			toFilename = self.filename
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
-		f.write(self.toBytes())
-		self.dirty = False
+		f.write(self.encode_())
+
+	def saveNew(self, toFilename=None):
+		"""
+		save a new gimp image to a file
+		"""
+		if toFilename is None:
+			toFilename = self.filename
+		if not hasattr(toFilename, 'write'):
+			f = open(toFilename, 'wb')
+		f.write(self.encode_())
 
 	def __repr__(self, indent=''):
 		"""
@@ -609,7 +376,7 @@ class GimpDocument(GimpIOBase):
 				ret.append(l.__repr__('\t'))
 		if self._channelPtr:
 			ret.append('Channels: ')
-			for ch in self.channels:
+			for ch in self._channels:
 				ret.append(ch.__repr__('\t'))
 		return '\n'.join(ret)
 
@@ -707,9 +474,12 @@ def flattenAll(layers, imageDimensions, ignoreHidden=True):
 	return flattenedSoFar
 
 
+
+### ARGPARSE STUFF ###
+
 if __name__ == '__main__':
 	""" CLI Entry Point """
-	parser = argparse.ArgumentParser("gimpGbrBrush.py")
+	parser = argparse.ArgumentParser("GimpGbrBrush.py")
 	parser.add_argument("xcfdocument", action="store",
 	help="xcf file to act on")
 	group = parser.add_mutually_exclusive_group()

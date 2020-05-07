@@ -3,9 +3,9 @@
 Pure python implementation of the OLD gimp gpb brush format
 """
 import argparse
-from .binaryIO import IO
-from .gimpGbrBrush import GimpGbrBrush
-from .gimpPatPattern import GimpPatPattern
+from .BinaryIO import IO
+from .GimpGbrBrush import GimpGbrBrush
+from .GimpPatPattern import GimpPatPattern
 
 
 class GimpGpbBrush:
@@ -37,31 +37,31 @@ class GimpGpbBrush:
 			f = open(filename, 'rb')
 		data = f.read()
 		f.close()
-		self._decode_(data)
+		self.decode_(data)
 
-	def _decode_(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		index = self.brush._decode_(data, index)
-		#index = self.pattern._decode_(data, index)
+		index = self.brush.decode_(data, index)
+		#index = self.pattern.decode_(data, index)
 		return index
 
-	def toBytes(self):
+	def encode_(self):
 		""" encode this object to a byte array """
 		io = IO()
-		io.addBytes(self.brush.toBytes())
-		io.addBytes(self.pattern.toBytes())
+		io.addBytes(self.brush.encode_())
+		io.addBytes(self.pattern.encode_())
 		return io.data
 
 	def save(self, toFilename=None):
 		""" save this gimp image to a file """
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
-		f.write(self.toBytes())
+		f.write(self.encode_())
 
 	def __repr__(self, indent=''):
 		""" Get a textual representation of this object """
@@ -75,7 +75,7 @@ class GimpGpbBrush:
 
 if __name__ == '__main__':
 	""" CLI Entry Point """
-	parser = argparse.ArgumentParser("gimpGbrBrush.py")
+	parser = argparse.ArgumentParser("GimpGbrBrush.py")
 	parser.add_argument("xcfdocument", action="store",
 	help="xcf file to act on")
 	parser.add_argument("--dump", action="store_true",

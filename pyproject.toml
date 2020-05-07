@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gimpformats"
-version = "2020.1.3"
+version = "2020.2"
 description = "Pure python implementation of the gimp file format(s)"
 authors = ["FredHappyface"]
 classifiers = [
@@ -27,8 +27,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.5"
-numpy = "^1.18.3"
-pillow = "^7.1.1"
+numpy = "^1.18.4"
+pillow = "^7.1.2"
 brackettree = "^0.2.5"
 
 [tool.dephell.main]

@@ -29,9 +29,9 @@ class GimpGplPalette:
 			f = open(filename, 'r')
 		data = f.read()
 		f.close()
-		self._decode_(data)
+		self.decode_(data)
 
-	def _decode_(self, data):
+	def decode_(self, data):
 		"""
 		decode a byte buffer
 
@@ -54,7 +54,7 @@ class GimpGplPalette:
 			else:
 				self.colorNames.append(None)
 
-	def toBytes(self):
+	def encode_(self):
 		""" encode to a raw data stream """
 		data = []
 		data.append("GIMP Palette")
@@ -81,7 +81,7 @@ class GimpGplPalette:
 					toExtension = None
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
-		f.write(self.toBytes())
+		f.write(self.encode_())
 		f.close()
 
 	def __repr__(self, indent=''):
@@ -116,7 +116,7 @@ class GimpGplPalette:
 
 if __name__ == '__main__':
 	""" CLI Entry Point """
-	parser = argparse.ArgumentParser("gimpVbrBrush.py")
+	parser = argparse.ArgumentParser("GimpGplPalette.py")
 	parser.add_argument("xcfdocument", action="store",
 	help="xcf file to act on")
 	group = parser.add_mutually_exclusive_group()

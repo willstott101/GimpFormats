@@ -4,7 +4,7 @@ Pure python implementation of a gimp pattern file
 """
 import argparse
 import PIL.Image
-from .binaryIO import IO
+from .BinaryIO import IO
 
 
 class GimpPatPattern:
@@ -44,9 +44,9 @@ class GimpPatPattern:
 			f = open(filename, 'rb')
 		data = f.read()
 		f.close()
-		self._decode_(data)
+		self.decode_(data)
 
-	def _decode_(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -68,7 +68,7 @@ class GimpPatPattern:
 		self._rawImage = io.getBytes(self.width * self.height * self.bpp)
 		self._image = None
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode to a byte buffer
 		"""
@@ -132,7 +132,7 @@ class GimpPatPattern:
 		else:
 			if not hasattr(toFilename, 'write'):
 				f = open(toFilename, 'wb')
-			f.write(self.toBytes())
+			f.write(self.encode_())
 			f.close()
 
 	def __repr__(self, indent=''):
@@ -152,7 +152,7 @@ class GimpPatPattern:
 
 if __name__ == '__main__':
 	""" CLI Entry Point """
-	parser = argparse.ArgumentParser("gimpPatPattern.py")
+	parser = argparse.ArgumentParser("GimpPatPattern.py")
 	parser.add_argument("xcfdocument", action="store",
 	help="xcf file to act on")
 	group = parser.add_mutually_exclusive_group()

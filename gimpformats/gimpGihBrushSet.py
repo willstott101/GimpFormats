@@ -6,8 +6,8 @@ The gih format is use to store a series of brushes, and some extra info
 for how to use them.
 """
 import argparse
-from .binaryIO import IO
-from .gimpGbrBrush import GimpGbrBrush
+from .BinaryIO import IO
+from .GimpGbrBrush import GimpGbrBrush
 
 
 class GimpGihBrushSet:
@@ -42,9 +42,9 @@ class GimpGihBrushSet:
 			f = open(filename, 'rb')
 		data = f.read()
 		f.close()
-		self._decode_(data)
+		self.decode_(data)
 
-	def _decode_(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -63,13 +63,13 @@ class GimpGihBrushSet:
 		self.brushes = []
 		for _ in range(numBrushes):
 			b = GimpGbrBrush()
-			io.index = b._decode_(
+			io.index = b.decode_(
 			io.data,
 			io.index) # TODO: broken.  For some reson there is extra data between brushes!
 			self.brushes.append(b)
 		return io.index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode this object to a byte array
 		"""
@@ -82,7 +82,7 @@ class GimpGihBrushSet:
 		io.textLine = ' '.join(secondLine)
 		# add the brushes
 		for brush in self.brushes:
-			io.addBytes(brush.toBytes())
+			io.addBytes(brush.encode_())
 		return io.data
 
 	def save(self, toFilename=None):
@@ -91,7 +91,7 @@ class GimpGihBrushSet:
 		"""
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
-		f.write(self.toBytes())
+		f.write(self.encode_())
 
 	def __repr__(self, indent=''):
 		"""
@@ -111,7 +111,7 @@ class GimpGihBrushSet:
 
 if __name__ == '__main__':
 	""" CLI Entry Point """
-	parser = argparse.ArgumentParser("gimpGihBrushSet.py")
+	parser = argparse.ArgumentParser("GimpGihBrushSet.py")
 	parser.add_argument("xcfdocument", action="store",
 	help="xcf file to act on")
 	group = parser.add_mutually_exclusive_group()

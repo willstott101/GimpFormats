@@ -42,7 +42,7 @@ class GimpVbrBrush:
 			f = open(filename, 'r')
 		data = f.read()
 		f.close()
-		self._decode_(data)
+		self.decode_(data)
 
 	@property
 	def image(self):
@@ -51,7 +51,7 @@ class GimpVbrBrush:
 		"""
 		raise NotImplementedError() # TODO:
 
-	def _decode_(self, data):
+	def decode_(self, data):
 		"""
 		decode a byte buffer
 
@@ -80,7 +80,7 @@ class GimpVbrBrush:
 		else:
 			raise Exception('Unknown version ' + str(self.version))
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode to a raw data stream
 		"""
@@ -124,7 +124,7 @@ class GimpVbrBrush:
 		else:
 			if not hasattr(toFilename, 'write'):
 				f = open(toFilename, 'wb')
-			f.write(self.toBytes())
+			f.write(self.encode_())
 
 	def __repr__(self, indent=''):
 		"""

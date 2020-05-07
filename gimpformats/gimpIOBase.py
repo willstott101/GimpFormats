@@ -3,9 +3,9 @@
 A specialized binary file base for Gimp files
 """
 import struct
-from .binaryIO import IO
-from .gimpParasites import GimpParasite
-
+from .BinaryIO import IO
+from .GimpParasites import GimpParasite
+from .GimpVectors import GimpVector
 
 class GimpIOBase:
 	"""
@@ -212,7 +212,7 @@ class GimpIOBase:
 		index = 0
 		while index < len(data):
 			p = GimpParasite()
-			index = p.fromBytes(data, index)
+			index = p.decode_(data, index)
 			self.parasites.append(p)
 		return index
 
@@ -222,7 +222,7 @@ class GimpIOBase:
 		"""
 		io = IO()
 		for parasite in self.parasites:
-			io.addBytes(parasite.toBytes())
+			io.addBytes(parasite.encode_())
 		return io.data
 
 	def _guidelinesDecode_(self, data):
@@ -249,7 +249,6 @@ class GimpIOBase:
 			path.append(p)
 		self.itemPath = path
 
-	'''
 	def _vectorsDecode_(self, data):
 		"""
 		decode vectors
@@ -263,9 +262,8 @@ class GimpIOBase:
 		index += 4
 		for _ in range(numPaths):
 			gv = GimpVector(self)
-			gv._decode_(data)
+			gv.decode_(data)
 			self.vectors.append(gv)
-	'''
 
 	@property
 	def activeVector(self):
@@ -322,8 +320,8 @@ class GimpIOBase:
 		decode a set of user-defined measurement units
 		"""
 		u = GimpUserUnits()
-		#u._decode_(data)
-		u.fromBytes(data)
+		#u.decode_(data)
+		u.decode_(data)
 		self.userUnits = u
 
 	def _samplePointsDecode_(self, data):
@@ -465,6 +463,7 @@ class GimpIOBase:
 		io = IO(boolSize=32)
 		if propertyType == self.PROP_COLORMAP:
 			if self.colorMap is not None and self.colorMap:
+				pass
 				io.u32 = self.PROP_COLORMAP
 				#io.addBytes(self._colormapEncode_())
 		elif propertyType == self.PROP_ACTIVE_LAYER:
@@ -535,7 +534,8 @@ class GimpIOBase:
 				io.u32 = self.compression
 		elif propertyType == self.PROP_GUIDES:
 			if self.guidelines is not None and self.guidelines:
-				io.u32 = self.PROP_GUIDES
+				pass
+				#io.u32 = self.PROP_GUIDES
 				#io.addBytes(self._guidelinesEncode_())
 		elif propertyType == self.PROP_RESOLUTION:
 			if self.horizontalResolution is not None and self.verticalResolution is not None:
@@ -555,19 +555,22 @@ class GimpIOBase:
 				io.u32 = self.units
 		elif propertyType == self.PROP_PATHS:
 			if self.paths is not None and self.paths:
-				io.u32 = self.PROP_PATHS
-				io.u32 = len(self.paths)
+				pass
+				#io.u32 = self.PROP_PATHS
+				#io.u32 = len(self.paths)
 				'''
 				for path in self.paths:
 					io.append(self._pathEncode_(path))
 				'''
 		elif propertyType == self.PROP_USER_UNIT:
 			if self.userUnits is not None:
-				io.u32 = self.PROP_USER_UNIT
+				pass
+				#io.u32 = self.PROP_USER_UNIT
 				#io.addBytes(self._userUnitsEncode_())
 		elif propertyType == self.PROP_VECTORS:
 			if self.vectors is not None and self.vectors:
-				io.u32 = self.PROP_VECTORS
+				pass
+				#io.u32 = self.PROP_VECTORS
 				#io.addBytes(self._vectorsEncode_())
 		elif propertyType == self.PROP_TEXT_LAYER_FLAGS:
 			if self.textLayerFlags is not None:
@@ -584,7 +587,8 @@ class GimpIOBase:
 				io.u32 = self.PROP_GROUP_ITEM
 		elif propertyType == self.PROP_ITEM_PATH:
 			if self.itemPath is not None:
-				io.u32 = self.PROP_ITEM_PATH
+				pass
+				#io.u32 = self.PROP_ITEM_PATH
 				#io.addBytes(self._itemPathEncode_())
 		elif propertyType == self.PROP_GROUP_ITEM_FLAGS:
 			if self.groupItemFlags is not None:
@@ -615,15 +619,16 @@ class GimpIOBase:
 				io.u32 = self.PROP_BLEND_SPACE
 				io.u32 = self.blendSpace
 		elif propertyType == self.PROP_FLOAT_COLOR:
-			if self.color is not None and isinstance(self.color[0], float) or isinstance(
-				self.color[1], float) or isinstance(self.color[2], float):
+			if self.color is not None and isinstance(self.color[0], float) and isinstance(
+				self.color[1], float) and isinstance(self.color[2], float):
 				io.u32 = self.PROP_FLOAT_COLOR
 				io.float32 = self.color[0]
 				io.float32 = self.color[1]
 				io.float32 = self.color[2]
 		elif propertyType == self.PROP_SAMPLE_POINTS:
 			if self.samplePoints is not None and self.samplePoints:
-				io.u32 = self.PROP_SAMPLE_POINTS
+				pass
+				#io.u32 = self.PROP_SAMPLE_POINTS
 				#self.addBytes(self._samplePointsEncode_())
 		else:
 			raise Exception('Unknown property id ' + str(propertyType))
@@ -762,7 +767,7 @@ class GimpUserUnits:
 		self.sname = ''
 		self.pname = ''
 
-	def fromBytes(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -779,7 +784,7 @@ class GimpUserUnits:
 		self.pname = io.sz754
 		return io.index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		convert this object to raw bytes
 		"""

@@ -4,7 +4,7 @@ Pure python implementation of the gimp gbr brush format
 """
 import argparse
 import PIL.Image
-from .binaryIO import IO
+from .BinaryIO import IO
 
 class GimpGbrBrush:
 	"""
@@ -43,9 +43,9 @@ class GimpGbrBrush:
 			f = open(filename, 'rb')
 		data = f.read()
 		f.close()
-		self._decode_(data)
+		self.decode_(data)
 
-	def _decode_(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -62,16 +62,16 @@ class GimpGbrBrush:
 		self.bpp = io.u32 # only allows grayscale or RGB
 		self.mode = self.COLOR_MODES[self.bpp]
 		magic = io.getBytes(4)
-		if magic.decode('ascii') != 'GIMP':
-			raise Exception('"' + magic.decode('ascii') + '" ' + str(index) +
+		if magic.decode_('ascii') != 'GIMP':
+			raise Exception('"' + magic.decode_('ascii') + '" ' + str(index) +
 		" File format error.  Magic value mismatch.")
 		self.spacing = io.u32
 		nameLen = headerSize - io.index
-		self.name = io.getBytes(nameLen).decode('UTF-8')
+		self.name = io.getBytes(nameLen).decode_('UTF-8')
 		self.rawImage = io.getBytes(self.width * self.height * self.bpp)
 		return io.index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode this object to byte array
 		"""
@@ -117,7 +117,7 @@ class GimpGbrBrush:
 		else:
 			if not hasattr(toFilename, 'write'):
 				f = open(toFilename, 'wb')
-			f.write(self.toBytes())
+			f.write(self.encode_())
 			f.close()
 
 	def __repr__(self, indent=''):
@@ -136,7 +136,7 @@ class GimpGbrBrush:
 
 if __name__ == '__main__':
 	""" CLI Entry Point """
-	parser = argparse.ArgumentParser("gimpGbrBrush.py")
+	parser = argparse.ArgumentParser("GimpGbrBrush.py")
 	parser.add_argument("xcfdocument", action="store",
 	help="xcf file to act on")
 	group = parser.add_mutually_exclusive_group()

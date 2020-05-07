@@ -7,7 +7,7 @@ They are used to store things like last-used plugin settings, gamma adjuetments,
 Format of known parasites:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
 """
-from .binaryIO import IO
+from .BinaryIO import IO
 
 #TODO: how to best use these for our puproses??
 KNOWN_DOCUMENT_PARASITES = [
@@ -35,7 +35,7 @@ class GimpParasite:
 		self.flags = 0
 		self.data = None
 
-	def fromBytes(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -49,11 +49,11 @@ class GimpParasite:
 		self.data = io.getBytes(dataLength)
 		return io.index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
-		decode a byte buffer
+		encode a byte buffer
 
-		:param data: data buffer to decode
+		:param data: data buffer to encode
 		:param index: index within the buffer to start at
 		"""
 		io = IO()

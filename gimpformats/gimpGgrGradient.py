@@ -34,7 +34,7 @@ class GradientSegment:
 		"""
 		raise NotImplementedError()
 
-	def _decode_(self, data):
+	def decode_(self, data):
 		"""
 		decode a byte buffer
 
@@ -57,7 +57,7 @@ class GradientSegment:
 					if len(data) >= 15:
 						self.rightColorType = int(data[14])
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode this to a byte array
 		"""
@@ -124,16 +124,16 @@ class GimpGgrGradient:
 			f = open(filename, 'rb')
 		data = f.read()
 		f.close()
-		self._decode_(data)
+		self.decode_(data)
 
-	def _decode_(self, data):
+	def decode_(self, data):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		data = data.decode('utf-8').split('\n')
+		data = data.decode_('utf-8').split('\n')
 		data = [l.strip() for l in data]
 		if data[0] != 'GIMP Gradient':
 			raise Exception('File format error.  Magic value mismatch.')
@@ -141,10 +141,10 @@ class GimpGgrGradient:
 		numSegments = int(data[2])
 		for i in range(numSegments):
 			gs = GradientSegment()
-			gs._decode_(data[i + 3])
+			gs.decode_(data[i + 3])
 			self.segments.append(gs)
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode this to a byte array
 		"""
@@ -152,7 +152,7 @@ class GimpGgrGradient:
 		ret.append('Name: ' + self.name)
 		ret.append(str(len(self.segments)))
 		for segment in self.segments:
-			ret.append(segment.toBytes())
+			ret.append(segment.encode_())
 		return ('\n'.join(ret) + '\n').encode('utf-8')
 
 	def save(self, toFilename=None):
@@ -161,7 +161,7 @@ class GimpGgrGradient:
 		"""
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
-		f.write(self.toBytes())
+		f.write(self.encode_())
 		f.close()
 
 	def getColor(self, percent):
@@ -186,7 +186,7 @@ class GimpGgrGradient:
 
 if __name__ == '__main__':
 	""" CLI Entry Point """
-	parser = argparse.ArgumentParser("gimpGgrGradient.py")
+	parser = argparse.ArgumentParser("GimpGgrGradient.py")
 	parser.add_argument("xcfdocument", action="store",
 	help="xcf file to act on")
 	parser.add_argument("--dump", action="store_true",

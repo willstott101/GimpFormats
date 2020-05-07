@@ -99,7 +99,7 @@ Group "Layer Group" contains Layer "Layer2"
 ```
 
 ## Next tasks (see below)
-- Add new layers
+- Saving
 
 ## Currently supports
 - Loading xcf files (up to current GIMP version 2.10)
@@ -111,10 +111,10 @@ Group "Layer Group" contains Layer "Layer2"
 - .pat pattern files
 - .gtp tool presets
 - Generate a flattened image
+- Add new layers
 
 ## In progress but results in crashes and tests failing
 - Saving
-- Alter documents (add layer, etc)
 - .ggr gradients - reads/saves fine, but I need to come up with a way to get the
 actual colours
 - .gih brush sets - BUG: seems to have more image data per brush than what's

@@ -2,16 +2,16 @@
 """
 Stuff related to vectors/paths within a gimp document
 """
-from .gimpIOBase import GimpIOBase
-from .binaryIO import IO
-from .gimpParasites import GimpParasite
+#from .GimpIOBase import GimpIOBase
+from .BinaryIO import IO
+from .GimpParasites import GimpParasite
 
-class GimpVector(GimpIOBase):
+class GimpVector:
 	"""
 	A gimp brush stroke vector
 	"""
 	def __init__(self, parent):
-		GimpIOBase.__init__(self, parent)
+		#GimpIOBase.__init__(self, parent)
 		self.name = ''
 		self.uniqueId = 0
 		self.visible = True
@@ -19,7 +19,7 @@ class GimpVector(GimpIOBase):
 		self.parasites = []
 		self.strokes = []
 
-	def fromBytes(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -35,15 +35,15 @@ class GimpVector(GimpIOBase):
 		numStrokes = io.u32
 		for _ in range(numParasites):
 			p = GimpParasite()
-			io.index = p.fromBytes(io.data, io.index)
+			io.index = p.decode_(io.data, io.index)
 			self.parasites.append(p)
 		for _ in range(numStrokes):
 			gs = GimpStroke(self)
-			io.index = gs.fromBytes(io.data, io.index)
+			io.index = gs.decode_(io.data, io.index)
 			self.strokes.append(p)
 		return io.index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode to binary data
 		"""
@@ -55,9 +55,9 @@ class GimpVector(GimpIOBase):
 		io.u32 = len(self.parasites)
 		io.u32 = len(self.strokes)
 		for p in self.parasites:
-			io.addBytes(p.toBytes())
+			io.addBytes(p.encode_())
 		for gs in self.strokes:
-			io.addBytes(gs.toBytes())
+			io.addBytes(gs.encode_())
 		return io.data
 
 	def __repr__(self, indent=''):
@@ -80,7 +80,7 @@ class GimpVector(GimpIOBase):
 		return indent + (('\n' + indent).join(ret))
 
 
-class GimpStroke(GimpIOBase):
+class GimpStroke:
 	"""
 	A single stroke within a vector
 	"""
@@ -88,12 +88,12 @@ class GimpStroke(GimpIOBase):
 	STROKE_TYPES = ['None', 'Bezier']
 
 	def __init__(self, parent):
-		GimpIOBase.__init__(self, parent)
+		#GimpIOBase.__init__(self, parent)
 		self.strokeType = 1 # one of self.STROKE_TYPES
 		self.closedShape = True
 		self.points = []
 
-	def fromBytes(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -107,11 +107,11 @@ class GimpStroke(GimpIOBase):
 		numPoints = io.u32
 		for _ in range(numPoints):
 			gp = GimpPoint(self)
-			io.index = gp.fromBytes(io.data, io.index, numFloatsPerPoint)
+			io.index = gp.decode_(io.data, io.index, numFloatsPerPoint)
 			self.points.append(gp)
 		return io.index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode to binary data
 		"""
@@ -121,7 +121,7 @@ class GimpStroke(GimpIOBase):
 		#io.u32 = numFloatsPerPoint
 		#io.u32 = numPoints
 		for gp in self.points:
-			io.addBytes(gp.toBytes())
+			io.addBytes(gp.encode_())
 		return io.data
 
 	def __repr__(self, indent=''):
@@ -137,7 +137,7 @@ class GimpStroke(GimpIOBase):
 		return indent + (('\n' + indent).join(ret))
 
 
-class GimpPoint(GimpIOBase):
+class GimpPoint:
 	"""
 	A single point within a stroke
 	"""
@@ -145,7 +145,7 @@ class GimpPoint(GimpIOBase):
 	POINT_TYPES = ['Anchor', 'Bezier control point']
 
 	def __init__(self, parent):
-		GimpIOBase.__init__(self, parent)
+		#GimpIOBase.__init__(self, parent)
 		self.x = 0
 		self.y = 0
 		self.pressure = 1.0
@@ -154,7 +154,7 @@ class GimpPoint(GimpIOBase):
 		self.wheel = 0.5
 		self.pointType = 0
 
-	def fromBytes(self, data, index=0, numFloatsPerPoint=0):
+	def decode_(self, data, index=0, numFloatsPerPoint=0):
 		"""
 		decode a byte buffer
 
@@ -184,7 +184,7 @@ class GimpPoint(GimpIOBase):
 						self.wheel = io.float
 		return io.index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode to binary data
 		"""

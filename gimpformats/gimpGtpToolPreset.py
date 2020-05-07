@@ -122,10 +122,10 @@ class GimpGtpToolPreset:
 			self.filename = filename
 			f = open(filename, 'r')
 		data = f.read()
-		self._decode_(data)
+		self.decode_(data)
 		f.close()
 
-	def _decode_(self, data, index=0):
+	def decode_(self, data, index=0):
 		"""
 		decode a byte buffer
 
@@ -134,7 +134,7 @@ class GimpGtpToolPreset:
 		self.values = parenFileDecode(data)
 		return index
 
-	def toBytes(self):
+	def encode_(self):
 		"""
 		encode to a byte array
 		"""
@@ -153,7 +153,7 @@ class GimpGtpToolPreset:
 					toExtension = None
 		if not hasattr(toFilename, 'write'):
 			f = open(toFilename, 'wb')
-		f.write(self.toBytes())
+		f.write(self.encode_())
 		f.close()
 
 	def __repr__(self, indent=''):
