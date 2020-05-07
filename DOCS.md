@@ -578,25 +578,85 @@ set sz754W
 
 set sz754U
 
+<a name=".gimpformats.binaryIO.IO.textLine"></a>
+#### textLine
+
+```python
+ | @textLine.setter
+ | textLine(text)
+```
+
+Set a sequence of chars until the next new line char
+
+<a name=".gimpformats.binaryIO.IO.textLineA"></a>
+#### textLineA
+
+```python
+ | @textLineA.setter
+ | textLineA(text)
+```
+
+Set a sequence of chars until the next new line char in ascii
+
+<a name=".gimpformats.binaryIO.IO.textLineW"></a>
+#### textLineW
+
+```python
+ | @textLineW.setter
+ | textLineW(text)
+```
+
+Set a sequence of chars until the next new line char in ucs-2
+
+<a name=".gimpformats.binaryIO.IO.textLineU"></a>
+#### textLineU
+
+```python
+ | @textLineU.setter
+ | textLineU(text)
+```
+
+Set a sequence of chars until the next new line char in utf-8
+
+<a name=".gimpformats.binaryIO.IO.cString"></a>
+#### cString
+
+```python
+ | @cString.setter
+ | cString(text)
+```
+
+Set a sequence of chars and add a null byte
+
+<a name=".gimpformats.binaryIO.IO.cStringA"></a>
+#### cStringA
+
+```python
+ | @cStringA.setter
+ | cStringA(text)
+```
+
+Set a sequence of chars and add a null byte in ascii
+
 <a name=".gimpformats.binaryIO.IO.cStringW"></a>
 #### cStringW
 
 ```python
- | @property
- | cStringW()
+ | @cStringW.setter
+ | cStringW(text)
 ```
 
-cStringW
+Set a sequence of chars and add a null byte in ucs-2
 
 <a name=".gimpformats.binaryIO.IO.cStringU"></a>
 #### cStringU
 
 ```python
- | @property
- | cStringU()
+ | @cStringU.setter
+ | cStringU(text)
 ```
 
-cStringU
+Set a sequence of chars and add a null byte in utf-8
 
 <a name=".gimpformats.gimpFormat"></a>
 ## gimpformats.gimpFormat
@@ -1626,6 +1686,11 @@ decode a series of points
 
 decode a single property
 
+Many properties are in the form
+propertyType: one of PROP_
+lengthOfData: 4
+data: varies but is often io.32 or io.bool
+
 <a name=".gimpformats.gimpIOBase.GimpIOBase._propertyEncode_"></a>
 #### \_propertyEncode\_
 
@@ -1634,6 +1699,11 @@ decode a single property
 ```
 
 encode a single property
+
+Many properties are in the form
+propertyType: one of PROP_
+lengthOfData: 4
+data: varies but is often io.32 or io.bool
 
 If the property is the same as the default, or not specified, returns empty array
 
@@ -2107,6 +2177,13 @@ Represents a single layer in a gimp image
 
 decode a byte buffer
 
+Steps:
+Create a new IO buffer (array of binary values)
+Grab attributes as outlined in the spec
+List of properties
+Get the image hierarchy and mask pointers
+Return the offset
+
 **Arguments**:
 
 - `data`: data buffer to decode
@@ -2120,6 +2197,13 @@ decode a byte buffer
 ```
 
 encode to byte array
+
+Steps:
+Create a new IO buffer (array of binary values)
+Set attributes as outlined in the spec
+List of properties
+Set the image hierarchy and mask pointers
+Return the data
 
 <a name=".gimpformats.gimpXcfDocument.GimpLayer.mask"></a>
 #### mask
@@ -2227,7 +2311,8 @@ See:
  | load(fileName)
 ```
 
-load a gimp file
+Load a gimp xcf and decode the file. See decode for more on this
+process
 
 **Arguments**:
 
@@ -2242,6 +2327,17 @@ load a gimp file
 
 decode a byte buffer
 
+Steps:
+Create a new IO buffer (array of binary values)
+Check that the file is a valid gimp xcf
+Grab the file version
+Grab other attributes as outlined in the spec
+Get precision data using the class and io buffer
+List of properties
+Get the layers and add the pointers to them
+Get the channels and add the pointers to them
+Return the offset
+
 **Arguments**:
 
 - `data`: data buffer to decode
@@ -2255,6 +2351,17 @@ decode a byte buffer
 ```
 
 encode to a byte array
+
+Steps:
+Create a new IO buffer (array of binary values)
+The file is a valid gimp xcf
+Set the file version
+Set other attributes as outlined in the spec
+Set precision data using the class and io buffer
+List of properties
+Set the layers and add the pointers to them
+Set the channels and add the pointers to them
+Return the data
 
 <a name=".gimpformats.gimpXcfDocument.GimpDocument.layers"></a>
 #### layers

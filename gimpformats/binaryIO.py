@@ -778,6 +778,8 @@ class IO:
 
 	def _readUntil(self, until, encoding='A'):
 		"""
+		Read a sequence of chars in a set encoding until a set char
+
 		:param until: must be within the ascii character set
 		:param encoding: one of A (ascii), U (UTF-8) or W (UCS-2)
 		"""
@@ -805,7 +807,7 @@ class IO:
 
 	@property
 	def textLine(self):
-		'''textLine'''
+		'''Read a sequence of chars until the next new line char'''
 		ret = self._readUntil('\n', self.stringEncoding)
 		if ret[-1] == '\r':
 			ret = ret[-1]
@@ -813,13 +815,14 @@ class IO:
 
 	@textLine.setter
 	def textLine(self, text):
+		'''Set a sequence of chars until the next new line char'''
 		self.setBytes(text)
 		if text[-1] != '\n':
 			self.setBytes('\n')
 
 	@property
 	def textLineA(self):
-		'''textLineA'''
+		'''Read a sequence of chars until the next new line char in ascii'''
 		ret = self._readUntil('\n', 'A')
 		if ret[-1] == '\r':
 			ret = ret[-1]
@@ -827,13 +830,14 @@ class IO:
 
 	@textLineA.setter
 	def textLineA(self, text):
+		'''Set a sequence of chars until the next new line char in ascii'''
 		self.setBytes(text)
 		if text[-1] != '\n':
 			self.setBytes('\n')
 
 	@property
 	def textLineW(self):
-		'''textLineW'''
+		'''Read a sequence of chars until the next new line char in ucs-2'''
 		ret = self._readUntil('\n', 'W')
 		if ret[-1] == '\r':
 			ret = ret[-1]
@@ -841,13 +845,14 @@ class IO:
 
 	@textLineW.setter
 	def textLineW(self, text):
+		'''Set a sequence of chars until the next new line char in ucs-2'''
 		self.setBytes(text)
 		if text[-1] != '\n':
 			self.setBytes('\0\n')
 
 	@property
 	def textLineU(self):
-		'''textLineU'''
+		'''Read a sequence of chars until the next new line char in utf-8'''
 		ret = self._readUntil('\n', 'U')
 		if ret[-1] == '\r':
 			ret = ret[-1]
@@ -855,46 +860,51 @@ class IO:
 
 	@textLineU.setter
 	def textLineU(self, text):
+		'''Set a sequence of chars until the next new line char in utf-8'''
 		self.setBytes(text)
 		if text[-1] != '\n':
 			self.setBytes('\n')
 
 	@property
 	def cString(self):
-		'''cString'''
+		'''Read a sequence of chars until the next null byte'''
 		return self._readUntil('\0', self.stringEncoding)
 
 	@cString.setter
 	def cString(self, text):
+		"""Set a sequence of chars and add a null byte """
 		self.setBytes(text)
 		self.setBytes('\0')
 
 	@property
 	def cStringA(self):
-		'''cStringA'''
+		'''Read a sequence of chars until the next null byte in ascii'''
 		return self._readUntil('\0', 'A')
 
-	@cString.setter
+	@cStringA.setter
 	def cStringA(self, text):
+		"""Set a sequence of chars and add a null byte in ascii"""
 		self.setBytes(text)
 		self.setBytes('\0')
 
 	@property
 	def cStringW(self):
-		'''cStringW'''
+		'''Read a sequence of chars until the next null byte in ucs-2'''
 		return self._readUntil('\0', 'W')
 
-	@cString.setter
-	def cString(self, text):
+	@cStringW.setter
+	def cStringW(self, text):
+		"""Set a sequence of chars and add a null byte in ucs-2"""
 		self.setBytes(text)
 		self.setBytes('\0\0')
 
 	@property
 	def cStringU(self):
-		'''cStringU'''
+		'''Read a sequence of chars until the next null byte in utf-8'''
 		return self._readUntil('\0', 'U')
 
-	@cString.setter
-	def cString(self, text):
+	@cStringU.setter
+	def cStringU(self, text):
+		"""Set a sequence of chars and add a null byte in utf-8"""
 		self.setBytes(text)
 		self.setBytes('\0')

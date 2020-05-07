@@ -21,7 +21,7 @@ if os.path.exists(readme_path):
 setup(
     long_description=readme,
     name='gimpformats',
-    version='2020.1.2',
+    version='2020.1.3',
     description='Pure python implementation of the gimp file format(s)',
     python_requires='==3.*,>=3.5.0',
     project_urls={

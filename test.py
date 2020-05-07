@@ -6,6 +6,9 @@ from gimpformats.gimpXcfDocument import GimpDocument
 project = GimpDocument("base24.xcf")
 
 layers = project.layers
+print("## Visible layers.")
+for layer in layers:
+	print(layer.name, layer.visible)
 index = 0
 print("## Group info...")
 while index < len(layers):

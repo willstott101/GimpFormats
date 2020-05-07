@@ -343,6 +343,11 @@ class GimpIOBase:
 	def _propertyDecode_(self, propertyType, data):
 		"""
 		decode a single property
+
+		Many properties are in the form
+		propertyType: one of PROP_
+		lengthOfData: 4
+		data: varies but is often io.32 or io.bool
 		"""
 		io = IO(data, boolSize=32)
 		#print('DECODING PROPERTY',propertyType,len(data))
@@ -361,7 +366,7 @@ class GimpIOBase:
 		elif propertyType == self.PROP_MODE:
 			self.blendMode = io.u32
 		elif propertyType == self.PROP_VISIBLE:
-			self.visible = True
+			self.visible = io.bool
 		elif propertyType == self.PROP_LINKED:
 			self.isLinked = io.bool
 		elif propertyType == self.PROP_LOCK_ALPHA:
@@ -450,6 +455,11 @@ class GimpIOBase:
 		"""
 		encode a single property
 
+		Many properties are in the form
+		propertyType: one of PROP_
+		lengthOfData: 4
+		data: varies but is often io.32 or io.bool
+
 		If the property is the same as the default, or not specified, returns empty array
 		"""
 		io = IO(boolSize=32)
@@ -479,8 +489,9 @@ class GimpIOBase:
 				io.u32 = self.PROP_MODE
 				io.u32 = self.blendMode
 		elif propertyType == self.PROP_VISIBLE:
-			if self.visible is not None and self.visible:
+			if self.visible is not None:
 				io.u32 = self.PROP_VISIBLE
+				io.bool = self.visible
 		elif propertyType == self.PROP_LINKED:
 			if self.isLinked is not None and self.isLinked:
 				io.u32 = self.PROP_LINKED

@@ -50,32 +50,54 @@ class GimpLayer(GimpIOBase):
 		"""
 		decode a byte buffer
 
+		Steps:
+		Create a new IO buffer (array of binary values)
+		Grab attributes as outlined in the spec
+		List of properties
+		Get the image hierarchy and mask pointers
+		Return the offset
+
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
+		# Create a new IO buffer (array of binary values)
 		io = IO(data, index)
-		#print 'Decoding Layer at',index
+		# Grab attributes as outlined in the spec
 		self.width = io.u32
 		self.height = io.u32
 		self.colorMode = io.u32 # one of self.COLOR_MODES
 		self.name = io.sz754
+		# List of properties
 		self._propertiesDecode_(io)
+		# Get the image hierarchy and mask pointers
 		self._imageHierarchyPtr = self._pointerDecode_(io)
 		self._maskPtr = self._pointerDecode_(io)
 		self._mask = None
 		self._data = data
+		# Return the offset
 		return io.index
 
 	def toBytes(self):
 		"""
 		encode to byte array
+
+		Steps:
+		Create a new IO buffer (array of binary values)
+		Set attributes as outlined in the spec
+		List of properties
+		Set the image hierarchy and mask pointers
+		Return the data
+
 		"""
+		# Create a new IO buffer (array of binary values)
 		dataAreaIO = IO()
 		io = IO()
+		# Set attributes as outlined in the spec
 		io.u32 = self.width
 		io.u32 = self.height
 		io.u32 = self.colorMode
 		io.sz754 = self.name
+		# Set the image hierarchy and mask pointers
 		dataAreaIndex = io.index + self._POINTER_SIZE_ * 2
 		io.addBytes(self._pointerEncode_(dataAreaIndex))
 		dataAreaIO.addBytes(self._propertiesEncode_())
@@ -84,6 +106,7 @@ class GimpLayer(GimpIOBase):
 			dataAreaIO.addBytes(self.mask.toBytes())
 		io.addBytes(self._pointerEncode_(dataAreaIndex + dataAreaIO.index))
 		io.addBytes(dataAreaIO)
+		# Return the data
 		return io.data
 
 	@property
@@ -279,7 +302,8 @@ class GimpDocument(GimpIOBase):
 
 	def load(self, fileName):
 		"""
-		load a gimp file
+		Load a gimp xcf and decode the file. See decode for more on this
+		process
 
 		:param filename: can be a file name or a file-like object
 		"""
@@ -297,25 +321,43 @@ class GimpDocument(GimpIOBase):
 		"""
 		decode a byte buffer
 
+		Steps:
+		Create a new IO buffer (array of binary values)
+		Check that the file is a valid gimp xcf
+		Grab the file version
+		Grab other attributes as outlined in the spec
+		Get precision data using the class and io buffer
+		List of properties
+		Get the layers and add the pointers to them
+		Get the channels and add the pointers to them
+		Return the offset
+
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
+		# Create a new IO buffer (array of binary values)
 		io = IO(data, index)
+		# Check that the file is a valid gimp xcf
 		if io.getBytes(9) != "gimp xcf ".encode('ascii'):
 			raise Exception('Not a valid GIMP file')
+		# Grab the file version
 		version = io.cString
 		if version == 'file':
 			self.version = 0
 		else:
 			self.version = int(version[1:])
+		# Grab other attributes as outlined in the spec
 		self.width = io.u32
 		self.height = io.u32
 		self.baseColorMode = io.u32
+		# Get precision data using the class and io buffer
 		self.precision = Precision()
 		self.precision.decode(self.version, io)
+		# List of properties
 		self._propertiesDecode_(io)
 		self._layerPtr = []
 		self._layers = []
+		# Get the layers and add the pointers to them
 		while True:
 			ptr = self._pointerDecode_(io)
 			if ptr == 0:
@@ -324,6 +366,7 @@ class GimpDocument(GimpIOBase):
 			l = GimpLayer(self)
 			l._decode_(io.data, ptr)
 			self._layers.append(l)
+		# Get the channels and add the pointers to them
 		self._channelPtr = []
 		self.channels = []
 		while True:
@@ -334,30 +377,52 @@ class GimpDocument(GimpIOBase):
 			c = GimpChannel(self)
 			c.fromBytes(io.data, ptr)
 			self.channels.append(c)
+		# Return the offset
 		return io.index
 
 	def toBytes(self):
 		"""
 		encode to a byte array
+
+		Steps:
+		Create a new IO buffer (array of binary values)
+		The file is a valid gimp xcf
+		Set the file version
+		Set other attributes as outlined in the spec
+		Set precision data using the class and io buffer
+		List of properties
+		Set the layers and add the pointers to them
+		Set the channels and add the pointers to them
+		Return the data
+
 		"""
+		# Create a new IO buffer (array of binary values)
 		io = IO()
+		# The file is a valid gimp xcf
 		io.addBytes("gimp xcf ")
+		# Set the file version
 		io.addBytes(str(self.version) + '\0')
+		# Set other attributes as outlined in the spec
 		io.u32 = self.width
 		io.u32 = self.height
 		io.u32 = self.baseColorMode
+		# Set precision data using the class and io buffer
 		if self.precision is None:
 			self.precision = Precision()
 		self.precision.encode(self.version, io)
+		# List of properties
 		io.addBytes(self._propertiesEncode_())
 		dataAreaIdx = io.index + self._POINTER_SIZE_ * (len(self.layers) + len(self.channels))
 		dataAreaIo = IO()
+		# Set the layers and add the pointers to them
 		for l in self.layers:
 			io.pointer = dataAreaIdx + dataAreaIo.index
 			dataAreaIo.addBytes(l.toBytes())
+		# Set the channels and add the pointers to them
 		for channel in self.channels:
 			io.pointer = dataAreaIdx + dataAreaIo.index
 			dataAreaIo.addBytes(channel.toBytes())
+		# Return the data
 		return io.data
 
 	def _forceFullyLoaded(self):
