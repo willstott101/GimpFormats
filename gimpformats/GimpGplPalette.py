@@ -43,7 +43,7 @@ class GimpGplPalette:
 		self.name = data[1].split(':', 1)[-1].lstrip()
 		self.columns = int(data[2].split(':', 1)[-1].lstrip())
 		if data[3] != "#":
-			raise Exception('File format error.  Separtor missing.')
+			raise Exception('File format error. Separator missing.')
 		for line in data[4:]:
 			line = line.split(None, 4)
 			if len(line) < 3:
