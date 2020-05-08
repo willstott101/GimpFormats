@@ -2,6 +2,9 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2020.2.1 - 2020/05/08
+- Added `blendmodes` as a dependency
+
 ## 2020.2 - 2020/05/07
 - Massive backend changes. This is to make the development and maintenance
   processes easier as code files are a little smaller and contain one class (in

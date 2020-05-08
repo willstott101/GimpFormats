@@ -59,14 +59,7 @@ def run(tests=None, output=None, verbosity=2, failfast=False):
 
 
 if __name__ == '__main__':
-	# Use the Psyco python accelerator if available
-	# See:
-	# 	http://psyco.sourceforge.net
-	try:
-		import psyco
-		psyco.full() # accelerate this program
-	except ImportError:
-		pass
+
 	printhelp = False
 	save = None
 	testsM = []
