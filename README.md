@@ -225,7 +225,7 @@ More information can be found at
 ## Community Files
 ### Licence
 LGPLv3 License
-(See the [LICENSE](/LICENSE.md) for more information.)
+(See the [LICENSE](/LICENSE.txt) for more information.)
 
 ### Changelog
 See the [Changelog](/CHANGELOG.md) for more information.
