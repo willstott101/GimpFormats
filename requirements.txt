@@ -1,3 +1,4 @@
+binaryiotools==2020.*,>=2020.0.0
 blendmodes==2020.*,>=2020.2.2
 brackettree==0.*,>=0.2.5
 numpy==1.*,>=1.18.4

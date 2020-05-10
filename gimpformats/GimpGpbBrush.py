@@ -3,7 +3,7 @@
 Pure python implementation of the OLD gimp gpb brush format
 """
 import argparse
-from .BinaryIO import IO
+from binaryiotools import IO
 from .GimpGbrBrush import GimpGbrBrush
 from .GimpPatPattern import GimpPatPattern
 

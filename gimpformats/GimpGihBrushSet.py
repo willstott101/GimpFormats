@@ -6,7 +6,7 @@ The gih format is use to store a series of brushes, and some extra info
 for how to use them.
 """
 import argparse
-from .BinaryIO import IO
+from binaryiotools import IO
 from .GimpGbrBrush import GimpGbrBrush
 
 

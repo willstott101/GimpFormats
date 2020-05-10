@@ -3,7 +3,7 @@
 A specialized binary file base for Gimp files
 """
 import struct
-from .BinaryIO import IO
+from binaryiotools import IO
 from .GimpParasites import GimpParasite
 from .GimpVectors import GimpVector
 

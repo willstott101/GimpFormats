@@ -4,7 +4,7 @@ Pure python implementation of the gimp gbr brush format
 """
 import argparse
 import PIL.Image
-from .BinaryIO import IO
+from binaryiotools import IO
 
 class GimpGbrBrush:
 	"""

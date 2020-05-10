@@ -4,7 +4,7 @@ Pure python implementation of a gimp pattern file
 """
 import argparse
 import PIL.Image
-from .BinaryIO import IO
+from binaryiotools import IO
 
 
 class GimpPatPattern:

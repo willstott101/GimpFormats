@@ -17,7 +17,7 @@ import copy
 import PIL.ImageGrab
 from PIL import Image
 from blendmodes.blend import blendLayers, BlendType
-from .BinaryIO import IO
+from binaryiotools import IO
 from .GimpIOBase import GimpIOBase
 #from .GimpImageHierarchy import GimpImageHierarchy
 from .GimpPrecision import Precision

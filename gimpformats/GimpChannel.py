@@ -2,7 +2,7 @@
 Represents a single channel or mask in a gimp image
 """
 
-from .BinaryIO import IO
+from binaryiotools import IO
 from .GimpIOBase import GimpIOBase
 from .GimpImageHierarchy import GimpImageHierarchy
 

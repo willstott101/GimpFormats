@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gimpformats"
-version = "2020.2.1"
+version = "2020.2.2"
 description = "Pure python implementation of the gimp file format(s)"
 authors = ["FredHappyface"]
 classifiers = [
@@ -31,6 +31,7 @@ numpy = "^1.18.4"
 pillow = "^7.1.2"
 brackettree = "^0.2.5"
 blendmodes = "^2020.2.2"
+binaryiotools = "^2020"
 
 [tool.dephell.main]
 from = "pyproject.toml"

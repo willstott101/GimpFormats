@@ -3,7 +3,7 @@
 Stuff related to vectors/paths within a gimp document
 """
 #from .GimpIOBase import GimpIOBase
-from .BinaryIO import IO
+from binaryiotools import IO
 from .GimpParasites import GimpParasite
 
 class GimpVector:
