@@ -2,6 +2,9 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2020.2.3 - 2020/05/14
+- Fix fatal read xcf bug (upstream)
+
 ## 2020.2.2 - 2020/05/10
 - `BinaryIO` is now an external dependency `binaryiotools` as it provides many
   generalized methods that can be used to read a whole range of binary streams
