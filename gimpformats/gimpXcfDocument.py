@@ -19,7 +19,7 @@ from PIL import Image
 from blendmodes.blend import blendLayers, BlendType
 from binaryiotools import IO
 from .GimpIOBase import GimpIOBase
-#from .GimpImageHierarchy import GimpImageHierarchy
+from .GimpImageHierarchy import GimpImageHierarchy
 from .GimpPrecision import Precision
 from .GimpLayer import GimpLayer
 from .GimpChannel import GimpChannel
@@ -242,6 +242,7 @@ class GimpDocument(GimpIOBase):
 		:return: newly created GimpLayer object
 		"""
 		l = GimpLayer(self, name, image)
+		l.imageHierarchy = GimpImageHierarchy(self, image=image)
 		self.insertLayer(l, index)
 		return l
 

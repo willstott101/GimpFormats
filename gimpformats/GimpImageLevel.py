@@ -70,14 +70,14 @@ class GimpImageLevel(GimpIOBase):
 		io.u32 = self.width
 		io.u32 = self.height
 		dataIndex = io.index + self._POINTER_SIZE_ * (len(self.tiles) + 1)
-		for tile in self._tiles:
+		for tile in self.tiles:
 			io.addBytes(self._pointerEncode_(dataIndex + dataIO.index))
 			data = tile.tobytes()
 			if self.doc.compression == 0: # none
 				pass
 			elif self.doc.compression == 1: # RLE
-				#data = self._encodeRLE(data, self.bpp)
-				raise Exception('RLE Compression is a work in progress!')
+				data = self._encodeRLE(data, self.bpp)
+				#raise Exception('RLE Compression is a work in progress!')
 			elif self.doc.compression == 2: # zip
 				data = zlib.compress(data)
 			else:
@@ -145,13 +145,13 @@ class GimpImageLevel(GimpIOBase):
 
 	def _encodeRLE(self, data, bpp):
 		"""
-		encode image to RLE  image data
+		encode image to RLE image data
 		"""
-		def countSame(_data, _startIdx):
+		def countSame(data, startIdx):
 			"""
 			count how many times bytes are identical
 			"""
-			'''
+			idx = startIdx
 			l = len(data)
 			if idx >= l:
 				return 0
@@ -159,27 +159,23 @@ class GimpImageLevel(GimpIOBase):
 			idx = startIdx + 1
 			while idx < l and data[idx] == c:
 				idx += 1
-			return idx - startIdxdef
-			'''
-			return 0
+			return idx - startIdx
 
 
 		def countDifferent(data, startIdx):
 			"""
 			count how many times bytes are different
 			"""
-			'''
+			idx = startIdx
 			l = len(data)
 			if idx >= l:
-				return 0
+				return 1
 			c = data[idx]
 			idx = startIdx + 1
-			while idx < l and data[idx] != c:
+			while idx < (l - 1) and data[idx] != c:
 				idx += 1
 				c = data[idx]
 			return idx - startIdx
-			'''
-			return 0
 
 
 		def rleEncodeChan(data):
@@ -225,10 +221,10 @@ class GimpImageLevel(GimpIOBase):
 				chanData.append(data[index])
 			dataByChannel.append(chanData)
 		# encode each channel
-		for index in dataByChannel:
+		for index in range(len(dataByChannel)): # iterate through 2d array
 			dataByChannel[index] = rleEncodeChan(dataByChannel[index])
 		# join and return
-		return ''.join(dataByChannel)
+		return "".join("".join(str(x)) for x in dataByChannel)
 
 	@property
 	def bpp(self):

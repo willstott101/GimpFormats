@@ -38,6 +38,11 @@ class Test(unittest.TestCase):
 		actual.close()
 		os.remove(__HERE__ + 'actualOutput_Plasma.gpl')
 
+	def testWeb(self):
+		""" test web """
+		self.dut.load(__HERE__ + 'web.gpl')
+		assert len(self.dut.colors) == 216
+
 
 def testSuite():
 	"""

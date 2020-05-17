@@ -42,9 +42,9 @@ class GimpGplPalette:
 			raise Exception('File format error.  Magic value mismatch.')
 		self.name = data[1].split(':', 1)[-1].lstrip()
 		self.columns = int(data[2].split(':', 1)[-1].lstrip())
-		if data[3] != "#":
-			raise Exception('File format error. Separator missing.')
-		for line in data[4:]:
+		for line in data[3:]:
+			if len(line) < 1 or line[0] == "#": # Commented Line
+				continue
 			line = line.split(None, 4)
 			if len(line) < 3:
 				continue

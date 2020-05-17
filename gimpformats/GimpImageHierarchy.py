@@ -66,7 +66,7 @@ class GimpImageHierarchy(GimpIOBase):
 		io.u32 = self.width
 		io.u32 = self.height
 		io.u32 = self.bpp
-		dataIndex = io.index + GimpIOBase._POINTER_SIZE_ * (len(self.levels) + 1)
+		dataIndex = io.index + self._POINTER_SIZE_ * (len(self.levels) + 1)
 		for level in self.levels:
 			io.addBytes(self._pointerEncode_(dataIndex + dataIO.index)) # TODO: This may be incorrect
 			dataIO.addBytes(level.encode_())

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gimpformats"
-version = "2020.2.3"
+version = "2020.2.4"
 description = "Pure python implementation of the gimp file format(s)"
 authors = ["FredHappyface"]
 classifiers = [

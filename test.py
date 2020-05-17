@@ -35,4 +35,4 @@ newProj = GimpDocument()
 newProj.newLayer("wilber", wilber)
 for layer in newProj.layers:
 	print(layer.name)
-newProj.saveNew("wilber.xcf")
+#newProj.saveNew("wilber.xcf")

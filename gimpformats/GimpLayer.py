@@ -82,11 +82,14 @@ class GimpLayer(GimpIOBase):
 		io.u32 = self.height
 		io.u32 = self.colorMode
 		io.sz754 = self.name
-		# Set the image hierarchy and mask pointers
+		# Layer properties
+		io.addBytes(self._propertiesEncode_())
+		# Pointer to the image heirachy structure
 		dataAreaIndex = io.index + self._POINTER_SIZE_ * 2
 		io.addBytes(self._pointerEncode_(dataAreaIndex))
-		dataAreaIO.addBytes(self._propertiesEncode_())
-		io.addBytes(self._pointerEncode_(dataAreaIndex))
+		dataAreaIO.addBytes(self.imageHierarchy.encode_())
+		#io.addBytes(self._pointerEncode_(dataAreaIndex))
+		# Pointer to the layer mask
 		if self.mask is not None:
 			dataAreaIO.addBytes(self.mask.encode_())
 		io.addBytes(self._pointerEncode_(dataAreaIndex + dataAreaIO.index))
@@ -148,6 +151,12 @@ class GimpLayer(GimpIOBase):
 			self._imageHierarchy.decode_(self._data, self._imageHierarchyPtr)
 		return self._imageHierarchy
 
+	@imageHierarchy.setter
+	def imageHierarchy(self, imgHierarchy):
+		""" set the image hierarchy """
+		self._imageHierarchy = imgHierarchy
+
+
 	def _forceFullyLoaded(self):
 		"""
 		make sure everything is fully loaded from the file
@@ -155,8 +164,8 @@ class GimpLayer(GimpIOBase):
 		if self.mask is not None:
 			self.mask._forceFullyLoaded()
 		_ = self.image # make sure the image is loaded so we can delete the hierarchy nonsense
-		self._imageHierarchy = None
-		self._data = None
+		#self._imageHierarchy = None
+		#self._data = None
 
 	def __repr__(self, indent=''):
 		"""

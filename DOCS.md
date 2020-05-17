@@ -1194,16 +1194,11 @@ NOTE: resets layer width, height, and colorMode
 #### imageHierarchy
 
 ```python
- | @property
- | imageHierarchy()
+ | @imageHierarchy.setter
+ | imageHierarchy(imgHierarchy)
 ```
 
-Get the image hierarchy objects
-
-This is mainly needed for deciphering image, and therefore,
-of little use to you, the user.
-
-NOTE: can return None if it has been fully read into an image
+set the image hierarchy
 
 <a name=".gimpformats.GimpLayer.GimpLayer.__repr__"></a>
 #### \_\_repr\_\_
