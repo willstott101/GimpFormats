@@ -2,6 +2,7 @@
 """
 Pure python implementation of a gimp pattern file
 """
+from __future__ import annotations
 import argparse
 import PIL.Image
 from binaryiotools import IO
@@ -17,8 +18,8 @@ class GimpPatPattern:
 
 	COLOR_MODES = [None, 'L', 'LA', 'RGB', 'RGBA']
 
-	def __init__(self, filename=None):
-		self.filename = None
+	def __init__(self, fileName=None):
+		self.fileName = None
 		self.version = 1
 		self.width = 0
 		self.height = 0
@@ -27,65 +28,65 @@ class GimpPatPattern:
 		self.name = ''
 		self._rawImage = None
 		self._image = None
-		if filename is not None:
-			self.load(filename)
+		if fileName is not None:
+			self.load(fileName)
 
-	def load(self, filename):
+	def load(self, fileName: Union[BytesIO, str]):
 		"""
 		load a gimp file
 
-		:param filename: can be a file name or a file-like object
+		:param fileName: can be a file name or a file-like object
 		"""
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
-			f = filename
+		if isinstance(fileName, str):
+			self.fileName = fileName
+			file = open(fileName, 'rb')
 		else:
-			self.filename = filename
-			f = open(filename, 'rb')
-		data = f.read()
-		f.close()
-		self.decode_(data)
+			self.fileName = fileName.name
+			file = fileName
+		data = file.read()
+		file.close()
+		self.decode(data)
 
-	def decode_(self, data, index=0):
+	def decode(self, data, index=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		io = IO(data, index)
-		headerSize = io.u32
-		self.version = io.u32
-		self.width = io.u32
-		self.height = io.u32
-		self.bpp = io.u32
+		ioBuf = IO(data, index)
+		headerSize = ioBuf.u32
+		self.version = ioBuf.u32
+		self.width = ioBuf.u32
+		self.height = ioBuf.u32
+		self.bpp = ioBuf.u32
 		self.mode = self.COLOR_MODES[self.bpp]
-		magic = io.getBytes(4)
+		magic = ioBuf.getBytes(4)
 		if magic.decode('ascii') != 'GPAT':
 			raise Exception('File format error.  Magic value mismatch.')
-		nameLen = headerSize - io.index
-		self.name = io.getBytes(nameLen).decode('UTF-8')
-		self._rawImage = io.getBytes(self.width * self.height * self.bpp)
+		nameLen = headerSize - ioBuf.index
+		self.name = ioBuf.getBytes(nameLen).decode('UTF-8')
+		self._rawImage = ioBuf.getBytes(self.width * self.height * self.bpp)
 		self._image = None
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode to a byte buffer
 		"""
-		io = IO()
-		io.u32 = 24 + len(self.name)
-		io.u32 = self.version
-		io.u32 = self.width
-		io.u32 = self.height
-		io.u32 = len(self.image.mode)
-		io.addBytes('GPAT')
-		io.addBytes(self.name.encode('utf-8'))
+		ioBuf = IO()
+		ioBuf.u32 = 24 + len(self.name)
+		ioBuf.u32 = self.version
+		ioBuf.u32 = self.width
+		ioBuf.u32 = self.height
+		ioBuf.u32 = len(self.image.mode)
+		ioBuf.addBytes('GPAT')
+		ioBuf.addBytes(self.name.encode('utf-8'))
 		if self._rawImage is None:
 			rawImage = self.image.tobytes(encoder_name='raw')
 		else:
 			rawImage = self._rawImage
-		io.addBytes(rawImage)
-		return io.data
+		ioBuf.addBytes(rawImage)
+		return ioBuf.data
 
 	@property
 	def size(self):
@@ -113,14 +114,14 @@ class GimpPatPattern:
 		self._image = image
 		self._rawImage = None
 
-	def save(self, toFilename=None, toExtension=None):
+	def save(self, tofileName=None, toExtension=None):
 		"""
 		save this gimp image to a file
 		"""
 		asImage = False
 		if toExtension is None:
-			if toFilename is not None:
-				toExtension = toFilename.rsplit('.', 1)
+			if tofileName is not None:
+				toExtension = tofileName.rsplit('.', 1)
 				if len(toExtension) > 1:
 					toExtension = toExtension[-1]
 				else:
@@ -128,11 +129,11 @@ class GimpPatPattern:
 		if toExtension is not None and toExtension != 'pat':
 			asImage = True
 		if asImage:
-			self.image.save(toFilename)
+			self.image.save(tofileName)
 		else:
-			if not hasattr(toFilename, 'write'):
-				f = open(toFilename, 'wb')
-			f.write(self.encode_())
+			if not hasattr(tofileName, 'write'):
+				f = open(tofileName, 'wb')
+			f.write(self.encode())
 			f.close()
 
 	def __repr__(self, indent=''):
@@ -140,8 +141,8 @@ class GimpPatPattern:
 		Get a textual representation of this object
 		"""
 		ret = []
-		if self.filename is not None:
-			ret.append('Filename: ' + self.filename)
+		if self.fileName is not None:
+			ret.append('fileName: ' + self.fileName)
 		ret.append('Name: ' + str(self.name))
 		ret.append('Version: ' + str(self.version))
 		ret.append('Size: ' + str(self.width) + ' x ' + str(self.height))

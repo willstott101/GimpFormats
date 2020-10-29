@@ -2,6 +2,7 @@
 """
 Pure python implementation of the OLD gimp gpb brush format
 """
+from __future__ import annotations
 import argparse
 from binaryiotools import IO
 from .GimpGbrBrush import GimpGbrBrush
@@ -15,59 +16,59 @@ class GimpGpbBrush:
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/vbr.txt
 	"""
-	def __init__(self, filename):
+	def __init__(self, fileName: Union[BytesIO, str]):
 		self.brush = GimpGbrBrush()
 		self.pattern = GimpPatPattern()
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
+		if hasattr(fileName, 'read'):
+			self.fileName = fileName.name
 		else:
-			self.filename = filename
+			self.fileName = fileName
 
-	def load(self, filename):
+	def load(self, fileName: Union[BytesIO, str]):
 		"""
 		load a gimp file
 
-		:param filename: can be a file name or a file-like object
+		:param fileName: can be a file name or a file-like object
 		"""
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
-			f = filename
+		if isinstance(fileName, str):
+			self.fileName = fileName
+			file = open(fileName, 'rb')
 		else:
-			self.filename = filename
-			f = open(filename, 'rb')
-		data = f.read()
-		f.close()
-		self.decode_(data)
+			self.fileName = fileName.name
+			file = fileName
+		data = file.read()
+		file.close()
+		self.decode(data)
 
-	def decode_(self, data, index=0):
+	def decode(self, data, index=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		index = self.brush.decode_(data, index)
-		#index = self.pattern.decode_(data, index)
+		index = self.brush.decode(data, index)
+		#index = self.pattern.decode(data, index)
 		return index
 
-	def encode_(self):
+	def encode(self):
 		""" encode this object to a byte array """
-		io = IO()
-		io.addBytes(self.brush.encode_())
-		io.addBytes(self.pattern.encode_())
-		return io.data
+		ioBuf = IO()
+		ioBuf.addBytes(self.brush.encode())
+		ioBuf.addBytes(self.pattern.encode())
+		return ioBuf.data
 
-	def save(self, toFilename=None):
+	def save(self, tofileName=None):
 		""" save this gimp image to a file """
-		if not hasattr(toFilename, 'write'):
-			f = open(toFilename, 'wb')
-		f.write(self.encode_())
+		if not hasattr(tofileName, 'write'):
+			f = open(tofileName, 'wb')
+		f.write(self.encode())
 
 	def __repr__(self, indent=''):
 		""" Get a textual representation of this object """
 		ret = []
-		if self.filename is not None:
-			ret.append('Filename: ' + self.filename)
+		if self.fileName is not None:
+			ret.append('fileName: ' + self.fileName)
 		ret.append(self.brush.__repr__(indent + '\t'))
 		ret.append(self.pattern.__repr__(indent + '\t'))
 		return ('\n' + indent).join(ret)

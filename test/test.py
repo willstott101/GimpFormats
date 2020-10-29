@@ -82,7 +82,7 @@ if __name__ == '__main__':
 		print('  test.py [options] [tests]')
 		print('Options:')
 		print(
-		'   --save=filename ............... save the test output to this file, rather than the console'
+		'   --save=fileName ............... save the test output to this file, rather than the console'
 		)
 	else:
 		run(testsM, save)

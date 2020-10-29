@@ -7,6 +7,7 @@ They are used to store things like last-used plugin settings, gamma adjuetments,
 Format of known parasites:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
 """
+from __future__ import annotations
 from binaryiotools import IO
 
 #TODO: how to best use these for our puproses??
@@ -35,35 +36,35 @@ class GimpParasite:
 		self.flags = 0
 		self.data = None
 
-	def decode_(self, data, index=0):
+	def decode(self, data: bytearray, index: int=0) -> int:
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		io = IO(data, index)
-		self.name = io.sz754
-		self.flags = io.u32
-		dataLength = io.u32
-		self.data = io.getBytes(dataLength)
-		return io.index
+		ioBuf = IO(data, index)
+		self.name = ioBuf.sz754
+		self.flags = ioBuf.u32
+		dataLength = ioBuf.u32
+		self.data = ioBuf.getBytes(dataLength)
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode a byte buffer
 
 		:param data: data buffer to encode
 		:param index: index within the buffer to start at
 		"""
-		io = IO()
-		io.sz754 = self.name
-		io.u32 = self.flags
-		io.u32 = len(self.data)
-		io.addBytes(self.data)
-		return io.data
+		ioBuf = IO()
+		ioBuf.sz754 = self.name
+		ioBuf.u32 = self.flags
+		ioBuf.u32 = len(self.data)
+		ioBuf.addBytes(self.data)
+		return ioBuf.data
 
-	def __repr__(self, indent=''):
+	def __repr__(self, indent: str='') -> str:
 		"""
 		Get a textual representation of this object
 		"""

@@ -5,6 +5,7 @@ Gimp Image Pipe Format
 The gih format is use to store a series of brushes, and some extra info
 for how to use them.
 """
+from __future__ import annotations
 import argparse
 from binaryiotools import IO
 from .GimpGbrBrush import GimpGbrBrush
@@ -20,40 +21,40 @@ class GimpGihBrushSet:
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/gih.txt
 	"""
-	def __init__(self, filename=None):
-		self.filename = None
+	def __init__(self, fileName=None):
+		self.fileName = None
 		self.name = ''
 		self.params = {}
 		self.brushes = []
-		if filename is not None:
-			self.load(filename)
+		if fileName is not None:
+			self.load(fileName)
 
-	def load(self, filename):
+	def load(self, fileName: Union[BytesIO, str]):
 		"""
 		load a gimp file
 
-		:param filename: can be a file name or a file-like object
+		:param fileName: can be a file name or a file-like object
 		"""
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
-			f = filename
+		if isinstance(fileName, str):
+			self.fileName = fileName
+			file = open(fileName, 'rb')
 		else:
-			self.filename = filename
-			f = open(filename, 'rb')
-		data = f.read()
-		f.close()
-		self.decode_(data)
+			self.fileName = fileName.name
+			file = fileName
+		data = file.read()
+		file.close()
+		self.decode(data)
 
-	def decode_(self, data, index=0):
+	def decode(self, data, index=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		io = IO(data, index)
-		self.name = io.textLine
-		secondLine = io.textLine.split(' ')
+		ioBuf = IO(data, index)
+		self.name = ioBuf.textLine
+		secondLine = ioBuf.textLine.split(' ')
 		self.params = {}
 		numBrushes = int(secondLine[0])
 		# everything that's left is a gimp-image-pipe-parameters parasite
@@ -63,43 +64,43 @@ class GimpGihBrushSet:
 		self.brushes = []
 		for _ in range(numBrushes):
 			b = GimpGbrBrush()
-			io.index = b.decode_(
-			io.data,
-			io.index) # TODO: broken.  For some reson there is extra data between brushes!
+			ioBuf.index = b.decode(
+			ioBuf.data,
+			ioBuf.index) # TODO: broken.  For some reson there is extra data between brushes!
 			self.brushes.append(b)
-		return io.index
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode this object to a byte array
 		"""
-		io = IO()
-		io.textLine = self.name
+		ioBuf = IO()
+		ioBuf.textLine = self.name
 		# add the second line of data
 		secondLine = [str(len(self.brushes))]
 		for key in self.params:
 			secondLine.append(key + ':' + str(self.params[key]))
-		io.textLine = ' '.join(secondLine)
+		ioBuf.textLine = ' '.join(secondLine)
 		# add the brushes
 		for brush in self.brushes:
-			io.addBytes(brush.encode_())
-		return io.data
+			ioBuf.addBytes(brush.encode())
+		return ioBuf.data
 
-	def save(self, toFilename=None):
+	def save(self, tofileName=None):
 		"""
 		save this gimp image to a file
 		"""
-		if not hasattr(toFilename, 'write'):
-			f = open(toFilename, 'wb')
-		f.write(self.encode_())
+		if not hasattr(tofileName, 'write'):
+			f = open(tofileName, 'wb')
+		f.write(self.encode())
 
 	def __repr__(self, indent=''):
 		"""
 		Get a textual representation of this object
 		"""
 		ret = []
-		if self.filename is not None:
-			ret.append('Filename: ' + self.filename)
+		if self.fileName is not None:
+			ret.append('fileName: ' + self.fileName)
 		ret.append('Name: ' + str(self.name))
 		for k, v in list(self.params.items()):
 			ret.append(k + ': ' + str(v))
@@ -134,13 +135,13 @@ if __name__ == '__main__':
 		else:
 			gimpGihBrushSet.brushes[int(args.show)].image.show()
 	if args.save:
-		indexM, filenameM = args.save.split(',', 1)
-		if filenameM.find('*') < 0:
-			filenameM = '*.'.join(filenameM.split('.', 1))
+		indexM, fileNameM = args.save.split(',', 1)
+		if fileNameM.find('*') < 0:
+			fileNameM = '*.'.join(fileNameM.split('.', 1))
 		if indexM == '*':
 			for iterationM in range(len(gimpGihBrushSet.brushes)):
-				fn2 = filenameM.replace('*', str(iterationM))
+				fn2 = fileNameM.replace('*', str(iterationM))
 				gimpGihBrushSet.brushes[iterationM].image.save(fn2)
 		else:
-			fn2 = filenameM.replace('*', iterationM)
+			fn2 = fileNameM.replace('*', iterationM)
 			gimpGihBrushSet.brushes[int(indexM)].image.save(fn2)

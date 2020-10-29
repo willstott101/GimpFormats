@@ -2,6 +2,9 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2020.3 - 2020/10/29
+- A bit of typing
+
 ## 2020.2.4 - 2020/05/17
 - Update gpl reader to remove comments
 - More work on saving xcf. Still doesn't work.

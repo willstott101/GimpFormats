@@ -2,8 +2,10 @@
 """
 Pure python implementation of the gimp vbr brush format
 """
-
+from __future__ import annotations
 import argparse
+from ioBuf import BytesIO
+from typing import Optional, Union
 
 class GimpVbrBrush:
 	"""
@@ -15,7 +17,7 @@ class GimpVbrBrush:
 
 	BRUSH_SHAPES = ["circle", "square", "diamond"]
 
-	def __init__(self, filename=None):
+	def __init__(self, fileName: Union[BytesIO, str, None]=None):
 		self.version = 1.0
 		self.name = ''
 		self.spacing = 0
@@ -25,24 +27,24 @@ class GimpVbrBrush:
 		self.angle = 0
 		self.brushShape = None # one of the strings in self.BRUSH_SHAPES
 		self.spikes = None
-		if filename is not None:
-			self.load(filename)
+		if fileName is not None:
+			self.load(fileName)
 
-	def load(self, filename):
+	def load(self, fileName: Union[BytesIO, str]):
 		"""
 		load a gimp file
 
-		:param filename: can be a file name or a file-like object
+		:param fileName: can be a file name or a file-like object
 		"""
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
-			f = filename
+		if isinstance(fileName, str):
+			self.fileName = fileName
+			file = open(fileName, 'rb')
 		else:
-			self.filename = filename
-			f = open(filename, 'r')
-		data = f.read()
-		f.close()
-		self.decode_(data)
+			self.fileName = fileName.name
+			file = fileName
+		data = file.read()
+		file.close()
+		self.decode(data)
 
 	@property
 	def image(self):
@@ -51,7 +53,7 @@ class GimpVbrBrush:
 		"""
 		raise NotImplementedError() # TODO:
 
-	def decode_(self, data):
+	def decode(self, data: bytes):
 		"""
 		decode a byte buffer
 
@@ -80,7 +82,7 @@ class GimpVbrBrush:
 		else:
 			raise Exception('Unknown version ' + str(self.version))
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode to a raw data stream
 		"""
@@ -105,14 +107,14 @@ class GimpVbrBrush:
 			data.append(str(self.angle))
 		return ('\n'.join(data) + '\n').encode('utf-8')
 
-	def save(self, toFilename=None, toExtension=None):
+	def save(self, tofileName=None, toExtension=None):
 		"""
 		save this gimp image to a file
 		"""
 		asImage = False
 		if toExtension is None:
-			if toFilename is not None:
-				toExtension = toFilename.rsplit('.', 1)
+			if tofileName is not None:
+				toExtension = tofileName.rsplit('.', 1)
 				if len(toExtension) > 1:
 					toExtension = toExtension[-1]
 				else:
@@ -120,19 +122,19 @@ class GimpVbrBrush:
 		if toExtension is not None and toExtension != 'vbr':
 			asImage = True
 		if asImage:
-			self.image.save(toFilename)
+			self.image.save(tofileName)
 		else:
-			if not hasattr(toFilename, 'write'):
-				f = open(toFilename, 'wb')
-			f.write(self.encode_())
+			if not hasattr(tofileName, 'write'):
+				f = open(tofileName, 'wb')
+			f.write(self.encode())
 
 	def __repr__(self, indent=''):
 		"""
 		Get a textual representation of this object
 		"""
 		ret = []
-		if self.filename is not None:
-			ret.append('Filename: ' + self.filename)
+		if self.fileName is not None:
+			ret.append('fileName: ' + self.fileName)
 		ret.append('Name: ' + str(self.name))
 		ret.append('Version: ' + str(self.version))
 		ret.append('Spacing: ' + str(self.spacing))

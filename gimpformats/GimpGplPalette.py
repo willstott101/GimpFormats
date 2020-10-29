@@ -2,36 +2,36 @@
 """
 Pure python implementation of the gimp gpl palette format
 """
-
+from __future__ import annotations
 import argparse
 
 class GimpGplPalette:
 	""" Pure python implementation of the gimp gpl palette format """
-	def __init__(self, filename=None):
+	def __init__(self, fileName=None):
 		self.name = ''
 		self.columns = 16
 		self.colors = []
 		self.colorNames = []
-		if filename is not None:
-			self.load(filename)
+		if fileName is not None:
+			self.load(fileName)
 
-	def load(self, filename):
+	def load(self, fileName: Union[BytesIO, str]):
 		"""
 		load a gimp file
 
-		:param filename: can be a file name or a file-like object
+		:param fileName: can be a file name or a file-like object
 		"""
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
-			f = filename
+		if hasattr(fileName, 'read'):
+			self.fileName = fileName.name
+			f = fileName
 		else:
-			self.filename = filename
-			f = open(filename, 'r')
+			self.fileName = fileName
+			f = open(fileName, 'r')
 		data = f.read()
 		f.close()
-		self.decode_(data)
+		self.decode(data)
 
-	def decode_(self, data):
+	def decode(self, data):
 		"""
 		decode a byte buffer
 
@@ -54,7 +54,7 @@ class GimpGplPalette:
 			else:
 				self.colorNames.append(None)
 
-	def encode_(self):
+	def encode(self):
 		""" encode to a raw data stream """
 		data = []
 		data.append("GIMP Palette")
@@ -70,25 +70,25 @@ class GimpGplPalette:
 			data.append(line)
 		return ('\n'.join(data) + '\n').encode('utf-8')
 
-	def save(self, toFilename=None, toExtension=None):
+	def save(self, tofileName=None, toExtension=None):
 		""" save this gimp image to a file """
 		if toExtension is None:
-			if toFilename is not None:
-				toExtension = toFilename.rsplit('.', 1)
+			if tofileName is not None:
+				toExtension = tofileName.rsplit('.', 1)
 				if len(toExtension) > 1:
 					toExtension = toExtension[-1]
 				else:
 					toExtension = None
-		if not hasattr(toFilename, 'write'):
-			f = open(toFilename, 'wb')
-		f.write(self.encode_())
+		if not hasattr(tofileName, 'write'):
+			f = open(tofileName, 'wb')
+		f.write(self.encode())
 		f.close()
 
 	def __repr__(self, indent=''):
 		""" Get a textual representation of this object """
 		ret = []
-		if self.filename is not None:
-			ret.append('Filename: ' + self.filename)
+		if self.fileName is not None:
+			ret.append('fileName: ' + self.fileName)
 		ret.append('Name: ' + str(self.name))
 		ret.append('Columns: ' + str(self.columns))
 		ret.append('Colors:')

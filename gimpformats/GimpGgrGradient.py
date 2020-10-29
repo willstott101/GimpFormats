@@ -2,6 +2,7 @@
 """
 Gimp color gradient
 """
+from __future__ import annotations
 import argparse
 
 
@@ -34,7 +35,7 @@ class GradientSegment:
 		"""
 		raise NotImplementedError()
 
-	def decode_(self, data):
+	def decode(self, data):
 		"""
 		decode a byte buffer
 
@@ -57,7 +58,7 @@ class GradientSegment:
 					if len(data) >= 15:
 						self.rightColorType = int(data[14])
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode this to a byte array
 		"""
@@ -103,37 +104,37 @@ class GimpGgrGradient:
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/ggr.txt
 	"""
-	def __init__(self, filename=None):
-		self.filename = None
+	def __init__(self, fileName=None):
+		self.fileName = None
 		self.segments = []
 		self.name = ''
-		if filename is not None:
-			self.load(filename)
+		if fileName is not None:
+			self.load(fileName)
 
-	def load(self, filename):
+	def load(self, fileName: Union[BytesIO, str]):
 		"""
 		load a gimp file
 
-		:param filename: can be a file name or a file-like object
+		:param fileName: can be a file name or a file-like object
 		"""
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
-			f = filename
+		if isinstance(fileName, str):
+			self.fileName = fileName
+			file = open(fileName, 'rb')
 		else:
-			self.filename = filename
-			f = open(filename, 'rb')
-		data = f.read()
-		f.close()
-		self.decode_(data)
+			self.fileName = fileName.name
+			file = fileName
+		data = file.read()
+		file.close()
+		self.decode(data)
 
-	def decode_(self, data):
+	def decode(self, data):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		data = data.decode_('utf-8').split('\n')
+		data = data.decode('utf-8').split('\n')
 		data = [l.strip() for l in data]
 		if data[0] != 'GIMP Gradient':
 			raise Exception('File format error.  Magic value mismatch.')
@@ -141,10 +142,10 @@ class GimpGgrGradient:
 		numSegments = int(data[2])
 		for i in range(numSegments):
 			gs = GradientSegment()
-			gs.decode_(data[i + 3])
+			gs.decode(data[i + 3])
 			self.segments.append(gs)
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode this to a byte array
 		"""
@@ -152,16 +153,16 @@ class GimpGgrGradient:
 		ret.append('Name: ' + self.name)
 		ret.append(str(len(self.segments)))
 		for segment in self.segments:
-			ret.append(segment.encode_())
+			ret.append(segment.encode())
 		return ('\n'.join(ret) + '\n').encode('utf-8')
 
-	def save(self, toFilename=None):
+	def save(self, tofileName=None):
 		"""
 		save this gimp image to a file
 		"""
-		if not hasattr(toFilename, 'write'):
-			f = open(toFilename, 'wb')
-		f.write(self.encode_())
+		if not hasattr(tofileName, 'write'):
+			f = open(tofileName, 'wb')
+		f.write(self.encode())
 		f.close()
 
 	def getColor(self, percent):
@@ -176,8 +177,8 @@ class GimpGgrGradient:
 		Get a textual representation of this object
 		"""
 		ret = []
-		if self.filename is not None:
-			ret.append('Filename: ' + self.filename)
+		if self.fileName is not None:
+			ret.append('fileName: ' + self.fileName)
 		ret.append('Name: ' + str(self.name))
 		for s in self.segments:
 			ret.append(s.__repr__(indent + '\t'))

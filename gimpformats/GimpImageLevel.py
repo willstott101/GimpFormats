@@ -4,9 +4,11 @@ Gets packed pixels from a gimp image
 
 This represents a single level in an imageHierarchy
 """
+from __future__ import annotations
 import math
 import zlib
 import PIL.Image
+from PIL.Image import Image
 from .GimpIOBase import IO, GimpIOBase
 
 
@@ -23,17 +25,17 @@ class GimpImageLevel(GimpIOBase):
 		self._tiles = None # tile PIL images
 		self._image = None
 
-	def decode_(self, data, index=0):
+	def decode(self, data: bytearray, index: int=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		io = IO(data, index)
-		#print 'Decoding image level at',io.index
-		self.width = io.u32
-		self.height = io.u32
+		ioBuf = IO(data, index)
+		#print 'Decoding image level at',ioBuf.index
+		self.width = ioBuf.u32
+		self.height = ioBuf.u32
 		if self.width != self.parent.width or self.height != self.parent.height:
 			currentSize = '(' + str(self.width) + ',' + str(self.height) + ')'
 			expectedSize = '(' + str(self.parent.width) + ',' + str(self.parent.height) + ')'
@@ -43,35 +45,35 @@ class GimpImageLevel(GimpIOBase):
 		self._image = None
 		for y in range(0, self.height, 64):
 			for x in range(0, self.width, 64):
-				ptr = self._pointerDecode_(io)
+				ptr = self._pointerDecode(ioBuf)
 				size = (min(self.width - x, 64), min(self.height - y, 64))
 				totalBytes = size[0] * size[1] * self.bpp
 				if self.doc.compression == 0: # none
-					data = io.data[ptr:ptr + totalBytes]
+					data = ioBuf.data[ptr:ptr + totalBytes]
 				elif self.doc.compression == 1: # RLE
-					data = self._decodeRLE(io.data, size[0] * size[1], self.bpp, ptr)
+					data = self._decodeRLE(ioBuf.data, size[0] * size[1], self.bpp, ptr)
 				elif self.doc.compression == 2: # zip
-					data = zlib.decompress(io.data[ptr:ptr + totalBytes +
+					data = zlib.decompress(ioBuf.data[ptr:ptr + totalBytes +
 					24]) # guess how many bytes are needed
 				else:
 					raise Exception('ERR: unsupported compression mode ' +
 					str(self.doc.compression))
 				subImage = PIL.Image.frombytes(self.mode, size, bytes(data), decoder_name='raw')
 				self._tiles.append(subImage)
-		_ = self._pointerDecode_(io) # list ends with nul character
-		return io.index
+		_ = self._pointerDecode(ioBuf) # list ends with nul character
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode this object to a byte buffer
 		"""
-		dataIO = IO()
-		io = IO()
-		io.u32 = self.width
-		io.u32 = self.height
-		dataIndex = io.index + self._POINTER_SIZE_ * (len(self.tiles) + 1)
+		dataioBuf = IO()
+		ioBuf = IO()
+		ioBuf.u32 = self.width
+		ioBuf.u32 = self.height
+		dataIndex = ioBuf.index + self._POINTER_SIZE * (len(self.tiles) + 1)
 		for tile in self.tiles:
-			io.addBytes(self._pointerEncode_(dataIndex + dataIO.index))
+			ioBuf.addBytes(self._pointerEncode(dataIndex + dataioBuf.index))
 			data = tile.tobytes()
 			if self.doc.compression == 0: # none
 				pass
@@ -82,10 +84,10 @@ class GimpImageLevel(GimpIOBase):
 				data = zlib.compress(data)
 			else:
 				raise Exception('ERR: unsupported compression mode ' + str(self.doc.compression))
-			dataIO.addBytes(data)
-		io.addBytes(self._pointerEncode_(0))
-		io.addBytes(dataIO.data)
-		return io.data
+			dataioBuf.addBytes(data)
+		ioBuf.addBytes(self._pointerEncode(0))
+		ioBuf.addBytes(dataioBuf.data)
+		return ioBuf.data
 
 
 	def _decodeRLE(self, data, pixels, bpp, index=0):
@@ -258,7 +260,7 @@ class GimpImageLevel(GimpIOBase):
 		return ret
 
 	@property
-	def image(self):
+	def image(self) -> Image:
 		"""
 		get a final, compiled image
 		"""
@@ -274,14 +276,14 @@ class GimpImageLevel(GimpIOBase):
 		return self._image
 
 	@image.setter
-	def image(self, image):
+	def image(self, image: Image):
 		self._image = image
 		self._tiles = None
 		self.width = image.width
 		self.height = image.height
 		self.tiles = None
 
-	def __repr__(self, indent=''):
+	def __repr__(self, indent: str=''):
 		"""
 		Get a textual representation of this object
 		"""

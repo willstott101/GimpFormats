@@ -4,6 +4,8 @@ to parse it.
 """
 
 #from .GimpImageHierarchy import GimpImageHierarchy
+from __future__ import annotations
+from binaryiotools import IO
 
 class Precision:
 	"""
@@ -15,7 +17,7 @@ class Precision:
 		self.gamma = True
 		self.numberFormat = int
 
-	def decode_(self, gimpVersion, io):
+	def decode(self, gimpVersion: int, ioBuf: IO):
 		"""
 		decode the precision code from the file
 		"""
@@ -24,7 +26,7 @@ class Precision:
 			self.gamma = True
 			self.numberFormat = int
 		else:
-			code = io.u32
+			code = ioBuf.u32
 			if gimpVersion == 4:
 				self.gamma = (True, True, False, False, False)[code]
 				self.bits = (8, 16, 32, 16, 32)[code]
@@ -40,7 +42,7 @@ class Precision:
 				self.bits = (8, 16, 32, 16, 32, 64)[code]
 				self.numberFormat = (int, int, int, float, float, float)[code]
 
-	def encode_(self, gimpVersion, io):
+	def encode(self, gimpVersion: int, ioBuf: IO):
 		"""
 		encode this to the file
 
@@ -73,7 +75,7 @@ class Precision:
 				code = code * 100
 				if self.gamma:
 					code += 50
-			io.u32 = code
+			ioBuf.u32 = code
 
 	def requiredGimpVersion(self):
 		"""

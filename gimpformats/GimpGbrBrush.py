@@ -2,7 +2,10 @@
 """
 Pure python implementation of the gimp gbr brush format
 """
+from __future__ import annotations
 import argparse
+from io import BytesIO
+from typing import Union
 import PIL.Image
 from binaryiotools import IO
 
@@ -16,8 +19,8 @@ class GimpGbrBrush:
 
 	COLOR_MODES = [None, 'L', 'LA', 'RGB', 'RGBA'] # only L or RGB allowed
 
-	def __init__(self, filename=None):
-		self.filename = None
+	def __init__(self, fileName=None):
+		self.fileName = None
 		self.version = 2
 		self.width = 0
 		self.height = 0
@@ -26,66 +29,66 @@ class GimpGbrBrush:
 		self.name = ''
 		self.rawImage = None
 		self.spacing = 0
-		if filename is not None:
-			self.load(filename)
+		if fileName is not None:
+			self.load(fileName)
 
-	def load(self, filename):
+	def load(self, fileName: Union[BytesIO, str]):
 		"""
 		load a gimp file
 
-		:param filename: can be a file name or a file-like object
+		:param fileName: can be a file name or a file-like object
 		"""
-		if hasattr(filename, 'read'):
-			self.filename = filename.name
-			f = filename
+		if isinstance(fileName, str):
+			self.fileName = fileName
+			file = open(fileName, 'rb')
 		else:
-			self.filename = filename
-			f = open(filename, 'rb')
-		data = f.read()
-		f.close()
-		self.decode_(data)
+			self.fileName = fileName.name
+			file = fileName
+		data = file.read()
+		file.close()
+		self.decode(data)
 
-	def decode_(self, data, index=0):
+	def decode(self, data: bytes, index: int=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		io = IO(data, index)
-		headerSize = io.u32
-		self.version = io.u32
+		ioBuf = IO(data, index)
+		headerSize = ioBuf.u32
+		self.version = ioBuf.u32
 		if self.version != 2:
 			raise Exception('ERR: unknown brush version ' + str(self.version))
-		self.width = io.u32
-		self.height = io.u32
-		self.bpp = io.u32 # only allows grayscale or RGB
+		self.width = ioBuf.u32
+		self.height = ioBuf.u32
+		self.bpp = ioBuf.u32 # only allows grayscale or RGB
 		self.mode = self.COLOR_MODES[self.bpp]
-		magic = io.getBytes(4)
-		if magic.decode_('ascii') != 'GIMP':
-			raise Exception('"' + magic.decode_('ascii') + '" ' + str(index) +
+		magic = ioBuf.getBytes(4)
+		if magic.decode('ascii') != 'GIMP':
+			raise Exception('"' + magic.decode('ascii') + '" ' + str(index) +
 		" File format error.  Magic value mismatch.")
-		self.spacing = io.u32
-		nameLen = headerSize - io.index
-		self.name = io.getBytes(nameLen).decode_('UTF-8')
-		self.rawImage = io.getBytes(self.width * self.height * self.bpp)
-		return io.index
+		self.spacing = ioBuf.u32
+		nameLen = headerSize - ioBuf.index
+		self.name = ioBuf.getBytes(nameLen).decode('UTF-8')
+		self.rawImage = ioBuf.getBytes(self.width * self.height * self.bpp)
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode this object to byte array
 		"""
-		io = IO()
-		io.u32 = 28 + len(self.name)
-		io.u32 = self.version
-		io.u32 = self.width
-		io.u32 = self.height
-		io.u32 = self.bpp
-		io.addBytes('GIMP')
-		io.u32 = self.spacing
-		io.addBytes(self.name)
-		io.addBytes(self.rawImage)
-		return io.data
+		ioBuf = IO()
+		ioBuf.u32 = 28 + len(self.name)
+		ioBuf.u32 = self.version
+		ioBuf.u32 = self.width
+		ioBuf.u32 = self.height
+		ioBuf.u32 = self.bpp
+		ioBuf.addBytes('GIMP')
+		ioBuf.u32 = self.spacing
+		ioBuf.addBytes(self.name)
+		ioBuf.addBytes(self.rawImage)
+		return ioBuf.data
 
 	@property
 	def size(self):
@@ -99,12 +102,12 @@ class GimpGbrBrush:
 			return None
 		return PIL.Image.frombytes(self.mode, self.size, self.rawImage, decoder_name='raw')
 
-	def save(self, toFilename=None, toExtension=None):
+	def save(self, tofileName=None, toExtension=None):
 		"""	save this gimp image to a file """
 		asImage = False
 		if toExtension is None:
-			if toFilename is not None:
-				toExtension = toFilename.rsplit('.', 1)
+			if tofileName is not None:
+				toExtension = tofileName.rsplit('.', 1)
 				if len(toExtension) > 1:
 					toExtension = toExtension[-1]
 				else:
@@ -112,19 +115,19 @@ class GimpGbrBrush:
 		if toExtension is not None and toExtension != 'gbr':
 			asImage = True
 		if asImage:
-			self.image.save(toFilename)
+			self.image.save(tofileName)
 			self.image.close()
 		else:
-			if not hasattr(toFilename, 'write'):
-				f = open(toFilename, 'wb')
-			f.write(self.encode_())
+			if not hasattr(tofileName, 'write'):
+				f = open(tofileName, 'wb')
+			f.write(self.encode())
 			f.close()
 
 	def __repr__(self, indent=''):
 		"""	Get a textual representation of this object """
 		ret = []
-		if self.filename is not None:
-			ret.append('Filename: ' + self.filename)
+		if self.fileName is not None:
+			ret.append('fileName: ' + self.fileName)
 		ret.append('Name: ' + str(self.name))
 		ret.append('Version: ' + str(self.version))
 		ret.append('Size: ' + str(self.width) + ' x ' + str(self.height))

@@ -3,6 +3,7 @@
 Stuff related to vectors/paths within a gimp document
 """
 #from .GimpIOBase import GimpIOBase
+from __future__ import annotations
 from binaryiotools import IO
 from .GimpParasites import GimpParasite
 
@@ -19,48 +20,48 @@ class GimpVector:
 		self.parasites = []
 		self.strokes = []
 
-	def decode_(self, data, index=0):
+	def decode(self, data, index=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		io = IO(data, index, boolSize=32)
-		self.name = io.sz754
-		self.uniqueId = io.u32
-		self.visible = io.bool
-		self.linked = io.bool
-		numParasites = io.u32
-		numStrokes = io.u32
+		ioBuf = IO(data, index, boolSize=32)
+		self.name = ioBuf.sz754
+		self.uniqueId = ioBuf.u32
+		self.visible = ioBuf.bool
+		self.linked = ioBuf.bool
+		numParasites = ioBuf.u32
+		numStrokes = ioBuf.u32
 		for _ in range(numParasites):
 			p = GimpParasite()
-			io.index = p.decode_(io.data, io.index)
+			ioBuf.index = p.decode(ioBuf.data, ioBuf.index)
 			self.parasites.append(p)
 		for _ in range(numStrokes):
 			gs = GimpStroke(self)
-			io.index = gs.decode_(io.data, io.index)
+			ioBuf.index = gs.decode(ioBuf.data, ioBuf.index)
 			self.strokes.append(p)
-		return io.index
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode to binary data
 		"""
-		io = IO(boolSize=32)
-		io.sz754 = self.name
-		io.u32 = self.uniqueId
-		io.bool = self.visible
-		io.bool = self.linked
-		io.u32 = len(self.parasites)
-		io.u32 = len(self.strokes)
+		ioBuf = IO(boolSize=32)
+		ioBuf.sz754 = self.name
+		ioBuf.u32 = self.uniqueId
+		ioBuf.bool = self.visible
+		ioBuf.bool = self.linked
+		ioBuf.u32 = len(self.parasites)
+		ioBuf.u32 = len(self.strokes)
 		for p in self.parasites:
-			io.addBytes(p.encode_())
+			ioBuf.addBytes(p.encode())
 		for gs in self.strokes:
-			io.addBytes(gs.encode_())
-		return io.data
+			ioBuf.addBytes(gs.encode())
+		return ioBuf.data
 
-	def __repr__(self, indent=''):
+	def __repr__(self, indent: str='') -> str:
 		"""
 		Get a textual representation of this object
 		"""
@@ -93,36 +94,36 @@ class GimpStroke:
 		self.closedShape = True
 		self.points = []
 
-	def decode_(self, data, index=0):
+	def decode(self, data, index=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		io = IO(data, index, boolSize=32)
-		self.strokeType = io.u32
-		self.closedShape = io.bool
-		numFloatsPerPoint = io.u32
-		numPoints = io.u32
+		ioBuf = IO(data, index, boolSize=32)
+		self.strokeType = ioBuf.u32
+		self.closedShape = ioBuf.bool
+		numFloatsPerPoint = ioBuf.u32
+		numPoints = ioBuf.u32
 		for _ in range(numPoints):
 			gp = GimpPoint(self)
-			io.index = gp.decode_(io.data, io.index, numFloatsPerPoint)
+			ioBuf.index = gp.decode(ioBuf.data, ioBuf.index, numFloatsPerPoint)
 			self.points.append(gp)
-		return io.index
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode to binary data
 		"""
-		io = IO(boolSize=32)
-		io.u32 = self.strokeType
-		io.bool = self.closedShape
-		#io.u32 = numFloatsPerPoint
-		#io.u32 = numPoints
+		ioBuf = IO(boolSize=32)
+		ioBuf.u32 = self.strokeType
+		ioBuf.bool = self.closedShape
+		#ioBuf.u32 = numFloatsPerPoint
+		#ioBuf.u32 = numPoints
 		for gp in self.points:
-			io.addBytes(gp.encode_())
-		return io.data
+			ioBuf.addBytes(gp.encode())
+		return ioBuf.data
 
 	def __repr__(self, indent=''):
 		"""
@@ -154,7 +155,7 @@ class GimpPoint:
 		self.wheel = 0.5
 		self.pointType = 0
 
-	def decode_(self, data, index=0, numFloatsPerPoint=0):
+	def decode(self, data, index=0, numFloatsPerPoint=0):
 		"""
 		decode a byte buffer
 
@@ -164,43 +165,43 @@ class GimpPoint:
 			how many different brush dynamic measurements are
 			inside each point
 		"""
-		io = IO(data, index, boolSize=32)
+		ioBuf = IO(data, index, boolSize=32)
 		self.pressure = 1.0
 		self.xTilt = 0.5
 		self.yTilt = 0.5
 		self.wheel = 0.5
-		self.pointType = io.u32
+		self.pointType = ioBuf.u32
 		if numFloatsPerPoint < 1:
-			numFloatsPerPoint = (len(io.data) - io.index) / 4
-		self.x = io.float
-		self.y = io.float
+			numFloatsPerPoint = (len(ioBuf.data) - ioBuf.index) / 4
+		self.x = ioBuf.float
+		self.y = ioBuf.float
 		if numFloatsPerPoint > 2:
-			self.pressure = io.float
+			self.pressure = ioBuf.float
 			if numFloatsPerPoint > 3:
-				self.xTilt = io.float
+				self.xTilt = ioBuf.float
 				if numFloatsPerPoint > 4:
-					self.yTilt = io.float
+					self.yTilt = ioBuf.float
 					if numFloatsPerPoint > 5:
-						self.wheel = io.float
-		return io.index
+						self.wheel = ioBuf.float
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode to binary data
 		"""
-		io = IO(boolSize=32)
-		io.u32 = self.pointType
-		io.float = self.x
-		io.float = self.y
+		ioBuf = IO(boolSize=32)
+		ioBuf.u32 = self.pointType
+		ioBuf.float = self.x
+		ioBuf.float = self.y
 		if self.pressure is not None:
-			io.float = self.pressure
+			ioBuf.float = self.pressure
 			if self.xTilt is not None:
-				io.float = self.xTilt
+				ioBuf.float = self.xTilt
 				if self.yTilt is not None:
-					io.float = self.yTilt
+					ioBuf.float = self.yTilt
 					if self.wheel is not None:
-						io.float = self.wheel
-		return io.data
+						ioBuf.float = self.wheel
+		return ioBuf.data
 
 	def __repr__(self, indent=''):
 		"""

@@ -1,7 +1,9 @@
 """
 Represents a single layer in a gimp image
 """
-
+from __future__ import annotations
+from typing import Optional
+from PIL.Image import Image
 from binaryiotools import IO
 from .GimpIOBase import GimpIOBase
 from .GimpImageHierarchy import GimpImageHierarchy
@@ -17,7 +19,7 @@ class GimpLayer(GimpIOBase):
 	'Grayscale with alpha', 'Indexed without alpha', 'Indexed with alpha']
 	PIL_MODE_TO_LAYER_MODE = {'L': 2, 'LA': 3, 'RGB': 0, 'RGBA': 1}
 
-	def __init__(self, parent, name=None, image=None):
+	def __init__(self, parent, name: Optional[str]=None, image: Optional[Image]=None):
 		GimpIOBase.__init__(self, parent)
 		self.width = 0
 		self.height = 0
@@ -31,7 +33,7 @@ class GimpLayer(GimpIOBase):
 		if image is not None:
 			self.image = image # done last as it resets some of the above defaults
 
-	def decode_(self, data, index=0):
+	def decode(self, data: bytearray, index: int=0):
 		"""
 		decode a byte buffer
 
@@ -46,23 +48,23 @@ class GimpLayer(GimpIOBase):
 		:param index: index within the buffer to start at
 		"""
 		# Create a new IO buffer (array of binary values)
-		io = IO(data, index)
+		ioBuf = IO(data, index)
 		# Grab attributes as outlined in the spec
-		self.width = io.u32
-		self.height = io.u32
-		self.colorMode = io.u32 # one of self.COLOR_MODES
-		self.name = io.sz754
+		self.width = ioBuf.u32
+		self.height = ioBuf.u32
+		self.colorMode = ioBuf.u32 # one of self.COLOR_MODES
+		self.name = ioBuf.sz754
 		# List of properties
-		self._propertiesDecode_(io)
+		self._propertiesDecode(ioBuf)
 		# Get the image hierarchy and mask pointers
-		self._imageHierarchyPtr = self._pointerDecode_(io)
-		self._maskPtr = self._pointerDecode_(io)
+		self._imageHierarchyPtr = self._pointerDecode(ioBuf)
+		self._maskPtr = self._pointerDecode(ioBuf)
 		self._mask = None
 		self._data = data
 		# Return the offset
-		return io.index
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		encode to byte array
 
@@ -76,26 +78,26 @@ class GimpLayer(GimpIOBase):
 		"""
 		# Create a new IO buffer (array of binary values)
 		dataAreaIO = IO()
-		io = IO()
+		ioBuf = IO()
 		# Set attributes as outlined in the spec
-		io.u32 = self.width
-		io.u32 = self.height
-		io.u32 = self.colorMode
-		io.sz754 = self.name
+		ioBuf.u32 = self.width
+		ioBuf.u32 = self.height
+		ioBuf.u32 = self.colorMode
+		ioBuf.sz754 = self.name
 		# Layer properties
-		io.addBytes(self._propertiesEncode_())
+		ioBuf.addBytes(self._propertiesEncode())
 		# Pointer to the image heirachy structure
-		dataAreaIndex = io.index + self._POINTER_SIZE_ * 2
-		io.addBytes(self._pointerEncode_(dataAreaIndex))
-		dataAreaIO.addBytes(self.imageHierarchy.encode_())
-		#io.addBytes(self._pointerEncode_(dataAreaIndex))
+		dataAreaIndex = ioBuf.index + self._POINTER_SIZE * 2
+		ioBuf.addBytes(self._pointerEncode(dataAreaIndex))
+		dataAreaIO.addBytes(self.imageHierarchy.encode())
+		#ioBuf.addBytes(self._pointerEncode_(dataAreaIndex))
 		# Pointer to the layer mask
 		if self.mask is not None:
-			dataAreaIO.addBytes(self.mask.encode_())
-		io.addBytes(self._pointerEncode_(dataAreaIndex + dataAreaIO.index))
-		io.addBytes(dataAreaIO)
+			dataAreaIO.addBytes(self.mask.encode())
+		ioBuf.addBytes(self._pointerEncode(dataAreaIndex + dataAreaIO.index))
+		ioBuf.addBytes(dataAreaIO)
 		# Return the data
-		return io.data
+		return ioBuf.data
 
 	@property
 	def mask(self):
@@ -104,11 +106,11 @@ class GimpLayer(GimpIOBase):
 		"""
 		if self._mask is None and self._maskPtr is not None and self._maskPtr != 0:
 			self._mask = GimpChannel(self)
-			self._mask.decode_(self._data, self._maskPtr)
+			self._mask.decode(self._data, self._maskPtr)
 		return self._mask
 
 	@property
-	def image(self):
+	def image(self) -> Image:
 		"""
 		get the layer image
 
@@ -119,7 +121,7 @@ class GimpLayer(GimpIOBase):
 		return self.imageHierarchy.image
 
 	@image.setter
-	def image(self, image):
+	def image(self, image: Image):
 		"""
 		set the layer image
 
@@ -131,13 +133,13 @@ class GimpLayer(GimpIOBase):
 			raise NotImplementedError('No way of handlng PIL image mode "' + image.mode + '"')
 		self.colorMode = self.PIL_MODE_TO_LAYER_MODE[image.mode]
 		if not self.name and isinstance(image, str):
-			# try to use a filename as the name
+			# try to use a fileName as the name
 			self.name = image.rsplit('\\', 1)[-1].rsplit('/', 1)[-1]
 		self._imageHierarchy = GimpImageHierarchy(self)
 		self._imageHierarchy.image = image
 
 	@property
-	def imageHierarchy(self):
+	def imageHierarchy(self) -> GimpImageHierarchy:
 		"""
 		Get the image hierarchy objects
 
@@ -148,7 +150,7 @@ class GimpLayer(GimpIOBase):
 		"""
 		if self._imageHierarchy is None and self._imageHierarchyPtr > 0:
 			self._imageHierarchy = GimpImageHierarchy(self)
-			self._imageHierarchy.decode_(self._data, self._imageHierarchyPtr)
+			self._imageHierarchy.decode(self._data, self._imageHierarchyPtr)
 		return self._imageHierarchy
 
 	@imageHierarchy.setter

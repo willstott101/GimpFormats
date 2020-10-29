@@ -2,7 +2,9 @@
 """
 A specialized binary file base for Gimp files
 """
+from __future__ import annotations
 import struct
+from typing import Optional
 from binaryiotools import IO
 from .GimpParasites import GimpParasite
 from .GimpVectors import GimpVector
@@ -34,7 +36,7 @@ class GimpIOBase:
 	'Linear burn', 'Luma/Luminance darken only', 'Luma/Luminance lighten only', 'Luminance',
 	'Color erase', 'Erase', 'Merge', 'Split', 'Pass through']
 
-	PROP_END = 0
+	PROP_END:int = 0
 	PROP_COLORMAP = 1
 	PROP_ACTIVE_LAYER = 2
 	PROP_ACTIVE_CHANNEL = 3
@@ -78,55 +80,55 @@ class GimpIOBase:
 
 	def __init__(self, parent):
 		self.parent = parent
-		self.parasites = []
-		self.guidelines = []
-		self.itemPath = None
-		self.vectors = []
-		self.colorMap = []
-		self.userUnits = None
-		self.samplePoints = []
-		self.selected = False
-		self.isSelection = False
-		self.selectionAttachedTo = None
-		self.blendMode = None # one of self.BLEND_MODES
-		self.visible = None
-		self.isLinked = None
-		self.lockAlpha = None
-		self.applyMask = None
-		self.editingMask = None
-		self.showMask = None
-		self.showMasked = None
-		self.xOffset = None
-		self.yOffset = None
-		self.compression = None # one of self.COMPRESSION_MODES
+		self.parasites: list[GimpParasite] = []
+		self.guidelines: list[tuple[bool, int]] = []
+		self.itemPath: Optional[str] = None
+		self.vectors: list[GimpVector] = []
+		self.colorMap: list[tuple[int, int, int]] = []
+		self.userUnits: Optional[GimpUserUnits] = None
+		self.samplePoints: list[tuple[int, int]] = []
+		self.selected:bool = False
+		self.isSelection:bool = False
+		self.selectionAttachedTo: Optional[str] = None
+		self.blendMode:int = 0 # one of self.BLEND_MODES
+		self.visible:bool = False
+		self.isLinked:bool = False
+		self.lockAlpha:bool = False
+		self.applyMask:bool = False
+		self.editingMask:bool = False
+		self.showMask:bool = False
+		self.showMasked:bool = False
+		self.xOffset:int = 0
+		self.yOffset:int = 0
+		self.compression:int = 0 # one of self.COMPRESSION_MODES
 		self.horizontalResolution = None
 		self.verticalResolution = None
 		self.uniqueId = None
-		self.units = None # one of self.UNITS
+		self.units:int = 0 # one of self.UNITS
 		self.textLayerFlags = None
 		self.locked = None
 		self.isGroup = None
-		self.groupItemFlags = None
-		self.positionLocked = None
-		self.opacity = None
-		self.colorTag = None # one of self.TAG_COLORS
-		self.compositeMode = None # one of self.COMPOSITE_MODES
-		self.compositeSpace = None # one of self.COMPOSITE_SPACES
+		self.groupItemFlags:int = 0
+		self.positionLocked:bool = False
+		self.opacity:float = 1.0
+		self.colorTag:int = 0 # one of self.TAG_COLORS
+		self.compositeMode:int = 0 # one of self.COMPOSITE_MODES
+		self.compositeSpace:int = 0 # one of self.COMPOSITE_SPACES
 		self.blendSpace = None
 		self.color = None
-		self.vectorsVersion = 0
-		self.activeVectorIndex = 0
+		self.vectorsVersion:int = 0
+		self.activeVectorIndex:int = 0
 		self.paths = []
 
-	def getBlendMode(self):
+	def getBlendMode(self) -> str:
 		""" return the blend mode as a string """
 		return self.BLEND_MODES[self.blendMode]
 
-	def getCompression(self):
+	def getCompression(self) -> str:
 		""" return the compression as a string """
 		return self.COMPRESSION_MODES[self.compression]
 
-	def getUnits(self):
+	def getUnits(self) -> str:
 		""" return the units as a string """
 		return self.UNITS[self.units]
 
@@ -144,7 +146,7 @@ class GimpIOBase:
 
 
 	@property
-	def _POINTER_SIZE_(self):
+	def _POINTER_SIZE(self) -> int:
 		"""
 		Determine the size of the "pointer" datatype
 		based on the document version
@@ -157,21 +159,19 @@ class GimpIOBase:
 			return 64
 		return 32
 
-	def _pointerDecode_(self, io):
-		if self._POINTER_SIZE_ == 64:
-			return io.u64
-		return io.u32
+	def _pointerDecode(self, ioBuf: IO) -> int:
+		if self._POINTER_SIZE == 64:
+			return ioBuf.u64
+		return ioBuf.u32
 
-	def _pointerEncode_(self, ptr, io=None):
-		if not isinstance(ptr, int):
-			raise Exception('pointer is wrong type = ' + str(type(ptr)))
-		if io is None:
-			io = IO()
-		if self._POINTER_SIZE_ == 64:
-			io.u64 = ptr
+	def _pointerEncode(self, ptr: int, ioBuf: Optional[IO]=None) -> bytearray:
+		if ioBuf is None:
+			ioBuf = IO()
+		if self._POINTER_SIZE == 64:
+			ioBuf.u64 = ptr
 		else:
-			io.u32 = ptr
-		return io.data
+			ioBuf.u32 = ptr
+		return ioBuf.data
 
 	@property
 	def doc(self):
@@ -205,31 +205,31 @@ class GimpIOBase:
 		"""
 		self.uniqueId = tattoo
 
-	def _parasitesDecode_(self, data):
+	def _parasitesDecode(self, data: bytearray) -> int:
 		"""
 		decode list of parasites
 		"""
-		index = 0
+		index:int = 0
 		while index < len(data):
-			p = GimpParasite()
-			index = p.decode_(data, index)
-			self.parasites.append(p)
+			parasite = GimpParasite()
+			index = parasite.decode(data, index)
+			self.parasites.append(parasite)
 		return index
 
-	def _parasitesEncode_(self):
+	def _parasitesEncode(self):
 		"""
 		encode list of parasites
 		"""
-		io = IO()
+		ioBuf = IO()
 		for parasite in self.parasites:
-			io.addBytes(parasite.encode_())
-		return io.data
+			ioBuf.addBytes(parasite.encode())
+		return ioBuf.data
 
-	def _guidelinesDecode_(self, data):
+	def _guidelinesDecode(self, data):
 		"""
 		decode guidelines
 		"""
-		index = 0
+		index:int = 0
 		while index < len(data):
 			position = struct.unpack('>I', data[index:index + 4])[0]
 			index += 4
@@ -237,11 +237,11 @@ class GimpIOBase:
 			index += 1
 			self.guidelines.append((isVertical, position))
 
-	def _itemPathDecode_(self, data):
+	def _itemPathDecode(self, data):
 		"""
 		decode item path
 		"""
-		index = 0
+		index:int = 0
 		path = []
 		while index < len(data):
 			p = struct.unpack('>I', data[index:index + 4])[0]
@@ -249,11 +249,11 @@ class GimpIOBase:
 			path.append(p)
 		self.itemPath = path
 
-	def _vectorsDecode_(self, data):
+	def _vectorsDecode(self, data):
 		"""
 		decode vectors
 		"""
-		index = 0
+		index:int = 0
 		self.vectorsVersion = struct.unpack('>I', data[index:index + 4])[0]
 		index += 4
 		self.activeVectorIndex = struct.unpack('>I', data[index:index + 4])[0]
@@ -261,9 +261,9 @@ class GimpIOBase:
 		numPaths = struct.unpack('>I', data[index:index + 4])[0]
 		index += 4
 		for _ in range(numPaths):
-			gv = GimpVector(self)
-			gv.decode_(data)
-			self.vectors.append(gv)
+			gimpV = GimpVector(self)
+			gimpV.decode(data)
+			self.vectors.append(gimpV)
 
 	@property
 	def activeVector(self):
@@ -273,7 +273,7 @@ class GimpIOBase:
 		return self.vectors[self.activeVectorIndex]
 
 	@property
-	def expanded(self):
+	def expanded(self) -> bool:
 		"""
 		is the group layer expanded
 		"""
@@ -320,15 +320,15 @@ class GimpIOBase:
 		decode a set of user-defined measurement units
 		"""
 		u = GimpUserUnits()
-		#u.decode_(data)
-		u.decode_(data)
+		#u.decode(data)
+		u.decode(data)
 		self.userUnits = u
 
 	def _samplePointsDecode_(self, data):
 		"""
 		decode a series of points
 		"""
-		index = 0
+		index:int = 0
 		samplePoints = []
 		while index < len(data):
 			x = struct.unpack('>I', data[index:index + 4])[0]
@@ -338,19 +338,19 @@ class GimpIOBase:
 			samplePoints.append((x, y))
 		self.samplePoints = samplePoints
 
-	def _propertyDecode_(self, propertyType, data):
+	def _propertyDecode(self, propertyType, data):
 		"""
 		decode a single property
 
 		Many properties are in the form
 		propertyType: one of PROP_
 		lengthOfData: 4
-		data: varies but is often io.32 or io.bool
+		data: varies but is often ioBuf.32 or ioBuf.boolean
 		"""
-		io = IO(data, boolSize=32)
+		ioBuf = IO(data, boolSize=32)
 		#print('DECODING PROPERTY',propertyType,len(data))
 		if propertyType == self.PROP_COLORMAP:
-			self._colormapDecode_(io)
+			self._colormapDecode_(ioBuf)
 		elif propertyType == self.PROP_ACTIVE_LAYER:
 			self.selected = True
 		elif propertyType == self.PROP_ACTIVE_CHANNEL:
@@ -358,48 +358,48 @@ class GimpIOBase:
 		elif propertyType == self.PROP_SELECTION:
 			self.isSelection = True
 		elif propertyType == self.PROP_FLOATING_SELECTION:
-			self.selectionAttachedTo = io.u32
+			self.selectionAttachedTo = ioBuf.u32
 		elif propertyType == self.PROP_OPACITY:
-			self.opacity = io.u32
+			self.opacity = ioBuf.u32
 		elif propertyType == self.PROP_MODE:
-			self.blendMode = io.u32
+			self.blendMode = ioBuf.u32
 		elif propertyType == self.PROP_VISIBLE:
-			self.visible = io.bool
+			self.visible = ioBuf.boolean
 		elif propertyType == self.PROP_LINKED:
-			self.isLinked = io.bool
+			self.isLinked = ioBuf.boolean
 		elif propertyType == self.PROP_LOCK_ALPHA:
-			self.lockAlpha = io.bool
+			self.lockAlpha = ioBuf.boolean
 		elif propertyType == self.PROP_APPLY_MASK:
-			self.applyMask = io.bool
+			self.applyMask = ioBuf.boolean
 		elif propertyType == self.PROP_EDIT_MASK:
-			self.editingMask = io.bool
+			self.editingMask = ioBuf.boolean
 		elif propertyType == self.PROP_SHOW_MASK:
-			self.showMask = io.bool
+			self.showMask = ioBuf.boolean
 		elif propertyType == self.PROP_SHOW_MASKED:
-			self.showMasked = io.bool
+			self.showMasked = ioBuf.boolean
 		elif propertyType == self.PROP_OFFSETS:
-			self.xOffset = io.i32
-			self.yOffset = io.i32
+			self.xOffset = ioBuf.i32
+			self.yOffset = ioBuf.i32
 		elif propertyType == self.PROP_COLOR:
-			r = io.byte
-			g = io.byte
-			b = io.byte
+			r = ioBuf.byte
+			g = ioBuf.byte
+			b = ioBuf.byte
 			self.color = [r, g, b]
 		elif propertyType == self.PROP_COMPRESSION:
-			self.compression = io.byte
+			self.compression = ioBuf.byte
 		elif propertyType == self.PROP_GUIDES:
-			self._guidelinesDecode_(data)
+			self._guidelinesDecode(data)
 		elif propertyType == self.PROP_RESOLUTION:
-			self.horizontalResolution = io.float32
-			self.verticalResolution = io.float32
+			self.horizontalResolution = ioBuf.float32
+			self.verticalResolution = ioBuf.float32
 		elif propertyType == self.PROP_TATTOO:
 			self.uniqueId = data.hex()
 		elif propertyType == self.PROP_PARASITES:
-			self._parasitesDecode_(data)
+			self._parasitesDecode(data)
 		elif propertyType == self.PROP_UNIT:
-			self.units = io.u32
+			self.units = ioBuf.u32
 		elif propertyType == self.PROP_PATHS:
-			_numPaths = io.u32
+			_numPaths = ioBuf.u32
 			'''
 			for _ in range(numPaths):
 				nRead, path = self._pathDecode_(data[index:])
@@ -419,252 +419,251 @@ class GimpIOBase:
 		elif propertyType == self.PROP_OLD_SAMPLE_POINTS:
 			raise Exception("ERR: old sample points structure not supported")
 		elif propertyType == self.PROP_LOCK_CONTENT:
-			self.locked = io.bool
+			self.locked = ioBuf.boolean
 		elif propertyType == self.PROP_GROUP_ITEM:
 			self.isGroup = True
 		elif propertyType == self.PROP_ITEM_PATH:
-			self._itemPathDecode_(data)
+			self._itemPathDecode(data)
 		elif propertyType == self.PROP_GROUP_ITEM_FLAGS:
-			self.groupItemFlags = io.u32
+			self.groupItemFlags = ioBuf.u32
 		elif propertyType == self.PROP_LOCK_POSITION:
-			self.positionLocked = io.bool
+			self.positionLocked = ioBuf.boolean
 		elif propertyType == self.PROP_FLOAT_OPACITY:
-			self.opacity = io.float32
+			self.opacity = ioBuf.float32
 		elif propertyType == self.PROP_COLOR_TAG:
-			self.colorTag = io.u32
+			self.colorTag = ioBuf.u32
 		elif propertyType == self.PROP_COMPOSITE_MODE:
-			self.compositeMode = io.i32
+			self.compositeMode = ioBuf.i32
 		elif propertyType == self.PROP_COMPOSITE_SPACE:
-			self.compositeSpace = io.i32
+			self.compositeSpace = ioBuf.i32
 		elif propertyType == self.PROP_BLEND_SPACE:
-			self.blendSpace = io.u32
+			self.blendSpace = ioBuf.u32
 		elif propertyType == self.PROP_FLOAT_COLOR:
-			r = io.float32
-			g = io.float32
-			b = io.float32
+			r = ioBuf.float32
+			g = ioBuf.float32
+			b = ioBuf.float32
 			self.color = [r, g, b]
 		elif propertyType == self.PROP_SAMPLE_POINTS:
 			self._samplePointsDecode_(data)
 		else:
 			raise Exception('Unknown property id ' + str(propertyType))
-		return io.index
+		return ioBuf.index
 
-	def _propertyEncode_(self, propertyType):
+	def _propertyEncode(self, propertyType):
 		"""
 		encode a single property
 
 		Many properties are in the form
 		propertyType: one of PROP_
 		lengthOfData: 4
-		data: varies but is often io.32 or io.bool
+		data: varies but is often ioBuf.32 or ioBuf.boolean
 
 		If the property is the same as the default, or not specified, returns empty array
 		"""
-		io = IO(boolSize=32)
+		ioBuf = IO(boolSize=32)
 		if propertyType == self.PROP_COLORMAP:
 			if self.colorMap is not None and self.colorMap:
 				pass
-				io.u32 = self.PROP_COLORMAP
-				#io.addBytes(self._colormapEncode_())
+				ioBuf.u32 = self.PROP_COLORMAP
+				#ioBuf.addBytes(self._colormapEncode_())
 		elif propertyType == self.PROP_ACTIVE_LAYER:
 			if self.selected is not None and self.selected:
-				io.u32 = self.PROP_ACTIVE_LAYER
+				ioBuf.u32 = self.PROP_ACTIVE_LAYER
 		elif propertyType == self.PROP_ACTIVE_CHANNEL:
 			if self.selected is not None and self.selected:
-				io.u32 = self.PROP_ACTIVE_LAYER
+				ioBuf.u32 = self.PROP_ACTIVE_LAYER
 		elif propertyType == self.PROP_SELECTION:
 			if self.isSelection is not None and self.isSelection:
-				io.u32 = self.PROP_SELECTION
+				ioBuf.u32 = self.PROP_SELECTION
 		elif propertyType == self.PROP_FLOATING_SELECTION:
 			if self.selectionAttachedTo is not None:
-				io.u32 = self.PROP_FLOATING_SELECTION
-				io.u32 = self.selectionAttachedTo
+				ioBuf.u32 = self.PROP_FLOATING_SELECTION
+				ioBuf.u32 = self.selectionAttachedTo
 		elif propertyType == self.PROP_OPACITY:
 			if self.opacity is not None and not isinstance(self.opacity, float):
-				io.u32 = self.PROP_OPACITY
-				io.u32 = self.opacity
+				ioBuf.u32 = self.PROP_OPACITY
+				ioBuf.u32 = self.opacity
 		elif propertyType == self.PROP_MODE:
 			if self.blendMode is not None:
-				io.u32 = self.PROP_MODE
-				io.u32 = self.blendMode
+				ioBuf.u32 = self.PROP_MODE
+				ioBuf.u32 = self.blendMode
 		elif propertyType == self.PROP_VISIBLE:
 			if self.visible is not None:
-				io.u32 = self.PROP_VISIBLE
-				io.bool = self.visible
+				ioBuf.u32 = self.PROP_VISIBLE
+				ioBuf.boolean = self.visible
 		elif propertyType == self.PROP_LINKED:
 			if self.isLinked is not None and self.isLinked:
-				io.u32 = self.PROP_LINKED
-				io.bool = self.isLinked
+				ioBuf.u32 = self.PROP_LINKED
+				ioBuf.boolean = self.isLinked
 		elif propertyType == self.PROP_LOCK_ALPHA:
 			if self.lockAlpha is not None and self.lockAlpha:
-				io.u32 = self.PROP_LOCK_ALPHA
-				io.bool = self.lockAlpha
+				ioBuf.u32 = self.PROP_LOCK_ALPHA
+				ioBuf.boolean = self.lockAlpha
 		elif propertyType == self.PROP_APPLY_MASK:
 			if self.applyMask is not None:
-				io.u32 = self.PROP_APPLY_MASK
-				io.bool = self.applyMask
+				ioBuf.u32 = self.PROP_APPLY_MASK
+				ioBuf.boolean = self.applyMask
 		elif propertyType == self.PROP_EDIT_MASK:
 			if self.editingMask is not None and self.editingMask:
-				io.u32 = self.PROP_EDIT_MASK
-				io.bool = self.editingMask
+				ioBuf.u32 = self.PROP_EDIT_MASK
+				ioBuf.boolean = self.editingMask
 		elif propertyType == self.PROP_SHOW_MASK:
 			if self.showMask is not None and self.showMask:
-				io.u32 = self.PROP_SHOW_MASK
-				io.bool = self.showMask
+				ioBuf.u32 = self.PROP_SHOW_MASK
+				ioBuf.boolean = self.showMask
 		elif propertyType == self.PROP_SHOW_MASKED:
 			if self.showMasked is not None:
-				io.u32 = self.PROP_SHOW_MASKED
-				io.bool = self.showMasked
+				ioBuf.u32 = self.PROP_SHOW_MASKED
+				ioBuf.boolean = self.showMasked
 		elif propertyType == self.PROP_OFFSETS:
 			if self.xOffset is not None and self.yOffset is not None:
-				io.u32 = self.PROP_OFFSETS
-				io.i32 = self.xOffset
-				io.i32 = self.yOffset
+				ioBuf.u32 = self.PROP_OFFSETS
+				ioBuf.i32 = self.xOffset
+				ioBuf.i32 = self.yOffset
 		elif propertyType == self.PROP_COLOR:
 			if self.color is not None and not isinstance(self.color[0],
 			float) and not isinstance(self.color[1], float) and not type(
 				self.color[2], float):
-				io.u32 = self.PROP_COLOR
-				io.byte = self.color[0]
-				io.byte = self.color[1]
-				io.byte = self.color[2]
+				ioBuf.u32 = self.PROP_COLOR
+				ioBuf.byte = self.color[0]
+				ioBuf.byte = self.color[1]
+				ioBuf.byte = self.color[2]
 		elif propertyType == self.PROP_COMPRESSION:
 			if self.compression is not None:
-				io.u32 = self.PROP_COMPRESSION
-				io.u32 = self.compression
+				ioBuf.u32 = self.PROP_COMPRESSION
+				ioBuf.u32 = self.compression
 		elif propertyType == self.PROP_GUIDES:
 			if self.guidelines is not None and self.guidelines:
 				pass
-				#io.u32 = self.PROP_GUIDES
-				#io.addBytes(self._guidelinesEncode_())
+				#ioBuf.u32 = self.PROP_GUIDES
+				#ioBuf.addBytes(self._guidelinesEncode_())
 		elif propertyType == self.PROP_RESOLUTION:
 			if self.horizontalResolution is not None and self.verticalResolution is not None:
-				io.u32 = self.PROP_RESOLUTION
-				io.u32 = self.horizontalResolution
-				io.i32 = self.verticalResolution
+				ioBuf.u32 = self.PROP_RESOLUTION
+				ioBuf.u32 = int(self.horizontalResolution)
+				ioBuf.i32 = int(self.verticalResolution)
 		elif propertyType == self.PROP_TATTOO:
 			if self.uniqueId is not None:
-				io.u32 = int(self.uniqueId, 16)
+				ioBuf.u32 = int(self.uniqueId, 16)
 		elif propertyType == self.PROP_PARASITES:
 			if self.parasites is not None and self.parasites:
-				io.u32 = self.PROP_PARASITES
-				io.addBytes(self._parasitesEncode_())
+				ioBuf.u32 = self.PROP_PARASITES
+				ioBuf.addBytes(self._parasitesEncode())
 		elif propertyType == self.PROP_UNIT:
 			if self.units is not None:
-				io.u32 = self.PROP_UNIT
-				io.u32 = self.units
+				ioBuf.u32 = self.PROP_UNIT
+				ioBuf.u32 = self.units
 		elif propertyType == self.PROP_PATHS:
 			if self.paths is not None and self.paths:
-				pass
-				#io.u32 = self.PROP_PATHS
-				#io.u32 = len(self.paths)
+				#ioBuf.u32 = self.PROP_PATHS
+				#ioBuf.u32 = len(self.paths)
 				'''
 				for path in self.paths:
-					io.append(self._pathEncode_(path))
+					ioBuf.append(self._pathEncode_(path))
 				'''
 		elif propertyType == self.PROP_USER_UNIT:
 			if self.userUnits is not None:
 				pass
-				#io.u32 = self.PROP_USER_UNIT
-				#io.addBytes(self._userUnitsEncode_())
+				#ioBuf.u32 = self.PROP_USER_UNIT
+				#ioBuf.addBytes(self._userUnitsEncode_())
 		elif propertyType == self.PROP_VECTORS:
 			if self.vectors is not None and self.vectors:
 				pass
-				#io.u32 = self.PROP_VECTORS
-				#io.addBytes(self._vectorsEncode_())
+				#ioBuf.u32 = self.PROP_VECTORS
+				#ioBuf.addBytes(self._vectorsEncode_())
 		elif propertyType == self.PROP_TEXT_LAYER_FLAGS:
 			if self.textLayerFlags is not None:
-				io.u32 = self.PROP_TEXT_LAYER_FLAGS
-				io.u32 = self.textLayerFlags
+				ioBuf.u32 = self.PROP_TEXT_LAYER_FLAGS
+				ioBuf.u32 = self.textLayerFlags
 		elif propertyType == self.PROP_OLD_SAMPLE_POINTS:
 			pass
 		elif propertyType == self.PROP_LOCK_CONTENT:
 			if self.locked is not None and self.locked:
-				io.u32 = self.PROP_LOCK_CONTENT
-				io.bool = self.locked
+				ioBuf.u32 = self.PROP_LOCK_CONTENT
+				ioBuf.boolean = self.locked
 		elif propertyType == self.PROP_GROUP_ITEM:
 			if self.isGroup is not None and self.isGroup:
-				io.u32 = self.PROP_GROUP_ITEM
+				ioBuf.u32 = self.PROP_GROUP_ITEM
 		elif propertyType == self.PROP_ITEM_PATH:
 			if self.itemPath is not None:
 				pass
-				#io.u32 = self.PROP_ITEM_PATH
-				#io.addBytes(self._itemPathEncode_())
+				#ioBuf.u32 = self.PROP_ITEM_PATH
+				#ioBuf.addBytes(self._itemPathEncode_())
 		elif propertyType == self.PROP_GROUP_ITEM_FLAGS:
 			if self.groupItemFlags is not None:
-				io.u32 = self.PROP_GROUP_ITEM_FLAGS
-				io.u32 = self.groupItemFlags
+				ioBuf.u32 = self.PROP_GROUP_ITEM_FLAGS
+				ioBuf.u32 = self.groupItemFlags
 		elif propertyType == self.PROP_LOCK_POSITION:
 			if self.positionLocked is not None and self.positionLocked:
-				io.u32 = self.PROP_LOCK_POSITION
-				io.bool = self.positionLocked
+				ioBuf.u32 = self.PROP_LOCK_POSITION
+				ioBuf.boolean = self.positionLocked
 		elif propertyType == self.PROP_FLOAT_OPACITY:
 			if self.opacity is not None and isinstance(self.opacity, float):
-				io.u32 = self.PROP_FLOAT_OPACITY
-				io.float32 = self.opacity
+				ioBuf.u32 = self.PROP_FLOAT_OPACITY
+				ioBuf.float32 = self.opacity
 		elif propertyType == self.PROP_COLOR_TAG:
 			if self.colorTag is not None:
-				io.u32 = self.PROP_COLOR_TAG
-				io.u32 = self.colorTag
+				ioBuf.u32 = self.PROP_COLOR_TAG
+				ioBuf.u32 = self.colorTag
 		elif propertyType == self.PROP_COMPOSITE_MODE:
 			if self.compositeMode is not None:
-				io.u32 = self.PROP_COMPOSITE_MODE
-				io.i32 = self.compositeMode
+				ioBuf.u32 = self.PROP_COMPOSITE_MODE
+				ioBuf.i32 = self.compositeMode
 		elif propertyType == self.PROP_COMPOSITE_SPACE:
 			if self.compositeSpace is not None:
-				io.u32 = self.PROP_COMPOSITE_SPACE
-				io.i32 = self.compositeSpace
+				ioBuf.u32 = self.PROP_COMPOSITE_SPACE
+				ioBuf.i32 = self.compositeSpace
 		elif propertyType == self.PROP_BLEND_SPACE:
 			if self.blendSpace is not None:
-				io.u32 = self.PROP_BLEND_SPACE
-				io.u32 = self.blendSpace
+				ioBuf.u32 = self.PROP_BLEND_SPACE
+				ioBuf.u32 = self.blendSpace
 		elif propertyType == self.PROP_FLOAT_COLOR:
 			if self.color is not None and isinstance(self.color[0], float) and isinstance(
 				self.color[1], float) and isinstance(self.color[2], float):
-				io.u32 = self.PROP_FLOAT_COLOR
-				io.float32 = self.color[0]
-				io.float32 = self.color[1]
-				io.float32 = self.color[2]
+				ioBuf.u32 = self.PROP_FLOAT_COLOR
+				ioBuf.float32 = self.color[0]
+				ioBuf.float32 = self.color[1]
+				ioBuf.float32 = self.color[2]
 		elif propertyType == self.PROP_SAMPLE_POINTS:
 			if self.samplePoints is not None and self.samplePoints:
 				pass
-				#io.u32 = self.PROP_SAMPLE_POINTS
+				#ioBuf.u32 = self.PROP_SAMPLE_POINTS
 				#self.addBytes(self._samplePointsEncode_())
 		else:
 			raise Exception('Unknown property id ' + str(propertyType))
-		return io.data
+		return ioBuf.data
 
-	def _propertiesDecode_(self, io):
+	def _propertiesDecode(self, ioBuf: IO):
 		"""
 		decode a list of properties
 		"""
 		while True:
 			try:
-				propertyType = io.u32
-				dataLength = io.u32
+				propertyType = ioBuf.u32
+				dataLength = ioBuf.u32
 			except struct.error: # end of data, so that's that.
 				break
 			if propertyType == 0:
 				break
-			self._propertyDecode_(propertyType, io.getBytes(dataLength))
-		return io.index
+			self._propertyDecode(propertyType, ioBuf.getBytes(dataLength))
+		return ioBuf.index
 
-	def _propertiesEncode_(self):
+	def _propertiesEncode(self):
 		"""
 		encode a list of properties
 		"""
-		io = IO()
+		ioBuf = IO()
 		for propertyType in range(1, self.PROP_NUM_PROPS):
-			moData = self._propertyEncode_(propertyType)
+			moData = self._propertyEncode(propertyType)
 			if moData:
-				io.addBytes(moData)
-		return io.data
+				ioBuf.addBytes(moData)
+		return ioBuf.data
 
-	def __repr__(self, indent=''):
+	def __repr__(self, indent: str=''):
 		"""
 		Get a textual representation of this object
 		"""
-		ret = []
+		ret: list[str] = []
 		if self.itemPath is not None:
 			ret.append('Item Path: ' + str(self.itemPath))
 		if self.selected is not None:
@@ -759,46 +758,46 @@ class GimpUserUnits:
 	user-defined measurement units
 	"""
 	def __init__(self):
-		self.factor = 0
-		self.numDigits = 0
+		self.factor:int = 0
+		self.numDigits:int = 0
 		self.id = ''
 		self.symbol = ''
 		self.abbrev = ''
 		self.sname = ''
 		self.pname = ''
 
-	def decode_(self, data, index=0):
+	def decode(self, data: bytearray, index: int=0):
 		"""
 		decode a byte buffer
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		io = IO(data, index)
-		self.factor = io.float32
-		self.numDigits = io.u32
-		self.id = io.sz754
-		self.symbol = io.sz754
-		self.abbrev = io.sz754
-		self.sname = io.sz754
-		self.pname = io.sz754
-		return io.index
+		ioBuf = IO(data, index)
+		self.factor = ioBuf.float32
+		self.numDigits = ioBuf.u32
+		self.id = ioBuf.sz754
+		self.symbol = ioBuf.sz754
+		self.abbrev = ioBuf.sz754
+		self.sname = ioBuf.sz754
+		self.pname = ioBuf.sz754
+		return ioBuf.index
 
-	def encode_(self):
+	def encode(self):
 		"""
 		convert this object to raw bytes
 		"""
-		io = IO()
-		io.float32 = self.factor
-		io.u32 = self.numDigits
-		io.sz754 = self.id
-		io.sz754 = self.symbol
-		io.sz754 = self.abbrev
-		io.sz754 = self.sname
-		io.sz754 = self.pname
-		return io.data
+		ioBuf = IO()
+		ioBuf.float32 = self.factor
+		ioBuf.u32 = self.numDigits
+		ioBuf.sz754 = self.id
+		ioBuf.sz754 = self.symbol
+		ioBuf.sz754 = self.abbrev
+		ioBuf.sz754 = self.sname
+		ioBuf.sz754 = self.pname
+		return ioBuf.data
 
-	def __repr__(self, indent=''):
+	def __repr__(self, indent: str=''):
 		"""
 		Get a textual representation of this object
 		"""
