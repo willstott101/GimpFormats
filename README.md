@@ -129,7 +129,7 @@ ensure I don't get a full-blown svg in the mix
 - Standard "parasites"
 
 ## Documentation
-See the [Docs](/DOCS/README.md) for more information.
+See the [Docs](/DOCS/) for more information.
 
 ## Install With PIP
 ```python
