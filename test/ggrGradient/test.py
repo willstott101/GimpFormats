@@ -25,7 +25,7 @@ class Test(unittest.TestCase):
 		pass
 
 	def colorArray(self, numPoints):
-		""" colour array """
+		"""colour array."""
 		colors = []
 		i = 0.0
 		inc = 1.0 / numPoints
@@ -35,7 +35,7 @@ class Test(unittest.TestCase):
 		return colors
 
 	def saveColors(self, f, colorArray):
-		""" save colours """
+		"""save colours."""
 		f.write('r, g, b, a\n'.encode('utf-8'))
 		for c in colorArray:
 			line = []
@@ -45,13 +45,13 @@ class Test(unittest.TestCase):
 			f.write(line.encode('utf-8'))
 
 	def testColdSteel(self):
-		""" test cold steel """
+		"""test cold steel."""
 		self.dut.load(__HERE__ + 'Cold_Steel_2.ggr')
 		# test round-trip compatibility
 		self.dut.save(__HERE__ + 'actualOutput_Cold_Steel_2.ggr')
 		original = open(__HERE__ + 'Cold_Steel_2.ggr', 'rb')
 		actual = open(__HERE__ + 'actualOutput_Cold_Steel_2.ggr', 'rb')
-		assert actual.read() == original.read()
+		assert actual.read() == original.read().replace(b"\r\n",b"\n")
 		original.close()
 		actual.close()
 		os.remove(__HERE__ + 'actualOutput_Cold_Steel_2.ggr')

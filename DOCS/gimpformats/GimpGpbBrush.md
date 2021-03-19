@@ -14,11 +14,11 @@ Pure python implementation of the OLD gimp gpb brush format
 
 ## GimpGpbBrush
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L12)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L16)
 
 ```python
 class GimpGpbBrush():
-    def __init__(fileName: Union[(BytesIO, str)]):
+    def __init__(fileName: BytesIO | str):
 ```
 
 Pure python implementation of the OLD gimp gpb brush format
@@ -28,23 +28,23 @@ See:
 
 ### GimpGpbBrush().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L67)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L73)
 
 ```python
 def __repr__(indent=''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpGpbBrush().decode
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L43)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L47)
 
 ```python
 def decode(data, index=0):
 ```
 
-decode a byte buffer
+Decode a byte buffer
 
 #### Arguments
 
@@ -53,23 +53,23 @@ decode a byte buffer
 
 ### GimpGpbBrush().encode
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L54)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L57)
 
 ```python
 def encode():
 ```
 
-encode this object to a byte array
+Encode this object to a byte array.
 
 ### GimpGpbBrush().load
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L27)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L32)
 
 ```python
-def load(fileName: Union[(BytesIO, str)]):
+def load(fileName: BytesIO | str):
 ```
 
-load a gimp file
+Load a gimp file.
 
 #### Arguments
 
@@ -77,10 +77,10 @@ load a gimp file
 
 ### GimpGpbBrush().save
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L61)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L64)
 
 ```python
 def save(tofileName=None):
 ```
 
-save this gimp image to a file
+Save this gimp image to a file.

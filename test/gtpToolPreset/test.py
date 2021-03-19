@@ -29,13 +29,13 @@ class Test(unittest.TestCase):
 		pass
 
 	def testSmudgeRough(self):
-		""" test smudge rough """
+		"""test smudge rough."""
 		self.dut.load(__HERE__ + 'Smudge-Rough.gtp')
 		# test round-trip compatibility
 		self.dut.save(__HERE__ + 'actualOutput_Smudge-Rough.gtp')
 		original = open(__HERE__ + 'Smudge-Rough.gtp', 'rb')
 		actual = open(__HERE__ + 'actualOutput_Smudge-Rough.gtp', 'rb')
-		assert actual.read() == original.read()
+		assert actual.read() == original.read().replace(b"\r\n",b"\n")
 		original.close()
 		actual.close()
 		os.remove(__HERE__ + 'actualOutput_Smudge-Rough.gtp')

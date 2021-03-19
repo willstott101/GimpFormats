@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpPatPattern](../../gimpformats/GimpPatPattern.py) module.
 
-Pure python implementation of a gimp pattern file
+Pure python implementation of a gimp pattern file.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpPatPattern
     - [GimpPatPattern](#gimppatpattern)
@@ -17,37 +17,37 @@ Pure python implementation of a gimp pattern file
 
 ## GimpPatPattern
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L11)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L12)
 
 ```python
 class GimpPatPattern():
     def __init__(fileName=None):
 ```
 
-Pure python implementation of a gimp pattern file
+Pure python implementation of a gimp pattern file.
 
 See:
  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/pat.txt
 
 ### GimpPatPattern().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L139)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L130)
 
 ```python
 def __repr__(indent=''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpPatPattern().decode
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L50)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L49)
 
 ```python
 def decode(data, index=0):
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
@@ -56,28 +56,28 @@ decode a byte buffer
 
 ### GimpPatPattern().encode
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L72)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L70)
 
 ```python
 def encode():
 ```
 
-encode to a byte buffer
+Encode to a byte buffer.
 
 ### GimpPatPattern().image
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L98)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L92)
 
 ```python
 @property
 def image():
 ```
 
-get a final, compiled image
+Get a final, compiled image.
 
 ### GimpPatPattern().image
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L112)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L103)
 
 ```python
 @image.setter
@@ -89,10 +89,10 @@ def image(image):
 [[find in source code]](../../gimpformats/GimpPatPattern.py#L34)
 
 ```python
-def load(fileName: Union[(BytesIO, str)]):
+def load(fileName: BytesIO | str):
 ```
 
-load a gimp file
+Load a gimp file.
 
 #### Arguments
 
@@ -100,21 +100,21 @@ load a gimp file
 
 ### GimpPatPattern().save
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L117)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L108)
 
 ```python
 def save(tofileName=None, toExtension=None):
 ```
 
-save this gimp image to a file
+Save this gimp image to a file.
 
 ### GimpPatPattern().size
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L91)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L87)
 
 ```python
 @property
 def size():
 ```
 
-the size of the pattern
+The size of the pattern.

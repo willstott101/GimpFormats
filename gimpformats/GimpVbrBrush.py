@@ -3,9 +3,11 @@
 Pure python implementation of the gimp vbr brush format
 """
 from __future__ import annotations
+
 import argparse
-from ioBuf import BytesIO
+from io import BytesIO
 from typing import Optional, Union
+
 
 class GimpVbrBrush:
 	"""
@@ -17,20 +19,20 @@ class GimpVbrBrush:
 
 	BRUSH_SHAPES = ["circle", "square", "diamond"]
 
-	def __init__(self, fileName: Union[BytesIO, str, None]=None):
+	def __init__(self, fileName: BytesIO | str | None = None):
 		self.version = 1.0
-		self.name = ''
+		self.name = ""
 		self.spacing = 0
 		self.radius = 50
 		self.hardness = 1
 		self.aspectRatio = 1
 		self.angle = 0
-		self.brushShape = None # one of the strings in self.BRUSH_SHAPES
+		self.brushShape = None  # one of the strings in self.BRUSH_SHAPES
 		self.spikes = None
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: Union[BytesIO, str]):
+	def load(self, fileName: BytesIO | str):
 		"""
 		load a gimp file
 
@@ -38,7 +40,7 @@ class GimpVbrBrush:
 		"""
 		if isinstance(fileName, str):
 			self.fileName = fileName
-			file = open(fileName, 'rb')
+			file = open(fileName, "rb")
 		else:
 			self.fileName = fileName.name
 			file = fileName
@@ -51,7 +53,7 @@ class GimpVbrBrush:
 		"""
 		this parametric brush converted to a useable PIL image
 		"""
-		raise NotImplementedError() # TODO:
+		raise NotImplementedError()  # TODO:
 
 	def decode(self, data: bytes):
 		"""
@@ -59,20 +61,20 @@ class GimpVbrBrush:
 
 		:param data: data buffer to decode
 		"""
-		data = [s.strip() for s in data.split('\n')]
+		data = [s.strip() for s in data.split("\n")]
 		if data[0] != "GIMP-VBR":
-			raise Exception('File format error.  Magic value mismatch.')
+			raise Exception("File format error.  Magic value mismatch.")
 		self.version = float(data[1])
 		if self.version == 1.0:
-			self.name = data[2] # max len 255 bytes
+			self.name = data[2]  # max len 255 bytes
 			self.spacing = float(data[3])
 			self.radius = float(data[4])
 			self.hardness = float(data[5])
 			self.aspectRatio = float(data[6])
 			self.angle = float(data[7])
 		elif self.version == 1.5:
-			self.name = data[2] # max len 255 bytes
-			self.brushShape = data[3] # one of the strings in self.BRUSH_SHAPES
+			self.name = data[2]  # max len 255 bytes
+			self.brushShape = data[3]  # one of the strings in self.BRUSH_SHAPES
 			self.spacing = float(data[4])
 			self.radius = float(data[5])
 			self.spikes = float(data[6])
@@ -80,7 +82,7 @@ class GimpVbrBrush:
 			self.aspectRatio = float(data[8])
 			self.angle = float(data[9])
 		else:
-			raise Exception('Unknown version ' + str(self.version))
+			raise Exception("Unknown version " + str(self.version))
 
 	def encode(self):
 		"""
@@ -105,7 +107,7 @@ class GimpVbrBrush:
 			data.append(str(self.hardness))
 			data.append(str(self.aspectRatio))
 			data.append(str(self.angle))
-		return ('\n'.join(data) + '\n').encode('utf-8')
+		return ("\n".join(data) + "\n").encode("utf-8")
 
 	def save(self, tofileName=None, toExtension=None):
 		"""
@@ -114,37 +116,40 @@ class GimpVbrBrush:
 		asImage = False
 		if toExtension is None:
 			if tofileName is not None:
-				toExtension = tofileName.rsplit('.', 1)
+				toExtension = tofileName.rsplit(".", 1)
 				if len(toExtension) > 1:
 					toExtension = toExtension[-1]
 				else:
 					toExtension = None
-		if toExtension is not None and toExtension != 'vbr':
+		if toExtension is not None and toExtension != "vbr":
 			asImage = True
 		if asImage:
 			self.image.save(tofileName)
 		else:
-			if not hasattr(tofileName, 'write'):
-				f = open(tofileName, 'wb')
-			f.write(self.encode())
+			if hasattr(tofileName, "write"):
+				file = tofileName
+			else:
+				file = open(tofileName, "wb")
+			file.write(self.encode())
+			file.close()
 
-	def __repr__(self, indent=''):
+	def __repr__(self, indent=""):
 		"""
 		Get a textual representation of this object
 		"""
 		ret = []
 		if self.fileName is not None:
-			ret.append('fileName: ' + self.fileName)
-		ret.append('Name: ' + str(self.name))
-		ret.append('Version: ' + str(self.version))
-		ret.append('Spacing: ' + str(self.spacing))
-		ret.append('Radius: ' + str(self.radius))
-		ret.append('Hardness: ' + str(self.hardness))
-		ret.append('Aspect ratio: ' + str(self.aspectRatio))
-		ret.append('Angle: ' + str(self.angle))
-		ret.append('Brush Shape: ' + str(self.brushShape))
-		ret.append('Spikes: ' + str(self.spikes))
-		return '\n'.join(ret)
+			ret.append("fileName: " + self.fileName)
+		ret.append("Name: " + str(self.name))
+		ret.append("Version: " + str(self.version))
+		ret.append("Spacing: " + str(self.spacing))
+		ret.append("Radius: " + str(self.radius))
+		ret.append("Hardness: " + str(self.hardness))
+		ret.append("Aspect ratio: " + str(self.aspectRatio))
+		ret.append("Angle: " + str(self.angle))
+		ret.append("Brush Shape: " + str(self.brushShape))
+		ret.append("Spikes: " + str(self.spikes))
+		return "\n".join(ret)
 
 	def __eq__(self, other):
 		"""
@@ -171,13 +176,11 @@ class GimpVbrBrush:
 		return True
 
 
-if __name__ == '__main__':
-	""" CLI Entry Point """
+if __name__ == "__main__":
+	"""CLI Entry Point."""
 	parser = argparse.ArgumentParser("gimpVbrBrush.py")
-	parser.add_argument("xcfdocument", action="store",
-	help="xcf file to act on")
-	parser.add_argument("--dump", action="store_true",
-	help="dump info about this file")
+	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
+	parser.add_argument("--dump", action="store_true", help="dump info about this file")
 	args = parser.parse_args()
 
 	gimpVbrBrush = GimpVbrBrush(args.xcfdocument)

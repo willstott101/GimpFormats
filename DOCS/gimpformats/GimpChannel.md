@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpChannel](../../gimpformats/GimpChannel.py) module.
 
-Represents a single channel or mask in a gimp image
+Represents a single channel or mask in a gimp image.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpChannel
     - [GimpChannel](#gimpchannel)
@@ -15,60 +15,64 @@ Represents a single channel or mask in a gimp image
 
 ## GimpChannel
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L12)
+[[find in source code]](../../gimpformats/GimpChannel.py#L14)
 
 ```python
 class GimpChannel(GimpIOBase):
-    def __init__(parent, name: str = '', image: Optional[Image.Image] = None):
+    def __init__(parent, name: str = '', image: Image.Image | None = None):
 ```
 
-Represents a single channel or mask in a gimp image
+Represents a single channel or mask in a gimp image.
 
 ### GimpChannel().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L99)
+[[find in source code]](../../gimpformats/GimpChannel.py#L94)
 
 ```python
 def __repr__(indent: str = '') -> str:
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpChannel().decode
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L27)
+[[find in source code]](../../gimpformats/GimpChannel.py#L28)
 
 ```python
-def decode(data: bytearray, index: int = 0):
+def decode(data: bytearray, index: int = 0) -> int:
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
-- `data` - data buffer to decode
-- `index` - index within the buffer to start at
+- `data` *bytearray* - data to decode
+- `index` *int, optional* - index to start from. Defaults to 0.
+
+#### Returns
+
+- `int` - pointer
 
 ### GimpChannel().encode
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L44)
+[[find in source code]](../../gimpformats/GimpChannel.py#L48)
 
 ```python
-def encode():
+def encode() -> bytearray:
 ```
 
-encode this object to a byte buffer
+Encode this object to a byte buffer.
 
 ### GimpChannel().image
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L59)
+[[find in source code]](../../gimpformats/GimpChannel.py#L61)
 
 ```python
 @property
-def image() -> Optional[Image.Image]:
+def image() -> Image.Image | None:
 ```
 
-get a final, compiled image
+Get a final, compiled image.
 
 ### GimpChannel().image
 
@@ -79,18 +83,18 @@ get a final, compiled image
 def image(image: Image.Image):
 ```
 
-get a final, compiled image
+Get a final, compiled image.
 
 ### GimpChannel().imageHierarchy
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L86)
+[[find in source code]](../../gimpformats/GimpChannel.py#L82)
 
 ```python
 @property
 def imageHierarchy():
 ```
 
-Get the image hierarchy
+Get the image hierarchy.
 
 This is mainly used for decoding the image, so
 not much use to you.

@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpGihBrushSet](../../gimpformats/GimpGihBrushSet.py) module.
 
-Gimp Image Pipe Format
+Gimp Image Pipe Format.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpGihBrushSet
     - [GimpGihBrushSet](#gimpgihbrushset)
@@ -17,14 +17,14 @@ for how to use them.
 
 ## GimpGihBrushSet
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L14)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L17)
 
 ```python
 class GimpGihBrushSet():
     def __init__(fileName=None):
 ```
 
-Gimp Image Pipe Format
+Gimp Image Pipe Format.
 
 The gih format is use to store a series of brushes, and some extra info
 for how to use them.
@@ -34,23 +34,23 @@ See:
 
 ### GimpGihBrushSet().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L97)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L98)
 
 ```python
 def __repr__(indent=''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpGihBrushSet().decode
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L48)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L50)
 
 ```python
-def decode(data, index=0):
+def decode(data: bytearray, index: int = 0):
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
@@ -59,23 +59,23 @@ decode a byte buffer
 
 ### GimpGihBrushSet().encode
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L73)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L74)
 
 ```python
 def encode():
 ```
 
-encode this object to a byte array
+Encode this object to a byte array.
 
 ### GimpGihBrushSet().load
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L32)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L35)
 
 ```python
-def load(fileName: Union[(BytesIO, str)]):
+def load(fileName: BytesIO | str):
 ```
 
-load a gimp file
+Load a gimp file.
 
 #### Arguments
 
@@ -83,10 +83,10 @@ load a gimp file
 
 ### GimpGihBrushSet().save
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L89)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L88)
 
 ```python
-def save(tofileName=None):
+def save(tofileName: str):
 ```
 
-save this gimp image to a file
+Save this gimp image to a file.

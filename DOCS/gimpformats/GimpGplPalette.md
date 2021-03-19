@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpGplPalette](../../gimpformats/GimpGplPalette.py) module.
 
-Pure python implementation of the gimp gpl palette format
+Pure python implementation of the gimp gpl palette format.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpGplPalette
     - [GimpGplPalette](#gimpgplpalette)
@@ -15,44 +15,44 @@ Pure python implementation of the gimp gpl palette format
 
 ## GimpGplPalette
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L8)
+[[find in source code]](../../gimpformats/GimpGplPalette.py#L9)
 
 ```python
 class GimpGplPalette():
-    def __init__(fileName=None):
+    def __init__(fileName: BytesIO | str | None = None):
 ```
 
-Pure python implementation of the gimp gpl palette format
+Pure python implementation of the gimp gpl palette format.
 
 ### GimpGplPalette().\_\_eq\_\_
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L102)
+[[find in source code]](../../gimpformats/GimpGplPalette.py#L98)
 
 ```python
-def __eq__(other):
+def __eq__(other: GimpGplPalette):
 ```
 
-perform a comparison
+Perform a comparison.
 
 ### GimpGplPalette().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L87)
+[[find in source code]](../../gimpformats/GimpGplPalette.py#L83)
 
 ```python
-def __repr__(indent=''):
+def __repr__():
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpGplPalette().decode
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L34)
+[[find in source code]](../../gimpformats/GimpGplPalette.py#L35)
 
 ```python
-def decode(data):
+def decode(data: str) -> None:
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
@@ -66,17 +66,17 @@ decode a byte buffer
 def encode():
 ```
 
-encode to a raw data stream
+Encode to a raw data stream.
 
 ### GimpGplPalette().load
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L18)
+[[find in source code]](../../gimpformats/GimpGplPalette.py#L20)
 
 ```python
-def load(fileName: Union[(BytesIO, str)]):
+def load(fileName: BytesIO | str):
 ```
 
-load a gimp file
+Load a gimp file.
 
 #### Arguments
 
@@ -84,10 +84,10 @@ load a gimp file
 
 ### GimpGplPalette().save
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L73)
+[[find in source code]](../../gimpformats/GimpGplPalette.py#L74)
 
 ```python
-def save(tofileName=None, toExtension=None):
+def save(fileName: str | BytesIO):
 ```
 
-save this gimp image to a file
+Save this gimp image to a file.

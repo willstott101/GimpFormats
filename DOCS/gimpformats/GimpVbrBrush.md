@@ -16,11 +16,11 @@ Pure python implementation of the gimp vbr brush format
 
 ## GimpVbrBrush
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L10)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L12)
 
 ```python
 class GimpVbrBrush():
-    def __init__(fileName: Union[(BytesIO, str, None)] = None):
+    def __init__(fileName: BytesIO | str | None = None):
 ```
 
 Pure python implementation of the gimp vbr brush format
@@ -30,7 +30,7 @@ See:
 
 ### GimpVbrBrush().\_\_eq\_\_
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L149)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L154)
 
 ```python
 def __eq__(other):
@@ -40,7 +40,7 @@ perform a comparison
 
 ### GimpVbrBrush().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L131)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L136)
 
 ```python
 def __repr__(indent=''):
@@ -50,7 +50,7 @@ Get a textual representation of this object
 
 ### GimpVbrBrush().decode
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L56)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L58)
 
 ```python
 def decode(data: bytes):
@@ -64,7 +64,7 @@ decode a byte buffer
 
 ### GimpVbrBrush().encode
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L85)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L87)
 
 ```python
 def encode():
@@ -74,7 +74,7 @@ encode to a raw data stream
 
 ### GimpVbrBrush().image
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L49)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L51)
 
 ```python
 @property
@@ -85,10 +85,10 @@ this parametric brush converted to a useable PIL image
 
 ### GimpVbrBrush().load
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L33)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L35)
 
 ```python
-def load(fileName: Union[(BytesIO, str)]):
+def load(fileName: BytesIO | str):
 ```
 
 load a gimp file
@@ -99,7 +99,7 @@ load a gimp file
 
 ### GimpVbrBrush().save
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L110)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L112)
 
 ```python
 def save(tofileName=None, toExtension=None):

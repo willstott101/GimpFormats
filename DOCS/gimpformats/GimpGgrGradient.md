@@ -20,37 +20,37 @@ Gimp color gradient
 
 ## GimpGgrGradient
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L100)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L113)
 
 ```python
 class GimpGgrGradient():
     def __init__(fileName=None):
 ```
 
-Gimp color gradient
+Gimp color gradient.
 
 See:
  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/ggr.txt
 
 ### GimpGgrGradient().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L175)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L185)
 
 ```python
 def __repr__(indent=''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpGgrGradient().decode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L130)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L142)
 
 ```python
 def decode(data):
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
@@ -59,34 +59,35 @@ decode a byte buffer
 
 ### GimpGgrGradient().encode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L148)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L159)
 
 ```python
 def encode():
 ```
 
-encode this to a byte array
+Encode this to a byte array.
 
 ### GimpGgrGradient().getColor
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L168)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L178)
 
 ```python
 def getColor(percent):
 ```
 
-given a decimal percent (1.0 = 100%) retrieve
-the appropriate color for this point in the gradient
+Given a decimal percent (1.0 = 100%) retrieve...
+
+the appropriate color for this point in the gradient.
 
 ### GimpGgrGradient().load
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L114)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L127)
 
 ```python
-def load(fileName: Union[(BytesIO, str)]):
+def load(fileName: BytesIO | str):
 ```
 
-load a gimp file
+Load a gimp file.
 
 #### Arguments
 
@@ -94,17 +95,17 @@ load a gimp file
 
 ### GimpGgrGradient().save
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L159)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L168)
 
 ```python
 def save(tofileName=None):
 ```
 
-save this gimp image to a file
+Save this gimp image to a file.
 
 ## GradientSegment
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L9)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L11)
 
 ```python
 class GradientSegment():
@@ -115,7 +116,7 @@ Single segment within a gradient
 
 ### GradientSegment().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L83)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L96)
 
 ```python
 def __repr__(indent=''):
@@ -125,7 +126,7 @@ Get a textual representation of this object
 
 ### GradientSegment().decode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L38)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L51)
 
 ```python
 def decode(data):
@@ -139,7 +140,7 @@ decode a byte buffer
 
 ### GradientSegment().encode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L61)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L74)
 
 ```python
 def encode():
@@ -149,7 +150,7 @@ encode this to a byte array
 
 ### GradientSegment().getColor
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L31)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L44)
 
 ```python
 def getColor(percent):

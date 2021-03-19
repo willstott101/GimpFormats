@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpImageHierarchy](../../gimpformats/GimpImageHierarchy.py) module.
 
-Gets packed pixels from a gimp image
+Gets packed pixels from a gimp image.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpImageHierarchy
     - [GimpImageHierarchy](#gimpimagehierarchy)
@@ -19,7 +19,7 @@ NOTE: This was originally designed to be a hierarchy, like
 
 ## GimpImageHierarchy
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L15)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L17)
 
 ```python
 class GimpImageHierarchy(GimpIOBase):
@@ -34,17 +34,17 @@ NOTE: This was originally designed to be a hierarchy, like
 
 ### GimpImageHierarchy().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L116)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L118)
 
 ```python
 def __repr__(indent: str = ''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpImageHierarchy().decode
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L34)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L37)
 
 ```python
 def decode(data: bytearray, index: int = 0):
@@ -59,46 +59,46 @@ decode a byte buffer
 
 ### GimpImageHierarchy().encode
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L62)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L69)
 
 ```python
 def encode():
 ```
 
-encode this object to a byte buffer
+Encode this object to a byte buffer.
 
 ### GimpImageHierarchy().image
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L94)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L100)
 
 ```python
 @property
 def image() -> Optional[Image.Image]:
 ```
 
-get a final, compiled image
+Get a final, compiled image.
 
 ### GimpImageHierarchy().image
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L103)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L107)
 
 ```python
 @image.setter
 def image(image: Image.Image):
 ```
 
-set the image
+Set the image.
 
 ### GimpImageHierarchy().levels
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L79)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L86)
 
 ```python
 @property
 def levels():
 ```
 
-Get the levels within this hierarchy
+Get the levels within this hierarchy.
 
 Presently hierarchy is not really used by gimp,
 so this returns an array of one item

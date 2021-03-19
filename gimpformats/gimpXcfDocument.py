@@ -12,20 +12,22 @@ Currently not supporting:
 	Rendering a final, compositied image
 """
 from __future__ import annotations
+
 import argparse
 import copy
 from io import BytesIO
-from typing import Optional, Union
 
 import PIL.ImageGrab
-from PIL import Image
-from blendmodes.blend import blendLayers, BlendType
 from binaryiotools import IO
-from .GimpIOBase import GimpIOBase
-from .GimpImageHierarchy import GimpImageHierarchy
-from .GimpPrecision import Precision
-from .GimpLayer import GimpLayer
+from blendmodes.blend import BlendType, blendLayers
+from PIL import Image
+
 from .GimpChannel import GimpChannel
+from .GimpImageHierarchy import GimpImageHierarchy
+from .GimpIOBase import GimpIOBase
+from .GimpLayer import GimpLayer
+from .GimpPrecision import Precision
+
 
 class GimpDocument(GimpIOBase):
 	"""
@@ -46,22 +48,23 @@ class GimpDocument(GimpIOBase):
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 	"""
+
 	def __init__(self, fileName=None):
 		GimpIOBase.__init__(self, self)
 		self._layers = []
 		self._layerPtr = []
 		self._channels = []
 		self._channelPtr = []
-		self.version = 11 # This is the most recent version
+		self.version = 11  # This is the most recent version
 		self.width = 0
 		self.height = 0
 		self.baseColorMode = 0
-		self.precision = None # Precision object
+		self.precision = None  # Precision object
 		self._data = None
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: Union[BytesIO, str]):
+	def load(self, fileName: BytesIO | str):
 		"""
 		Load a gimp xcf and decode the file. See decode for more on this
 		process
@@ -70,7 +73,7 @@ class GimpDocument(GimpIOBase):
 		"""
 		if isinstance(fileName, str):
 			self.fileName = fileName
-			file = open(fileName, 'rb')
+			file = open(fileName, "rb")
 		else:
 			self.fileName = fileName.name
 			file = fileName
@@ -78,7 +81,7 @@ class GimpDocument(GimpIOBase):
 		file.close()
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int=0):
+	def decode(self, data: bytes, index: int = 0):
 		"""
 		decode a byte buffer
 
@@ -99,11 +102,11 @@ class GimpDocument(GimpIOBase):
 		# Create a new IO buffer (array of binary values)
 		ioBuf = IO(data, index)
 		# Check that the file is a valid gimp xcf
-		if ioBuf.getBytes(9) != "gimp xcf ".encode('ascii'):
-			raise Exception('Not a valid GIMP file')
+		if ioBuf.getBytes(9) != b"gimp xcf ":
+			raise Exception("Not a valid GIMP file")
 		# Grab the file version
 		version = ioBuf.cString
-		if version == 'file':
+		if version == "file":
 			self.version = 0
 		else:
 			self.version = int(version[1:])
@@ -162,7 +165,7 @@ class GimpDocument(GimpIOBase):
 		# The file is a valid gimp xcf
 		ioBuf.addBytes("gimp xcf ")
 		# Set the file version
-		ioBuf.addBytes("v{0:03d}".format(self.version) + '\0')
+		ioBuf.addBytes(f"v{self.version:03d}" + "\0")
 		# Set other attributes as outlined in the spec
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
@@ -233,10 +236,10 @@ class GimpDocument(GimpIOBase):
 		assign to a given layer
 		"""
 		self._forceFullyLoaded()
-		self._layerPtr = None # no longer try to use the pointers to get data
-		#self.layers._actualSetitem(index, l)
+		self._layerPtr = None  # no longer try to use the pointers to get data
+		# self.layers._actualSetitem(index, l)
 
-	def newLayer(self, name: str, image: Image.Image, index: int=-1):
+	def newLayer(self, name: str, image: Image.Image, index: int = -1):
 		"""
 		create a new layer based on a PIL image
 
@@ -249,7 +252,7 @@ class GimpDocument(GimpIOBase):
 		self.insertLayer(lyr, index)
 		return lyr
 
-	def newLayerFromClipboard(self, name: str='pasted', index: int=-1):
+	def newLayerFromClipboard(self, name: str = "pasted", index: int = -1):
 		"""
 		Create a new image from the system clipboard.
 
@@ -279,7 +282,7 @@ class GimpDocument(GimpIOBase):
 		"""
 		self.insertLayer(l, -1)
 
-	def insertLayer(self, lyr: GimpLayer, index: int=-1):
+	def insertLayer(self, lyr: GimpLayer, index: int = -1):
 		"""
 		insert a layer object at a specific position
 
@@ -321,7 +324,7 @@ class GimpDocument(GimpIOBase):
 
 		# Example Layers [layer, layer, group, layer]
 		# Example Group [Layer(Group), [layer, layer, ...]]
-		layers = self.layers[:] # Copy the attribute rather than write to it
+		layers = self.layers[:]  # Copy the attribute rather than write to it
 		layersOut = []
 		index = 0
 		while index < len(layers):
@@ -348,9 +351,12 @@ class GimpDocument(GimpIOBase):
 		self._forceFullyLoaded()
 		if tofileName is None:
 			tofileName = self.fileName
-		if not hasattr(tofileName, 'write'):
-			file = open(tofileName, 'wb')
+		if hasattr(tofileName, "write"):
+			file = tofileName
+		else:
+			file = open(tofileName, "wb")
 		file.write(self.encode())
+		file.close()
 
 	def saveNew(self, tofileName=None):
 		"""
@@ -358,48 +364,59 @@ class GimpDocument(GimpIOBase):
 		"""
 		if tofileName is None:
 			tofileName = self.fileName
-		if not hasattr(tofileName, 'write'):
-			f = open(tofileName, 'wb')
-		f.write(self.encode())
+		if hasattr(tofileName, "write"):
+			file = tofileName
+		else:
+			file = open(tofileName, "wb")
+		file.write(self.encode())
+		file.close()
 
-	def __repr__(self, indent: str=''):
+	def __repr__(self, indent: str = ""):
 		"""
 		Get a textual representation of this object
 		"""
 		ret = []
 		if self.fileName is not None:
-			ret.append('fileName: ' + self.fileName)
-		ret.append('Version: ' + str(self.version))
-		ret.append('Size: ' + str(self.width) + ' x ' + str(self.height))
-		ret.append('Base Color Mode: ' + self.COLOR_MODES[self.baseColorMode])
-		ret.append('Precision: ' + str(self.precision))
+			ret.append("fileName: " + self.fileName)
+		ret.append("Version: " + str(self.version))
+		ret.append("Size: " + str(self.width) + " x " + str(self.height))
+		ret.append("Base Color Mode: " + self.COLOR_MODES[self.baseColorMode])
+		ret.append("Precision: " + str(self.precision))
 		ret.append(GimpIOBase.__repr__(self))
 		if self._layerPtr:
-			ret.append('Layers: ')
+			ret.append("Layers: ")
 			for l in self.layers:
-				ret.append(l.__repr__('\t'))
+				ret.append(l.__repr__("\t"))
 		if self._channelPtr:
-			ret.append('Channels: ')
+			ret.append("Channels: ")
 			for ch in self._channels:
-				ret.append(ch.__repr__('\t'))
-		return '\n'.join(ret)
+				ret.append(ch.__repr__("\t"))
+		return "\n".join(ret)
 
-def blendModeLookup(blendmode: int, blendLookup: dict[int, BlendType],
-default: BlendType=BlendType.NORMAL):
-	""" Get the blendmode from a lookup table """
+
+def blendModeLookup(
+	blendmode: int, blendLookup: dict[int, BlendType], default: BlendType = BlendType.NORMAL
+):
+	"""Get the blendmode from a lookup table."""
 	if blendmode not in blendLookup:
 		print("WARNING " + str(blendmode) + " is not currently supported!")
 		return default
 	return blendLookup[blendmode]
 
-def rasterImageOffset(image: Image.Image, size: tuple[int, int], offsets: tuple[int, int]=(0, 0)):
-	""" Rasterise an image with offset to a given size"""
+
+def rasterImageOffset(image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)):
+	"""Rasterise an image with offset to a given size"""
 	imageOffset = Image.new("RGBA", size)
 	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
 	return imageOffset
 
-def flattenLayerOrGroup(layerOrGroup: Union[list[GimpLayer], GimpLayer], imageDimensions: tuple[int, int],
-flattenedSoFar: Optional[Image.Image]=None, ignoreHidden: bool=True) -> Image.Image:
+
+def flattenLayerOrGroup(
+	layerOrGroup: list[GimpLayer] | GimpLayer,
+	imageDimensions: tuple[int, int],
+	flattenedSoFar: Image.Image | None = None,
+	ignoreHidden: bool = True,
+) -> Image.Image:
 	"""Flatten a layer or group on to an image of what has already been
 	flattened
 	Args:
@@ -412,49 +429,90 @@ flattenedSoFar: Optional[Image.Image]=None, ignoreHidden: bool=True) -> Image.Im
 	Returns:
 		PIL.Image: Flattened image
 	"""
-	blendLookup = {0: BlendType.NORMAL, 3: BlendType.MULTIPLY,
-	4: BlendType.SCREEN, 5: BlendType.OVERLAY, 6: BlendType.DIFFERENCE,
-	7: BlendType.ADDITIVE, 8: BlendType.NEGATION, 9: BlendType.DARKEN,
-	10: BlendType.LIGHTEN, 11: BlendType.HUE, 12: BlendType.SATURATION,
-	13: BlendType.COLOUR, 14: BlendType.LUMINOSITY, 15: BlendType.DIVIDE,
-	16: BlendType.COLOURDODGE, 17: BlendType.COLOURBURN,
-	18: BlendType.HARDLIGHT, 19: BlendType.SOFTLIGHT, 20: BlendType.GRAINEXTRACT,
-	21: BlendType.GRAINMERGE, 23: BlendType.OVERLAY, 24: BlendType.HUE,
-	25: BlendType.SATURATION, 26: BlendType.COLOUR, 27: BlendType.LUMINOSITY,
-	28: BlendType.NORMAL, 30: BlendType.MULTIPLY, 31: BlendType.SCREEN,
-	32: BlendType.DIFFERENCE, 33: BlendType.ADDITIVE, 34: BlendType.NEGATION,
-	35: BlendType.DARKEN, 36: BlendType.LIGHTEN, 37: BlendType.HUE,
-	38: BlendType.SATURATION, 39: BlendType.COLOUR, 40: BlendType.LUMINOSITY,
-	41: BlendType.DIVIDE, 42: BlendType.COLOURDODGE,
-	43: BlendType.COLOURBURN, 44: BlendType.HARDLIGHT, 45: BlendType.SOFTLIGHT,
-	46: BlendType.GRAINEXTRACT, 47: BlendType.GRAINMERGE,
-	48: BlendType.VIVIDLIGHT, 49: BlendType.PINLIGHT, 52: BlendType.EXCLUSION}
+	blendLookup = {
+		0: BlendType.NORMAL,
+		3: BlendType.MULTIPLY,
+		4: BlendType.SCREEN,
+		5: BlendType.OVERLAY,
+		6: BlendType.DIFFERENCE,
+		7: BlendType.ADDITIVE,
+		8: BlendType.NEGATION,
+		9: BlendType.DARKEN,
+		10: BlendType.LIGHTEN,
+		11: BlendType.HUE,
+		12: BlendType.SATURATION,
+		13: BlendType.COLOUR,
+		14: BlendType.LUMINOSITY,
+		15: BlendType.DIVIDE,
+		16: BlendType.COLOURDODGE,
+		17: BlendType.COLOURBURN,
+		18: BlendType.HARDLIGHT,
+		19: BlendType.SOFTLIGHT,
+		20: BlendType.GRAINEXTRACT,
+		21: BlendType.GRAINMERGE,
+		23: BlendType.OVERLAY,
+		24: BlendType.HUE,
+		25: BlendType.SATURATION,
+		26: BlendType.COLOUR,
+		27: BlendType.LUMINOSITY,
+		28: BlendType.NORMAL,
+		30: BlendType.MULTIPLY,
+		31: BlendType.SCREEN,
+		32: BlendType.DIFFERENCE,
+		33: BlendType.ADDITIVE,
+		34: BlendType.NEGATION,
+		35: BlendType.DARKEN,
+		36: BlendType.LIGHTEN,
+		37: BlendType.HUE,
+		38: BlendType.SATURATION,
+		39: BlendType.COLOUR,
+		40: BlendType.LUMINOSITY,
+		41: BlendType.DIVIDE,
+		42: BlendType.COLOURDODGE,
+		43: BlendType.COLOURBURN,
+		44: BlendType.HARDLIGHT,
+		45: BlendType.SOFTLIGHT,
+		46: BlendType.GRAINEXTRACT,
+		47: BlendType.GRAINMERGE,
+		48: BlendType.VIVIDLIGHT,
+		49: BlendType.PINLIGHT,
+		52: BlendType.EXCLUSION,
+	}
 
 	if isinstance(layerOrGroup, list):
 		if ignoreHidden and not layerOrGroup[0].visible:
 			foregroundRaster = Image.new("RGBA", imageDimensions)
-		else: # A group is a list of layers
+		else:  # A group is a list of layers
 			# (see flattenAll)
-			foregroundRaster = rasterImageOffset(flattenAll(layerOrGroup[1],
-			imageDimensions, ignoreHidden), imageDimensions, (layerOrGroup[0].xOffset,
-			layerOrGroup[0].yOffset))
+			foregroundRaster = rasterImageOffset(
+				flattenAll(layerOrGroup[1], imageDimensions, ignoreHidden),
+				imageDimensions,
+				(layerOrGroup[0].xOffset, layerOrGroup[0].yOffset),
+			)
 		if flattenedSoFar is None:
 			return foregroundRaster
-		return blendLayers(flattenedSoFar, foregroundRaster,
-		blendModeLookup(layerOrGroup[0].blendMode, blendLookup),
-		layerOrGroup[0].opacity)
+		return blendLayers(
+			flattenedSoFar,
+			foregroundRaster,
+			blendModeLookup(layerOrGroup[0].blendMode, blendLookup),
+			layerOrGroup[0].opacity,
+		)
 
 	if ignoreHidden and not layerOrGroup.visible:
 		foregroundRaster = Image.new("RGBA", imageDimensions)
 	else:
 		# Get a raster image and apply blending
-		foregroundRaster = rasterImageOffset(layerOrGroup.image, imageDimensions,
-		(layerOrGroup.xOffset, layerOrGroup.yOffset))
+		foregroundRaster = rasterImageOffset(
+			layerOrGroup.image, imageDimensions, (layerOrGroup.xOffset, layerOrGroup.yOffset)
+		)
 	if flattenedSoFar is None:
 		return foregroundRaster
-	return blendLayers(flattenedSoFar, foregroundRaster,
-	blendModeLookup(layerOrGroup.blendMode, blendLookup),
-	layerOrGroup.opacity)
+	return blendLayers(
+		flattenedSoFar,
+		foregroundRaster,
+		blendModeLookup(layerOrGroup.blendMode, blendLookup),
+		layerOrGroup.opacity,
+	)
 
 
 def flattenAll(layers, imageDimensions, ignoreHidden=True):
@@ -474,28 +532,23 @@ def flattenAll(layers, imageDimensions, ignoreHidden=True):
 	end = len(layers) - 1
 	flattenedSoFar = flattenLayerOrGroup(layers[end], imageDimensions, ignoreHidden=ignoreHidden)
 	for l in range(end - 1, -1, -1):
-		flattenedSoFar = flattenLayerOrGroup(layers[l], imageDimensions,
-		flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden)
+		flattenedSoFar = flattenLayerOrGroup(
+			layers[l], imageDimensions, flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden
+		)
 	return flattenedSoFar
-
 
 
 ### ARGPARSE STUFF ###
 
-if __name__ == '__main__':
-	""" CLI Entry Point """
+if __name__ == "__main__":
+	"""CLI Entry Point."""
 	parser = argparse.ArgumentParser("GimpGbrBrush.py")
-	parser.add_argument("xcfdocument", action="store",
-	help="xcf file to act on")
+	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
 	group = parser.add_mutually_exclusive_group()
-	group.add_argument("--dump", action="store_true",
-	help="dump info about this file")
-	group.add_argument("--showLayer", action="store_true",
-	help="show layer(s) (use * for all)")
-	group.add_argument("--saveLayer", action="store_true",
-	help="save layer(s) out to file")
-	group.add_argument("--save", action="store",
-	help="save out the brush image")
+	group.add_argument("--dump", action="store_true", help="dump info about this file")
+	group.add_argument("--showLayer", action="store_true", help="show layer(s) (use * for all)")
+	group.add_argument("--saveLayer", action="store_true", help="save layer(s) out to file")
+	group.add_argument("--save", action="store", help="save out the brush image")
 	args = parser.parse_args()
 
 	gimpDocument = GimpDocument(args.xcfdocument)
@@ -503,7 +556,7 @@ if __name__ == '__main__':
 	if args.dump:
 		print(gimpDocument)
 	if args.showLayer:
-		if args.showLayer == '*':
+		if args.showLayer == "*":
 			for layer in range(len(gimpDocument.layers)):
 				im = gimpDocument.layers[layer].image
 				showLayer(im, layer)
@@ -511,15 +564,15 @@ if __name__ == '__main__':
 			im = gimpDocument.layers[int(args.showLayer)].image
 			showLayer(im, int(args.showLayer))
 	if args.saveLayer:
-		layer = args.saveLayer.split(',', 1)
+		layer = args.saveLayer.split(",", 1)
 		if len(layer) > 1:
 			fileName = layer[1]
 		else:
-			fileName = 'layer *.png'
+			fileName = "layer *.png"
 		layer = args.saveLayer[0]
-		if layer == '*':
-			if fileName.find('*') < 0:
-				fileName = '.'.join(fileName.split('.', 1).insert(1, '*'))
+		if layer == "*":
+			if fileName.find("*") < 0:
+				fileName = ".".join(fileName.split(".", 1).insert(1, "*"))
 			for n in range(len(gimpDocument.layers)):
 				saveLayer(gimpDocument, n, fileName)
 		else:
@@ -529,20 +582,20 @@ if __name__ == '__main__':
 
 
 def showLayer(image, l):
-	""" show a layer """
+	"""show a layer."""
 	if image is None:
-		print('No image for layer', l)
+		print("No image for layer", l)
 	else:
-		print('Showing layer', l)
+		print("Showing layer", l)
 		image.show()
 
 
-def saveLayer(gimpDoc, l, fileName: Union[BytesIO, str]):
-	""" save a layer """
+def saveLayer(gimpDoc, l, fileName: BytesIO | str):
+	"""save a layer."""
 	iteration = gimpDoc.layers[l].image
 	if iteration is None:
-		print('No image for layer', l)
+		print("No image for layer", l)
 	else:
-		fn2 = fileName.replace('*', str(l))
-		print('saving layer', fn2)
+		fn2 = fileName.replace("*", str(l))
+		print("saving layer", fn2)
 		iteration.save(fn2)

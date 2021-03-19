@@ -30,7 +30,7 @@ class Test(unittest.TestCase):
 		pass
 
 	def testWilber(self):
-		""" test wilber """
+		"""test wilber."""
 		self.dut.load(__HERE__ + 'Wilber.gih')
 		# test image saving (implicit)
 		self.dut.save(__HERE__ + 'actualOutput_Wilber.png')
@@ -45,7 +45,7 @@ class Test(unittest.TestCase):
 		os.remove(__HERE__ + 'actualOutput_Wilber.gih')
 
 	def testFeltpen(self):
-		""" test felt pen """
+		"""test felt pen."""
 		self.dut.load(__HERE__ + 'feltpen.gih')
 		# test image saving (explicit)
 		self.dut.image.save(__HERE__ + 'actualOutput_feltpen.png')

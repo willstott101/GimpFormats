@@ -27,19 +27,19 @@ class Test(unittest.TestCase):
 		pass
 
 	def testPlasma(self):
-		""" test plasma """
+		"""test plasma."""
 		self.dut.load(__HERE__ + 'Plasma.gpl')
 		# test round-trip compatibility
 		self.dut.save(__HERE__ + 'actualOutput_Plasma.gpl')
 		original = open(__HERE__ + 'Plasma.gpl', 'rb')
 		actual = open(__HERE__ + 'actualOutput_Plasma.gpl', 'rb')
-		assert actual.read() == original.read()
+		assert actual.read() == original.read().replace(b"\r\n",b"\n")
 		original.close()
 		actual.close()
 		os.remove(__HERE__ + 'actualOutput_Plasma.gpl')
 
 	def testWeb(self):
-		""" test web """
+		"""test web."""
 		self.dut.load(__HERE__ + 'web.gpl')
 		assert len(self.dut.colors) == 216
 

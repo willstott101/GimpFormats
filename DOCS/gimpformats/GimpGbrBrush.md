@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpGbrBrush](../../gimpformats/GimpGbrBrush.py) module.
 
-Pure python implementation of the gimp gbr brush format
+Pure python implementation of the gimp gbr brush format.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpGbrBrush
     - [GimpGbrBrush](#gimpgbrbrush)
@@ -16,37 +16,37 @@ Pure python implementation of the gimp gbr brush format
 
 ## GimpGbrBrush
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L12)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L14)
 
 ```python
 class GimpGbrBrush():
     def __init__(fileName=None):
 ```
 
-Pure python implementation of the gimp gbr brush format
+Pure python implementation of the gimp gbr brush format.
 
 See:
  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/gbr.txt
 
 ### GimpGbrBrush().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L126)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L132)
 
 ```python
 def __repr__(indent=''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpGbrBrush().decode
 
 [[find in source code]](../../gimpformats/GimpGbrBrush.py#L51)
 
 ```python
-def decode(data: bytes, index: int = 0):
+def decode(data: bytes, index: int = 0) -> int:
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
@@ -55,34 +55,34 @@ decode a byte buffer
 
 ### GimpGbrBrush().encode
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L77)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L81)
 
 ```python
-def encode():
+def encode() -> bytearray:
 ```
 
 encode this object to byte array
 
 ### GimpGbrBrush().image
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L98)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L102)
 
 ```python
 @property
-def image():
+def image() -> PIL.Image.Image | None:
 ```
 
-get a final, compiled image
+get a final, compiled image.
 
 ### GimpGbrBrush().load
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L35)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L36)
 
 ```python
-def load(fileName: Union[(BytesIO, str)]):
+def load(fileName: BytesIO | str):
 ```
 
-load a gimp file
+Load a gimp file.
 
 #### Arguments
 
@@ -90,21 +90,21 @@ load a gimp file
 
 ### GimpGbrBrush().save
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L105)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L109)
 
 ```python
-def save(tofileName=None, toExtension=None):
+def save(tofileName: str, toExtension: str | None = None):
 ```
 
-save this gimp image to a file
+save this gimp image to a file.
 
 ### GimpGbrBrush().size
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L93)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L97)
 
 ```python
 @property
-def size():
+def size() -> tuple[(int, int)]:
 ```
 
-Get the size
+Get the size.

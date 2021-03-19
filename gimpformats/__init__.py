@@ -1,4 +1,4 @@
-""" gimpformats
+"""gimpformats.
 
 Forked from https://github.com/TheHeadlessSourceMan/gimpFormats
 

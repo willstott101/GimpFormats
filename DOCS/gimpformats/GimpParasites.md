@@ -17,7 +17,7 @@ Format of known parasites:
 
 ## GimpParasite
 
-[[find in source code]](../../gimpformats/GimpParasites.py#L25)
+[[find in source code]](../../gimpformats/GimpParasites.py#L47)
 
 ```python
 class GimpParasite():
@@ -33,7 +33,7 @@ Format of known parasites:
 
 ### GimpParasite().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpParasites.py#L67)
+[[find in source code]](../../gimpformats/GimpParasites.py#L87)
 
 ```python
 def __repr__(indent: str = '') -> str:
@@ -43,13 +43,13 @@ Get a textual representation of this object
 
 ### GimpParasite().decode
 
-[[find in source code]](../../gimpformats/GimpParasites.py#L39)
+[[find in source code]](../../gimpformats/GimpParasites.py#L61)
 
 ```python
 def decode(data: bytearray, index: int = 0) -> int:
 ```
 
-decode a byte buffer
+Decode a byte buffer
 
 #### Arguments
 
@@ -58,13 +58,13 @@ decode a byte buffer
 
 ### GimpParasite().encode
 
-[[find in source code]](../../gimpformats/GimpParasites.py#L53)
+[[find in source code]](../../gimpformats/GimpParasites.py#L74)
 
 ```python
 def encode():
 ```
 
-encode a byte buffer
+Encode a byte buffer
 
 #### Arguments
 

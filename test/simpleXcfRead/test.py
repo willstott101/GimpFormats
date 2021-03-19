@@ -28,14 +28,14 @@ class Test(unittest.TestCase):
 		pass
 
 	def testImage(self):
-		""" test an image """
+		"""test an image."""
 		self.dut.load(__HERE__ + 'one_layer_with_transparency.xcf')
 		#self.dut.save(__HERE__ + 'actualOutput.png')
 		self.dut.image.save(__HERE__ + 'actualOutput.png')
 		assert imgcompare.is_equal(self.dut.image, __HERE__ + 'desiredOutput.png', tolerance=1)
 
 	def testComplexImage(self):
-		""" test an image """
+		"""test an image."""
 		self.dut.load(__HERE__ + 'base24.xcf')
 		self.dut.image.save(__HERE__ + 'base24.png')
 		assert imgcompare.is_equal(self.dut.image, __HERE__ + 'expected.png', tolerance=1)

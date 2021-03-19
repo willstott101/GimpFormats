@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpGtpToolPreset](../../gimpformats/GimpGtpToolPreset.py) module.
 
-Pure python implementation of the gimp gtp tool preset format
+Pure python implementation of the gimp gtp tool preset format.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpGtpToolPreset
     - [GimpGtpToolPreset](#gimpgtptoolpreset)
@@ -19,34 +19,34 @@ Pure python implementation of the gimp gtp tool preset format
 
 ## GimpGtpToolPreset
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L102)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L109)
 
 ```python
 class GimpGtpToolPreset():
     def __init__(fileName=None):
 ```
 
-Pure python implementation of the gimp gtp tool preset format
+Pure python implementation of the gimp gtp tool preset format.
 
 ### GimpGtpToolPreset().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L159)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L161)
 
 ```python
 def __repr__(indent=''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpGtpToolPreset().decode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L128)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L133)
 
 ```python
 def decode(data, index=0):
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
@@ -54,23 +54,23 @@ decode a byte buffer
 
 ### GimpGtpToolPreset().encode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L137)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L141)
 
 ```python
 def encode():
 ```
 
-encode to a byte array
+Encode to a byte array.
 
 ### GimpGtpToolPreset().load
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L112)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L118)
 
 ```python
-def load(fileName: Union[(BytesIO, str)]):
+def load(fileName: BytesIO | str):
 ```
 
-load a gimp file
+Load a gimp file.
 
 #### Arguments
 
@@ -78,63 +78,65 @@ load a gimp file
 
 ### GimpGtpToolPreset().save
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L143)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L145)
 
 ```python
 def save(tofileName=None, toExtension=None):
 ```
 
-save this gimp tool preset to a file
+Save this gimp tool preset to a file.
 
 ## ParenFileValue
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L9)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L12)
 
 ```python
 class ParenFileValue():
     def __init__(name=None, value='', children=None):
 ```
 
-A parentheses-based file format
+A parentheses-based file format.
+
 (possibly "scheme" language?)
 
 ### ParenFileValue().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L39)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L43)
 
 ```python
 def __repr__():
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ## parenFileDecode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L57)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L61)
 
 ```python
 def parenFileDecode(data):
 ```
 
-Decode a parentheses-based file format
+Decode a parentheses-based file format.
+
 (possibly "scheme" language?)
 
 ## parenFileEncode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L86)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L95)
 
 ```python
 def parenFileEncode(values):
 ```
 
-encode a values tree to a buffer
+Encode a values tree to a buffer.
 
 ## walkTree
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L68)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L71)
 
 ```python
 def walkTree(items):
 ```
 
-walk the tree
+Walk the tree.

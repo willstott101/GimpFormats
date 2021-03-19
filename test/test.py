@@ -49,7 +49,7 @@ def suite(tests=None):
 
 
 def run(tests=None, output=None, verbosity=2, failfast=False):
-	""" run the tests """
+	"""run the tests."""
 	if output is None:
 		output = sys.stdout
 	else:

@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats](../../gimpformats/__init__.py) module.
 
-gimpformats
+gimpformats.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / gimpformats
     - Modules

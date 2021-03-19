@@ -17,22 +17,18 @@ Represents a single layer in a gimp image
 
 ## GimpLayer
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L12)
+[[find in source code]](../../gimpformats/GimpLayer.py#L15)
 
 ```python
 class GimpLayer(GimpIOBase):
-    def __init__(
-        parent,
-        name: Optional[str] = None,
-        image: Optional[Image] = None,
-    ):
+    def __init__(parent, name: str | None = None, image: Image | None = None):
 ```
 
 Represents a single layer in a gimp image
 
 ### GimpLayer().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L172)
+[[find in source code]](../../gimpformats/GimpLayer.py#L168)
 
 ```python
 def __repr__(indent=''):
@@ -42,13 +38,13 @@ Get a textual representation of this object
 
 ### GimpLayer().decode
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L36)
+[[find in source code]](../../gimpformats/GimpLayer.py#L42)
 
 ```python
 def decode(data: bytearray, index: int = 0):
 ```
 
-decode a byte buffer
+Decode a byte buffer
 
 Steps:
 Create a new IO buffer (array of binary values)
@@ -64,13 +60,13 @@ Return the offset
 
 ### GimpLayer().encode
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L67)
+[[find in source code]](../../gimpformats/GimpLayer.py#L72)
 
 ```python
 def encode():
 ```
 
-encode to byte array
+Encode to byte array
 
 Steps:
 Create a new IO buffer (array of binary values)
@@ -81,27 +77,27 @@ Return the data
 
 ### GimpLayer().image
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L112)
+[[find in source code]](../../gimpformats/GimpLayer.py#L114)
 
 ```python
 @property
 def image() -> Image:
 ```
 
-get the layer image
+Get the layer image
 
 NOTE: can return None!
 
 ### GimpLayer().image
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L123)
+[[find in source code]](../../gimpformats/GimpLayer.py#L124)
 
 ```python
 @image.setter
 def image(image: Image):
 ```
 
-set the layer image
+Set the layer image
 
 NOTE: resets layer width, height, and colorMode
 
@@ -123,18 +119,18 @@ NOTE: can return None if it has been fully read into an image
 
 ### GimpLayer().imageHierarchy
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L156)
+[[find in source code]](../../gimpformats/GimpLayer.py#L155)
 
 ```python
 @imageHierarchy.setter
 def imageHierarchy(imgHierarchy):
 ```
 
-set the image hierarchy
+Set the image hierarchy.
 
 ### GimpLayer().mask
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L102)
+[[find in source code]](../../gimpformats/GimpLayer.py#L106)
 
 ```python
 @property

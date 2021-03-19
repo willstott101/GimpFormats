@@ -3,7 +3,9 @@
 Gimp color gradient
 """
 from __future__ import annotations
+
 import argparse
+from io import BytesIO
 
 
 class GradientSegment:
@@ -12,10 +14,21 @@ class GradientSegment:
 	"""
 
 	BLEND_FUNCTIONS = [
-	"linear", "curved", "sinusoidal", "spherical (increasing)", "spherical (decreasing)", "step"]
+		"linear",
+		"curved",
+		"sinusoidal",
+		"spherical (increasing)",
+		"spherical (decreasing)",
+		"step",
+	]
 	COLOR_TYPES = ["RGB", "HSV CCW", "HSV CW"]
 	ENDPOINT_COLOR_TYPES = [
-	"fixed", "foreground", "foreground transparent", "background", "background transparent"]
+		"fixed",
+		"foreground",
+		"foreground transparent",
+		"background",
+		"background transparent",
+	]
 
 	def __init__(self):
 		self.leftPosition = 0
@@ -23,10 +36,10 @@ class GradientSegment:
 		self.rightPosition = 1.0
 		self.leftColor = (0, 0, 0, 0)
 		self.rightColor = (255, 255, 255, 0)
-		self.blendFunc = None # one of self.BLEND_FUNCTIONS
-		self.colorType = None # one of self.COLOR_TYPES
-		self.leftColorType = None # one of self.ENDPOINT_COLOR_TYPES
-		self.rightColorType = None # one of self.ENDPOINT_COLOR_TYPES
+		self.blendFunc = None  # one of self.BLEND_FUNCTIONS
+		self.colorType = None  # one of self.COLOR_TYPES
+		self.leftColorType = None  # one of self.ENDPOINT_COLOR_TYPES
+		self.rightColorType = None  # one of self.ENDPOINT_COLOR_TYPES
 
 	def getColor(self, percent):
 		"""
@@ -41,9 +54,9 @@ class GradientSegment:
 
 		:param data: data buffer to decode
 		"""
-		data = data.split(' ')
+		data = data.split(" ")
 		if len(data) < 11 or len(data) > 15:
-			raise Exception('Data table is unexpected size. ' + str(len(data)))
+			raise Exception("Data table is unexpected size. " + str(len(data)))
 		self.leftPosition = float(data[0])
 		self.middlePosition = float(data[1])
 		self.rightPosition = float(data[2])
@@ -78,48 +91,47 @@ class GradientSegment:
 					ret.append("%d" % self.leftColorType)
 					if self.rightColorType is not None:
 						ret.append("%d" % self.rightColorType)
-		return (' '.join(ret))
+		return " ".join(ret)
 
-	def __repr__(self, indent=''):
+	def __repr__(self, indent=""):
 		"""
 		Get a textual representation of this object
 		"""
 		ret = []
-		ret.append('Left Position: ' + str(self.leftPosition))
-		ret.append('Middle Position: ' + str(self.middlePosition))
-		ret.append('Right Position: ' + str(self.rightPosition))
-		ret.append('Left Color: ' + str(self.leftColor))
-		ret.append('Right Color: ' + str(self.rightColor))
-		ret.append('Blend Function: ' + self.BLEND_FUNCTIONS[self.blendFunc])
-		ret.append('Color Type: ' + self.COLOR_TYPES[self.colorType])
-		ret.append('Left Color Type: ' + self.ENDPOINT_COLOR_TYPES[self.leftColorType])
-		ret.append('Right Color Type: ' + self.ENDPOINT_COLOR_TYPES[self.rightColorType])
-		return ('\n' + indent).join(ret)
+		ret.append("Left Position: " + str(self.leftPosition))
+		ret.append("Middle Position: " + str(self.middlePosition))
+		ret.append("Right Position: " + str(self.rightPosition))
+		ret.append("Left Color: " + str(self.leftColor))
+		ret.append("Right Color: " + str(self.rightColor))
+		ret.append("Blend Function: " + self.BLEND_FUNCTIONS[self.blendFunc])
+		ret.append("Color Type: " + self.COLOR_TYPES[self.colorType])
+		ret.append("Left Color Type: " + self.ENDPOINT_COLOR_TYPES[self.leftColorType])
+		ret.append("Right Color Type: " + self.ENDPOINT_COLOR_TYPES[self.rightColorType])
+		return ("\n" + indent).join(ret)
 
 
 class GimpGgrGradient:
-	"""
-	Gimp color gradient
+	"""Gimp color gradient.
 
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/ggr.txt
 	"""
+
 	def __init__(self, fileName=None):
 		self.fileName = None
 		self.segments = []
-		self.name = ''
+		self.name = ""
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: Union[BytesIO, str]):
-		"""
-		load a gimp file
+	def load(self, fileName: BytesIO | str):
+		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
 		"""
 		if isinstance(fileName, str):
 			self.fileName = fileName
-			file = open(fileName, 'rb')
+			file = open(fileName, "rb")
 		else:
 			self.fileName = fileName.name
 			file = fileName
@@ -128,70 +140,64 @@ class GimpGgrGradient:
 		self.decode(data)
 
 	def decode(self, data):
-		"""
-		decode a byte buffer
+		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
-		data = data.decode('utf-8').split('\n')
+		data = data.decode("utf-8").split("\n")
 		data = [l.strip() for l in data]
-		if data[0] != 'GIMP Gradient':
-			raise Exception('File format error.  Magic value mismatch.')
-		self.name = data[1].split(':', 1)[-1].strip()
+		if data[0] != "GIMP Gradient":
+			raise Exception("File format error.  Magic value mismatch.")
+		self.name = data[1].split(":", 1)[-1].strip()
 		numSegments = int(data[2])
 		for i in range(numSegments):
-			gs = GradientSegment()
-			gs.decode(data[i + 3])
-			self.segments.append(gs)
+			gSeg = GradientSegment()
+			gSeg.decode(data[i + 3])
+			self.segments.append(gSeg)
 
 	def encode(self):
-		"""
-		encode this to a byte array
-		"""
-		ret = ['GIMP Gradient']
-		ret.append('Name: ' + self.name)
+		"""Encode this to a byte array."""
+		ret = ["GIMP Gradient"]
+		ret.append("Name: " + self.name)
 		ret.append(str(len(self.segments)))
 		for segment in self.segments:
 			ret.append(segment.encode())
-		return ('\n'.join(ret) + '\n').encode('utf-8')
+		return ("\n".join(ret) + "\n").encode("utf-8")
 
 	def save(self, tofileName=None):
-		"""
-		save this gimp image to a file
-		"""
-		if not hasattr(tofileName, 'write'):
-			f = open(tofileName, 'wb')
-		f.write(self.encode())
-		f.close()
+		"""Save this gimp image to a file."""
+		if hasattr(tofileName, "write"):
+			file = tofileName
+		else:
+			file = open(tofileName, "wb")
+		file.write(self.encode())
+		file.close()
+
 
 	def getColor(self, percent):
-		"""
-		given a decimal percent (1.0 = 100%) retrieve
-		the appropriate color for this point in the gradient
+		"""Given a decimal percent (1.0 = 100%) retrieve...
+
+		the appropriate color for this point in the gradient.
 		"""
 		raise NotImplementedError()
 
-	def __repr__(self, indent=''):
-		"""
-		Get a textual representation of this object
-		"""
+	def __repr__(self, indent=""):
+		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
-			ret.append('fileName: ' + self.fileName)
-		ret.append('Name: ' + str(self.name))
-		for s in self.segments:
-			ret.append(s.__repr__(indent + '\t'))
-		return ('\n' + indent).join(ret)
+			ret.append("fileName: " + self.fileName)
+		ret.append("Name: " + str(self.name))
+		for seg in self.segments:
+			ret.append(seg.__repr__(indent + "\t"))
+		return ("\n" + indent).join(ret)
 
 
-if __name__ == '__main__':
-	""" CLI Entry Point """
+if __name__ == "__main__":
+	"""CLI Entry Point."""
 	parser = argparse.ArgumentParser("GimpGgrGradient.py")
-	parser.add_argument("xcfdocument", action="store",
-	help="xcf file to act on")
-	parser.add_argument("--dump", action="store_true",
-	help="dump info about this file")
+	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
+	parser.add_argument("--dump", action="store_true", help="dump info about this file")
 	args = parser.parse_args()
 	gimpGgrGradient = GimpGgrGradient(args.xcfdocument)
 	if args.dump:

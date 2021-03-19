@@ -28,7 +28,7 @@ class Test(unittest.TestCase):
 		pass
 
 	def testDiagonalStar(self):
-		""" test diagonal star """
+		"""test diagonal star."""
 		self.dut.load(__HERE__ + 'Diagonal-Star-17.vbr')
 		# test image saving (explicit)
 		#self.dut.image.save(__HERE__+'actualOutput_Diagonal-Star-17.png')
