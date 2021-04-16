@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gimpformats"
-version = "2021"
+version = "2021.0.1"
 description = "Pure python implementation of the gimp file format(s)"
 authors = ["FredHappyface"]
 classifiers = [
@@ -31,10 +31,38 @@ blendmodes = "<2022,>=2020.3.0"
 brackettree = "<2,>=0.2.5"
 numpy = "<3,>=1.19.3"
 Pillow = "<10,>=8.1.2"
-data-science-types = "<2,>=0.2.19"
-
-
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+# Pylint
+[tool.pylint.basic]
+argument-naming-style ="camelCase"
+attr-naming-style ="camelCase"
+function-naming-style ="camelCase"
+method-naming-style ="camelCase"
+variable-naming-style ="camelCase"
+
+[tool.pylint.format]
+indent-string ="\t"
+
+[tool.pylint.master]
+ignore-patterns ="test_.*?py"
+
+[tool.pylint.messages_control]
+enable = [
+	'F',  # Fatal
+	'E',  # Error
+	'W',  # Warning
+	'R',  # Refactor
+	'C',  # Convention
+]
+disable=[
+	"pointless-string-statement",
+	"superfluous-parens",
+	"bad-continuation",
+	"wrong-import-position",
+	"unsubscriptable-object",
+	"python3",
+]

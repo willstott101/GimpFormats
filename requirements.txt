@@ -2,5 +2,4 @@ Pillow<10,>=8.1.2
 binaryiotools<2022,>=2020.2.1
 blendmodes<2022,>=2020.3.0
 brackettree<2,>=0.2.5
-data-science-types<2,>=0.2.19
 numpy<3,>=1.19.3

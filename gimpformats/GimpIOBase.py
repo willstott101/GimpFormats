@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-"""A specialized binary file base for Gimp files
+"""A specialized binary file base for Gimp files.
 """
 from __future__ import annotations
 
@@ -12,7 +11,7 @@ from .GimpVectors import GimpVector
 
 
 class GimpIOBase:
-	"""A specialized binary file base for Gimp files"""
+	"""A specialized binary file base for Gimp files."""
 
 	COLOR_MODES = ["RGB", "Grayscale", "Indexed"]
 	UNITS = ["Inches", "Millimeters", "Points", "Picas"]
@@ -133,7 +132,7 @@ class GimpIOBase:
 		self.parent = parent
 		self.parasites: list[GimpParasite] = []
 		self.guidelines: list[tuple[bool, int]] = []
-		self.itemPath: str | None = None
+		self.itemPath: list[str] | None = None
 		self.vectors: list[GimpVector] = []
 		self.colorMap: list[tuple[int, int, int]] = []
 		self.userUnits: GimpUserUnits | None = None
@@ -172,34 +171,32 @@ class GimpIOBase:
 		self.paths = []
 
 	def getBlendMode(self) -> str:
-		"""return the blend mode as a string."""
+		"""Return the blend mode as a string."""
 		return self.BLEND_MODES[self.blendMode]
 
 	def getCompression(self) -> str:
-		"""return the compression as a string."""
+		"""Return the compression as a string."""
 		return self.COMPRESSION_MODES[self.compression]
 
 	def getUnits(self) -> str:
-		"""return the units as a string."""
+		"""Return the units as a string."""
 		return self.UNITS[self.units]
 
 	def getTagColours(self):
-		"""return the tag colours as a string."""
+		"""Return the tag colours as a string."""
 		return self.TAG_COLORS[self.colorTag]
 
 	def getCompositeModes(self):
-		"""return the composite mode as a string."""
+		"""Return the composite mode as a string."""
 		return self.COMPOSITE_MODES[abs(self.compositeMode)]
 
 	def getCompositeSpaces(self):
-		"""return the composite spaces as a string."""
+		"""Return the composite spaces as a string."""
 		return self.COMPOSITE_SPACES[abs(self.compositeSpace)]
 
 	@property
 	def _POINTER_SIZE(self) -> int:
-		"""
-		Determine the size of the "pointer" datatype
-		based on the document version
+		"""Determine the size of the "pointer" datatype based on the document version.
 
 		NOTE: prior to version 11, it was 32-bit,
 			since then it is 64-bit, thus supporting
@@ -225,9 +222,7 @@ class GimpIOBase:
 
 	@property
 	def doc(self):
-		"""
-		Get the main document object
-		"""
+		"""Get the main document object."""
 		item = self
 		while item.parent != item:
 			item = item.parent
@@ -235,30 +230,21 @@ class GimpIOBase:
 
 	@property
 	def root(self):
-		"""
-		Get the root of the file object tree
-		(Which is the same as self.doc)
-		"""
+		"""Get the root of the file object tree (Which is the same as self.doc)."""
 		return self.doc
 
 	@property
 	def tattoo(self):
-		"""
-		This is the gimp nomenclature for the item's unique id
-		"""
+		"""Gimp nomenclature for the item's unique id."""
 		return self.uniqueId
 
 	@tattoo.setter
 	def tattoo(self, tattoo):
-		"""
-		This is the gimp nomenclature for the item's unique id
-		"""
+		"""Gimp nomenclature for the item's unique id."""
 		self.uniqueId = tattoo
 
 	def _parasitesDecode(self, data: bytearray) -> int:
-		"""
-		decode list of parasites
-		"""
+		"""Decode list of parasites."""
 		index: int = 0
 		while index < len(data):
 			parasite = GimpParasite()
@@ -267,42 +253,34 @@ class GimpIOBase:
 		return index
 
 	def _parasitesEncode(self):
-		"""
-		encode list of parasites
-		"""
+		"""Encode list of parasites."""
 		ioBuf = IO()
 		for parasite in self.parasites:
 			ioBuf.addBytes(parasite.encode())
 		return ioBuf.data
 
 	def _guidelinesDecode(self, data):
-		"""
-		decode guidelines
-		"""
+		"""Decode guidelines."""
 		index: int = 0
 		while index < len(data):
 			position = struct.unpack(">I", data[index : index + 4])[0]
 			index += 4
-			isVertical = struct.unpack(">B", data[index])[0] == 2
+			isVertical = struct.unpack(">c", data[index])[0] == 2
 			index += 1
 			self.guidelines.append((isVertical, position))
 
 	def _itemPathDecode(self, data):
-		"""
-		decode item path
-		"""
+		"""Decode item path."""
 		index: int = 0
 		path = []
 		while index < len(data):
-			p = struct.unpack(">I", data[index : index + 4])[0]
+			pathElem = struct.unpack(">I", data[index : index + 4])[0]
 			index += 4
-			path.append(p)
+			path.append(pathElem)
 		self.itemPath = path
 
 	def _vectorsDecode(self, data):
-		"""
-		decode vectors
-		"""
+		"""Decode vectors."""
 		index: int = 0
 		self.vectorsVersion = struct.unpack(">I", data[index : index + 4])[0]
 		index += 4
@@ -317,30 +295,25 @@ class GimpIOBase:
 
 	@property
 	def activeVector(self):
-		"""
-		get the vector that is currently active
-		"""
+		"""Get the vector that is currently active."""
 		return self.vectors[self.activeVectorIndex]
 
 	@property
 	def expanded(self) -> bool:
-		"""
-		is the group layer expanded
-		"""
+		"""Is the group layer expanded."""
 		return self.groupItemFlags & 0x00000001 > 0
 
 	@expanded.setter
 	def expanded(self, expanded):
-		"""
-		is the group layer expanded
-		"""
+		"""Is the group layer expanded."""
 		if expanded:
 			self.groupItemFlags |= 0x00000001
 		else:
 			self.groupItemFlags &= ~0x00000001
 
 	def _colormapDecode_(self, data, index=None):
-		"""
+		"""_colormapDecode_.
+
 		:param data: can be bytes or an IO object
 
 		decode colormap/palette
@@ -366,18 +339,13 @@ class GimpIOBase:
 			ioObj.index = index
 
 	def _userUnitsDecode_(self, data):
-		"""
-		decode a set of user-defined measurement units
-		"""
-		u = GimpUserUnits()
-		# u.decode(data)
-		u.decode(data)
-		self.userUnits = u
+		"""Decode a set of user-defined measurement units."""
+		userUnits = GimpUserUnits()
+		userUnits.decode(data)
+		self.userUnits = userUnits
 
 	def _samplePointsDecode_(self, data):
-		"""
-		decode a series of points
-		"""
+		"""Decode a series of points."""
 		index: int = 0
 		samplePoints = []
 		while index < len(data):
@@ -389,8 +357,7 @@ class GimpIOBase:
 		self.samplePoints = samplePoints
 
 	def _propertyDecode(self, propertyType, data):
-		"""
-		decode a single property
+		"""Decode a single property.
 
 		Many properties are in the form
 		propertyType: one of PROP_
@@ -500,8 +467,7 @@ class GimpIOBase:
 		return ioBuf.index
 
 	def _propertyEncode(self, propertyType):
-		"""
-		encode a single property
+		"""Encode a single property.
 
 		Many properties are in the form
 		propertyType: one of PROP_
@@ -691,7 +657,7 @@ class GimpIOBase:
 		return ioBuf.data
 
 	def _propertiesDecode(self, ioBuf: IO):
-		"""Decode a list of properties"""
+		"""Decode a list of properties."""
 		while True:
 			try:
 				propertyType = ioBuf.u32
@@ -704,7 +670,7 @@ class GimpIOBase:
 		return ioBuf.index
 
 	def _propertiesEncode(self):
-		"""Encode a list of properties"""
+		"""Encode a list of properties."""
 		ioBuf = IO()
 		for propertyType in range(1, self.PROP_NUM_PROPS):
 			moData = self._propertyEncode(propertyType)
@@ -713,7 +679,7 @@ class GimpIOBase:
 		return ioBuf.data
 
 	def __repr__(self, indent: str = ""):
-		"""Get a textual representation of this object"""
+		"""Get a textual representation of this object."""
 		ret: list[str] = []
 		if self.itemPath is not None:
 			ret.append("Item Path: " + str(self.itemPath))
@@ -806,15 +772,13 @@ class GimpIOBase:
 			for i in range(len(self.colorMap)):
 				color = self.colorMap[i]
 				ret.append(
-					i + ": (" + str(color[0]) + "," + str(color[1]) + "," + str(color[2]) + ")"
+					str(i) + ": (" + str(color[0]) + "," + str(color[1]) + "," + str(color[2]) + ")"
 				)
 		return indent + (("\n" + indent).join(ret))
 
 
 class GimpUserUnits:
-	"""
-	user-defined measurement units
-	"""
+	"""User-defined measurement units."""
 
 	def __init__(self):
 		self.factor: int = 0
@@ -825,9 +789,8 @@ class GimpUserUnits:
 		self.sname = ""
 		self.pname = ""
 
-	def decode(self, data: bytearray, index: int = 0):
-		"""
-		decode a byte buffer
+	def decode(self, data: bytearray, index: int = 0) -> int:
+		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
@@ -843,9 +806,7 @@ class GimpUserUnits:
 		return ioBuf.index
 
 	def encode(self):
-		"""
-		convert this object to raw bytes
-		"""
+		"""Convert this object to raw bytes."""
 		ioBuf = IO()
 		ioBuf.float32 = self.factor
 		ioBuf.u32 = self.numDigits
@@ -857,9 +818,7 @@ class GimpUserUnits:
 		return ioBuf.data
 
 	def __repr__(self, indent: str = ""):
-		"""
-		Get a textual representation of this object
-		"""
+		"""Get a textual representation of this object."""
 		ret = []
 		ret.append("Factor: " + str(self.factor))
 		ret.append("Num Digits: " + str(self.numDigits))
