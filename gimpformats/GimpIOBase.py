@@ -129,6 +129,7 @@ class GimpIOBase:
 	PROP_NUM_PROPS = 40
 
 	def __init__(self, parent):
+		"""A specialized binary file base for Gimp files."""
 		self.parent = parent
 		self.parasites: list[GimpParasite] = []
 		self.guidelines: list[tuple[bool, int]] = []
@@ -195,7 +196,7 @@ class GimpIOBase:
 		return self.COMPOSITE_SPACES[abs(self.compositeSpace)]
 
 	@property
-	def _POINTER_SIZE(self) -> int:
+	def POINTER_SIZE(self) -> int:
 		"""Determine the size of the "pointer" datatype based on the document version.
 
 		NOTE: prior to version 11, it was 32-bit,
@@ -207,14 +208,14 @@ class GimpIOBase:
 		return 32
 
 	def _pointerDecode(self, ioBuf: IO) -> int:
-		if self._POINTER_SIZE == 64:
+		if self.POINTER_SIZE == 64:
 			return ioBuf.u64
 		return ioBuf.u32
 
 	def _pointerEncode(self, ptr: int, ioBuf: IO | None = None) -> bytearray:
 		if ioBuf is None:
 			ioBuf = IO()
-		if self._POINTER_SIZE == 64:
+		if self.POINTER_SIZE == 64:
 			ioBuf.u64 = ptr
 		else:
 			ioBuf.u32 = ptr
@@ -243,7 +244,7 @@ class GimpIOBase:
 		"""Gimp nomenclature for the item's unique id."""
 		self.uniqueId = tattoo
 
-	def _parasitesDecode(self, data: bytearray) -> int:
+	def _parasitesDecode(self, data: bytes) -> int:
 		"""Decode list of parasites."""
 		index: int = 0
 		while index < len(data):
@@ -327,13 +328,13 @@ class GimpIOBase:
 		index += 4
 		colors = []
 		while index < len(data):
-			r = data[index]
+			red = data[index]
 			index += 1
-			g = data[index]
+			green = data[index]
 			index += 1
-			b = data[index]
+			blue = data[index]
 			index += 1
-			colors.append((r, g, b))
+			colors.append((red, green, blue))
 		self.colorMap = colors
 		if ioObj is not None:
 			ioObj.index = index
@@ -398,10 +399,10 @@ class GimpIOBase:
 			self.xOffset = ioBuf.i32
 			self.yOffset = ioBuf.i32
 		elif propertyType == self.PROP_COLOR:
-			r = ioBuf.byte
-			g = ioBuf.byte
-			b = ioBuf.byte
-			self.color = [r, g, b]
+			red = ioBuf.byte
+			green = ioBuf.byte
+			blue = ioBuf.byte
+			self.color = [red, green, blue]
 		elif propertyType == self.PROP_COMPRESSION:
 			self.compression = ioBuf.byte
 		elif propertyType == self.PROP_GUIDES:
@@ -456,10 +457,10 @@ class GimpIOBase:
 		elif propertyType == self.PROP_BLEND_SPACE:
 			self.blendSpace = ioBuf.u32
 		elif propertyType == self.PROP_FLOAT_COLOR:
-			r = ioBuf.float32
-			g = ioBuf.float32
-			b = ioBuf.float32
-			self.color = [r, g, b]
+			red = ioBuf.float32
+			green = ioBuf.float32
+			blue = ioBuf.float32
+			self.color = [red, green, blue]
 		elif propertyType == self.PROP_SAMPLE_POINTS:
 			self._samplePointsDecode_(data)
 		else:
@@ -681,30 +682,33 @@ class GimpIOBase:
 	def __repr__(self, indent: str = ""):
 		"""Get a textual representation of this object."""
 		ret: list[str] = []
-		if self.itemPath is not None:
-			ret.append("Item Path: " + str(self.itemPath))
-		if self.selected is not None:
-			ret.append("Selected: " + str(self.selected))
-		if self.isSelection is not None:
-			ret.append("is Selection: " + str(self.isSelection))
-		if self.selectionAttachedTo is not None:
-			ret.append("Selection Attached To: " + str(self.selectionAttachedTo))
+		attrs = [
+			"itemPath",
+			"selected",
+			"isSelection",
+			"selectionAttachedTo",
+			"visible",
+			"isLinked",
+			"lockAlpha",
+			"applyMask",
+			"editingMask",
+			"showMask",
+			"showMasked",
+			"uniqueId",
+			"textLayerFlags",
+			"locked",
+			"isGroup",
+			"groupItemFlags",
+			"positionLocked",
+			"opacity",
+			"blendSpace",
+		]
+		for attr in attrs:
+			_ = "" if getattr(self, attr) is None else ret.append(f"{attr}: {getattr(self, attr)}")
+
 		if self.blendMode is not None:
 			ret.append("Blend Mode: " + self.getBlendMode())
-		if self.visible is not None:
-			ret.append("Visible: " + str(self.visible))
-		if self.isLinked is not None:
-			ret.append("Linked: " + str(self.isLinked))
-		if self.lockAlpha is not None:
-			ret.append("Alpha Locked: " + str(self.lockAlpha))
-		if self.applyMask is not None:
-			ret.append("Apply Mask: " + str(self.applyMask))
-		if self.editingMask is not None:
-			ret.append("Editing Mask: " + str(self.editingMask))
-		if self.showMask is not None:
-			ret.append("Show Mask: " + str(self.showMask))
-		if self.showMasked is not None:
-			ret.append("Show Masked: " + str(self.showMasked))
+
 		if self.xOffset is not None:
 			ret.append("Offset: " + str(self.xOffset) + " x " + str(self.yOffset))
 		if self.compression is not None:
@@ -712,22 +716,8 @@ class GimpIOBase:
 		if self.horizontalResolution is not None:
 			res = str(self.horizontalResolution) + "ppi x " + str(self.verticalResolution) + "ppi"
 			ret.append("Resolution: " + res)
-		if self.uniqueId is not None:
-			ret.append("Unique ID (tattoo): " + str(self.uniqueId))
 		if self.units is not None:
 			ret.append("Units: " + self.getUnits())
-		if self.textLayerFlags is not None:
-			ret.append("Text Layer Flags: " + str(self.textLayerFlags))
-		if self.locked is not None:
-			ret.append("Locked: " + str(self.locked))
-		if self.isGroup is not None:
-			ret.append("Is Group: " + str(self.isGroup))
-		if self.groupItemFlags is not None:
-			ret.append("Group Items Flag: " + str(self.groupItemFlags))
-		if self.positionLocked is not None:
-			ret.append("Position Locked: " + str(self.positionLocked))
-		if self.opacity is not None:
-			ret.append("Opacity: " + str(self.opacity))
 		if self.colorTag is not None:
 			ret.append("Tag Color: " + self.getTagColours())
 		if self.compositeMode is not None:
@@ -736,8 +726,6 @@ class GimpIOBase:
 		if self.compositeSpace is not None:
 			auto = "Auto " if self.compositeSpace < 0 else ""  # negative values are "Auto"
 			ret.append("Composite Space: " + auto + self.getCompositeSpaces())
-		if self.blendSpace is not None:
-			ret.append("Blend Space: " + str(self.blendSpace))
 		if self.color is not None:
 			ret.append(
 				"Color: ("
@@ -789,11 +777,15 @@ class GimpUserUnits:
 		self.sname = ""
 		self.pname = ""
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Args:
+			data (bytes): data buffer to decode
+			index (int, optional): index within the buffer to start at]. Defaults to 0.
+
+		Returns:
+			int: offset
 		"""
 		ioBuf = IO(data, index)
 		self.factor = ioBuf.float32

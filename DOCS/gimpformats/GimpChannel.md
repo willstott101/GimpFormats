@@ -9,13 +9,14 @@ Represents a single channel or mask in a gimp image.
         - [GimpChannel().\_\_repr\_\_](#gimpchannel__repr__)
         - [GimpChannel().decode](#gimpchanneldecode)
         - [GimpChannel().encode](#gimpchannelencode)
+        - [GimpChannel().forceFullyLoaded](#gimpchannelforcefullyloaded)
         - [GimpChannel().image](#gimpchannelimage)
         - [GimpChannel().image](#gimpchannelimage)
         - [GimpChannel().imageHierarchy](#gimpchannelimagehierarchy)
 
 ## GimpChannel
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L14)
+[[find in source code]](../../gimpformats/GimpChannel.py#L12)
 
 ```python
 class GimpChannel(GimpIOBase):
@@ -26,7 +27,7 @@ Represents a single channel or mask in a gimp image.
 
 ### GimpChannel().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L94)
+[[find in source code]](../../gimpformats/GimpChannel.py#L99)
 
 ```python
 def __repr__(indent: str = '') -> str:
@@ -36,17 +37,17 @@ Get a textual representation of this object.
 
 ### GimpChannel().decode
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L28)
+[[find in source code]](../../gimpformats/GimpChannel.py#L33)
 
 ```python
-def decode(data: bytearray, index: int = 0) -> int:
+def decode(data: bytes, index: int = 0) -> int:
 ```
 
 Decode a byte buffer.
 
 #### Arguments
 
-- `data` *bytearray* - data to decode
+- `data` *bytes* - data to decode
 - `index` *int, optional* - index to start from. Defaults to 0.
 
 #### Returns
@@ -55,7 +56,7 @@ Decode a byte buffer.
 
 ### GimpChannel().encode
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L48)
+[[find in source code]](../../gimpformats/GimpChannel.py#L53)
 
 ```python
 def encode() -> bytearray:
@@ -63,9 +64,19 @@ def encode() -> bytearray:
 
 Encode this object to a byte buffer.
 
+### GimpChannel().forceFullyLoaded
+
+[[find in source code]](../../gimpformats/GimpChannel.py#L81)
+
+```python
+def forceFullyLoaded():
+```
+
+Make sure everything is fully loaded from the file.
+
 ### GimpChannel().image
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L61)
+[[find in source code]](../../gimpformats/GimpChannel.py#L66)
 
 ```python
 @property
@@ -76,7 +87,7 @@ Get a final, compiled image.
 
 ### GimpChannel().image
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L66)
+[[find in source code]](../../gimpformats/GimpChannel.py#L71)
 
 ```python
 @image.setter
@@ -87,7 +98,7 @@ Get a final, compiled image.
 
 ### GimpChannel().imageHierarchy
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L82)
+[[find in source code]](../../gimpformats/GimpChannel.py#L87)
 
 ```python
 @property

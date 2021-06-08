@@ -1,5 +1,4 @@
-"""
-Since the precision code is so unusual, I decided to create a class to parse it.
+"""Since the precision code is so unusual, I decided to create a class to parse it.
 """
 
 # from .GimpImageHierarchy import GimpImageHierarchy
@@ -9,12 +8,10 @@ from binaryiotools import IO
 
 
 class Precision:
-	"""Since the precision code is so unusual, I decided to create a class...
-
-	to parse it.
-	"""
+	"""Since the precision code is so unusual, I decided to create a class to parse it."""
 
 	def __init__(self):
+		"""Since the precision code is so unusual, I decided to create a class to parse it."""
 		self.bits = 8
 		self.gamma = True
 		self.numberFormat = int
@@ -88,6 +85,7 @@ class Precision:
 		return 4
 
 	def __repr__(self):
+		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(str(self.bits) + "-bit")
 		ret.append("gamma" if self.gamma else "linear")

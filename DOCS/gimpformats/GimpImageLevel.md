@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpImageLevel](../../gimpformats/GimpImageLevel.py) module.
 
-Gets packed pixels from a gimp image
+Gets packed pixels from a gimp image.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpImageLevel
     - [GimpImageLevel](#gimpimagelevel)
@@ -26,40 +26,40 @@ class GimpImageLevel(GimpIOBase):
     def __init__(parent):
 ```
 
-Gets packed pixels from a gimp image
+Gets packed pixels from a gimp image.
 
 This represents a single level in an imageHierarchy
 
 ### GimpImageLevel().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L277)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L275)
 
 ```python
 def __repr__(indent: str = ''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpImageLevel().bpp
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L222)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L220)
 
 ```python
 @property
 def bpp():
 ```
 
-get bpp.
+Get bpp.
 
 ### GimpImageLevel().decode
 
 [[find in source code]](../../gimpformats/GimpImageLevel.py#L30)
 
 ```python
-def decode(data: bytearray, index: int = 0):
+def decode(data: bytes, index: int = 0):
 ```
 
-Decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
@@ -74,22 +74,22 @@ Decode a byte buffer
 def encode():
 ```
 
-Encode this object to a byte buffer
+Encode this object to a byte buffer.
 
 ### GimpImageLevel().image
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L253)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L251)
 
 ```python
 @property
 def image() -> Image:
 ```
 
-get a final, compiled image
+Get a final, compiled image
 
 ### GimpImageLevel().image
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L269)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L267)
 
 ```python
 @image.setter
@@ -98,22 +98,22 @@ def image(image: Image):
 
 ### GimpImageLevel().mode
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L227)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L225)
 
 ```python
 @property
 def mode():
 ```
 
-get mode.
+Get mode.
 
 ### GimpImageLevel().tiles
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L233)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L231)
 
 ```python
 @property
 def tiles():
 ```
 
-get tiles.
+Get tiles.

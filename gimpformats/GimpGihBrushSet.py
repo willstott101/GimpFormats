@@ -6,7 +6,6 @@ for how to use them.
 """
 from __future__ import annotations
 
-import argparse
 from io import BytesIO
 
 from binaryiotools import IO
@@ -24,7 +23,12 @@ class GimpGihBrushSet:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/gih.txt
 	"""
 
-	def __init__(self, fileName=None):
+	def __init__(self, fileName: str = None):
+		"""Gimp Image Pipe Format.
+
+		Args:
+			fileName (str, optional): filename. Defaults to None.
+		"""
 		self.fileName = None
 		self.name = ""
 		self.params = {}
@@ -47,11 +51,15 @@ class GimpGihBrushSet:
 		file.close()
 		self.decode(data)
 
-	def decode(self, data: bytearray, index: int = 0):
+	def decode(self, data: bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Args:
+			data (bytes): data buffer to decode
+			index (int, optional): index within the buffer to start at. Defaults to 0.
+
+		Returns:
+			int: offset
 		"""
 		ioBuf = IO(data, index)
 		self.name = ioBuf.textLine
@@ -94,7 +102,6 @@ class GimpGihBrushSet:
 		file.write(self.encode())
 		file.close()
 
-
 	def __repr__(self, indent=""):
 		"""Get a textual representation of this object."""
 		ret = []
@@ -107,38 +114,3 @@ class GimpGihBrushSet:
 			ret.append("Brush " + str(i))
 			ret.append(self.brushes[i].__repr__(indent + "\t"))
 		return ("\n" + indent).join(ret)
-
-
-if __name__ == "__main__":
-	"""CLI Entry Point."""
-	parser = argparse.ArgumentParser("GimpGihBrushSet.py")
-	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
-	group = parser.add_mutually_exclusive_group()
-	group.add_argument("--dump", action="store_true", help="dump info about this file")
-	group.add_argument(
-		"--show", action="store", help="show the brush image (n or * for all layers)"
-	)
-	group.add_argument("--save", action="store", help="save out the brush set (n,out-file.png)")
-	args = parser.parse_args()
-
-	gimpGihBrushSet = GimpGihBrushSet(args.xcfdocument)
-
-	if args.dump:
-		print(gimpGihBrushSet)
-	if args.show:
-		if args.show == "*":
-			for iterationM in range(len(gimpGihBrushSet.brushes)):
-				gimpGihBrushSet.brushes[iterationM].image.show()
-		else:
-			gimpGihBrushSet.brushes[int(args.show)].image.show()
-	if args.save:
-		indexM, fileNameM = args.save.split(",", 1)
-		if fileNameM.find("*") < 0:
-			fileNameM = "*.".join(fileNameM.split(".", 1))
-		if indexM == "*":
-			for iterationM in range(len(gimpGihBrushSet.brushes)):
-				fn2 = fileNameM.replace("*", str(iterationM))
-				gimpGihBrushSet.brushes[iterationM].image.save(fn2)
-		else:
-			fn2 = fileNameM.replace("*", iterationM)
-			gimpGihBrushSet.brushes[int(indexM)].image.save(fn2)

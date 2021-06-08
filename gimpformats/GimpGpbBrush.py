@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""
-Pure python implementation of the OLD gimp gpb brush format
+"""Pure python implementation of the OLD gimp gpb brush format.
 """
 from __future__ import annotations
 
-import argparse
 from io import BytesIO
 
 from binaryiotools import IO
@@ -14,20 +12,24 @@ from .GimpPatPattern import GimpPatPattern
 
 
 class GimpGpbBrush:
-	"""
-	Pure python implementation of the OLD gimp gpb brush format
+	"""Pure python implementation of the OLD gimp gpb brush format.
 
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/vbr.txt
 	"""
 
 	def __init__(self, fileName: BytesIO | str):
+		"""Pure python implementation of the OLD gimp gpb brush format.
+
+		Args:
+			fileName (BytesIO): filename/ filepointer
+		"""
 		self.brush = GimpGbrBrush()
 		self.pattern = GimpPatPattern()
-		if hasattr(fileName, "read"):
-			self.fileName = fileName.name
-		else:
+		if isinstance(fileName, str):
 			self.fileName = fileName
+		else:
+			self.fileName = fileName.name
 
 	def load(self, fileName: BytesIO | str):
 		"""Load a gimp file.
@@ -44,11 +46,15 @@ class GimpGpbBrush:
 		file.close()
 		self.decode(data)
 
-	def decode(self, data, index=0):
-		"""Decode a byte buffer
+	def decode(self, data: bytes, index: int = 0):
+		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Args:
+			data (bytes): data to decode
+			index (int, optional): index to start from. Defaults to 0.
+
+		Returns:
+			int: pointer
 		"""
 		index = self.brush.decode(data, index)
 		# index = self.pattern.decode(data, index)
@@ -78,16 +84,3 @@ class GimpGpbBrush:
 		ret.append(self.brush.__repr__(indent + "\t"))
 		ret.append(self.pattern.__repr__(indent + "\t"))
 		return ("\n" + indent).join(ret)
-
-
-if __name__ == "__main__":
-	"""CLI Entry Point."""
-	parser = argparse.ArgumentParser("GimpGbrBrush.py")
-	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
-	parser.add_argument("--dump", action="store_true", help="dump info about this file")
-	args = parser.parse_args()
-
-	gimpDocument = GimpGbrBrush(args.xcfdocument)
-
-	if args.dump:
-		print(gimpDocument)

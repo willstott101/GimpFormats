@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Pure python implementation of the gimp xcf file format
+"""Pure python implementation of the gimp xcf file format.
 
 Currently supports:
 	Loading xcf files
@@ -13,13 +12,13 @@ Currently not supporting:
 """
 from __future__ import annotations
 
-import argparse
 import copy
-from io import BytesIO
+from io import BytesIO, FileIO
 
 import PIL.ImageGrab
 from binaryiotools import IO
 from blendmodes.blend import BlendType, blendLayers
+from blendmodes.imagetools import rasterImageOffset
 from PIL import Image
 
 from .GimpChannel import GimpChannel
@@ -30,8 +29,7 @@ from .GimpPrecision import Precision
 
 
 class GimpDocument(GimpIOBase):
-	"""
-	Pure python implementation of the gimp file format
+	"""Pure python implementation of the gimp file format.
 
 	Has a series of attributes including the following:
 	self._layers = None
@@ -50,6 +48,23 @@ class GimpDocument(GimpIOBase):
 	"""
 
 	def __init__(self, fileName=None):
+		"""Pure python implementation of the gimp file format.
+
+		Has a series of attributes including the following:
+		self._layers = None
+		self._layerPtr = []
+		self._channels = []
+		self._channelPtr = []
+		self.version = None
+		self.width = 0
+		self.height = 0
+		self.baseColorMode = 0
+		self.precision = None # Precision object
+		self._data = None
+
+		See:
+			https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
+		"""
 		GimpIOBase.__init__(self, self)
 		self._layers = []
 		self._layerPtr = []
@@ -61,13 +76,12 @@ class GimpDocument(GimpIOBase):
 		self.baseColorMode = 0
 		self.precision = None  # Precision object
 		self._data = None
+		self.fileName = None
 		if fileName is not None:
 			self.load(fileName)
 
 	def load(self, fileName: BytesIO | str):
-		"""
-		Load a gimp xcf and decode the file. See decode for more on this
-		process
+		"""Load a gimp xcf and decode the file. See decode for more on this process.
 
 		:param fileName: can be a file name or a file-like object
 		"""
@@ -81,9 +95,8 @@ class GimpDocument(GimpIOBase):
 		file.close()
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0):
-		"""
-		decode a byte buffer
+	def decode(self, data: bytes, index: int = 0) -> int:
+		"""Decode a byte buffer.
 
 		Steps:
 		Create a new IO buffer (array of binary values)
@@ -96,8 +109,15 @@ class GimpDocument(GimpIOBase):
 		Get the channels and add the pointers to them
 		Return the offset
 
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Args:
+			data (bytes): data buffer to decode
+			index (int, optional): index within the buffer to start at]. Defaults to 0.
+
+		Raises:
+			Exception: "Not a valid GIMP file"
+
+		Returns:
+			int: offset
 		"""
 		# Create a new IO buffer (array of binary values)
 		ioBuf = IO(data, index)
@@ -127,9 +147,9 @@ class GimpDocument(GimpIOBase):
 			if ptr == 0:
 				break
 			self._layerPtr.append(ptr)
-			lyr = GimpLayer(self)
-			lyr.decode(ioBuf.data, ptr)
-			self._layers.append(lyr)
+			layer = GimpLayer(self)
+			layer.decode(ioBuf.data, ptr)
+			self._layers.append(layer)
 		# Get the channels and add the pointers to them
 		self._channelPtr = []
 		self._channels = []
@@ -145,8 +165,7 @@ class GimpDocument(GimpIOBase):
 		return ioBuf.index
 
 	def encode(self):
-		"""
-		encode to a byte array
+		"""Encode to a byte array.
 
 		Steps:
 		Create a new IO buffer (array of binary values)
@@ -176,28 +195,26 @@ class GimpDocument(GimpIOBase):
 		self.precision.encode(self.version, ioBuf)
 		# List of properties
 		ioBuf.addBytes(self._propertiesEncode())
-		dataAreaIdx = ioBuf.index + self._POINTER_SIZE * (len(self.layers) + len(self._channels))
+		dataAreaIdx = ioBuf.index + self.POINTER_SIZE * (len(self.layers) + len(self._channels))
 		dataAreaIO = IO()
 		# Set the layers and add the pointers to them
-		for lyr in self.layers:
-			ioBuf.pointer = dataAreaIdx + dataAreaIO.index
-			dataAreaIO.addBytes(lyr.encode())
+		for layer in self.layers:
+			ioBuf.index = dataAreaIdx + dataAreaIO.index
+			dataAreaIO.addBytes(layer.encode())
 		# Set the channels and add the pointers to them
 		for channel in self._channels:
-			ioBuf.pointer = dataAreaIdx + dataAreaIO.index
+			ioBuf.index = dataAreaIdx + dataAreaIO.index
 			dataAreaIO.addBytes(channel.encode())
 		ioBuf.addBytes(dataAreaIO)
 		# Return the data
 		return ioBuf.data
 
-	def _forceFullyLoaded(self):
-		"""
-		make sure everything is fully loaded from the file
-		"""
-		for lyr in self.layers:
-			lyr._forceFullyLoaded()
-		for chan in self._channels:
-			chan._forceFullyLoaded()
+	def forceFullyLoaded(self):
+		"""Make sure everything is fully loaded from the file."""
+		for layer in self.layers:
+			layer.forceFullyLoaded()
+		for channel in self._channels:
+			channel.forceFullyLoaded()
 		# no longer try to get the data from file
 		self._layerPtr = None
 		self._channelPtr = None
@@ -205,120 +222,130 @@ class GimpDocument(GimpIOBase):
 
 	@property
 	def layers(self):
-		"""
-		Decode the image's layers if necessary
+		"""Decode the image's layers if necessary.
 
 		TODO: need to do the same thing with self.Channels
 		"""
 		if len(self._layers) == 0:
 			self._layers = []
 			for ptr in self._layerPtr:
-				lyr = GimpLayer(self)
-				lyr.decode(self._data, ptr)
-				self._layers.append(lyr)
+				layer = GimpLayer(self)
+				layer.decode(self._data, ptr)
+				self._layers.append(layer)
 			# add a reference back to this object so it doesn't go away while array is in use
 			self._layers.parent = self
 			# override some internal methods so we can do more with them
 			self._layers._actualDelitem_ = self._layers.__delitem__
 			self._layers.__delitem__ = self.deleteLayer
-			self._layers._actualSetitem_ = self._layers.__delitem__
+			self._layers._actualSetitem_ = self._layers.__setitem__
 			self._layers.__setitem__ = self.setLayer
 		return self._layers
 
 	def getLayer(self, index: int):
-		"""
-		return a given layer
-		"""
+		"""Return a given layer."""
 		return self.layers[index]
 
-	def setLayer(self, _index, _l):
-		"""
-		assign to a given layer
-		"""
-		self._forceFullyLoaded()
+	def setLayer(self, index, layer):
+		"""Assign to a given layer."""
+		self.forceFullyLoaded()
 		self._layerPtr = None  # no longer try to use the pointers to get data
-		# self.layers._actualSetitem(index, l)
+		self.layers._actualSetitem_(index, layer)
 
-	def newLayer(self, name: str, image: Image.Image, index: int = -1):
+	def newLayer(self, name: str, image: Image.Image, index: int = -1) -> GimpLayer:
+		"""Create a new layer based on a PIL image.
+
+		Args:
+			name (str): a name for the new layer
+			image (Image.Image): pil image
+			index (int, optional): where to insert the new layer (default=top). Defaults to -1.
+
+		Returns:
+			GimpLayer: newly created GimpLayer object
 		"""
-		create a new layer based on a PIL image
+		layer = GimpLayer(self, name, image)
+		layer.imageHierarchy = GimpImageHierarchy(self, image=image)
+		self.insertLayer(layer, index)
+		return layer
 
-		:param name: a name for the new layer
-		:param index: where to insert the new layer (default=top)
-		:return: newly created GimpLayer object
-		"""
-		lyr = GimpLayer(self, name, image)
-		lyr.imageHierarchy = GimpImageHierarchy(self, image=image)
-		self.insertLayer(lyr, index)
-		return lyr
-
-	def newLayerFromClipboard(self, name: str = "pasted", index: int = -1):
-		"""
-		Create a new image from the system clipboard.
-
-		:param name: a name for the new layer (default="pasted")
-		:param index: where to insert the new layer (default=top)
-		:return: newly created GimpLayer object
+	def newLayerFromClipboard(self, name: str = "pasted", index: int = -1) -> GimpLayer | None:
+		"""Create a new image from the system clipboard.
 
 		NOTE: requires pillow PIL implementation
 		NOTE: only works on OSX and Windows
+
+		Args:
+			name (str): a name for the new layer
+			index (int, optional): where to insert the new layer (default=top). Defaults to -1.
+
+		Returns:
+			GimpLayer: newly created GimpLayer object
 		"""
 		image = PIL.ImageGrab.grabclipboard()
-		return self.newLayer(name, image, index)
+		if isinstance(image, Image.Image):
+			return self.newLayer(name, image, index)
 
-	def addLayer(self, lyr: GimpLayer):
-		"""
-		append a layer object to the document
-
-		:param layer: the new layer to append
-		"""
-		self.insertLayer(lyr, -1)
-
-	def appendLayer(self, l):
-		"""
-		append a layer object to the document
+	def addLayer(self, layer: GimpLayer):
+		"""Append a layer object to the document.
 
 		:param layer: the new layer to append
 		"""
-		self.insertLayer(l, -1)
+		self.insertLayer(layer, -1)
 
-	def insertLayer(self, lyr: GimpLayer, index: int = -1):
+	def appendLayer(self, layer: GimpLayer):
+		"""Append a layer object to the document.
+
+		:param layer: the new layer to append
 		"""
-		insert a layer object at a specific position
+		self.insertLayer(layer, -1)
+
+	def insertLayer(self, layer: GimpLayer, index: int = -1):
+		"""Insert a layer object at a specific position.
 
 		:param layer: the new layer to insert
 		:param index: where to insert the new layer (default=top)
 		"""
-		self._layers.insert(index, lyr)
+		self._layers.insert(index, layer)
 
 	def deleteLayer(self, index: int) -> None:
-		"""
-		delete a layer
-		"""
+		"""Delete a layer."""
 		self.__delitem__(index)
 
 	# make this class act like this class is an array of layers
-	def __len__(self):
+	def __len__(self) -> int:
+		"""Make this class act like this class is an array of layers...
+
+		Get the len.
+		"""
 		return len(self.layers)
 
-	def __getitem__(self, index: int):
+	def __getitem__(self, index: int) -> GimpLayer:
+		"""Make this class act like this class is an array of layers...
+
+		Get the layer at an index.
+		"""
 		return self.layers[index]
 
-	def __setitem__(self, index: int, lyr):
-		self.setLayer(index, lyr)
+	def __setitem__(self, index: int, layer) -> None:
+		"""Make this class act like this class is an array of layers...
 
-	def __delitem__(self, index: int):
+		Set a layer at an index.
+		"""
+		self.setLayer(index, layer)
+
+	def __delitem__(self, index: int) -> None:
+		"""Make this class act like this class is an array of layers...
+
+		Delete a layer at an index.
+		"""
 		self.deleteLayer(index)
 
-	def __inc__(self, amt):
+	def __inc__(self, amt) -> GimpDocument:
 		self.appendLayer(amt)
 		return self
 
 	@property
 	def image(self):
-		"""
-		get a final, compiled image
-		"""
+		"""Get a final, compiled image."""
 		# We need to preprocess the layers to sort them into a list of layers
 		# and groups. Where a group is a list of layers
 
@@ -344,37 +371,32 @@ class GimpDocument(GimpIOBase):
 				index += 1
 		return flattenAll(layersOut, (self.width, self.height))
 
-	def save(self, tofileName=None):
-		"""
-		save this gimp image to a file
-		"""
-		self._forceFullyLoaded()
-		if tofileName is None:
-			tofileName = self.fileName
-		if hasattr(tofileName, "write"):
-			file = tofileName
+	def save(self, filename: str | FileIO = None):
+		"""Save this gimp image to a file."""
+		self.forceFullyLoaded()
+		if filename is None:
+			filename = self.fileName
+		if isinstance(filename, str):
+			file = open(filename, "wb")
 		else:
-			file = open(tofileName, "wb")
+			file = filename
 		file.write(self.encode())
 		file.close()
 
-	def saveNew(self, tofileName=None):
-		"""
-		save a new gimp image to a file
-		"""
-		if tofileName is None:
-			tofileName = self.fileName
-		if hasattr(tofileName, "write"):
-			file = tofileName
+	def saveNew(self, filename=None):
+		"""Save a new gimp image to a file."""
+		if filename is None:
+			filename = self.fileName
+		if isinstance(filename, str):
+			file = open(filename, "wb")
 		else:
-			file = open(tofileName, "wb")
+			file = filename
 		file.write(self.encode())
 		file.close()
 
-	def __repr__(self, indent: str = ""):
-		"""
-		Get a textual representation of this object
-		"""
+	def __repr__(self, indent="") -> str:
+		"""Get a textual representation of this object."""
+		del indent
 		ret = []
 		if self.fileName is not None:
 			ret.append("fileName: " + self.fileName)
@@ -385,12 +407,12 @@ class GimpDocument(GimpIOBase):
 		ret.append(GimpIOBase.__repr__(self))
 		if self._layerPtr:
 			ret.append("Layers: ")
-			for l in self.layers:
-				ret.append(l.__repr__("\t"))
+			for layer in self.layers:
+				ret.append(layer.__repr__("\t"))
 		if self._channelPtr:
 			ret.append("Channels: ")
-			for ch in self._channels:
-				ret.append(ch.__repr__("\t"))
+			for channel in self._channels:
+				ret.append(channel.__repr__("\t"))
 		return "\n".join(ret)
 
 
@@ -404,28 +426,22 @@ def blendModeLookup(
 	return blendLookup[blendmode]
 
 
-def rasterImageOffset(image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)):
-	"""Rasterise an image with offset to a given size"""
-	imageOffset = Image.new("RGBA", size)
-	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
-	return imageOffset
-
-
 def flattenLayerOrGroup(
 	layerOrGroup: list[GimpLayer] | GimpLayer,
 	imageDimensions: tuple[int, int],
 	flattenedSoFar: Image.Image | None = None,
 	ignoreHidden: bool = True,
 ) -> Image.Image:
-	"""Flatten a layer or group on to an image of what has already been
-	flattened
+	"""Flatten a layer or group on to an image of what has already been	flattened.
+
 	Args:
-		layerOrGroup (Layer|Group): A layer or a group of layers
-		imageDimensions ((int, int)): size of the image
+		layerOrGroup (Layer,Group): A layer or a group of layers
+		imageDimensions (tuple[int, int]): size of the image
 		flattenedSoFar (PIL.Image, optional): the image of what has already
 		been flattened. Defaults to None.
 		ignoreHidden (bool, optional): ignore layers that are hidden. Defaults
 		to True.
+
 	Returns:
 		PIL.Image: Flattened image
 	"""
@@ -481,121 +497,60 @@ def flattenLayerOrGroup(
 
 	if isinstance(layerOrGroup, list):
 		if ignoreHidden and not layerOrGroup[0].visible:
-			foregroundRaster = Image.new("RGBA", imageDimensions)
+			foregroundRender = Image.new("RGBA", imageDimensions)
 		else:  # A group is a list of layers
 			# (see flattenAll)
-			foregroundRaster = rasterImageOffset(
+			foregroundRender = rasterImageOffset(
 				flattenAll(layerOrGroup[1], imageDimensions, ignoreHidden),
 				imageDimensions,
 				(layerOrGroup[0].xOffset, layerOrGroup[0].yOffset),
 			)
 		if flattenedSoFar is None:
-			return foregroundRaster
+			return foregroundRender
 		return blendLayers(
 			flattenedSoFar,
-			foregroundRaster,
+			foregroundRender,
 			blendModeLookup(layerOrGroup[0].blendMode, blendLookup),
 			layerOrGroup[0].opacity,
 		)
 
 	if ignoreHidden and not layerOrGroup.visible:
-		foregroundRaster = Image.new("RGBA", imageDimensions)
+		foregroundRender = Image.new("RGBA", imageDimensions)
 	else:
 		# Get a raster image and apply blending
-		foregroundRaster = rasterImageOffset(
+		foregroundRender = rasterImageOffset(
 			layerOrGroup.image, imageDimensions, (layerOrGroup.xOffset, layerOrGroup.yOffset)
 		)
 	if flattenedSoFar is None:
-		return foregroundRaster
+		return foregroundRender
 	return blendLayers(
 		flattenedSoFar,
-		foregroundRaster,
+		foregroundRender,
 		blendModeLookup(layerOrGroup.blendMode, blendLookup),
 		layerOrGroup.opacity,
 	)
 
 
-def flattenAll(layers, imageDimensions, ignoreHidden=True):
-	"""Flatten a list of layers and groups
+def flattenAll(
+	layers: list[GimpLayer], imageDimensions: tuple[int, int], ignoreHidden: bool = True
+) -> Image.Image:
+	"""Flatten a list of layers and groups.
 
 	Note the bottom layer is at the end of the list
 
 	Args:
-		layers ([Layer|Group]): A list of layers and groups
-		imageDimensions ((int, int)): size of the image
-		been flattened. Defaults to None.
+		layers (list[GimpLayer]): A list of layers and groups
+		imageDimensions (tuple[int, int]): size of the image been flattened. Defaults to None.
 		ignoreHidden (bool, optional): ignore layers that are hidden. Defaults
 		to True.
+
 	Returns:
 		PIL.Image: Flattened image
 	"""
 	end = len(layers) - 1
 	flattenedSoFar = flattenLayerOrGroup(layers[end], imageDimensions, ignoreHidden=ignoreHidden)
-	for l in range(end - 1, -1, -1):
+	for layer in range(end - 1, -1, -1):
 		flattenedSoFar = flattenLayerOrGroup(
-			layers[l], imageDimensions, flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden
+			layers[layer], imageDimensions, flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden
 		)
 	return flattenedSoFar
-
-
-### ARGPARSE STUFF ###
-
-if __name__ == "__main__":
-	"""CLI Entry Point."""
-	parser = argparse.ArgumentParser("GimpGbrBrush.py")
-	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
-	group = parser.add_mutually_exclusive_group()
-	group.add_argument("--dump", action="store_true", help="dump info about this file")
-	group.add_argument("--showLayer", action="store_true", help="show layer(s) (use * for all)")
-	group.add_argument("--saveLayer", action="store_true", help="save layer(s) out to file")
-	group.add_argument("--save", action="store", help="save out the brush image")
-	args = parser.parse_args()
-
-	gimpDocument = GimpDocument(args.xcfdocument)
-
-	if args.dump:
-		print(gimpDocument)
-	if args.showLayer:
-		if args.showLayer == "*":
-			for layer in range(len(gimpDocument.layers)):
-				im = gimpDocument.layers[layer].image
-				showLayer(im, layer)
-		else:
-			im = gimpDocument.layers[int(args.showLayer)].image
-			showLayer(im, int(args.showLayer))
-	if args.saveLayer:
-		layer = args.saveLayer.split(",", 1)
-		if len(layer) > 1:
-			fileName = layer[1]
-		else:
-			fileName = "layer *.png"
-		layer = args.saveLayer[0]
-		if layer == "*":
-			if fileName.find("*") < 0:
-				fileName = ".".join(fileName.split(".", 1).insert(1, "*"))
-			for n in range(len(gimpDocument.layers)):
-				saveLayer(gimpDocument, n, fileName)
-		else:
-			saveLayer(gimpDocument, int(layer), fileName)
-	if args.save:
-		gimpDocument.save(args.save)
-
-
-def showLayer(image, l):
-	"""show a layer."""
-	if image is None:
-		print("No image for layer", l)
-	else:
-		print("Showing layer", l)
-		image.show()
-
-
-def saveLayer(gimpDoc, l, fileName: BytesIO | str):
-	"""save a layer."""
-	iteration = gimpDoc.layers[l].image
-	if iteration is None:
-		print("No image for layer", l)
-	else:
-		fn2 = fileName.replace("*", str(l))
-		print("saving layer", fn2)
-		iteration.save(fn2)

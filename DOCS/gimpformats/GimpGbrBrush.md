@@ -16,11 +16,11 @@ Pure python implementation of the gimp gbr brush format.
 
 ## GimpGbrBrush
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L14)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L12)
 
 ```python
 class GimpGbrBrush():
-    def __init__(fileName=None):
+    def __init__(fileName: str = None):
 ```
 
 Pure python implementation of the gimp gbr brush format.
@@ -30,7 +30,7 @@ See:
 
 ### GimpGbrBrush().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L132)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L141)
 
 ```python
 def __repr__(indent=''):
@@ -40,7 +40,7 @@ Get a textual representation of this object.
 
 ### GimpGbrBrush().decode
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L51)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L54)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -50,33 +50,42 @@ Decode a byte buffer.
 
 #### Arguments
 
-- `data` - data buffer to decode
-- `index` - index within the buffer to start at
+- `data` *bytes* - data buffer to decode
+- `index` *int, optional* - index within the buffer to start at. Defaults to 0.
+
+#### Raises
+
+- `Exception` - "unknown brush version"
+- `Exception` - "File format error.  Magic value mismatch"
+
+#### Returns
+
+- `int` - offset]
 
 ### GimpGbrBrush().encode
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L81)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L92)
 
 ```python
 def encode() -> bytearray:
 ```
 
-encode this object to byte array
+Encode this object to byte array.
 
 ### GimpGbrBrush().image
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L102)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L111)
 
 ```python
 @property
 def image() -> PIL.Image.Image | None:
 ```
 
-get a final, compiled image.
+Get a final, compiled image.
 
 ### GimpGbrBrush().load
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L36)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L39)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -90,17 +99,17 @@ Load a gimp file.
 
 ### GimpGbrBrush().save
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L109)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L118)
 
 ```python
-def save(tofileName: str, toExtension: str | None = None):
+def save(tofileName: str | FileIO, toExtension: str | None = None):
 ```
 
-save this gimp image to a file.
+Save this gimp image to a file.
 
 ### GimpGbrBrush().size
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L97)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L106)
 
 ```python
 @property

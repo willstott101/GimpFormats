@@ -39,14 +39,14 @@ Format of known parasites:
 def __repr__(indent: str = '') -> str:
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpParasite().decode
 
 [[find in source code]](../../gimpformats/GimpParasites.py#L61)
 
 ```python
-def decode(data: bytearray, index: int = 0) -> int:
+def decode(data: bytes, index: int = 0) -> int:
 ```
 
 Decode a byte buffer

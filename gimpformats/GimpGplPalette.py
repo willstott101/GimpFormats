@@ -10,6 +10,11 @@ class GimpGplPalette:
 	"""Pure python implementation of the gimp gpl palette format."""
 
 	def __init__(self, fileName: BytesIO | str | None = None):
+		"""Pure python implementation of the gimp gpl palette format.
+
+		Args:
+			fileName (BytesIO, str, optional): filename. Defaults to None.
+		"""
 		self.name = ""
 		self.columns = 16
 		self.colors = []
@@ -35,7 +40,11 @@ class GimpGplPalette:
 	def decode(self, data: str) -> None:
 		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
+		Args:
+			data (str): data buffer to decode
+
+		Raises:
+			Exception: File format error.  Magic value mismatch.
 		"""
 		lines = [s.strip() for s in data.split("\n")]
 		if lines[0] != "GIMP Palette":

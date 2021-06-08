@@ -19,11 +19,11 @@ NOTE: This was originally designed to be a hierarchy, like
 
 ## GimpImageHierarchy
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L17)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L15)
 
 ```python
 class GimpImageHierarchy(GimpIOBase):
-    def __init__(parent, image: Optional[Image.Image] = None):
+    def __init__(parent, image: Image.Image | None = None):
 ```
 
 Gets packed pixels from a gimp image
@@ -34,7 +34,7 @@ NOTE: This was originally designed to be a hierarchy, like
 
 ### GimpImageHierarchy().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L118)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L116)
 
 ```python
 def __repr__(indent: str = ''):
@@ -44,10 +44,10 @@ Get a textual representation of this object.
 
 ### GimpImageHierarchy().decode
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L37)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L35)
 
 ```python
-def decode(data: bytearray, index: int = 0):
+def decode(data: bytes, index: int = 0):
 ```
 
 decode a byte buffer
@@ -59,7 +59,7 @@ decode a byte buffer
 
 ### GimpImageHierarchy().encode
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L69)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L67)
 
 ```python
 def encode():
@@ -69,18 +69,18 @@ Encode this object to a byte buffer.
 
 ### GimpImageHierarchy().image
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L100)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L98)
 
 ```python
 @property
-def image() -> Optional[Image.Image]:
+def image() -> Image.Image | None:
 ```
 
 Get a final, compiled image.
 
 ### GimpImageHierarchy().image
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L107)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L105)
 
 ```python
 @image.setter
@@ -91,7 +91,7 @@ Set the image.
 
 ### GimpImageHierarchy().levels
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L86)
+[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L84)
 
 ```python
 @property

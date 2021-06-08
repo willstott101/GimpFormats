@@ -6,8 +6,6 @@ NOTE: This was originally designed to be a hierarchy, like
 """
 from __future__ import annotations
 
-from typing import Optional
-
 from PIL import Image
 
 from .GimpImageLevel import GimpImageLevel
@@ -23,7 +21,7 @@ class GimpImageHierarchy(GimpIOBase):
 		top level of the pyramid (64x64) and ignore the rest.
 	"""
 
-	def __init__(self, parent, image: Optional[Image.Image] = None):
+	def __init__(self, parent, image: Image.Image | None = None):
 		GimpIOBase.__init__(self, parent)
 		self.width: int = 0
 		self.height: int = 0
@@ -34,7 +32,7 @@ class GimpImageHierarchy(GimpIOBase):
 		if image is not None:  # NOTE: can override earlier parameters
 			self.image = image
 
-	def decode(self, data: bytearray, index: int = 0):
+	def decode(self, data: bytes, index: int = 0):
 		"""
 		decode a byte buffer
 
@@ -73,7 +71,7 @@ class GimpImageHierarchy(GimpIOBase):
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
 		ioBuf.u32 = self.bpp
-		dataIndex = ioBuf.index + self._POINTER_SIZE * (len(self.levels) + 1)
+		dataIndex = ioBuf.index + self.POINTER_SIZE * (len(self.levels) + 1)
 		for level in self.levels:
 			ioBuf.addBytes(
 				self._pointerEncode(dataIndex + dataioBuf.index)
@@ -98,7 +96,7 @@ class GimpImageHierarchy(GimpIOBase):
 		return self._levels
 
 	@property
-	def image(self) -> Optional[Image.Image]:
+	def image(self) -> Image.Image | None:
 		"""Get a final, compiled image."""
 		if not self.levels:
 			return None

@@ -21,7 +21,7 @@ Pure python implementation of a gimp pattern file.
 
 ```python
 class GimpPatPattern():
-    def __init__(fileName=None):
+    def __init__(fileName: BytesIO | str = None):
 ```
 
 Pure python implementation of a gimp pattern file.
@@ -31,32 +31,40 @@ See:
 
 ### GimpPatPattern().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L130)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L143)
 
 ```python
-def __repr__(indent=''):
+def __repr__():
 ```
 
 Get a textual representation of this object.
 
 ### GimpPatPattern().decode
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L49)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L54)
 
 ```python
-def decode(data, index=0):
+def decode(data: bytes, index: int = 0):
 ```
 
 Decode a byte buffer.
 
 #### Arguments
 
-- `data` - data buffer to decode
-- `index` - index within the buffer to start at
+- `data` *bytes* - data to decode
+- `index` *int, optional* - index to start from. Defaults to 0.
+
+#### Raises
+
+- `Exception` - "File format error.  Magic value mismatch."
+
+#### Returns
+
+- `int` - pointer
 
 ### GimpPatPattern().encode
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L70)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L83)
 
 ```python
 def encode():
@@ -66,7 +74,7 @@ Encode to a byte buffer.
 
 ### GimpPatPattern().image
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L92)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L105)
 
 ```python
 @property
@@ -77,7 +85,7 @@ Get a final, compiled image.
 
 ### GimpPatPattern().image
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L103)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L116)
 
 ```python
 @image.setter
@@ -86,7 +94,7 @@ def image(image):
 
 ### GimpPatPattern().load
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L34)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L39)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -100,7 +108,7 @@ Load a gimp file.
 
 ### GimpPatPattern().save
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L108)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L121)
 
 ```python
 def save(tofileName=None, toExtension=None):
@@ -110,7 +118,7 @@ Save this gimp image to a file.
 
 ### GimpPatPattern().size
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L87)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L100)
 
 ```python
 @property

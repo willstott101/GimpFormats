@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
-"""
-Gimp color gradient
+"""Gimp color gradient.
 """
 from __future__ import annotations
 
-import argparse
 from io import BytesIO
 
 
 class GradientSegment:
-	"""
-	Single segment within a gradient
-	"""
+	"""Single segment within a gradient."""
 
 	BLEND_FUNCTIONS = [
 		"linear",
@@ -31,6 +27,7 @@ class GradientSegment:
 	]
 
 	def __init__(self):
+		"""Single segment within a gradient."""
 		self.leftPosition = 0
 		self.middlePosition = 0.5
 		self.rightPosition = 1.0
@@ -42,19 +39,22 @@ class GradientSegment:
 		self.rightColorType = None  # one of self.ENDPOINT_COLOR_TYPES
 
 	def getColor(self, percent):
-		"""
-		given a decimal percent (1.0 = 100%) retrieve
-		the appropriate color for this point in the gradient
+		"""Given a decimal percent (1.0 = 100%) retrieve the appropriate...
+
+		color for this point in the gradient.
 		"""
 		raise NotImplementedError()
 
-	def decode(self, data):
-		"""
-		decode a byte buffer
+	def decode(self, dataIn: str):
+		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
+		Args:
+			dataIn (str): data buffer to decode
+
+		Raises:
+			Exception: [description]
 		"""
-		data = data.split(" ")
+		data = dataIn.split(" ")
 		if len(data) < 11 or len(data) > 15:
 			raise Exception("Data table is unexpected size. " + str(len(data)))
 		self.leftPosition = float(data[0])
@@ -72,9 +72,7 @@ class GradientSegment:
 						self.rightColorType = int(data[14])
 
 	def encode(self):
-		"""
-		encode this to a byte array
-		"""
+		"""Encode this to a byte array."""
 		ret = []
 		ret.append("%06f" % self.leftPosition)
 		ret.append("%06f" % self.middlePosition)
@@ -94,9 +92,7 @@ class GradientSegment:
 		return " ".join(ret)
 
 	def __repr__(self, indent=""):
-		"""
-		Get a textual representation of this object
-		"""
+		"""Get a textual representation of this object."""
 		ret = []
 		ret.append("Left Position: " + str(self.leftPosition))
 		ret.append("Middle Position: " + str(self.middlePosition))
@@ -117,7 +113,12 @@ class GimpGgrGradient:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/ggr.txt
 	"""
 
-	def __init__(self, fileName=None):
+	def __init__(self, fileName: str | None = None):
+		"""GimpGgrGradient.
+
+		Args:
+			fileName (str, optional): filename. Defaults to None.
+		"""
 		self.fileName = None
 		self.segments = []
 		self.name = ""
@@ -139,13 +140,16 @@ class GimpGgrGradient:
 		file.close()
 		self.decode(data)
 
-	def decode(self, data):
+	def decode(self, dataIn: bytes):
 		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Args:
+			dataIn (bytes): data buffer to decode
+
+		Raises:
+			Exception: File format error.  Magic value mismatch.
 		"""
-		data = data.decode("utf-8").split("\n")
+		data = dataIn.decode("utf-8").split("\n")
 		data = [l.strip() for l in data]
 		if data[0] != "GIMP Gradient":
 			raise Exception("File format error.  Magic value mismatch.")
@@ -174,7 +178,6 @@ class GimpGgrGradient:
 		file.write(self.encode())
 		file.close()
 
-
 	def getColor(self, percent):
 		"""Given a decimal percent (1.0 = 100%) retrieve...
 
@@ -191,14 +194,3 @@ class GimpGgrGradient:
 		for seg in self.segments:
 			ret.append(seg.__repr__(indent + "\t"))
 		return ("\n" + indent).join(ret)
-
-
-if __name__ == "__main__":
-	"""CLI Entry Point."""
-	parser = argparse.ArgumentParser("GimpGgrGradient.py")
-	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
-	parser.add_argument("--dump", action="store_true", help="dump info about this file")
-	args = parser.parse_args()
-	gimpGgrGradient = GimpGgrGradient(args.xcfdocument)
-	if args.dump:
-		print(gimpGgrGradient)

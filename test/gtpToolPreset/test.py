@@ -2,15 +2,18 @@
 """
 TODO: THIS IS BROKEN
 
-Run unit tests
+Run unit tests.
 
-See:
-	http://pyunit.sourceforge.net/pyunit.html
+You might be looking to run test.py from the 'test' directory. In windows::
+/GimpFormats/test> py ./test.py
+
+Alternatively, you can do py test.py or if you have pytest, pytest test.py
 """
-import unittest
 import os
 import sys
+import unittest
 from pathlib import Path
+
 PROJECTDIR = str(Path(__file__).resolve().parent.parent)
 sys.path.insert(0, os.path.dirname(PROJECTDIR))
 from gimpformats.GimpGtpToolPreset import GimpGtpToolPreset
@@ -22,6 +25,7 @@ class Test(unittest.TestCase):
 	"""
 	Run unit test
 	"""
+
 	def setUp(self):
 		self.dut = GimpGtpToolPreset()
 
@@ -30,15 +34,15 @@ class Test(unittest.TestCase):
 
 	def testSmudgeRough(self):
 		"""test smudge rough."""
-		self.dut.load(__HERE__ + 'Smudge-Rough.gtp')
+		self.dut.load(__HERE__ + "Smudge-Rough.gtp")
 		# test round-trip compatibility
-		self.dut.save(__HERE__ + 'actualOutput_Smudge-Rough.gtp')
-		original = open(__HERE__ + 'Smudge-Rough.gtp', 'rb')
-		actual = open(__HERE__ + 'actualOutput_Smudge-Rough.gtp', 'rb')
-		assert actual.read() == original.read().replace(b"\r\n",b"\n")
+		self.dut.save(__HERE__ + "actualOutput_Smudge-Rough.gtp")
+		original = open(__HERE__ + "Smudge-Rough.gtp", "rb")
+		actual = open(__HERE__ + "actualOutput_Smudge-Rough.gtp", "rb")
+		assert actual.read() == original.read().replace(b"\r\n", b"\n")
 		original.close()
 		actual.close()
-		os.remove(__HERE__ + 'actualOutput_Smudge-Rough.gtp')
+		os.remove(__HERE__ + "actualOutput_Smudge-Rough.gtp")
 
 
 def testSuite():
@@ -50,7 +54,7 @@ def testSuite():
 	return varTestSuite
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	"""
 	Run all the test suites in the standard way.
 	"""

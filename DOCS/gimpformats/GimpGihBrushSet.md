@@ -17,11 +17,11 @@ for how to use them.
 
 ## GimpGihBrushSet
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L17)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L16)
 
 ```python
 class GimpGihBrushSet():
-    def __init__(fileName=None):
+    def __init__(fileName: str = None):
 ```
 
 Gimp Image Pipe Format.
@@ -34,7 +34,7 @@ See:
 
 ### GimpGihBrushSet().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L98)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L105)
 
 ```python
 def __repr__(indent=''):
@@ -44,22 +44,26 @@ Get a textual representation of this object.
 
 ### GimpGihBrushSet().decode
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L50)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L54)
 
 ```python
-def decode(data: bytearray, index: int = 0):
+def decode(data: bytes, index: int = 0) -> int:
 ```
 
 Decode a byte buffer.
 
 #### Arguments
 
-- `data` - data buffer to decode
-- `index` - index within the buffer to start at
+- `data` *bytes* - data buffer to decode
+- `index` *int, optional* - index within the buffer to start at. Defaults to 0.
+
+#### Returns
+
+- `int` - offset
 
 ### GimpGihBrushSet().encode
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L74)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L82)
 
 ```python
 def encode():
@@ -69,7 +73,7 @@ Encode this object to a byte array.
 
 ### GimpGihBrushSet().load
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L35)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L39)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -83,7 +87,7 @@ Load a gimp file.
 
 ### GimpGihBrushSet().save
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L88)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L96)
 
 ```python
 def save(tofileName: str):

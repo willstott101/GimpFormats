@@ -3,7 +3,6 @@
 """
 from __future__ import annotations
 
-import argparse
 from io import BytesIO
 
 import brackettree
@@ -15,7 +14,15 @@ class ParenFileValue:
 	(possibly "scheme" language?)
 	"""
 
-	def __init__(self, name=None, value="", children=None):
+	def __init__(self, name: str = None, value: str = "", children=None):
+		"""parenthesis based file
+
+		Args:
+			name (str, optional): name of the file. Defaults to None.
+			value (str, optional): some value, str(float) or str. Defaults to "".
+			children ([type], optional): children. Defaults to None.
+		"""
+
 		self.name = name
 		try:
 			float(value)
@@ -164,16 +171,3 @@ class GimpGtpToolPreset:
 		for value in self.values:
 			ret.append(value.__repr__(indent + "\t"))
 		return "\n".join(ret)
-
-
-if __name__ == "__main__":
-	"""CLI Entry Point."""
-	parser = argparse.ArgumentParser("gimpGtpToolPreset.py")
-	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
-	parser.add_argument("--dump", action="store_true", help="dump info about this file")
-	args = parser.parse_args()
-
-	gimpGtpToolPreset = GimpGtpToolPreset(args.xcfdocument)
-
-	if args.dump:
-		print(gimpGtpToolPreset)

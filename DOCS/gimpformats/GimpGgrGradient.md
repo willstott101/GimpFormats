@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpGgrGradient](../../gimpformats/GimpGgrGradient.py) module.
 
-Gimp color gradient
+Gimp color gradient.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpGgrGradient
     - [GimpGgrGradient](#gimpggrgradient)
@@ -20,11 +20,11 @@ Gimp color gradient
 
 ## GimpGgrGradient
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L113)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L109)
 
 ```python
 class GimpGgrGradient():
-    def __init__(fileName=None):
+    def __init__(fileName: str | None = None):
 ```
 
 Gimp color gradient.
@@ -34,7 +34,7 @@ See:
 
 ### GimpGgrGradient().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L185)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L188)
 
 ```python
 def __repr__(indent=''):
@@ -44,22 +44,25 @@ Get a textual representation of this object.
 
 ### GimpGgrGradient().decode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L142)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L143)
 
 ```python
-def decode(data):
+def decode(dataIn: bytes):
 ```
 
 Decode a byte buffer.
 
 #### Arguments
 
-- `data` - data buffer to decode
-- `index` - index within the buffer to start at
+- `dataIn` *bytes* - data buffer to decode
+
+#### Raises
+
+- `Exception` - File format error.  Magic value mismatch.
 
 ### GimpGgrGradient().encode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L159)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L163)
 
 ```python
 def encode():
@@ -69,7 +72,7 @@ Encode this to a byte array.
 
 ### GimpGgrGradient().getColor
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L178)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L181)
 
 ```python
 def getColor(percent):
@@ -81,7 +84,7 @@ the appropriate color for this point in the gradient.
 
 ### GimpGgrGradient().load
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L127)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L128)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -95,7 +98,7 @@ Load a gimp file.
 
 ### GimpGgrGradient().save
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L168)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L172)
 
 ```python
 def save(tofileName=None):
@@ -105,38 +108,42 @@ Save this gimp image to a file.
 
 ## GradientSegment
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L11)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L9)
 
 ```python
 class GradientSegment():
     def __init__():
 ```
 
-Single segment within a gradient
+Single segment within a gradient.
 
 ### GradientSegment().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L96)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L94)
 
 ```python
 def __repr__(indent=''):
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GradientSegment().decode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L51)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L48)
 
 ```python
-def decode(data):
+def decode(dataIn: str):
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
-- `data` - data buffer to decode
+- `dataIn` *str* - data buffer to decode
+
+#### Raises
+
+- `Exception` - [description]
 
 ### GradientSegment().encode
 
@@ -146,15 +153,16 @@ decode a byte buffer
 def encode():
 ```
 
-encode this to a byte array
+Encode this to a byte array.
 
 ### GradientSegment().getColor
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L44)
+[[find in source code]](../../gimpformats/GimpGgrGradient.py#L41)
 
 ```python
 def getColor(percent):
 ```
 
-given a decimal percent (1.0 = 100%) retrieve
-the appropriate color for this point in the gradient
+Given a decimal percent (1.0 = 100%) retrieve the appropriate...
+
+color for this point in the gradient.

@@ -58,7 +58,7 @@ class GimpParasite:
 		self.flags = 0
 		self.data = None
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytes, index: int = 0) -> int:
 		"""Decode a byte buffer
 
 		:param data: data buffer to decode
@@ -85,7 +85,7 @@ class GimpParasite:
 		return ioBuf.data
 
 	def __repr__(self, indent: str = "") -> str:
-		"""Get a textual representation of this object"""
+		"""Get a textual representation of this object."""
 		ret = []
 		ret.append("Name: " + str(self.name))
 		ret.append("Flags: " + str(self.flags))

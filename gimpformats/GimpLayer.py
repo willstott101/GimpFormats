@@ -1,8 +1,6 @@
-"""Represents a single layer in a gimp image
+"""Represents a single layer in a gimp image.
 """
 from __future__ import annotations
-
-from typing import Optional
 
 from binaryiotools import IO
 from PIL.Image import Image
@@ -13,7 +11,7 @@ from .GimpIOBase import GimpIOBase
 
 
 class GimpLayer(GimpIOBase):
-	"""Represents a single layer in a gimp image"""
+	"""Represents a single layer in a gimp image."""
 
 	COLOR_MODES = [
 		"RGB color without alpha",
@@ -26,6 +24,13 @@ class GimpLayer(GimpIOBase):
 	PIL_MODE_TO_LAYER_MODE = {"L": 2, "LA": 3, "RGB": 0, "RGBA": 1}
 
 	def __init__(self, parent, name: str | None = None, image: Image | None = None):
+		"""Represents a single layer in a gimp image.
+
+		Args:
+			parent ([type]): some parent node/ layer
+			name (str, optional): name of the layer. Defaults to None.
+			image (Image, optional): image stored in the layer. Defaults to None.
+		"""
 		GimpIOBase.__init__(self, parent)
 		self.width = 0
 		self.height = 0
@@ -39,8 +44,8 @@ class GimpLayer(GimpIOBase):
 		if image is not None:
 			self.image = image  # done last as it resets some of the above defaults
 
-	def decode(self, data: bytearray, index: int = 0):
-		"""Decode a byte buffer
+	def decode(self, data: bytes, index: int = 0) -> int:
+		"""Decode a byte buffer.
 
 		Steps:
 		Create a new IO buffer (array of binary values)
@@ -49,8 +54,12 @@ class GimpLayer(GimpIOBase):
 		Get the image hierarchy and mask pointers
 		Return the offset
 
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Args:
+			data (bytes): data buffer to decode
+			index (int, optional): index within the buffer to start at]. Defaults to 0.
+
+		Returns:
+			int: offset
 		"""
 		# Create a new IO buffer (array of binary values)
 		ioBuf = IO(data, index)
@@ -70,7 +79,7 @@ class GimpLayer(GimpIOBase):
 		return ioBuf.index
 
 	def encode(self):
-		"""Encode to byte array
+		"""Encode to byte array.
 
 		Steps:
 		Create a new IO buffer (array of binary values)
@@ -91,7 +100,7 @@ class GimpLayer(GimpIOBase):
 		# Layer properties
 		ioBuf.addBytes(self._propertiesEncode())
 		# Pointer to the image heirachy structure
-		dataAreaIndex = ioBuf.index + self._POINTER_SIZE * 2
+		dataAreaIndex = ioBuf.index + self.POINTER_SIZE * 2
 		ioBuf.addBytes(self._pointerEncode(dataAreaIndex))
 		dataAreaIO.addBytes(self.imageHierarchy.encode())
 		# ioBuf.addBytes(self._pointerEncode_(dataAreaIndex))
@@ -105,15 +114,15 @@ class GimpLayer(GimpIOBase):
 
 	@property
 	def mask(self):
-		"""Get the layer mask"""
+		"""Get the layer mask."""
 		if self._mask is None and self._maskPtr is not None and self._maskPtr != 0:
 			self._mask = GimpChannel(self)
 			self._mask.decode(self._data, self._maskPtr)
 		return self._mask
 
 	@property
-	def image(self) -> Image:
-		"""Get the layer image
+	def image(self) -> Image | None:
+		"""Get the layer image.
 
 		NOTE: can return None!
 		"""
@@ -123,7 +132,7 @@ class GimpLayer(GimpIOBase):
 
 	@image.setter
 	def image(self, image: Image):
-		"""Set the layer image
+		"""Set the layer image.
 
 		NOTE: resets layer width, height, and colorMode
 		"""
@@ -140,7 +149,7 @@ class GimpLayer(GimpIOBase):
 
 	@property
 	def imageHierarchy(self) -> GimpImageHierarchy:
-		"""Get the image hierarchy objects
+		"""Get the image hierarchy objects.
 
 		This is mainly needed for deciphering image, and therefore,
 		of little use to you, the user.
@@ -157,23 +166,23 @@ class GimpLayer(GimpIOBase):
 		"""Set the image hierarchy."""
 		self._imageHierarchy = imgHierarchy
 
-	def _forceFullyLoaded(self):
-		"""Make sure everything is fully loaded from the file"""
+	def forceFullyLoaded(self):
+		"""Make sure everything is fully loaded from the file."""
 		if self.mask is not None:
-			self.mask._forceFullyLoaded()
+			self.mask.forceFullyLoaded()
 		_ = self.image  # make sure the image is loaded so we can delete the hierarchy nonsense
 		# self._imageHierarchy = None
 		# self._data = None
 
 	def __repr__(self, indent=""):
-		"""Get a textual representation of this object"""
+		"""Get a textual representation of this object."""
 		ret = []
 		ret.append("Name: " + str(self.name))
 		ret.append("Size: " + str(self.width) + " x " + str(self.height))
 		ret.append("colorMode: " + self.COLOR_MODES[self.colorMode])
 		ret.append(GimpIOBase.__repr__(self, indent))
-		m = self.mask
-		if m is not None:
+		mask = self.mask
+		if mask is not None:
 			ret.append("Mask:")
-			ret.append(m.__repr__(indent + "\t"))
+			ret.append(mask.__repr__(indent + "\t"))
 		return indent + (("\n" + indent).join(ret))

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gets packed pixels from a gimp image
+"""Gets packed pixels from a gimp image.
 
 This represents a single level in an imageHierarchy
 """
@@ -15,7 +15,7 @@ from .GimpIOBase import IO, GimpIOBase
 
 
 class GimpImageLevel(GimpIOBase):
-	"""Gets packed pixels from a gimp image
+	"""Gets packed pixels from a gimp image.
 
 	This represents a single level in an imageHierarchy
 	"""
@@ -27,8 +27,8 @@ class GimpImageLevel(GimpIOBase):
 		self._tiles = None  # tile PIL images
 		self._image = None
 
-	def decode(self, data: bytearray, index: int = 0):
-		"""Decode a byte buffer
+	def decode(self, data: bytes, index: int = 0):
+		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
@@ -67,12 +67,12 @@ class GimpImageLevel(GimpIOBase):
 		return ioBuf.index
 
 	def encode(self):
-		"""Encode this object to a byte buffer"""
+		"""Encode this object to a byte buffer."""
 		dataioBuf = IO()
 		ioBuf = IO()
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
-		dataIndex = ioBuf.index + self._POINTER_SIZE * (len(self.tiles) + 1)
+		dataIndex = ioBuf.index + self.POINTER_SIZE * (len(self.tiles) + 1)
 		for tile in self.tiles:
 			ioBuf.addBytes(self._pointerEncode(dataIndex + dataioBuf.index))
 			data = tile.tobytes()
@@ -147,9 +147,7 @@ class GimpImageLevel(GimpIOBase):
 		"""Encode image to RLE image data."""
 
 		def countSame(data, startIdx):
-			"""
-			count how many times bytes are identical
-			"""
+			"""Count how many times bytes are identical."""
 			idx = startIdx
 			l = len(data)
 			if idx >= l:
@@ -161,7 +159,7 @@ class GimpImageLevel(GimpIOBase):
 			return idx - startIdx
 
 		def countDifferent(data, startIdx):
-			"""Count how many times bytes are different"""
+			"""Count how many times bytes are different."""
 			idx = startIdx
 			l = len(data)
 			if idx >= l:
@@ -174,7 +172,7 @@ class GimpImageLevel(GimpIOBase):
 			return idx - startIdx
 
 		def rleEncodeChan(data):
-			"""Rle encode a single channel of data"""
+			"""Rle encode a single channel of data."""
 			ret = []
 			idx = 0
 			while idx < len(data):
@@ -221,18 +219,18 @@ class GimpImageLevel(GimpIOBase):
 
 	@property
 	def bpp(self):
-		"""get bpp."""
+		"""Get bpp."""
 		return self.parent.bpp
 
 	@property
 	def mode(self):
-		"""get mode."""
+		"""Get mode."""
 		MODES = [None, "L", "LA", "RGB", "RGBA"]
 		return MODES[self.bpp]
 
 	@property
 	def tiles(self):
-		"""get tiles."""
+		"""Get tiles."""
 		if self._tiles is not None:
 			return self._tiles
 		if self.image is not None:
@@ -253,7 +251,7 @@ class GimpImageLevel(GimpIOBase):
 	@property
 	def image(self) -> Image:
 		"""
-		get a final, compiled image
+		Get a final, compiled image
 		"""
 		if self._image is None:
 			self._image = PIL.Image.new(self.mode, (self.width, self.height), color=None)
@@ -275,9 +273,7 @@ class GimpImageLevel(GimpIOBase):
 		self.tiles = None
 
 	def __repr__(self, indent: str = ""):
-		"""
-		Get a textual representation of this object
-		"""
+		"""Get a textual representation of this object."""
 		ret = []
 		ret.append("Size: " + str(self.width) + " x " + str(self.height))
 		return indent + (("\n" + indent).join(ret))

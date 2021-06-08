@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
-"""
-Pure python implementation of the gimp vbr brush format
+"""Pure python implementation of the gimp vbr brush format.
 """
 from __future__ import annotations
 
-import argparse
 from io import BytesIO
-from typing import Optional, Union
 
 
 class GimpVbrBrush:
-	"""
-	Pure python implementation of the gimp vbr brush format
+	"""Pure python implementation of the gimp vbr brush format.
 
 	See:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/vbr.txt
@@ -20,6 +16,11 @@ class GimpVbrBrush:
 	BRUSH_SHAPES = ["circle", "square", "diamond"]
 
 	def __init__(self, fileName: BytesIO | str | None = None):
+		"""Pure python implementation of the gimp vbr brush format.
+
+		Args:
+			fileName (BytesIO, str, optional): filename. Defaults to None.
+		"""
 		self.version = 1.0
 		self.name = ""
 		self.spacing = 0
@@ -33,8 +34,7 @@ class GimpVbrBrush:
 			self.load(fileName)
 
 	def load(self, fileName: BytesIO | str):
-		"""
-		load a gimp file
+		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
 		"""
@@ -50,18 +50,15 @@ class GimpVbrBrush:
 
 	@property
 	def image(self):
-		"""
-		this parametric brush converted to a useable PIL image
-		"""
+		"""This parametric brush converted to a useable PIL image."""
 		raise NotImplementedError()  # TODO:
 
-	def decode(self, data: bytes):
-		"""
-		decode a byte buffer
+	def decode(self, dataIn: bytes):
+		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
+		:param dataIn: data buffer to decode
 		"""
-		data = [s.strip() for s in data.split("\n")]
+		data = [s.strip() for s in dataIn.decode("utf-8").split("\n")]
 		if data[0] != "GIMP-VBR":
 			raise Exception("File format error.  Magic value mismatch.")
 		self.version = float(data[1])
@@ -85,9 +82,7 @@ class GimpVbrBrush:
 			raise Exception("Unknown version " + str(self.version))
 
 	def encode(self):
-		"""
-		encode to a raw data stream
-		"""
+		"""Encode to a raw data stream."""
 		data = []
 		data.append("GIMP-VBR")
 		data.append(str(self.version))
@@ -110,9 +105,7 @@ class GimpVbrBrush:
 		return ("\n".join(data) + "\n").encode("utf-8")
 
 	def save(self, tofileName=None, toExtension=None):
-		"""
-		save this gimp image to a file
-		"""
+		"""Save this gimp image to a file."""
 		asImage = False
 		if toExtension is None:
 			if tofileName is not None:
@@ -133,10 +126,8 @@ class GimpVbrBrush:
 			file.write(self.encode())
 			file.close()
 
-	def __repr__(self, indent=""):
-		"""
-		Get a textual representation of this object
-		"""
+	def __repr__(self):
+		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
 			ret.append("fileName: " + self.fileName)
@@ -152,9 +143,7 @@ class GimpVbrBrush:
 		return "\n".join(ret)
 
 	def __eq__(self, other):
-		"""
-		perform a comparison
-		"""
+		"""Perform a comparison."""
 		if other.name != self.name:
 			return False
 		if other.version != self.version:
@@ -174,16 +163,3 @@ class GimpVbrBrush:
 		if other.spikes != self.spikes:
 			return False
 		return True
-
-
-if __name__ == "__main__":
-	"""CLI Entry Point."""
-	parser = argparse.ArgumentParser("gimpVbrBrush.py")
-	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
-	parser.add_argument("--dump", action="store_true", help="dump info about this file")
-	args = parser.parse_args()
-
-	gimpVbrBrush = GimpVbrBrush(args.xcfdocument)
-
-	if args.dump:
-		print(gimpVbrBrush)

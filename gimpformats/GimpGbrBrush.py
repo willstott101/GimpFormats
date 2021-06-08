@@ -3,9 +3,7 @@
 """
 from __future__ import annotations
 
-import argparse
-from io import BytesIO
-from typing import Union
+from io import BytesIO, FileIO
 
 import PIL.Image
 from binaryiotools import IO
@@ -20,7 +18,12 @@ class GimpGbrBrush:
 
 	COLOR_MODES = [None, "L", "LA", "RGB", "RGBA"]  # only L or RGB allowed
 
-	def __init__(self, fileName=None):
+	def __init__(self, fileName: str = None):
+		"""Pure python implementation of the gimp gbr brush format.
+
+		Args:
+			fileName (str, optional): filename for the brush. Defaults to None.
+		"""
 		self.fileName = None
 		self.version = 2
 		self.width = 0
@@ -51,8 +54,16 @@ class GimpGbrBrush:
 	def decode(self, data: bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Args:
+			data (bytes): data buffer to decode
+			index (int, optional): index within the buffer to start at. Defaults to 0.
+
+		Raises:
+			Exception: "unknown brush version"
+			Exception: "File format error.  Magic value mismatch"
+
+		Returns:
+			int: offset]
 		"""
 		ioBuf = IO(data, index)
 		headerSize = ioBuf.u32
@@ -79,9 +90,7 @@ class GimpGbrBrush:
 		return ioBuf.index
 
 	def encode(self) -> bytearray:
-		"""
-		encode this object to byte array
-		"""
+		"""Encode this object to byte array."""
 		ioBuf = IO()
 		ioBuf.u32 = 28 + len(self.name)
 		ioBuf.u32 = self.version
@@ -101,13 +110,13 @@ class GimpGbrBrush:
 
 	@property
 	def image(self) -> PIL.Image.Image | None:
-		"""	get a final, compiled image."""
+		"""Get a final, compiled image."""
 		if self.rawImage is None:
 			return None
 		return PIL.Image.frombytes(self.mode, self.size, self.rawImage, decoder_name="raw")
 
-	def save(self, tofileName: str, toExtension: str | None = None):
-		"""	save this gimp image to a file."""
+	def save(self, tofileName: str | FileIO, toExtension: str | None = None):
+		"""Save this gimp image to a file."""
 		asImage = False
 		if toExtension is None:
 			if tofileName is not None:
@@ -130,7 +139,7 @@ class GimpGbrBrush:
 			file.close()
 
 	def __repr__(self, indent=""):
-		"""	Get a textual representation of this object."""
+		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
 			ret.append("fileName: " + self.fileName)
@@ -141,23 +150,3 @@ class GimpGbrBrush:
 		ret.append("BPP: " + str(self.bpp))
 		ret.append("Mode: " + str(self.mode))
 		return ("\n" + indent).join(ret)
-
-
-if __name__ == "__main__":
-	"""CLI Entry Point."""
-	parser = argparse.ArgumentParser("GimpGbrBrush.py")
-	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
-	group = parser.add_mutually_exclusive_group()
-	group.add_argument("--dump", action="store_true", help="dump info about this file")
-	group.add_argument("--show", action="store_true", help="show the brush image")
-	group.add_argument("--save", action="store", help="save out the brush image")
-	args = parser.parse_args()
-
-	gimpDocument = GimpGbrBrush(args.xcfdocument)
-
-	if args.dump:
-		print(gimpDocument)
-	if args.show:
-		gimpDocument.image.show()
-	if args.save:
-		gimpDocument.image.save(args.save)

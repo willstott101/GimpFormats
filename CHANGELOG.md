@@ -2,6 +2,12 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2021.0.2 - 2021/06/08
+- Tidy up
+- pyupgrade
+- rasterImageOffset -> blendmodes
+- Work on tests a bit
+
 ## 2021.0.1 - 2021/04/16
 - Fix #2
 - Tidy up

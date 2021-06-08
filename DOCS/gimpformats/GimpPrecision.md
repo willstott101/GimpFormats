@@ -6,26 +6,35 @@ Since the precision code is so unusual, I decided to create a class to parse it.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpPrecision
     - [Precision](#precision)
+        - [Precision().\_\_repr\_\_](#precision__repr__)
         - [Precision().decode](#precisiondecode)
         - [Precision().encode](#precisionencode)
         - [Precision().requiredGimpVersion](#precisionrequiredgimpversion)
 
 ## Precision
 
-[[find in source code]](../../gimpformats/GimpPrecision.py#L11)
+[[find in source code]](../../gimpformats/GimpPrecision.py#L10)
 
 ```python
 class Precision():
     def __init__():
 ```
 
-Since the precision code is so unusual, I decided to create a class...
+Since the precision code is so unusual, I decided to create a class to parse it.
 
-to parse it.
+### Precision().\_\_repr\_\_
+
+[[find in source code]](../../gimpformats/GimpPrecision.py#L87)
+
+```python
+def __repr__():
+```
+
+Get a textual representation of this object.
 
 ### Precision().decode
 
-[[find in source code]](../../gimpformats/GimpPrecision.py#L22)
+[[find in source code]](../../gimpformats/GimpPrecision.py#L19)
 
 ```python
 def decode(gimpVersion: int, ioBuf: IO):
@@ -35,7 +44,7 @@ Decode the precision code from the file.
 
 ### Precision().encode
 
-[[find in source code]](../../gimpformats/GimpPrecision.py#L45)
+[[find in source code]](../../gimpformats/GimpPrecision.py#L42)
 
 ```python
 def encode(gimpVersion: int, ioBuf: IO):
@@ -47,7 +56,7 @@ NOTE: will not mess with development versions 5 or 6
 
 ### Precision().requiredGimpVersion
 
-[[find in source code]](../../gimpformats/GimpPrecision.py#L82)
+[[find in source code]](../../gimpformats/GimpPrecision.py#L79)
 
 ```python
 def requiredGimpVersion():

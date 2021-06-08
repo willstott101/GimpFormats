@@ -2,8 +2,6 @@
 """
 from __future__ import annotations
 
-from typing import Optional
-
 from binaryiotools import IO
 from PIL import Image
 
@@ -15,6 +13,13 @@ class GimpChannel(GimpIOBase):
 	"""Represents a single channel or mask in a gimp image."""
 
 	def __init__(self, parent, name: str = "", image: Image.Image | None = None):
+		"""GimpChannel.
+
+		Args:
+			parent ([type]): some parent node/ object
+			name (str, optional): name of the channel. Defaults to "".
+			image (Image.Image, optional): image to set. Defaults to None.
+		"""
 		GimpIOBase.__init__(self, parent)
 		self.width = 0
 		self.height = 0
@@ -25,11 +30,11 @@ class GimpChannel(GimpIOBase):
 			self.image = image
 		self._data = None
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
-			data (bytearray): data to decode
+			data (bytes): data to decode
 			index (int, optional): index to start from. Defaults to 0.
 
 		Returns:
@@ -73,7 +78,7 @@ class GimpChannel(GimpIOBase):
 			self.name = image.rsplit("\\", 1)[-1].rsplit("/", 1)[-1]
 		self._imageHierarchy = GimpImageHierarchy(self, image)
 
-	def _forceFullyLoaded(self):
+	def forceFullyLoaded(self):
 		"""Make sure everything is fully loaded from the file."""
 		_ = self.image  # make sure the image is loaded so we can delete the hierarchy nonsense
 		self._imageHierarchyPtr = None

@@ -3,7 +3,7 @@
 """
 from __future__ import annotations
 
-import argparse
+from io import BytesIO
 
 import PIL.Image
 from binaryiotools import IO
@@ -18,7 +18,12 @@ class GimpPatPattern:
 
 	COLOR_MODES = [None, "L", "LA", "RGB", "RGBA"]
 
-	def __init__(self, fileName=None):
+	def __init__(self, fileName: BytesIO | str = None):
+		"""Pure python implementation of a gimp pattern file.
+
+		Args:
+			fileName (BytesIO, optional): filename or pointer. Defaults to None.
+		"""
 		self.fileName = None
 		self.version = 1
 		self.width = 0
@@ -46,11 +51,18 @@ class GimpPatPattern:
 		file.close()
 		self.decode(data)
 
-	def decode(self, data, index=0):
+	def decode(self, data: bytes, index: int = 0):
 		"""Decode a byte buffer.
 
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Args:
+			data (bytes): data to decode
+			index (int, optional): index to start from. Defaults to 0.
+
+		Raises:
+			Exception: "File format error.  Magic value mismatch."
+
+		Returns:
+			int: pointer
 		"""
 		ioBuf = IO(data, index)
 		headerSize = ioBuf.u32
@@ -66,6 +78,7 @@ class GimpPatPattern:
 		self.name = ioBuf.getBytes(nameLen).decode("UTF-8")
 		self._rawImage = ioBuf.getBytes(self.width * self.height * self.bpp)
 		self._image = None
+		return ioBuf.index
 
 	def encode(self):
 		"""Encode to a byte buffer."""
@@ -127,7 +140,7 @@ class GimpPatPattern:
 			file.write(self.encode())
 			file.close()
 
-	def __repr__(self, indent=""):
+	def __repr__(self):
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
@@ -138,23 +151,3 @@ class GimpPatPattern:
 		ret.append("BPP: " + str(self.bpp))
 		ret.append("Mode: " + str(self.mode))
 		return "\n".join(ret)
-
-
-if __name__ == "__main__":
-	"""CLI Entry Point."""
-	parser = argparse.ArgumentParser("GimpPatPattern.py")
-	parser.add_argument("xcfdocument", action="store", help="xcf file to act on")
-	group = parser.add_mutually_exclusive_group()
-	group.add_argument("--dump", action="store_true", help="dump info about this file")
-	group.add_argument("--show", action="store_true", help="show the image")
-	group.add_argument("--save", action="store", help="save out the image")
-	args = parser.parse_args()
-
-	gimpPatPattern = GimpPatPattern(args.xcfdocument)
-
-	if args.dump:
-		print(gimpPatPattern)
-	if args.show:
-		gimpPatPattern.image.show()
-	if args.save:
-		gimpPatPattern.image.save(args.save)

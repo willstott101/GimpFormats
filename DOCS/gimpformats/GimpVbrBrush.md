@@ -2,7 +2,7 @@
 
 > Auto-generated documentation for [gimpformats.GimpVbrBrush](../../gimpformats/GimpVbrBrush.py) module.
 
-Pure python implementation of the gimp vbr brush format
+Pure python implementation of the gimp vbr brush format.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpVbrBrush
     - [GimpVbrBrush](#gimpvbrbrush)
@@ -16,61 +16,61 @@ Pure python implementation of the gimp vbr brush format
 
 ## GimpVbrBrush
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L12)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L9)
 
 ```python
 class GimpVbrBrush():
     def __init__(fileName: BytesIO | str | None = None):
 ```
 
-Pure python implementation of the gimp vbr brush format
+Pure python implementation of the gimp vbr brush format.
 
 See:
  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/vbr.txt
 
 ### GimpVbrBrush().\_\_eq\_\_
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L154)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L145)
 
 ```python
 def __eq__(other):
 ```
 
-perform a comparison
+Perform a comparison.
 
 ### GimpVbrBrush().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L136)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L129)
 
 ```python
-def __repr__(indent=''):
+def __repr__():
 ```
 
-Get a textual representation of this object
+Get a textual representation of this object.
 
 ### GimpVbrBrush().decode
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L58)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L56)
 
 ```python
-def decode(data: bytes):
+def decode(dataIn: bytes):
 ```
 
-decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
-- `data` - data buffer to decode
+- `dataIn` - data buffer to decode
 
 ### GimpVbrBrush().encode
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L87)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L84)
 
 ```python
 def encode():
 ```
 
-encode to a raw data stream
+Encode to a raw data stream.
 
 ### GimpVbrBrush().image
 
@@ -81,17 +81,17 @@ encode to a raw data stream
 def image():
 ```
 
-this parametric brush converted to a useable PIL image
+This parametric brush converted to a useable PIL image.
 
 ### GimpVbrBrush().load
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L35)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L36)
 
 ```python
 def load(fileName: BytesIO | str):
 ```
 
-load a gimp file
+Load a gimp file.
 
 #### Arguments
 
@@ -99,10 +99,10 @@ load a gimp file
 
 ### GimpVbrBrush().save
 
-[[find in source code]](../../gimpformats/GimpVbrBrush.py#L112)
+[[find in source code]](../../gimpformats/GimpVbrBrush.py#L107)
 
 ```python
 def save(tofileName=None, toExtension=None):
 ```
 
-save this gimp image to a file
+Save this gimp image to a file.
