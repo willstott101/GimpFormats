@@ -30,6 +30,8 @@ Pure python implementation of the gimp xcf file format.
     - [blendModeLookup](#blendmodelookup)
     - [flattenAll](#flattenall)
     - [flattenLayerOrGroup](#flattenlayerorgroup)
+    - [renderMaskWOffset](#rendermaskwoffset)
+    - [renderWOffset](#renderwoffset)
 
 Currently supports:
  Loading xcf files
@@ -42,7 +44,7 @@ Currently not supporting:
 
 ## GimpDocument
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L31)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L30)
 
 ```python
 class GimpDocument(GimpIOBase):
@@ -68,7 +70,7 @@ See:
 
 ### GimpDocument().\_\_delitem\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L335)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L334)
 
 ```python
 def __delitem__(index: int) -> None:
@@ -80,7 +82,7 @@ Delete a layer at an index.
 
 ### GimpDocument().\_\_getitem\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L321)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L320)
 
 ```python
 def __getitem__(index: int) -> GimpLayer:
@@ -92,7 +94,7 @@ Get the layer at an index.
 
 ### GimpDocument().\_\_len\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L314)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L313)
 
 ```python
 def __len__() -> int:
@@ -104,7 +106,7 @@ Get the len.
 
 ### GimpDocument().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L397)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L396)
 
 ```python
 def __repr__(indent='') -> str:
@@ -114,7 +116,7 @@ Get a textual representation of this object.
 
 ### GimpDocument().\_\_setitem\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L328)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L327)
 
 ```python
 def __setitem__(index: int, layer) -> None:
@@ -126,7 +128,7 @@ Set a layer at an index.
 
 ### GimpDocument().addLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L287)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L286)
 
 ```python
 def addLayer(layer: GimpLayer):
@@ -140,7 +142,7 @@ Append a layer object to the document.
 
 ### GimpDocument().appendLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L294)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L293)
 
 ```python
 def appendLayer(layer: GimpLayer):
@@ -154,7 +156,7 @@ Append a layer object to the document.
 
 ### GimpDocument().decode
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L98)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L97)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -188,7 +190,7 @@ Return the offset
 
 ### GimpDocument().deleteLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L309)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L308)
 
 ```python
 def deleteLayer(index: int) -> None:
@@ -198,7 +200,7 @@ Delete a layer.
 
 ### GimpDocument().encode
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L167)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L166)
 
 ```python
 def encode():
@@ -219,7 +221,7 @@ Return the data
 
 ### GimpDocument().forceFullyLoaded
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L212)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L211)
 
 ```python
 def forceFullyLoaded():
@@ -229,7 +231,7 @@ Make sure everything is fully loaded from the file.
 
 ### GimpDocument().getLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L244)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L243)
 
 ```python
 def getLayer(index: int):
@@ -239,7 +241,7 @@ Return a given layer.
 
 ### GimpDocument().image
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L346)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L345)
 
 ```python
 @property
@@ -250,7 +252,7 @@ Get a final, compiled image.
 
 ### GimpDocument().insertLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L301)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L300)
 
 ```python
 def insertLayer(layer: GimpLayer, index: int = -1):
@@ -265,7 +267,7 @@ Insert a layer object at a specific position.
 
 ### GimpDocument().layers
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L223)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L222)
 
 ```python
 @property
@@ -278,7 +280,7 @@ TODO: need to do the same thing with self.Channels
 
 ### GimpDocument().load
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L83)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L82)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -292,7 +294,7 @@ Load a gimp xcf and decode the file. See decode for more on this process.
 
 ### GimpDocument().newLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L254)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L253)
 
 ```python
 def newLayer(name: str, image: Image.Image, index: int = -1) -> GimpLayer:
@@ -312,7 +314,7 @@ Create a new layer based on a PIL image.
 
 ### GimpDocument().newLayerFromClipboard
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L270)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L269)
 
 ```python
 def newLayerFromClipboard(
@@ -337,7 +339,7 @@ NOTE: only works on OSX and Windows
 
 ### GimpDocument().save
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L374)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L373)
 
 ```python
 def save(filename: str | FileIO = None):
@@ -347,7 +349,7 @@ Save this gimp image to a file.
 
 ### GimpDocument().saveNew
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L386)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L385)
 
 ```python
 def saveNew(filename=None):
@@ -357,7 +359,7 @@ Save a new gimp image to a file.
 
 ### GimpDocument().setLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L248)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L247)
 
 ```python
 def setLayer(index, layer):
@@ -367,7 +369,7 @@ Assign to a given layer.
 
 ## blendModeLookup
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L419)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L418)
 
 ```python
 def blendModeLookup(
@@ -381,7 +383,7 @@ Get the blendmode from a lookup table.
 
 ## flattenAll
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L534)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L559)
 
 ```python
 def flattenAll(
@@ -408,7 +410,7 @@ to True.
 
 ## flattenLayerOrGroup
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L429)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L428)
 
 ```python
 def flattenLayerOrGroup(
@@ -433,3 +435,55 @@ to True.
 #### Returns
 
 - `PIL.Image` - Flattened image
+
+## renderMaskWOffset
+
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L604)
+
+```python
+def renderMaskWOffset(
+    image: Image.Image,
+    size: tuple[(int, int)],
+    offsets: tuple[(int, int)] = (0, 0),
+) -> Image.Image:
+```
+
+Render an image with offset and alpha to a given size.
+
+#### Arguments
+
+- `image` *Image.Image* - pil image to draw
+size (tuple[int, int]): width, height as a tuple
+- `alpha` *float, optional* - alpha transparency. Defaults to 1.0.
+offsets (tuple[int, int], optional): x, y offsets as a tuple.
+Defaults to (0, 0).
+
+#### Returns
+
+- `Image.Image` - new image
+
+## renderWOffset
+
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L584)
+
+```python
+def renderWOffset(
+    image: Image.Image,
+    size: tuple[(int, int)],
+    offsets: tuple[(int, int)] = (0, 0),
+) -> Image.Image:
+```
+
+Render an image with offset and alpha to a given size.
+
+#### Arguments
+
+- `image` *Image.Image* - pil image to draw
+size (tuple[int, int]): width, height as a tuple
+- `alpha` *float, optional* - alpha transparency. Defaults to 1.0.
+offsets (tuple[int, int], optional): x, y offsets as a tuple.
+Defaults to (0, 0).
+
+#### Returns
+
+- `Image.Image` - new image

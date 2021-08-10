@@ -18,7 +18,6 @@ from io import BytesIO, FileIO
 import PIL.ImageGrab
 from binaryiotools import IO
 from blendmodes.blend import BlendType, blendLayers
-from blendmodes.imagetools import rasterImageOffset
 from PIL import Image
 
 from .GimpChannel import GimpChannel
@@ -494,38 +493,64 @@ def flattenLayerOrGroup(
 		49: BlendType.PINLIGHT,
 		52: BlendType.EXCLUSION,
 	}
-
+	# Group
 	if isinstance(layerOrGroup, list):
 		if ignoreHidden and not layerOrGroup[0].visible:
-			foregroundRender = Image.new("RGBA", imageDimensions)
+			foregroundComposite = Image.new("RGBA", imageDimensions)
 		else:  # A group is a list of layers
 			# (see flattenAll)
-			foregroundRender = rasterImageOffset(
+			foregroundComposite = renderWOffset(
 				flattenAll(layerOrGroup[1], imageDimensions, ignoreHidden),
 				imageDimensions,
 				(layerOrGroup[0].xOffset, layerOrGroup[0].yOffset),
 			)
+			if layerOrGroup[0].mask is not None:
+				newFGComp = Image.new("RGBA", imageDimensions)
+				newFGComp.paste(
+					foregroundComposite,
+					None,
+					renderMaskWOffset(
+						layerOrGroup[0].mask.image,
+						imageDimensions,
+						(layerOrGroup[0].xOffset, layerOrGroup[0].yOffset),
+					),
+				)
+				foregroundComposite = newFGComp.convert("RGBA")
 		if flattenedSoFar is None:
-			return foregroundRender
+			return foregroundComposite
 		return blendLayers(
 			flattenedSoFar,
-			foregroundRender,
+			foregroundComposite,
 			blendModeLookup(layerOrGroup[0].blendMode, blendLookup),
 			layerOrGroup[0].opacity,
 		)
 
+	# Layer
 	if ignoreHidden and not layerOrGroup.visible:
-		foregroundRender = Image.new("RGBA", imageDimensions)
+		foregroundComposite = Image.new("RGBA", imageDimensions)
 	else:
 		# Get a raster image and apply blending
-		foregroundRender = rasterImageOffset(
+		foregroundComposite = renderWOffset(
 			layerOrGroup.image, imageDimensions, (layerOrGroup.xOffset, layerOrGroup.yOffset)
 		)
+		if layerOrGroup.mask is not None:
+			newFGComp = Image.new("RGBA", imageDimensions)
+			newFGComp.paste(
+				foregroundComposite,
+				None,
+				renderMaskWOffset(
+					layerOrGroup.mask.image,
+					imageDimensions,
+					(layerOrGroup.xOffset, layerOrGroup.yOffset),
+				),
+			)
+			foregroundComposite = newFGComp.convert("RGBA")
 	if flattenedSoFar is None:
-		return foregroundRender
+		return foregroundComposite
+
 	return blendLayers(
 		flattenedSoFar,
-		foregroundRender,
+		foregroundComposite,
 		blendModeLookup(layerOrGroup.blendMode, blendLookup),
 		layerOrGroup.opacity,
 	)
@@ -554,3 +579,44 @@ def flattenAll(
 			layers[layer], imageDimensions, flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden
 		)
 	return flattenedSoFar
+
+
+def renderWOffset(
+	image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
+) -> Image.Image:
+	"""Render an image with offset and alpha to a given size.
+
+	Args:
+		image (Image.Image): pil image to draw
+		size (tuple[int, int]): width, height as a tuple
+		alpha (float, optional): alpha transparency. Defaults to 1.0.
+		offsets (tuple[int, int], optional): x, y offsets as a tuple.
+		Defaults to (0, 0).
+
+	Returns:
+		Image.Image: new image
+	"""
+	imageOffset = Image.new("RGBA", size)
+	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
+	return imageOffset
+
+
+def renderMaskWOffset(
+	image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
+) -> Image.Image:
+	"""Render an image with offset and alpha to a given size.
+
+	Args:
+		image (Image.Image): pil image to draw
+		size (tuple[int, int]): width, height as a tuple
+		alpha (float, optional): alpha transparency. Defaults to 1.0.
+		offsets (tuple[int, int], optional): x, y offsets as a tuple.
+		Defaults to (0, 0).
+
+	Returns:
+		Image.Image: new image
+	"""
+	mode = image.mode
+	imageOffset = Image.new("RGBA", size)
+	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
+	return imageOffset.convert(mode)
