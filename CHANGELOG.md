@@ -2,6 +2,9 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2021.1.1 - 2021/09/13
+- Update pillow
+
 ## 2021.1 - 2021/08/11
 - Feature: https://github.com/FHPythonUtils/GimpFormats/issues/6
 - Brought `renderWOffset` back in-house
