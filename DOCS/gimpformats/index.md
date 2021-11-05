@@ -23,6 +23,7 @@ gimpformats.
         - [GimpVbrBrush](GimpVbrBrush.md#gimpvbrbrush)
         - [GimpVectors](GimpVectors.md#gimpvectors)
         - [gimpXcfDocument](gimpXcfDocument.md#gimpxcfdocument)
+        - [utils](utils.md#utils)
 
 Forked from https://github.com/TheHeadlessSourceMan/gimpFormats
 

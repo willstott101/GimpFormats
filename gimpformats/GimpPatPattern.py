@@ -8,6 +8,8 @@ from io import BytesIO
 import PIL.Image
 from binaryiotools import IO
 
+from . import utils
+
 
 class GimpPatPattern:
 	"""Pure python implementation of a gimp pattern file.
@@ -41,14 +43,7 @@ class GimpPatPattern:
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if isinstance(fileName, str):
-			self.fileName = fileName
-			file = open(fileName, "rb")
-		else:
-			self.fileName = fileName.name
-			file = fileName
-		data = file.read()
-		file.close()
+		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
 	def decode(self, data: bytes, index: int = 0):
@@ -144,10 +139,10 @@ class GimpPatPattern:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
-			ret.append("fileName: " + self.fileName)
-		ret.append("Name: " + str(self.name))
-		ret.append("Version: " + str(self.version))
-		ret.append("Size: " + str(self.width) + " x " + str(self.height))
-		ret.append("BPP: " + str(self.bpp))
-		ret.append("Mode: " + str(self.mode))
+			ret.append(f"fileName: {self.fileName}")
+		ret.append(f"Name: {self.name}")
+		ret.append(f"Version: {self.version}")
+		ret.append(f"Size: {self.width} x {self.height}")
+		ret.append(f"BPP: {self.bpp}")
+		ret.append(f"Mode: {self.mode}")
 		return "\n".join(ret)

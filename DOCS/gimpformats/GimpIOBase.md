@@ -6,7 +6,6 @@ A specialized binary file base for Gimp files.
 
 - [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpIOBase
     - [GimpIOBase](#gimpiobase)
-        - [GimpIOBase().POINTER_SIZE](#gimpiobasepointer_size)
         - [GimpIOBase().\_\_repr\_\_](#gimpiobase__repr__)
         - [GimpIOBase().activeVector](#gimpiobaseactivevector)
         - [GimpIOBase().doc](#gimpiobasedoc)
@@ -18,6 +17,7 @@ A specialized binary file base for Gimp files.
         - [GimpIOBase().getCompression](#gimpiobasegetcompression)
         - [GimpIOBase().getTagColours](#gimpiobasegettagcolours)
         - [GimpIOBase().getUnits](#gimpiobasegetunits)
+        - [GimpIOBase().pointerSize](#gimpiobasepointersize)
         - [GimpIOBase().root](#gimpiobaseroot)
         - [GimpIOBase().tattoo](#gimpiobasetattoo)
         - [GimpIOBase().tattoo](#gimpiobasetattoo)
@@ -37,24 +37,9 @@ class GimpIOBase():
 
 A specialized binary file base for Gimp files.
 
-### GimpIOBase().POINTER_SIZE
-
-[[find in source code]](../../gimpformats/GimpIOBase.py#L198)
-
-```python
-@property
-def POINTER_SIZE() -> int:
-```
-
-Determine the size of the "pointer" datatype based on the document version.
-
-NOTE: prior to version 11, it was 32-bit,
- since then it is 64-bit, thus supporting
- larger image files
-
 ### GimpIOBase().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpIOBase.py#L682)
+[[find in source code]](../../gimpformats/GimpIOBase.py#L681)
 
 ```python
 def __repr__(indent: str = ''):
@@ -166,6 +151,21 @@ def getUnits() -> str:
 
 Return the units as a string.
 
+### GimpIOBase().pointerSize
+
+[[find in source code]](../../gimpformats/GimpIOBase.py#L198)
+
+```python
+@property
+def pointerSize() -> int:
+```
+
+Determine the size of the "pointer" datatype based on the document version.
+
+NOTE: prior to version 11, it was 32-bit,
+ since then it is 64-bit, thus supporting
+ larger image files
+
 ### GimpIOBase().root
 
 [[find in source code]](../../gimpformats/GimpIOBase.py#L232)
@@ -201,7 +201,7 @@ Gimp nomenclature for the item's unique id.
 
 ## GimpUserUnits
 
-[[find in source code]](../../gimpformats/GimpIOBase.py#L768)
+[[find in source code]](../../gimpformats/GimpIOBase.py#L764)
 
 ```python
 class GimpUserUnits():
@@ -212,7 +212,7 @@ User-defined measurement units.
 
 ### GimpUserUnits().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpIOBase.py#L812)
+[[find in source code]](../../gimpformats/GimpIOBase.py#L808)
 
 ```python
 def __repr__(indent: str = ''):
@@ -222,7 +222,7 @@ Get a textual representation of this object.
 
 ### GimpUserUnits().decode
 
-[[find in source code]](../../gimpformats/GimpIOBase.py#L780)
+[[find in source code]](../../gimpformats/GimpIOBase.py#L776)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -241,7 +241,7 @@ Decode a byte buffer.
 
 ### GimpUserUnits().encode
 
-[[find in source code]](../../gimpformats/GimpIOBase.py#L800)
+[[find in source code]](../../gimpformats/GimpIOBase.py#L796)
 
 ```python
 def encode():

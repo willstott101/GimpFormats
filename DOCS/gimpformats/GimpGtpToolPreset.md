@@ -19,7 +19,7 @@ Pure python implementation of the gimp gtp tool preset format.
 
 ## GimpGtpToolPreset
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L116)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L118)
 
 ```python
 class GimpGtpToolPreset():
@@ -30,7 +30,7 @@ Pure python implementation of the gimp gtp tool preset format.
 
 ### GimpGtpToolPreset().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L168)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L163)
 
 ```python
 def __repr__(indent=''):
@@ -40,10 +40,10 @@ Get a textual representation of this object.
 
 ### GimpGtpToolPreset().decode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L140)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L135)
 
 ```python
-def decode(data, index=0):
+def decode(data: bytes, index: int = 0):
 ```
 
 Decode a byte buffer.
@@ -54,7 +54,7 @@ Decode a byte buffer.
 
 ### GimpGtpToolPreset().encode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L148)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L143)
 
 ```python
 def encode():
@@ -64,7 +64,7 @@ Encode to a byte array.
 
 ### GimpGtpToolPreset().load
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L125)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L127)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -78,7 +78,7 @@ Load a gimp file.
 
 ### GimpGtpToolPreset().save
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L152)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L147)
 
 ```python
 def save(tofileName=None, toExtension=None):
@@ -88,7 +88,7 @@ Save this gimp tool preset to a file.
 
 ## ParenFileValue
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L11)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L13)
 
 ```python
 class ParenFileValue():
@@ -101,7 +101,7 @@ A parentheses-based file format.
 
 ### ParenFileValue().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L50)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L52)
 
 ```python
 def __repr__():
@@ -111,7 +111,7 @@ Get a textual representation of this object.
 
 ## parenFileDecode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L68)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L70)
 
 ```python
 def parenFileDecode(data):
@@ -123,7 +123,7 @@ Decode a parentheses-based file format.
 
 ## parenFileEncode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L102)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L104)
 
 ```python
 def parenFileEncode(values):
@@ -133,7 +133,7 @@ Encode a values tree to a buffer.
 
 ## walkTree
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L78)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L80)
 
 ```python
 def walkTree(items):

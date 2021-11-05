@@ -19,7 +19,7 @@ This represents a single level in an imageHierarchy
 
 ## GimpImageLevel
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L17)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L19)
 
 ```python
 class GimpImageLevel(GimpIOBase):
@@ -32,7 +32,7 @@ This represents a single level in an imageHierarchy
 
 ### GimpImageLevel().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L275)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L277)
 
 ```python
 def __repr__(indent: str = ''):
@@ -42,7 +42,7 @@ Get a textual representation of this object.
 
 ### GimpImageLevel().bpp
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L220)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L222)
 
 ```python
 @property
@@ -53,7 +53,7 @@ Get bpp.
 
 ### GimpImageLevel().decode
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L30)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L32)
 
 ```python
 def decode(data: bytes, index: int = 0):
@@ -78,7 +78,7 @@ Encode this object to a byte buffer.
 
 ### GimpImageLevel().image
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L251)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L253)
 
 ```python
 @property
@@ -89,7 +89,7 @@ Get a final, compiled image
 
 ### GimpImageLevel().image
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L267)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L269)
 
 ```python
 @image.setter
@@ -98,7 +98,7 @@ def image(image: Image):
 
 ### GimpImageLevel().mode
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L225)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L227)
 
 ```python
 @property
@@ -109,7 +109,7 @@ Get mode.
 
 ### GimpImageLevel().tiles
 
-[[find in source code]](../../gimpformats/GimpImageLevel.py#L231)
+[[find in source code]](../../gimpformats/GimpImageLevel.py#L233)
 
 ```python
 @property

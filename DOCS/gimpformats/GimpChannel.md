@@ -27,7 +27,7 @@ Represents a single channel or mask in a gimp image.
 
 ### GimpChannel().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpChannel.py#L99)
+[[find in source code]](../../gimpformats/GimpChannel.py#L101)
 
 ```python
 def __repr__(indent: str = '') -> str:

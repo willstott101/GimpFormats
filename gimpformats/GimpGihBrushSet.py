@@ -10,6 +10,7 @@ from io import BytesIO
 
 from binaryiotools import IO
 
+from . import utils
 from .GimpGbrBrush import GimpGbrBrush
 
 
@@ -41,14 +42,7 @@ class GimpGihBrushSet:
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if isinstance(fileName, str):
-			self.fileName = fileName
-			file = open(fileName, "rb")
-		else:
-			self.fileName = fileName.name
-			file = fileName
-		data = file.read()
-		file.close()
+		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
 	def decode(self, data: bytes, index: int = 0) -> int:
@@ -85,8 +79,8 @@ class GimpGihBrushSet:
 		ioBuf.textLine = self.name
 		# add the second line of data
 		secondLine = [str(len(self.brushes))]
-		for key in self.params:
-			secondLine.append(key + ":" + str(self.params[key]))
+		for key, value in self.params.items():
+			secondLine.append(f"{key}:{value}")
 		ioBuf.textLine = " ".join(secondLine)
 		# add the brushes
 		for brush in self.brushes:
@@ -95,22 +89,17 @@ class GimpGihBrushSet:
 
 	def save(self, tofileName: str):
 		"""Save this gimp image to a file."""
-		if hasattr(tofileName, "write"):
-			file = tofileName
-		else:
-			file = open(tofileName, "wb")
-		file.write(self.encode())
-		file.close()
+		utils.save(tofileName, self.encode())
 
 	def __repr__(self, indent=""):
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
-			ret.append("fileName: " + self.fileName)
-		ret.append("Name: " + str(self.name))
+			ret.append(f"fileName: {self.fileName}")
+		ret.append(f"Name: {self.name}")
 		for k, val in list(self.params.items()):
-			ret.append(k + ": " + str(val))
-		for i in range(len(self.brushes)):
-			ret.append("Brush " + str(i))
-			ret.append(self.brushes[i].__repr__(indent + "\t"))
-		return ("\n" + indent).join(ret)
+			ret.append(k + f": {val}")
+		for i, brush in enumerate(self.brushes):
+			ret.append(f"Brush {i}")
+			ret.append(brush.__repr__(indent + "\t"))
+		return (f"\n{indent}").join(ret)

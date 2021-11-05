@@ -29,7 +29,7 @@ Represents a single layer in a gimp image.
 
 ### GimpLayer().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L177)
+[[find in source code]](../../gimpformats/GimpLayer.py#L179)
 
 ```python
 def __repr__(indent=''):
@@ -82,7 +82,7 @@ Return the data
 
 ### GimpLayer().forceFullyLoaded
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L169)
+[[find in source code]](../../gimpformats/GimpLayer.py#L171)
 
 ```python
 def forceFullyLoaded():
@@ -134,7 +134,7 @@ NOTE: can return None if it has been fully read into an image
 
 ### GimpLayer().imageHierarchy
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L164)
+[[find in source code]](../../gimpformats/GimpLayer.py#L166)
 
 ```python
 @imageHierarchy.setter

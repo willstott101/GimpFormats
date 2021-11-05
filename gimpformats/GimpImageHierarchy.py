@@ -71,7 +71,7 @@ class GimpImageHierarchy(GimpIOBase):
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
 		ioBuf.u32 = self.bpp
-		dataIndex = ioBuf.index + self.POINTER_SIZE * (len(self.levels) + 1)
+		dataIndex = ioBuf.index + self.pointerSize * (len(self.levels) + 1)
 		for level in self.levels:
 			ioBuf.addBytes(
 				self._pointerEncode(dataIndex + dataioBuf.index)
@@ -116,6 +116,6 @@ class GimpImageHierarchy(GimpIOBase):
 	def __repr__(self, indent: str = ""):
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Size: " + str(self.width) + " x " + str(self.height))
-		ret.append("Bytes Per Pixel: " + str(self.bpp))
-		return indent + (("\n" + indent).join(ret))
+		ret.append(f"Size: {self.width} x {self.height}")
+		ret.append(f"Bytes Per Pixel: {self.bpp}")
+		return indent + ((f"\n{indent}").join(ret))

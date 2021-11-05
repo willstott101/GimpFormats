@@ -46,14 +46,12 @@ class Precision:
 		"""
 		if gimpVersion < 4:
 			if self.bits != 8 or not (self.gamma) or self.numberFormat != int:
-				raise Exception(
-					"Illegal precision (" + str(self) + ") for gimp version " + str(gimpVersion)
-				)
+				raise Exception(f"Illegal precision ({self}" + f") for gimp version {gimpVersion}")
 		else:
 			if gimpVersion == 4:
 				if self.bits == 64:
 					raise Exception(
-						"Illegal precision (" + str(self) + ") for gimp version " + str(gimpVersion)
+						f"Illegal precision ({self}" + f") for gimp version {gimpVersion}"
 					)
 				if self.numberFormat == int:
 					code = (8, 16, 32).index(self.bits)
@@ -63,9 +61,7 @@ class Precision:
 				if self.gamma:
 					code += 50
 			elif gimpVersion in (5, 6):
-				raise NotImplementedError(
-					"Cannot save to gimp developer version " + str(gimpVersion)
-				)
+				raise NotImplementedError(f"Cannot save to gimp developer version {gimpVersion}")
 			else:  # version 7 or above
 				if self.numberFormat == int:
 					code = (8, 16, 32).index(self.bits)

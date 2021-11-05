@@ -13,13 +13,14 @@ Currently not supporting:
 from __future__ import annotations
 
 import copy
-from io import BytesIO, FileIO
+from io import BytesIO
 
 import PIL.ImageGrab
 from binaryiotools import IO
 from blendmodes.blend import BlendType, blendLayers
 from PIL import Image
 
+from . import utils
 from .GimpChannel import GimpChannel
 from .GimpImageHierarchy import GimpImageHierarchy
 from .GimpIOBase import GimpIOBase
@@ -84,14 +85,7 @@ class GimpDocument(GimpIOBase):
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if isinstance(fileName, str):
-			self.fileName = fileName
-			file = open(fileName, "rb")
-		else:
-			self.fileName = fileName.name
-			file = fileName
-		data = file.read()
-		file.close()
+		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
 	def decode(self, data: bytes, index: int = 0) -> int:
@@ -183,7 +177,7 @@ class GimpDocument(GimpIOBase):
 		# The file is a valid gimp xcf
 		ioBuf.addBytes("gimp xcf ")
 		# Set the file version
-		ioBuf.addBytes(f"v{self.version:03d}" + "\0")
+		ioBuf.addBytes(f"v{self.version:03d}\0")
 		# Set other attributes as outlined in the spec
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
@@ -194,7 +188,7 @@ class GimpDocument(GimpIOBase):
 		self.precision.encode(self.version, ioBuf)
 		# List of properties
 		ioBuf.addBytes(self._propertiesEncode())
-		dataAreaIdx = ioBuf.index + self.POINTER_SIZE * (len(self.layers) + len(self._channels))
+		dataAreaIdx = ioBuf.index + self.pointerSize * (len(self.layers) + len(self._channels))
 		dataAreaIO = IO()
 		# Set the layers and add the pointers to them
 		for layer in self.layers:
@@ -282,6 +276,7 @@ class GimpDocument(GimpIOBase):
 		image = PIL.ImageGrab.grabclipboard()
 		if isinstance(image, Image.Image):
 			return self.newLayer(name, image, index)
+		return
 
 	def addLayer(self, layer: GimpLayer):
 		"""Append a layer object to the document.
@@ -370,39 +365,25 @@ class GimpDocument(GimpIOBase):
 				index += 1
 		return flattenAll(layersOut, (self.width, self.height))
 
-	def save(self, filename: str | FileIO = None):
+	def save(self, filename: str | BytesIO = None):
 		"""Save this gimp image to a file."""
 		self.forceFullyLoaded()
-		if filename is None:
-			filename = self.fileName
-		if isinstance(filename, str):
-			file = open(filename, "wb")
-		else:
-			file = filename
-		file.write(self.encode())
-		file.close()
+		utils.save(self.encode(), filename or self.fileName)
 
 	def saveNew(self, filename=None):
 		"""Save a new gimp image to a file."""
-		if filename is None:
-			filename = self.fileName
-		if isinstance(filename, str):
-			file = open(filename, "wb")
-		else:
-			file = filename
-		file.write(self.encode())
-		file.close()
+		utils.save(self.encode(), filename or self.fileName)
 
 	def __repr__(self, indent="") -> str:
 		"""Get a textual representation of this object."""
 		del indent
 		ret = []
 		if self.fileName is not None:
-			ret.append("fileName: " + self.fileName)
-		ret.append("Version: " + str(self.version))
-		ret.append("Size: " + str(self.width) + " x " + str(self.height))
-		ret.append("Base Color Mode: " + self.COLOR_MODES[self.baseColorMode])
-		ret.append("Precision: " + str(self.precision))
+			ret.append(f"fileName: {self.fileName}")
+		ret.append(f"Version: {self.version}")
+		ret.append(f"Size: {self.width} x {self.height}")
+		ret.append(f"Base Color Mode: {self.COLOR_MODES[self.baseColorMode]}")
+		ret.append(f"Precision: {self.precision}")
 		ret.append(GimpIOBase.__repr__(self))
 		if self._layerPtr:
 			ret.append("Layers: ")
@@ -420,7 +401,7 @@ def blendModeLookup(
 ):
 	"""Get the blendmode from a lookup table."""
 	if blendmode not in blendLookup:
-		print("WARNING " + str(blendmode) + " is not currently supported!")
+		print(f"WARNING {blendmode} is not currently supported!")
 		return default
 	return blendLookup[blendmode]
 

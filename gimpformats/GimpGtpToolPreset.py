@@ -7,6 +7,8 @@ from io import BytesIO
 
 import brackettree
 
+from . import utils
+
 
 class ParenFileValue:
 	"""A parentheses-based file format.
@@ -50,14 +52,14 @@ class ParenFileValue:
 	def __repr__(self):
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("(" + str(self.name))
-		ret.append(" " + self.value)
+		ret.append(f"({self.name}")
+		ret.append(f" {self.value}")
 		if self.children is None:
 			ret.append(")")
 		ret.append("\n")
 		if self.children is not None:
 			for index, child in enumerate(self.children):
-				ret.append("    (" + str(child.name))
+				ret.append(f"    ({child.name}")
 				ret.append(" " + child.value + ")")
 				if index == len(self.children) - 1:
 					ret.append(")")
@@ -127,17 +129,10 @@ class GimpGtpToolPreset:
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if hasattr(fileName, "read"):
-			self.fileName = fileName.name
-			f = fileName
-		else:
-			self.fileName = fileName
-			f = open(fileName)
-		data = f.read()
+		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
-		f.close()
 
-	def decode(self, data, index=0):
+	def decode(self, data: bytes, index: int = 0):
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode

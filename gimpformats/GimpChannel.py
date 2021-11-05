@@ -91,15 +91,17 @@ class GimpChannel(GimpIOBase):
 		This is mainly used for decoding the image, so
 		not much use to you.
 		"""
-		if self._imageHierarchy is None:
-			self._imageHierarchy = GimpImageHierarchy(self)
-			self._imageHierarchy.decode(self._data, self._imageHierarchyPtr)
-		return self._imageHierarchy
+		if self._data and self._imageHierarchyPtr:
+			if self._imageHierarchy is None:
+				self._imageHierarchy = GimpImageHierarchy(self)
+				self._imageHierarchy.decode(self._data, self._imageHierarchyPtr)
+			return self._imageHierarchy
+		raise RuntimeError("self._data or self._imageHierarchyPtr is None")
 
 	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Name: " + str(self.name))
-		ret.append("Size: " + str(self.width) + " x " + str(self.height))
+		ret.append(f"Name: {self.name}")
+		ret.append(f"Size: {self.width} x {self.height}")
 		ret.append(GimpIOBase.__repr__(self, indent))
-		return indent + (("\n" + indent).join(ret))
+		return indent + ((f"\n{indent}").join(ret))

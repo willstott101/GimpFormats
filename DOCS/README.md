@@ -23,3 +23,4 @@ Full list of [Gimpformats](#gimpformats-index) project modules.
     - [GimpVbrBrush](gimpformats/GimpVbrBrush.md#gimpvbrbrush)
     - [GimpVectors](gimpformats/GimpVectors.md#gimpvectors)
     - [gimpXcfDocument](gimpformats/gimpXcfDocument.md#gimpxcfdocument)
+    - [utils](gimpformats/utils.md#utils)

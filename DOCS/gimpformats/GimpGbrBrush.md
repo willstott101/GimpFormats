@@ -16,7 +16,7 @@ Pure python implementation of the gimp gbr brush format.
 
 ## GimpGbrBrush
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L12)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L15)
 
 ```python
 class GimpGbrBrush():
@@ -30,7 +30,7 @@ See:
 
 ### GimpGbrBrush().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L141)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L132)
 
 ```python
 def __repr__(indent=''):
@@ -40,7 +40,7 @@ Get a textual representation of this object.
 
 ### GimpGbrBrush().decode
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L54)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L50)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -64,7 +64,7 @@ Decode a byte buffer.
 
 ### GimpGbrBrush().encode
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L92)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L88)
 
 ```python
 def encode() -> bytearray:
@@ -74,7 +74,7 @@ Encode this object to byte array.
 
 ### GimpGbrBrush().image
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L111)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L107)
 
 ```python
 @property
@@ -85,7 +85,7 @@ Get a final, compiled image.
 
 ### GimpGbrBrush().load
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L39)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L42)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -99,17 +99,17 @@ Load a gimp file.
 
 ### GimpGbrBrush().save
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L118)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L114)
 
 ```python
-def save(tofileName: str | FileIO, toExtension: str | None = None):
+def save(tofileName: str, toExtension: str | None = None):
 ```
 
 Save this gimp image to a file.
 
 ### GimpGbrBrush().size
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L106)
+[[find in source code]](../../gimpformats/GimpGbrBrush.py#L102)
 
 ```python
 @property

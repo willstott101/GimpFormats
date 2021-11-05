@@ -14,7 +14,7 @@ Pure python implementation of the OLD gimp gpb brush format.
 
 ## GimpGpbBrush
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L14)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L15)
 
 ```python
 class GimpGpbBrush():
@@ -28,7 +28,7 @@ See:
 
 ### GimpGpbBrush().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L79)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L68)
 
 ```python
 def __repr__(indent=''):
@@ -38,7 +38,7 @@ Get a textual representation of this object.
 
 ### GimpGpbBrush().decode
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L49)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L43)
 
 ```python
 def decode(data: bytes, index: int = 0):
@@ -57,7 +57,7 @@ Decode a byte buffer.
 
 ### GimpGpbBrush().encode
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L63)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L57)
 
 ```python
 def encode():
@@ -67,7 +67,7 @@ Encode this object to a byte array.
 
 ### GimpGpbBrush().load
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L34)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L35)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -81,7 +81,7 @@ Load a gimp file.
 
 ### GimpGpbBrush().save
 
-[[find in source code]](../../gimpformats/GimpGpbBrush.py#L70)
+[[find in source code]](../../gimpformats/GimpGpbBrush.py#L64)
 
 ```python
 def save(tofileName=None):

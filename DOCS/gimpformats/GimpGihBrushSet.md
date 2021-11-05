@@ -17,7 +17,7 @@ for how to use them.
 
 ## GimpGihBrushSet
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L16)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L17)
 
 ```python
 class GimpGihBrushSet():
@@ -34,7 +34,7 @@ See:
 
 ### GimpGihBrushSet().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L105)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L94)
 
 ```python
 def __repr__(indent=''):
@@ -44,7 +44,7 @@ Get a textual representation of this object.
 
 ### GimpGihBrushSet().decode
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L54)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L48)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -63,7 +63,7 @@ Decode a byte buffer.
 
 ### GimpGihBrushSet().encode
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L82)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L76)
 
 ```python
 def encode():
@@ -73,7 +73,7 @@ Encode this object to a byte array.
 
 ### GimpGihBrushSet().load
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L39)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L40)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -87,7 +87,7 @@ Load a gimp file.
 
 ### GimpGihBrushSet().save
 
-[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L96)
+[[find in source code]](../../gimpformats/GimpGihBrushSet.py#L90)
 
 ```python
 def save(tofileName: str):

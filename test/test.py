@@ -12,19 +12,19 @@ import sys
 import unittest
 
 TESTS = [
-	"exportedPaths",  # TODO: implement
-	"gbrBrush",
-	"ggrGradient",
-	"gihBrushSet",  # FIX: testWilber + testFeltPen
-	"gpbBrush",  # TODO: implement
-	"gplPalette",
+	"exported_paths",  # TODO: implement
+	"gbr_brush",
+	"ggr_gradient",
+	"gih_brush_set",  # FIX: testWilber + testFeltPen
+	"gpb_brush",  # TODO: implement
+	"gpl_palette",
 	"gtpToolPreset",
-	"layerGroups",  # TODO: implement
-	"patPattern",
-	"simpleXcfRead",
-	"twoLayers",  # TODO: implement
-	"vbrBrush",  # FIX: testDiagonalStar
-	"withPaths",
+	"layer_groups",  # TODO: implement
+	"pat_pattern",
+	"simple_xcf_read",
+	"two_layers",  # TODO: implement
+	"vbr_brush",  # FIX: testDiagonalStar
+	"with_paths",
 ]
 
 __HERE__ = os.path.abspath(__file__).rsplit(os.sep, 1)[0]
@@ -39,9 +39,9 @@ def suite(tests=None):
 		if os.path.isdir(dirname):
 			fullDirname = __HERE__ + os.sep + dirname
 			if os.path.exists(fullDirname + os.sep + "test.py"):
-				print("Queueing test: " + dirname)
-				exec("import " + dirname)
-				exec("testSuite.addTest(" + dirname + ".testSuite())")
+				print(f"Queueing test: {dirname}")
+				exec(f"import {dirname}")
+				exec(f"testSuite.addTest({dirname}.testSuite())")
 	return testSuite
 
 

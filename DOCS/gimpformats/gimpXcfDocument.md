@@ -44,7 +44,7 @@ Currently not supporting:
 
 ## GimpDocument
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L30)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L31)
 
 ```python
 class GimpDocument(GimpIOBase):
@@ -70,7 +70,7 @@ See:
 
 ### GimpDocument().\_\_delitem\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L334)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L329)
 
 ```python
 def __delitem__(index: int) -> None:
@@ -82,7 +82,7 @@ Delete a layer at an index.
 
 ### GimpDocument().\_\_getitem\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L320)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L315)
 
 ```python
 def __getitem__(index: int) -> GimpLayer:
@@ -94,7 +94,7 @@ Get the layer at an index.
 
 ### GimpDocument().\_\_len\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L313)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L308)
 
 ```python
 def __len__() -> int:
@@ -106,7 +106,7 @@ Get the len.
 
 ### GimpDocument().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L396)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L377)
 
 ```python
 def __repr__(indent='') -> str:
@@ -116,7 +116,7 @@ Get a textual representation of this object.
 
 ### GimpDocument().\_\_setitem\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L327)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L322)
 
 ```python
 def __setitem__(index: int, layer) -> None:
@@ -128,7 +128,7 @@ Set a layer at an index.
 
 ### GimpDocument().addLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L286)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L281)
 
 ```python
 def addLayer(layer: GimpLayer):
@@ -142,7 +142,7 @@ Append a layer object to the document.
 
 ### GimpDocument().appendLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L293)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L288)
 
 ```python
 def appendLayer(layer: GimpLayer):
@@ -156,7 +156,7 @@ Append a layer object to the document.
 
 ### GimpDocument().decode
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L97)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L91)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -190,7 +190,7 @@ Return the offset
 
 ### GimpDocument().deleteLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L308)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L303)
 
 ```python
 def deleteLayer(index: int) -> None:
@@ -200,7 +200,7 @@ Delete a layer.
 
 ### GimpDocument().encode
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L166)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L160)
 
 ```python
 def encode():
@@ -221,7 +221,7 @@ Return the data
 
 ### GimpDocument().forceFullyLoaded
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L211)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L205)
 
 ```python
 def forceFullyLoaded():
@@ -231,7 +231,7 @@ Make sure everything is fully loaded from the file.
 
 ### GimpDocument().getLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L243)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L237)
 
 ```python
 def getLayer(index: int):
@@ -241,7 +241,7 @@ Return a given layer.
 
 ### GimpDocument().image
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L345)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L340)
 
 ```python
 @property
@@ -252,7 +252,7 @@ Get a final, compiled image.
 
 ### GimpDocument().insertLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L300)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L295)
 
 ```python
 def insertLayer(layer: GimpLayer, index: int = -1):
@@ -267,7 +267,7 @@ Insert a layer object at a specific position.
 
 ### GimpDocument().layers
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L222)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L216)
 
 ```python
 @property
@@ -280,7 +280,7 @@ TODO: need to do the same thing with self.Channels
 
 ### GimpDocument().load
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L82)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L83)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -294,7 +294,7 @@ Load a gimp xcf and decode the file. See decode for more on this process.
 
 ### GimpDocument().newLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L253)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L247)
 
 ```python
 def newLayer(name: str, image: Image.Image, index: int = -1) -> GimpLayer:
@@ -314,7 +314,7 @@ Create a new layer based on a PIL image.
 
 ### GimpDocument().newLayerFromClipboard
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L269)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L263)
 
 ```python
 def newLayerFromClipboard(
@@ -339,17 +339,17 @@ NOTE: only works on OSX and Windows
 
 ### GimpDocument().save
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L373)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L368)
 
 ```python
-def save(filename: str | FileIO = None):
+def save(filename: str | BytesIO = None):
 ```
 
 Save this gimp image to a file.
 
 ### GimpDocument().saveNew
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L385)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L373)
 
 ```python
 def saveNew(filename=None):
@@ -359,7 +359,7 @@ Save a new gimp image to a file.
 
 ### GimpDocument().setLayer
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L247)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L241)
 
 ```python
 def setLayer(index, layer):
@@ -369,7 +369,7 @@ Assign to a given layer.
 
 ## blendModeLookup
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L418)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L399)
 
 ```python
 def blendModeLookup(
@@ -383,7 +383,7 @@ Get the blendmode from a lookup table.
 
 ## flattenAll
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L559)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L540)
 
 ```python
 def flattenAll(
@@ -410,7 +410,7 @@ to True.
 
 ## flattenLayerOrGroup
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L428)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L409)
 
 ```python
 def flattenLayerOrGroup(
@@ -438,7 +438,7 @@ to True.
 
 ## renderMaskWOffset
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L604)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L585)
 
 ```python
 def renderMaskWOffset(
@@ -464,7 +464,7 @@ Defaults to (0, 0).
 
 ## renderWOffset
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L584)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L565)
 
 ```python
 def renderWOffset(

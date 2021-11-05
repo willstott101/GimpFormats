@@ -56,6 +56,7 @@ Previously under `gimpformats_unofficial` now under `gimpformats`
 ## Getting started
 
 Read an image
+
 ```python
 from gimpformats.gimpXcfDocument import GimpDocument
 project = GimpDocument("image.xcf")
@@ -63,6 +64,7 @@ project = GimpDocument("image.xcf")
 
 Iterate the image and report the contents of each group followed by the first
 level children of the image
+
 ```python
 """List data on groups followed by the direct children of a gimp xcf document
 """
@@ -101,9 +103,11 @@ Group "Layer Group" contains Layer "Layer2"
 ```
 
 ## Next tasks (see below)
+
 - Saving
 
 ## Currently supports
+
 - Loading xcf files (up to current GIMP version 2.10)
 - Getting image hierarchy and info
 - Getting image for each layer (PIL image)
@@ -116,6 +120,7 @@ Group "Layer Group" contains Layer "Layer2"
 - Add new layers
 
 ## In progress but results in crashes and tests failing
+
 - Saving
 - .ggr gradients - reads/saves fine, but I need to come up with a way to get the
 actual colours
@@ -124,6 +129,7 @@ expected
 - .gpb brush - should work, but I need some test files
 
 ## Not implemented
+
 - Exported paths in .svg format. - Reading should be easy enough, but I need to
 ensure I don't get a full-blown svg in the mix
 - Standard "parasites"
@@ -132,6 +138,7 @@ ensure I don't get a full-blown svg in the mix
 See the [Docs](/DOCS/) for more information.
 
 ## Install With PIP
+
 ```python
 pip install gimpformats
 ```
@@ -139,58 +146,93 @@ pip install gimpformats
 Head to https://pypi.org/project/gimpformats/ for more info
 
 ## Language information
+
 ### Built for
-This program has been written for Python 3 and has been tested with
-Python version 3.9.0 <https://www.python.org/downloads/release/python-380/>.
+This program has been written for Python versions 3.7 - 3.10 and has been tested with both 3.7 and
+3.10
 
 ## Install Python on Windows
+
 ### Chocolatey
+
 ```powershell
 choco install python
 ```
-### Download
-To install Python, go to <https://www.python.org/> and download the latest
+
+### Windows - Python.org
+To install Python, go to https://www.python.org/downloads/windows/ and download the latest
 version.
 
 ## Install Python on Linux
+
 ### Apt
+
 ```bash
-sudo apt install python3.9
+sudo apt install python3.x
 ```
+
+### Dnf
+
+```bash
+sudo dnf install python3.x
+```
+
+## Install Python on MacOS
+
+### Homebrew
+
+```bash
+brew install python@3.x
+```
+
+### MacOS - Python.org
+To install Python, go to https://www.python.org/downloads/macos/ and download the latest
+version.
 
 ## How to run
-### With VSCode
-1. Open the .py file in vscode
-2. Ensure a python 3.9 interpreter is selected (Ctrl+Shift+P > Python:Select
-Interpreter > Python 3.9)
-3. Run by pressing Ctrl+F5 (if you are prompted to install any modules, accept)
-### From the Terminal
-```bash
-./[file].py
-```
+
+### Windows
+
+- Module
+	`py -3.x -m [module]` or `[module]` (if module installs a script)
+
+- File
+	`py -3.x [file]` or `./[file]`
+
+### Linux/ MacOS
+
+- Module
+	`python3.x -m [module]` or `[module]` (if module installs a script)
+
+- File
+	`python3.x [file]` or `./[file]`
 
 ## Download Project
+
 ### Clone
+
 #### Using The Command Line
+
 1. Press the Clone or download button in the top right
 2. Copy the URL (link)
 3. Open the command line and change directory to where you wish to
 clone to
 4. Type 'git clone' followed by URL in step 2
-```bash
-$ git clone https://github.com/FHPythonUtils/GimpFormats
-```
+	```bash
+	git clone https://github.com/FHPythonUtils/GimpFormats
+	```
 
 More information can be found at
-<https://help.github.com/en/articles/cloning-a-repository>
+https://help.github.com/en/articles/cloning-a-repository
 
 #### Using GitHub Desktop
+
 1. Press the Clone or download button in the top right
 2. Click open in desktop
 3. Choose the path for where you want and click Clone
 
 More information can be found at
-<https://help.github.com/en/desktop/contributing-to-projects/cloning-a-repository-from-github-to-github-desktop>
+https://help.github.com/en/desktop/contributing-to-projects/cloning-a-repository-from-github-to-github-desktop
 
 ### Download Zip File
 
@@ -199,6 +241,7 @@ More information can be found at
 3. Copy/ move to the desired location
 
 ## Community Files
+
 ### Licence
 LGPLv3 License
 (See the [LICENSE](/LICENSE.txt) for more information.)

@@ -13,6 +13,8 @@ from PIL.Image import Image
 
 from .GimpIOBase import IO, GimpIOBase
 
+# pylint:disable=invalid-name
+
 
 class GimpImageLevel(GimpIOBase):
 	"""Gets packed pixels from a gimp image.
@@ -38,8 +40,8 @@ class GimpImageLevel(GimpIOBase):
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
 		if self.width != self.parent.width or self.height != self.parent.height:
-			currentSize = "(" + str(self.width) + "," + str(self.height) + ")"
-			expectedSize = "(" + str(self.parent.width) + "," + str(self.parent.height) + ")"
+			currentSize = f"({self.width}" + f",{self.height})"
+			expectedSize = f"({self.parent.width}" + f",{self.parent.height})"
 			msg = " Usually this implies file corruption."
 			raise Exception("Image data size mismatch. " + currentSize + "!=" + expectedSize + msg)
 		self._tiles = []
@@ -58,9 +60,7 @@ class GimpImageLevel(GimpIOBase):
 						ioBuf.data[ptr : ptr + totalBytes + 24]
 					)  # guess how many bytes are needed
 				else:
-					raise Exception(
-						"ERR: unsupported compression mode " + str(self.doc.compression)
-					)
+					raise Exception(f"ERR: unsupported compression mode {self.doc.compression}")
 				subImage = PIL.Image.frombytes(self.mode, size, bytes(data), decoder_name="raw")
 				self._tiles.append(subImage)
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
@@ -72,7 +72,7 @@ class GimpImageLevel(GimpIOBase):
 		ioBuf = IO()
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
-		dataIndex = ioBuf.index + self.POINTER_SIZE * (len(self.tiles) + 1)
+		dataIndex = ioBuf.index + self.pointerSize * (len(self.tiles) + 1)
 		for tile in self.tiles:
 			ioBuf.addBytes(self._pointerEncode(dataIndex + dataioBuf.index))
 			data = tile.tobytes()
@@ -84,13 +84,14 @@ class GimpImageLevel(GimpIOBase):
 			elif self.doc.compression == 2:  # zip
 				data = zlib.compress(data)
 			else:
-				raise Exception("ERR: unsupported compression mode " + str(self.doc.compression))
+				raise Exception(f"ERR: unsupported compression mode {self.doc.compression}")
 			dataioBuf.addBytes(data)
 		ioBuf.addBytes(self._pointerEncode(0))
 		ioBuf.addBytes(dataioBuf.data)
 		return ioBuf.data
 
 	def _decodeRLE(self, data, pixels, bpp, index=0):
+		_ = self
 		"""Decode RLE encoded image data."""
 		ret = [[] for chan in range(bpp)]
 		for chan in range(bpp):
@@ -145,6 +146,7 @@ class GimpImageLevel(GimpIOBase):
 
 	def _encodeRLE(self, data, bpp):
 		"""Encode image to RLE image data."""
+		_ = self
 
 		def countSame(data, startIdx):
 			"""Count how many times bytes are identical."""
@@ -212,8 +214,8 @@ class GimpImageLevel(GimpIOBase):
 				chanData.append(data[index])
 			dataByChannel.append(chanData)
 		# encode each channel
-		for index in range(len(dataByChannel)):  # iterate through 2d array
-			dataByChannel[index] = rleEncodeChan(dataByChannel[index])
+		for dbc in dataByChannel:  # iterate through 2d array
+			dbc = rleEncodeChan(dbc)
 		# join and return
 		return "".join("".join(str(x)) for x in dataByChannel)
 
@@ -275,5 +277,5 @@ class GimpImageLevel(GimpIOBase):
 	def __repr__(self, indent: str = ""):
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Size: " + str(self.width) + " x " + str(self.height))
-		return indent + (("\n" + indent).join(ret))
+		ret.append(f"Size: {self.width} x {self.height}")
+		return indent + ((f"\n{indent}").join(ret))

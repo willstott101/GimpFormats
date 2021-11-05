@@ -5,6 +5,8 @@ from __future__ import annotations
 
 from io import BytesIO
 
+from . import utils
+
 
 class GimpGplPalette:
 	"""Pure python implementation of the gimp gpl palette format."""
@@ -27,15 +29,8 @@ class GimpGplPalette:
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if isinstance(fileName, str):
-			self.fileName = fileName
-			file = open(fileName)
-		else:
-			self.fileName = fileName.name
-			file = fileName
-		data = file.read()
-		file.close()
-		self.decode(data)
+		self.fileName, data = utils.fileOpen(fileName)
+		self.decode(data.decode("utf-8"))
 
 	def decode(self, data: str) -> None:
 		"""Decode a byte buffer.
@@ -67,8 +62,8 @@ class GimpGplPalette:
 		"""Encode to a raw data stream."""
 		data = []
 		data.append("GIMP Palette")
-		data.append("Name: " + str(self.name))
-		data.append("Columns: " + str(self.columns))
+		data.append(f"Name: {self.name}")
+		data.append(f"Columns: {self.columns}")
 		data.append("#")
 		for i, color in enumerate(self.colors):
 			colorName = self.colorNames[i]
@@ -82,24 +77,19 @@ class GimpGplPalette:
 
 	def save(self, fileName: str | BytesIO):
 		"""Save this gimp image to a file."""
-		if isinstance(fileName, str):
-			file = open(fileName, "wb")
-		else:
-			file = fileName
-		file.write(self.encode())
-		file.close()
+		utils.save(self.encode(), fileName)
 
 	def __repr__(self):
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
-			ret.append("fileName: " + self.fileName)
-		ret.append("Name: " + str(self.name))
-		ret.append("Columns: " + str(self.columns))
+			ret.append(f"fileName: {self.fileName}")
+		ret.append(f"Name: {self.name}")
+		ret.append(f"Columns: {self.columns}")
 		ret.append("Colors:")
 		for i, color in enumerate(self.colors):
 			colorName = self.colorNames[i]
-			line = "(%d,%d,%d)" % color[0], color[1], color[2]
+			line = f"{color[0]},{color[1]},{color[2]}"
 			if colorName is not None:
 				line = line + " " + colorName
 		return "\n".join(ret)

@@ -87,7 +87,7 @@ class GimpParasite:
 	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Name: " + str(self.name))
-		ret.append("Flags: " + str(self.flags))
-		ret.append("Data Len: " + str(len(self.data)))
-		return indent + (("\n" + indent).join(ret))
+		ret.append(f"Name: {self.name}")
+		ret.append(f"Flags: {self.flags}")
+		ret.append(f"Data Len: {len(self.data)}")
+		return indent + ((f"\n{indent}").join(ret))

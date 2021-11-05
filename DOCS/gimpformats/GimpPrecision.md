@@ -24,7 +24,7 @@ Since the precision code is so unusual, I decided to create a class to parse it.
 
 ### Precision().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpPrecision.py#L87)
+[[find in source code]](../../gimpformats/GimpPrecision.py#L83)
 
 ```python
 def __repr__():
@@ -56,7 +56,7 @@ NOTE: will not mess with development versions 5 or 6
 
 ### Precision().requiredGimpVersion
 
-[[find in source code]](../../gimpformats/GimpPrecision.py#L79)
+[[find in source code]](../../gimpformats/GimpPrecision.py#L75)
 
 ```python
 def requiredGimpVersion():

@@ -100,7 +100,7 @@ class GimpLayer(GimpIOBase):
 		# Layer properties
 		ioBuf.addBytes(self._propertiesEncode())
 		# Pointer to the image heirachy structure
-		dataAreaIndex = ioBuf.index + self.POINTER_SIZE * 2
+		dataAreaIndex = ioBuf.index + self.pointerSize * 2
 		ioBuf.addBytes(self._pointerEncode(dataAreaIndex))
 		dataAreaIO.addBytes(self.imageHierarchy.encode())
 		# ioBuf.addBytes(self._pointerEncode_(dataAreaIndex))
@@ -117,8 +117,8 @@ class GimpLayer(GimpIOBase):
 		"""Get the layer mask."""
 		if self._mask is None and self._maskPtr is not None and self._maskPtr != 0:
 			self._mask = GimpChannel(self)
-			self._mask.decode(self._data, self._maskPtr)
-		return self._mask
+			if self._data:
+				self._mask.decode(self._data, self._maskPtr)
 
 	@property
 	def image(self) -> Image | None:
@@ -156,10 +156,12 @@ class GimpLayer(GimpIOBase):
 
 		NOTE: can return None if it has been fully read into an image
 		"""
-		if self._imageHierarchy is None and self._imageHierarchyPtr > 0:
+		if self._imageHierarchy is None and self._imageHierarchyPtr:
 			self._imageHierarchy = GimpImageHierarchy(self)
+		if self._imageHierarchy and self._data and self._imageHierarchyPtr:
 			self._imageHierarchy.decode(self._data, self._imageHierarchyPtr)
-		return self._imageHierarchy
+			return self._imageHierarchy
+		raise RuntimeError("self._imageHierarchy or self._data or self._imageHierarchyPtr is None")
 
 	@imageHierarchy.setter
 	def imageHierarchy(self, imgHierarchy):
@@ -177,12 +179,12 @@ class GimpLayer(GimpIOBase):
 	def __repr__(self, indent=""):
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Name: " + str(self.name))
-		ret.append("Size: " + str(self.width) + " x " + str(self.height))
+		ret.append(f"Name: {self.name}")
+		ret.append(f"Size: {self.width} x {self.height}")
 		ret.append("colorMode: " + self.COLOR_MODES[self.colorMode])
 		ret.append(GimpIOBase.__repr__(self, indent))
 		mask = self.mask
 		if mask is not None:
 			ret.append("Mask:")
 			ret.append(mask.__repr__(indent + "\t"))
-		return indent + (("\n" + indent).join(ret))
+		return indent + ((f"\n{indent}").join(ret))

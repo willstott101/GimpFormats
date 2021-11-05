@@ -5,6 +5,8 @@ from __future__ import annotations
 
 from io import BytesIO
 
+from . import utils
+
 
 class GradientSegment:
 	"""Single segment within a gradient."""
@@ -38,11 +40,11 @@ class GradientSegment:
 		self.leftColorType = None  # one of self.ENDPOINT_COLOR_TYPES
 		self.rightColorType = None  # one of self.ENDPOINT_COLOR_TYPES
 
-	def getColor(self, percent):
-		"""Given a decimal percent (1.0 = 100%) retrieve the appropriate...
-
-		color for this point in the gradient.
+	def getColor(self, percent: float):
+		"""Given a decimal percent (1.0 = 100%) retrieve the appropriate color
+		for this point in the gradient.
 		"""
+		_ = self, percent
 		raise NotImplementedError()
 
 	def decode(self, dataIn: str):
@@ -56,7 +58,7 @@ class GradientSegment:
 		"""
 		data = dataIn.split(" ")
 		if len(data) < 11 or len(data) > 15:
-			raise Exception("Data table is unexpected size. " + str(len(data)))
+			raise Exception(f"Data table is unexpected size. {len(data)}")
 		self.leftPosition = float(data[0])
 		self.middlePosition = float(data[1])
 		self.rightPosition = float(data[2])
@@ -82,28 +84,32 @@ class GradientSegment:
 		for chan in self.rightColor:
 			ret.append("%06f" % chan)
 		if self.blendFunc is not None:
-			ret.append("%d" % self.blendFunc)
+			ret.append(f"{self.blendFunc}")
 			if self.colorType is not None:
-				ret.append("%d" % self.colorType)
+				ret.append(f"{self.colorType}")
 				if self.leftColorType is not None:
-					ret.append("%d" % self.leftColorType)
+					ret.append(f"{self.leftColorType}")
 					if self.rightColorType is not None:
-						ret.append("%d" % self.rightColorType)
+						ret.append(f"{self.rightColorType}")
 		return " ".join(ret)
 
 	def __repr__(self, indent=""):
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Left Position: " + str(self.leftPosition))
-		ret.append("Middle Position: " + str(self.middlePosition))
-		ret.append("Right Position: " + str(self.rightPosition))
-		ret.append("Left Color: " + str(self.leftColor))
-		ret.append("Right Color: " + str(self.rightColor))
-		ret.append("Blend Function: " + self.BLEND_FUNCTIONS[self.blendFunc])
-		ret.append("Color Type: " + self.COLOR_TYPES[self.colorType])
-		ret.append("Left Color Type: " + self.ENDPOINT_COLOR_TYPES[self.leftColorType])
-		ret.append("Right Color Type: " + self.ENDPOINT_COLOR_TYPES[self.rightColorType])
-		return ("\n" + indent).join(ret)
+		ret.append(f"Left Position: {self.leftPosition}")
+		ret.append(f"Middle Position: {self.middlePosition}")
+		ret.append(f"Right Position: {self.rightPosition}")
+		ret.append(f"Left Color: {self.leftColor}")
+		ret.append(f"Right Color: {self.rightColor}")
+		if self.blendFunc:
+			ret.append(f"Blend Function: {self.BLEND_FUNCTIONS[self.blendFunc]}")
+		if self.colorType:
+			ret.append(f"Color Type: {self.COLOR_TYPES[self.colorType]}")
+		if self.leftColorType:
+			ret.append(f"Left Color Type: {self.ENDPOINT_COLOR_TYPES[self.leftColorType]}")
+		if self.rightColorType:
+			ret.append(f"Right Color Type: {self.ENDPOINT_COLOR_TYPES[self.rightColorType]}")
+		return (f"\n{indent}").join(ret)
 
 
 class GimpGgrGradient:
@@ -130,14 +136,7 @@ class GimpGgrGradient:
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if isinstance(fileName, str):
-			self.fileName = fileName
-			file = open(fileName, "rb")
-		else:
-			self.fileName = fileName.name
-			file = fileName
-		data = file.read()
-		file.close()
+		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
 	def decode(self, dataIn: bytes):
@@ -163,7 +162,7 @@ class GimpGgrGradient:
 	def encode(self):
 		"""Encode this to a byte array."""
 		ret = ["GIMP Gradient"]
-		ret.append("Name: " + self.name)
+		ret.append(f"Name: {self.name}")
 		ret.append(str(len(self.segments)))
 		for segment in self.segments:
 			ret.append(segment.encode())
@@ -171,12 +170,7 @@ class GimpGgrGradient:
 
 	def save(self, tofileName=None):
 		"""Save this gimp image to a file."""
-		if hasattr(tofileName, "write"):
-			file = tofileName
-		else:
-			file = open(tofileName, "wb")
-		file.write(self.encode())
-		file.close()
+		utils.save(self.encode(), tofileName)
 
 	def getColor(self, percent):
 		"""Given a decimal percent (1.0 = 100%) retrieve...
@@ -189,8 +183,8 @@ class GimpGgrGradient:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
-			ret.append("fileName: " + self.fileName)
-		ret.append("Name: " + str(self.name))
+			ret.append(f"fileName: {self.fileName}")
+		ret.append(f"Name: {self.name}")
 		for seg in self.segments:
 			ret.append(seg.__repr__(indent + "\t"))
-		return ("\n" + indent).join(ret)
+		return (f"\n{indent}").join(ret)

@@ -5,6 +5,8 @@ from __future__ import annotations
 
 from io import BytesIO
 
+from . import utils
+
 
 class GimpVbrBrush:
 	"""Pure python implementation of the gimp vbr brush format.
@@ -38,14 +40,7 @@ class GimpVbrBrush:
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if isinstance(fileName, str):
-			self.fileName = fileName
-			file = open(fileName, "rb")
-		else:
-			self.fileName = fileName.name
-			file = fileName
-		data = file.read()
-		file.close()
+		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
 	@property
@@ -79,7 +74,7 @@ class GimpVbrBrush:
 			self.aspectRatio = float(data[8])
 			self.angle = float(data[9])
 		else:
-			raise Exception("Unknown version " + str(self.version))
+			raise Exception(f"Unknown version {self.version}")
 
 	def encode(self):
 		"""Encode to a raw data stream."""
@@ -130,36 +125,30 @@ class GimpVbrBrush:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
-			ret.append("fileName: " + self.fileName)
-		ret.append("Name: " + str(self.name))
-		ret.append("Version: " + str(self.version))
-		ret.append("Spacing: " + str(self.spacing))
-		ret.append("Radius: " + str(self.radius))
-		ret.append("Hardness: " + str(self.hardness))
-		ret.append("Aspect ratio: " + str(self.aspectRatio))
-		ret.append("Angle: " + str(self.angle))
-		ret.append("Brush Shape: " + str(self.brushShape))
-		ret.append("Spikes: " + str(self.spikes))
+			ret.append(f"fileName: {self.fileName}")
+		ret.append(f"Name: {self.name}")
+		ret.append(f"Version: {self.version}")
+		ret.append(f"Spacing: {self.spacing}")
+		ret.append(f"Radius: {self.radius}")
+		ret.append(f"Hardness: {self.hardness}")
+		ret.append(f"Aspect ratio: {self.aspectRatio}")
+		ret.append(f"Angle: {self.angle}")
+		ret.append(f"Brush Shape: {self.brushShape}")
+		ret.append(f"Spikes: {self.spikes}")
 		return "\n".join(ret)
 
 	def __eq__(self, other):
 		"""Perform a comparison."""
-		if other.name != self.name:
-			return False
-		if other.version != self.version:
-			return False
-		if other.spacing != self.spacing:
-			return False
-		if other.radius != self.radius:
-			return False
-		if other.hardness != self.hardness:
-			return False
-		if other.aspectRatio != self.aspectRatio:
-			return False
-		if other.angle != self.angle:
-			return False
-		if other.brushShape != self.brushShape:
-			return False
-		if other.spikes != self.spikes:
-			return False
-		return True
+		return all(
+			(
+				other.name == self.name,
+				other.version == self.version,
+				other.spacing == self.spacing,
+				other.radius == self.radius,
+				other.hardness == self.hardness,
+				other.aspectRatio == self.aspectRatio,
+				other.angle == self.angle,
+				other.brushShape == self.brushShape,
+				other.spikes == self.spikes,
+			)
+		)

@@ -14,6 +14,7 @@ class GimpVector:
 
 	def __init__(self, parent):
 		# GimpIOBase.__init__(self, parent)
+		_ = parent
 		self.name = ""
 		self.uniqueId = 0
 		self.visible = True
@@ -66,10 +67,10 @@ class GimpVector:
 	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Name: " + str(self.name))
-		ret.append("Unique ID (tattoo): " + str(self.uniqueId))
-		ret.append("Visible: " + str(self.visible))
-		ret.append("Linked: " + str(self.linked))
+		ret.append(f"Name: {self.name}")
+		ret.append(f"Unique ID (tattoo): {self.uniqueId}")
+		ret.append(f"Visible: {self.visible}")
+		ret.append(f"Linked: {self.linked}")
 		if self.parasites:
 			ret.append("Parasites: ")
 			for item in self.parasites:
@@ -78,7 +79,7 @@ class GimpVector:
 			ret.append("Strokes: ")
 			for item in self.strokes:
 				ret.append(item.__repr__(indent + "\t"))
-		return indent + (("\n" + indent).join(ret))
+		return indent + ((f"\n{indent}").join(ret))
 
 
 class GimpStroke:
@@ -88,6 +89,7 @@ class GimpStroke:
 
 	def __init__(self, parent):
 		# GimpIOBase.__init__(self, parent)
+		_ = parent
 		self.strokeType = 1  # one of self.STROKE_TYPES
 		self.closedShape = True
 		self.points = []
@@ -127,12 +129,12 @@ class GimpStroke:
 	def __repr__(self, indent: str = ""):
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Stroke Type: " + self.STROKE_TYPES[self.strokeType])
-		ret.append("Closed: " + str(self.closedShape))
+		ret.append(f"Stroke Type: {self.STROKE_TYPES[self.strokeType]}")
+		ret.append(f"Closed: {self.closedShape}")
 		ret.append("Points: ")
 		for point in self.points:
 			ret.append(point.__repr__(indent + "\t"))
-		return indent + (("\n" + indent).join(ret))
+		return indent + ((f"\n{indent}").join(ret))
 
 
 class GimpPoint:
@@ -141,6 +143,7 @@ class GimpPoint:
 	POINT_TYPES = ["Anchor", "Bezier control point"]
 
 	def __init__(self, parent):
+		_ = parent
 		self.x = 0
 		self.y = 0
 		self.pressure = 1.0
@@ -201,8 +204,8 @@ class GimpPoint:
 	def __repr__(self, indent=""):
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Location: (" + str(self.x) + "," + str(self.y) + ")")
-		ret.append("Pressure: " + str(self.pressure))
-		ret.append("Location: (" + str(self.xTilt) + "," + str(self.yTilt) + ")")
-		ret.append("Wheel: " + str(self.wheel))
-		return indent + (("\n" + indent).join(ret))
+		ret.append(f"Location: ({self.x}" + f",{self.y})")
+		ret.append(f"Pressure: {self.pressure}")
+		ret.append(f"Location: ({self.xTilt}" + f",{self.yTilt})")
+		ret.append(f"Wheel: {self.wheel}")
+		return indent + ((f"\n{indent}").join(ret))

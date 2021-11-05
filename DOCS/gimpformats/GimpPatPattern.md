@@ -17,7 +17,7 @@ Pure python implementation of a gimp pattern file.
 
 ## GimpPatPattern
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L12)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L14)
 
 ```python
 class GimpPatPattern():
@@ -31,7 +31,7 @@ See:
 
 ### GimpPatPattern().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L143)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L138)
 
 ```python
 def __repr__():
@@ -41,7 +41,7 @@ Get a textual representation of this object.
 
 ### GimpPatPattern().decode
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L54)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L49)
 
 ```python
 def decode(data: bytes, index: int = 0):
@@ -64,7 +64,7 @@ Decode a byte buffer.
 
 ### GimpPatPattern().encode
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L83)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L78)
 
 ```python
 def encode():
@@ -74,7 +74,7 @@ Encode to a byte buffer.
 
 ### GimpPatPattern().image
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L105)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L100)
 
 ```python
 @property
@@ -85,7 +85,7 @@ Get a final, compiled image.
 
 ### GimpPatPattern().image
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L116)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L111)
 
 ```python
 @image.setter
@@ -94,7 +94,7 @@ def image(image):
 
 ### GimpPatPattern().load
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L39)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L41)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -108,7 +108,7 @@ Load a gimp file.
 
 ### GimpPatPattern().save
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L121)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L116)
 
 ```python
 def save(tofileName=None, toExtension=None):
@@ -118,7 +118,7 @@ Save this gimp image to a file.
 
 ### GimpPatPattern().size
 
-[[find in source code]](../../gimpformats/GimpPatPattern.py#L100)
+[[find in source code]](../../gimpformats/GimpPatPattern.py#L95)
 
 ```python
 @property

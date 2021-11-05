@@ -196,7 +196,7 @@ class GimpIOBase:
 		return self.COMPOSITE_SPACES[abs(self.compositeSpace)]
 
 	@property
-	def POINTER_SIZE(self) -> int:
+	def pointerSize(self) -> int:
 		"""Determine the size of the "pointer" datatype based on the document version.
 
 		NOTE: prior to version 11, it was 32-bit,
@@ -208,14 +208,14 @@ class GimpIOBase:
 		return 32
 
 	def _pointerDecode(self, ioBuf: IO) -> int:
-		if self.POINTER_SIZE == 64:
+		if self.pointerSize == 64:
 			return ioBuf.u64
 		return ioBuf.u32
 
 	def _pointerEncode(self, ptr: int, ioBuf: IO | None = None) -> bytearray:
 		if ioBuf is None:
 			ioBuf = IO()
-		if self.POINTER_SIZE == 64:
+		if self.pointerSize == 64:
 			ioBuf.u64 = ptr
 		else:
 			ioBuf.u32 = ptr
@@ -312,7 +312,7 @@ class GimpIOBase:
 		else:
 			self.groupItemFlags &= ~0x00000001
 
-	def _colormapDecode_(self, data, index=None):
+	def _colormapDecode(self, data, index=None):
 		"""_colormapDecode_.
 
 		:param data: can be bytes or an IO object
@@ -339,13 +339,13 @@ class GimpIOBase:
 		if ioObj is not None:
 			ioObj.index = index
 
-	def _userUnitsDecode_(self, data):
+	def _userUnitsDecode(self, data):
 		"""Decode a set of user-defined measurement units."""
 		userUnits = GimpUserUnits()
 		userUnits.decode(data)
 		self.userUnits = userUnits
 
-	def _samplePointsDecode_(self, data):
+	def _samplePointsDecode(self, data):
 		"""Decode a series of points."""
 		index: int = 0
 		samplePoints = []
@@ -368,7 +368,7 @@ class GimpIOBase:
 		ioBuf = IO(data, boolSize=32)
 		# print('DECODING PROPERTY',propertyType,len(data))
 		if propertyType == self.PROP_COLORMAP:
-			self._colormapDecode_(ioBuf)
+			self._colormapDecode(ioBuf)
 		elif propertyType == self.PROP_ACTIVE_LAYER:
 			self.selected = True
 		elif propertyType == self.PROP_ACTIVE_CHANNEL:
@@ -425,7 +425,7 @@ class GimpIOBase:
 				index += nRead
 			"""
 		elif propertyType == self.PROP_USER_UNIT:
-			self._userUnitsDecode_(data)
+			self._userUnitsDecode(data)
 		elif propertyType == self.PROP_VECTORS:
 			pass
 			# self._vectorsDecode_(data)
@@ -462,9 +462,9 @@ class GimpIOBase:
 			blue = ioBuf.float32
 			self.color = [red, green, blue]
 		elif propertyType == self.PROP_SAMPLE_POINTS:
-			self._samplePointsDecode_(data)
+			self._samplePointsDecode(data)
 		else:
-			raise Exception("Unknown property id " + str(propertyType))
+			raise Exception(f"Unknown property id {propertyType}")
 		return ioBuf.index
 
 	def _propertyEncode(self, propertyType):
@@ -480,7 +480,6 @@ class GimpIOBase:
 		ioBuf = IO(boolSize=32)
 		if propertyType == self.PROP_COLORMAP:
 			if self.colorMap is not None and self.colorMap:
-				pass
 				ioBuf.u32 = self.PROP_COLORMAP
 				# ioBuf.addBytes(self._colormapEncode_())
 		elif propertyType == self.PROP_ACTIVE_LAYER:
@@ -654,7 +653,7 @@ class GimpIOBase:
 				# ioBuf.u32 = self.PROP_SAMPLE_POINTS
 				# self.addBytes(self._samplePointsEncode_())
 		else:
-			raise Exception("Unknown property id " + str(propertyType))
+			raise Exception(f"Unknown property id {propertyType}")
 		return ioBuf.data
 
 	def _propertiesDecode(self, ioBuf: IO):
@@ -710,12 +709,12 @@ class GimpIOBase:
 			ret.append("Blend Mode: " + self.getBlendMode())
 
 		if self.xOffset is not None:
-			ret.append("Offset: " + str(self.xOffset) + " x " + str(self.yOffset))
+			ret.append(f"Offset: {self.xOffset} x " + str(self.yOffset))
 		if self.compression is not None:
 			ret.append("Compression: " + self.getCompression())
 		if self.horizontalResolution is not None:
-			res = str(self.horizontalResolution) + "ppi x " + str(self.verticalResolution) + "ppi"
-			ret.append("Resolution: " + res)
+			res = str(self.horizontalResolution) + f"ppi x {self.verticalResolution}ppi"
+			ret.append(f"Resolution: {res}")
 		if self.units is not None:
 			ret.append("Units: " + self.getUnits())
 		if self.colorTag is not None:
@@ -750,19 +749,16 @@ class GimpIOBase:
 		if self.samplePoints:
 			ret.append("Sample Points: ")
 			for item in self.samplePoints:
-				ret.append("(" + str(item[0]) + "," + str(item[1]) + ")")
+				ret.append(f"({item[0]}," + str(item[1]) + ")")
 		if self.vectors:
 			ret.append("Vectors: ")
 			for item in self.vectors:
 				ret.append(item.__repr__(indent + "\t"))
 		if self.colorMap:
 			ret.append("Color Map: ")
-			for i in range(len(self.colorMap)):
-				color = self.colorMap[i]
-				ret.append(
-					str(i) + ": (" + str(color[0]) + "," + str(color[1]) + "," + str(color[2]) + ")"
-				)
-		return indent + (("\n" + indent).join(ret))
+			for i, color in enumerate(self.colorMap):
+				ret.append(str(i) + f": ({color[0]}," + str(color[1]) + f",{color[2]})")
+		return indent + ((f"\n{indent}").join(ret))
 
 
 class GimpUserUnits:
@@ -812,11 +808,11 @@ class GimpUserUnits:
 	def __repr__(self, indent: str = ""):
 		"""Get a textual representation of this object."""
 		ret = []
-		ret.append("Factor: " + str(self.factor))
-		ret.append("Num Digits: " + str(self.numDigits))
-		ret.append("ID: " + str(self.id))
-		ret.append("Symbol: " + str(self.symbol))
-		ret.append("Abbreviation: " + str(self.abbrev))
-		ret.append("Singular Name: " + str(self.sname))
-		ret.append("Plural Name: " + str(self.pname))
-		return indent + (("\n" + indent).join(ret))
+		ret.append(f"Factor: {self.factor}")
+		ret.append(f"Num Digits: {self.numDigits}")
+		ret.append(f"ID: {self.id}")
+		ret.append(f"Symbol: {self.symbol}")
+		ret.append(f"Abbreviation: {self.abbrev}")
+		ret.append(f"Singular Name: {self.sname}")
+		ret.append(f"Plural Name: {self.pname}")
+		return indent + ((f"\n{indent}").join(ret))

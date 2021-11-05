@@ -3,10 +3,13 @@
 """
 from __future__ import annotations
 
-from io import BytesIO, FileIO
+from io import BytesIO
+from pathlib import Path
 
 import PIL.Image
 from binaryiotools import IO
+
+from . import utils
 
 
 class GimpGbrBrush:
@@ -41,14 +44,7 @@ class GimpGbrBrush:
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if isinstance(fileName, str):
-			self.fileName = fileName
-			file = open(fileName, "rb")
-		else:
-			self.fileName = fileName.name
-			file = fileName
-		data = file.read()
-		file.close()
+		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
 	def decode(self, data: bytes, index: int = 0) -> int:
@@ -69,7 +65,7 @@ class GimpGbrBrush:
 		headerSize = ioBuf.u32
 		self.version = ioBuf.u32
 		if self.version != 2:
-			raise Exception("ERR: unknown brush version " + str(self.version))
+			raise Exception(f"ERR: unknown brush version {self.version}")
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
 		self.bpp = ioBuf.u32  # only allows grayscale or RGB
@@ -115,7 +111,7 @@ class GimpGbrBrush:
 			return None
 		return PIL.Image.frombytes(self.mode, self.size, self.rawImage, decoder_name="raw")
 
-	def save(self, tofileName: str | FileIO, toExtension: str | None = None):
+	def save(self, tofileName: str, toExtension: str | None = None):
 		"""Save this gimp image to a file."""
 		asImage = False
 		if toExtension is None:
@@ -127,26 +123,21 @@ class GimpGbrBrush:
 					toExtension = None
 		if toExtension is not None and toExtension != "gbr":
 			asImage = True
-		if asImage:
+		if asImage and self.image:
 			self.image.save(tofileName)
 			self.image.close()
 		else:
-			if hasattr(tofileName, "write"):
-				file = tofileName
-			else:
-				file = open(tofileName, "wb")
-			file.write(self.encode())
-			file.close()
+			Path(tofileName).write_bytes(self.encode())
 
 	def __repr__(self, indent=""):
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
-			ret.append("fileName: " + self.fileName)
-		ret.append("Name: " + str(self.name))
-		ret.append("Version: " + str(self.version))
-		ret.append("Size: " + str(self.width) + " x " + str(self.height))
-		ret.append("Spacing: " + str(self.spacing))
-		ret.append("BPP: " + str(self.bpp))
-		ret.append("Mode: " + str(self.mode))
-		return ("\n" + indent).join(ret)
+			ret.append(f"fileName: {self.fileName}")
+		ret.append(f"Name: {self.name}")
+		ret.append(f"Version: {self.version}")
+		ret.append(f"Size: {self.width} x {self.height}")
+		ret.append(f"Spacing: {self.spacing}")
+		ret.append(f"BPP: {self.bpp}")
+		ret.append(f"Mode: {self.mode}")
+		return (f"\n{indent}").join(ret)

@@ -7,6 +7,7 @@ from io import BytesIO
 
 from binaryiotools import IO
 
+from . import utils
 from .GimpGbrBrush import GimpGbrBrush
 from .GimpPatPattern import GimpPatPattern
 
@@ -36,14 +37,7 @@ class GimpGpbBrush:
 
 		:param fileName: can be a file name or a file-like object
 		"""
-		if isinstance(fileName, str):
-			self.fileName = fileName
-			file = open(fileName, "rb")
-		else:
-			self.fileName = fileName.name
-			file = fileName
-		data = file.read()
-		file.close()
+		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
 	def decode(self, data: bytes, index: int = 0):
@@ -69,18 +63,13 @@ class GimpGpbBrush:
 
 	def save(self, tofileName=None):
 		"""Save this gimp image to a file."""
-		if hasattr(tofileName, "write"):
-			file = tofileName
-		else:
-			file = open(tofileName, "wb")
-		file.write(self.encode())
-		file.close()
+		utils.save(tofileName, self.encode())
 
 	def __repr__(self, indent=""):
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
-			ret.append("fileName: " + self.fileName)
+			ret.append(f"fileName: {self.fileName}")
 		ret.append(self.brush.__repr__(indent + "\t"))
-		ret.append(self.pattern.__repr__(indent + "\t"))
-		return ("\n" + indent).join(ret)
+		ret.append(self.pattern.__repr__())
+		return (f"\n{indent}").join(ret)
