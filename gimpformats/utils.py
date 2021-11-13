@@ -1,11 +1,8 @@
-
-
 from io import BytesIO
 
 
 def fileOpen(fileName: BytesIO | str) -> tuple[str, bytes]:
 	if isinstance(fileName, str):
-		fileName = fileName
 		file = open(fileName, "rb")
 	else:
 		fileName = fileName.name
@@ -15,11 +12,11 @@ def fileOpen(fileName: BytesIO | str) -> tuple[str, bytes]:
 	return fileName, data
 
 
-def save(data:bytes, tofileName: BytesIO|str=None):
+def save(data: bytes, tofileName: BytesIO | str):
 	"""Save this gimp image to a file."""
-	if hasattr(tofileName, "write"):
-		file = tofileName
-	else:
+	if isinstance(tofileName, str):
 		file = open(tofileName, "wb")
+	else:
+		file = tofileName
 	file.write(data)
 	file.close()
