@@ -1,5 +1,7 @@
 """https://github.com/FHPythonUtils/GimpFormats/issues/4."""
 
+from __future__ import annotations
+
 from gimpformats.gimpXcfDocument import GimpDocument
 
 

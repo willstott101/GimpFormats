@@ -1,6 +1,8 @@
 """List data on groups followed by the direct children of a gimp xcf document.
 """
 
+from __future__ import annotations
+
 from PIL import Image
 
 from gimpformats.gimpXcfDocument import GimpDocument

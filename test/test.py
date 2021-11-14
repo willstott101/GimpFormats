@@ -7,6 +7,8 @@ See:
 Run test.py from the 'test' directory. In windows::
 /GimpFormats/test> py ./test.py
 """
+from __future__ import annotations
+
 import os
 import sys
 import unittest

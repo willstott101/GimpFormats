@@ -6,6 +6,8 @@ You might be looking to run test.py from the 'test' directory. In windows::
 
 Alternatively, you can do py test.py or if you have pytest, pytest test.py
 """
+from __future__ import annotations
+
 import os
 import sys
 import unittest
