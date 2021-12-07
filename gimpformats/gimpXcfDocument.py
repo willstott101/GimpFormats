@@ -367,13 +367,21 @@ class GimpDocument(GimpIOBase):
 
 	def save(self, filename: str | BytesIO = None):
 		"""Save this gimp image to a file."""
+
+		# Save not yet implemented so for now throw
+		# an except so we don't corrupt the fole
 		raise NotImplementedError
+
 		self.forceFullyLoaded()
 		utils.save(self.encode(), filename or self.fileName)
 
 	def saveNew(self, filename=None):
 		"""Save a new gimp image to a file."""
+
+		# Save not yet implemented so for now throw
+		# an except so we don't corrupt the fole
 		raise NotImplementedError
+
 		utils.save(self.encode(), filename or self.fileName)
 
 	def __repr__(self, indent="") -> str:
