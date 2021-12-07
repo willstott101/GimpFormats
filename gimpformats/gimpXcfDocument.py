@@ -346,24 +346,47 @@ class GimpDocument(GimpIOBase):
 		# Example Layers [layer, layer, group, layer]
 		# Example Group [Layer(Group), [layer, layer, ...]]
 		layers = self.layers[:]  # Copy the attribute rather than write to it
-		layersOut = []
+		# layersOut = []
 		index = 0
-		while index < len(layers):
-			layerOrGroup = layers[index]
+
+		# while index < len(layers):
+		# 	layerOrGroup = layers[index]
+		# 	log.debug(f'index: {index}')
+		# 	log.debug(f'layerOrGroup: {layerOrGroup}')
+		# 	log.debug(f' >> isGroup? {layerOrGroup.isGroup}')
+
+		# 	if layerOrGroup.isGroup:
+		# 		elem = [layerOrGroup, []]
+		# 		index += 1
+		# 		while layers[index].itemPath is not None:
+		# 			layerCopy = copy.deepcopy(layers[index])
+		# 			layerCopy.xOffset -= layerOrGroup.xOffset
+		# 			layerCopy.yOffset -= layerOrGroup.yOffset
+		# 			elem[1].append(layerCopy)
+		# 			layers.pop(index)
+		# 		layersOut.append(elem)
+		# 	else:
+		# 		layersOut.append(layerOrGroup)
+		# 		index += 1
+
+		layersOut = [None, []]
+		for idx, layerOrGroup in enumerate(layers):
+			parent = layersOut
+
+			if layerOrGroup.itemPath is not None:
+				layerOrGroup.itemPath.pop()
+
+				parent_layer = layersOut
+				for level_idx in layerOrGroup.itemPath:
+					parent = parent[1][level_idx]
+
 			if layerOrGroup.isGroup:
-				elem = [layerOrGroup, []]
-				index += 1
-				while layers[index].itemPath is not None:
-					layerCopy = copy.deepcopy(layers[index])
-					layerCopy.xOffset -= layerOrGroup.xOffset
-					layerCopy.yOffset -= layerOrGroup.yOffset
-					elem[1].append(layerCopy)
-					layers.pop(index)
-				layersOut.append(elem)
+				parent[1].append([layerOrGroup, []])
 			else:
-				layersOut.append(layerOrGroup)
-				index += 1
-		return flattenAll(layersOut, (self.width, self.height))
+				parent[1].append(layerOrGroup)
+
+		# return flattenAll(layersOut, (self.width, self.height))
+		return flattenAll(layersOut[1], (self.width, self.height))
 
 	def save(self, filename: str | BytesIO = None):
 		"""Save this gimp image to a file."""
