@@ -33,11 +33,13 @@ class Test(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	def testImage(self):
-		"""test an image."""
+	def testGroupMasks(self):
+		"""Test layer groups with masks."""
 		self.dut.load(__HERE__ + "group-mask-test.xcf")
+		result = self.dut.image
+		result.save(__HERE__ + "group-mask-test.png")
 		assert imgcompare.is_equal(
-			self.dut.image,
+			result,
 			__HERE__ + "group-mask-test.tga",
 			tolerance=1,
 		)
@@ -48,7 +50,7 @@ def testSuite():
 	Combine unit tests into an entire suite
 	"""
 	varTestSuite = unittest.TestSuite()
-	varTestSuite.addTest(Test("testImage"))
+	varTestSuite.addTest(Test("testGroupMasks"))
 	return varTestSuite
 
 

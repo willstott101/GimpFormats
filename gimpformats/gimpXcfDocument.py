@@ -28,6 +28,23 @@ from .GimpLayer import GimpLayer
 from .GimpPrecision import Precision
 
 
+from time import time
+import logging
+logging.basicConfig()
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+
+
+dbgimg_cnt = 0
+def dbgimg(image, note):
+	global dbgimg_cnt
+	dbgimg_cnt += 1
+	filename = f'/tmp/gimp_{dbgimg_cnt}_{note}.png'
+	log.debug(f'Saving: {filename}')
+	image.save(filename)
+
+
+
 class GimpDocument(GimpIOBase):
 	"""Pure python implementation of the gimp file format.
 
@@ -346,46 +363,29 @@ class GimpDocument(GimpIOBase):
 		# Example Layers [layer, layer, group, layer]
 		# Example Group [Layer(Group), [layer, layer, ...]]
 		layers = self.layers[:]  # Copy the attribute rather than write to it
-		# layersOut = []
-		index = 0
-
-		# while index < len(layers):
-		# 	layerOrGroup = layers[index]
-		# 	log.debug(f'index: {index}')
-		# 	log.debug(f'layerOrGroup: {layerOrGroup}')
-		# 	log.debug(f' >> isGroup? {layerOrGroup.isGroup}')
-
-		# 	if layerOrGroup.isGroup:
-		# 		elem = [layerOrGroup, []]
-		# 		index += 1
-		# 		while layers[index].itemPath is not None:
-		# 			layerCopy = copy.deepcopy(layers[index])
-		# 			layerCopy.xOffset -= layerOrGroup.xOffset
-		# 			layerCopy.yOffset -= layerOrGroup.yOffset
-		# 			elem[1].append(layerCopy)
-		# 			layers.pop(index)
-		# 		layersOut.append(elem)
-		# 	else:
-		# 		layersOut.append(layerOrGroup)
-		# 		index += 1
 
 		layersOut = [None, []]
 		for idx, layerOrGroup in enumerate(layers):
 			parent = layersOut
 
 			if layerOrGroup.itemPath is not None:
-				layerOrGroup.itemPath.pop()
-
-				parent_layer = layersOut
-				for level_idx in layerOrGroup.itemPath:
+				for level_idx in layerOrGroup.itemPath[:-1]:
 					parent = parent[1][level_idx]
 
-			if layerOrGroup.isGroup:
-				parent[1].append([layerOrGroup, []])
-			else:
-				parent[1].append(layerOrGroup)
+			layerCopy = copy.deepcopy(layerOrGroup)
 
-		# return flattenAll(layersOut, (self.width, self.height))
+			if layerOrGroup.isGroup:
+				log.debug(f'Appending {layerCopy.name} {(layerCopy.xOffset, layerCopy.yOffset)}')
+				parent[1].append([layerCopy, []])
+			else:
+				if parent[0] is not None:
+					log.debug(f"Parent offset: {parent[0].xOffset}, {parent[0].yOffset}")
+					# layerCopy.xOffset -= parent[0].xOffset
+					# layerCopy.yOffset -= parent[0].yOffset
+
+				log.debug(f'Appending {layerCopy.name} {(layerCopy.xOffset, layerCopy.yOffset)}')
+				parent[1].append(layerCopy)
+
 		return flattenAll(layersOut[1], (self.width, self.height))
 
 	def save(self, filename: str | BytesIO = None):
@@ -507,8 +507,12 @@ def flattenLayerOrGroup(
 		49: BlendType.PINLIGHT,
 		52: BlendType.EXCLUSION,
 	}
+	if flattenedSoFar is not None:
+		dbgimg(flattenedSoFar, 'flattenedSoFar')
 	# Group
 	if isinstance(layerOrGroup, list):
+		log.debug(f'flattenLayerOrGroup > layerOrGroup > {layerOrGroup[0].name}')
+
 		if ignoreHidden and not layerOrGroup[0].visible:
 			foregroundComposite = Image.new("RGBA", imageDimensions)
 		else:  # A group is a list of layers
@@ -516,8 +520,9 @@ def flattenLayerOrGroup(
 			foregroundComposite = renderWOffset(
 				flattenAll(layerOrGroup[1], imageDimensions, ignoreHidden),
 				imageDimensions,
-				(layerOrGroup[0].xOffset, layerOrGroup[0].yOffset),
+				# (layerOrGroup[0].xOffset, layerOrGroup[0].yOffset),
 			)
+			dbgimg(foregroundComposite, 'foregroundComposite1')
 			if layerOrGroup[0].mask is not None:
 				newFGComp = Image.new("RGBA", imageDimensions)
 				newFGComp.paste(
@@ -530,8 +535,11 @@ def flattenLayerOrGroup(
 					),
 				)
 				foregroundComposite = newFGComp.convert("RGBA")
+			dbgimg(foregroundComposite, 'newFGComp')
+
 		if flattenedSoFar is None:
 			return foregroundComposite
+
 		return blendLayers(
 			flattenedSoFar,
 			foregroundComposite,
@@ -539,6 +547,7 @@ def flattenLayerOrGroup(
 			layerOrGroup[0].opacity,
 		)
 
+	log.debug(f'(layerOrGroup.xOffset, layerOrGroup.yOffset) = {layerOrGroup.name} {(layerOrGroup.xOffset, layerOrGroup.yOffset)}')
 	# Layer
 	if ignoreHidden and not layerOrGroup.visible:
 		foregroundComposite = Image.new("RGBA", imageDimensions)
@@ -547,6 +556,9 @@ def flattenLayerOrGroup(
 		foregroundComposite = renderWOffset(
 			layerOrGroup.image, imageDimensions, (layerOrGroup.xOffset, layerOrGroup.yOffset)
 		)
+
+		dbgimg(foregroundComposite, 'foregroundComposite2')
+
 		if layerOrGroup.mask is not None:
 			newFGComp = Image.new("RGBA", imageDimensions)
 			newFGComp.paste(
@@ -559,6 +571,8 @@ def flattenLayerOrGroup(
 				),
 			)
 			foregroundComposite = newFGComp.convert("RGBA")
+			dbgimg(foregroundComposite, 'foregroundComposite3')
+
 	if flattenedSoFar is None:
 		return foregroundComposite
 
@@ -586,12 +600,14 @@ def flattenAll(
 	Returns:
 		PIL.Image: Flattened image
 	"""
+	log.debug('flattenAll()')
 	end = len(layers) - 1
 	flattenedSoFar = flattenLayerOrGroup(layers[end], imageDimensions, ignoreHidden=ignoreHidden)
 	for layer in range(end - 1, -1, -1):
 		flattenedSoFar = flattenLayerOrGroup(
 			layers[layer], imageDimensions, flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden
 		)
+	dbgimg(flattenedSoFar, 'flattenAll')
 	return flattenedSoFar
 
 
@@ -610,8 +626,12 @@ def renderWOffset(
 	Returns:
 		Image.Image: new image
 	"""
+	log.info('renderWOffset()')
+	log.debug(f'size: {size}')
+	log.debug(f'offsets: {offsets}')
 	imageOffset = Image.new("RGBA", size)
 	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
+	dbgimg(image, 'renderWOffset')
 	return imageOffset
 
 
@@ -630,7 +650,15 @@ def renderMaskWOffset(
 	Returns:
 		Image.Image: new image
 	"""
+	log.info('renderMaskWOffset()')
+	log.debug(f'size: {size}')
+	log.debug(f'offsets: {offsets}')
 	mode = image.mode
 	imageOffset = Image.new("RGBA", size)
-	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
+	imageOffset.paste(
+		image.convert("RGBA"),
+		offsets,
+		image.convert("RGBA"),
+	)
+	dbgimg(imageOffset, 'renderMaskWOffset')
 	return imageOffset.convert(mode)
