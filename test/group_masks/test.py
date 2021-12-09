@@ -33,14 +33,33 @@ class Test(unittest.TestCase):
 	def tearDown(self):
 		pass
 
-	def testGroupMasks(self):
-		"""Test layer groups with masks."""
-		self.dut.load(__HERE__ + "group-mask-test.xcf")
+	def testSingleMaskedGroup(self):
+		"""Test a single group with layer mask."""
+		self.dut.load(__HERE__ + "single-masked-group.xcf")
 		result = self.dut.image
-		result.save(__HERE__ + "group-mask-test.png")
 		assert imgcompare.is_equal(
 			result,
-			__HERE__ + "group-mask-test.tga",
+			__HERE__ + "single-masked-group.tga",
+			tolerance=1,
+		)
+
+	def testMultipleMaskedGroups(self):
+		"""Test multiple layer groups with masks."""
+		self.dut.load(__HERE__ + "multiple-masked-groups.xcf")
+		result = self.dut.image
+		assert imgcompare.is_equal(
+			result,
+			__HERE__ + "multiple-masked-groups.tga",
+			tolerance=1,
+		)
+
+	def testMultipleOffsetMaskedGroups(self):
+		"""Test multiple offset layer groups with masks."""
+		self.dut.load(__HERE__ + "multiple-offset-masked-groups.xcf")
+		result = self.dut.image
+		assert imgcompare.is_equal(
+			result,
+			__HERE__ + "multiple-offset-masked-groups.tga",
 			tolerance=1,
 		)
 
@@ -50,7 +69,9 @@ def testSuite():
 	Combine unit tests into an entire suite
 	"""
 	varTestSuite = unittest.TestSuite()
-	varTestSuite.addTest(Test("testGroupMasks"))
+	varTestSuite.addTest(Test("testSingleMaskedGroup"))
+	varTestSuite.addTest(Test("testMultipleMaskedGroups"))
+	varTestSuite.addTest(Test("testMultipleOffsetMaskedGroups"))
 	return varTestSuite
 
 
