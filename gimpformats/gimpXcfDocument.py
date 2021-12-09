@@ -28,22 +28,6 @@ from .GimpLayer import GimpLayer
 from .GimpPrecision import Precision
 
 
-from time import time
-import logging
-logging.basicConfig()
-log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
-
-
-dbgimg_cnt = 0
-def dbgimg(image, note):
-	global dbgimg_cnt
-	dbgimg_cnt += 1
-	filename = f'/tmp/gimp_{dbgimg_cnt}_{note}.png'
-	log.debug(f'Saving: {filename}')
-	image.save(filename)
-
-
 
 class GimpDocument(GimpIOBase):
 	"""Pure python implementation of the gimp file format.
@@ -375,15 +359,8 @@ class GimpDocument(GimpIOBase):
 			layerCopy = copy.deepcopy(layerOrGroup)
 
 			if layerOrGroup.isGroup:
-				log.debug(f'Appending {layerCopy.name} {(layerCopy.xOffset, layerCopy.yOffset)}')
 				parent[1].append([layerCopy, []])
 			else:
-				if parent[0] is not None:
-					log.debug(f"Parent offset: {parent[0].xOffset}, {parent[0].yOffset}")
-					# layerCopy.xOffset -= parent[0].xOffset
-					# layerCopy.yOffset -= parent[0].yOffset
-
-				log.debug(f'Appending {layerCopy.name} {(layerCopy.xOffset, layerCopy.yOffset)}')
 				parent[1].append(layerCopy)
 
 		return flattenAll(layersOut[1], (self.width, self.height))
@@ -507,12 +484,8 @@ def flattenLayerOrGroup(
 		49: BlendType.PINLIGHT,
 		52: BlendType.EXCLUSION,
 	}
-	if flattenedSoFar is not None:
-		dbgimg(flattenedSoFar, 'flattenedSoFar')
 	# Group
 	if isinstance(layerOrGroup, list):
-		log.debug(f'flattenLayerOrGroup > layerOrGroup > {layerOrGroup[0].name}')
-
 		if ignoreHidden and not layerOrGroup[0].visible:
 			foregroundComposite = Image.new("RGBA", imageDimensions)
 		else:  # A group is a list of layers
@@ -520,9 +493,8 @@ def flattenLayerOrGroup(
 			foregroundComposite = renderWOffset(
 				flattenAll(layerOrGroup[1], imageDimensions, ignoreHidden),
 				imageDimensions,
-				# (layerOrGroup[0].xOffset, layerOrGroup[0].yOffset),
 			)
-			dbgimg(foregroundComposite, 'foregroundComposite1')
+
 			if layerOrGroup[0].mask is not None:
 				newFGComp = Image.new("RGBA", imageDimensions)
 				newFGComp.paste(
@@ -535,7 +507,6 @@ def flattenLayerOrGroup(
 					),
 				)
 				foregroundComposite = newFGComp.convert("RGBA")
-			dbgimg(foregroundComposite, 'newFGComp')
 
 		if flattenedSoFar is None:
 			return foregroundComposite
@@ -547,7 +518,6 @@ def flattenLayerOrGroup(
 			layerOrGroup[0].opacity,
 		)
 
-	log.debug(f'(layerOrGroup.xOffset, layerOrGroup.yOffset) = {layerOrGroup.name} {(layerOrGroup.xOffset, layerOrGroup.yOffset)}')
 	# Layer
 	if ignoreHidden and not layerOrGroup.visible:
 		foregroundComposite = Image.new("RGBA", imageDimensions)
@@ -556,8 +526,6 @@ def flattenLayerOrGroup(
 		foregroundComposite = renderWOffset(
 			layerOrGroup.image, imageDimensions, (layerOrGroup.xOffset, layerOrGroup.yOffset)
 		)
-
-		dbgimg(foregroundComposite, 'foregroundComposite2')
 
 		if layerOrGroup.mask is not None:
 			newFGComp = Image.new("RGBA", imageDimensions)
@@ -571,7 +539,6 @@ def flattenLayerOrGroup(
 				),
 			)
 			foregroundComposite = newFGComp.convert("RGBA")
-			dbgimg(foregroundComposite, 'foregroundComposite3')
 
 	if flattenedSoFar is None:
 		return foregroundComposite
@@ -600,14 +567,12 @@ def flattenAll(
 	Returns:
 		PIL.Image: Flattened image
 	"""
-	log.debug('flattenAll()')
 	end = len(layers) - 1
 	flattenedSoFar = flattenLayerOrGroup(layers[end], imageDimensions, ignoreHidden=ignoreHidden)
 	for layer in range(end - 1, -1, -1):
 		flattenedSoFar = flattenLayerOrGroup(
 			layers[layer], imageDimensions, flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden
 		)
-	dbgimg(flattenedSoFar, 'flattenAll')
 	return flattenedSoFar
 
 
@@ -626,12 +591,8 @@ def renderWOffset(
 	Returns:
 		Image.Image: new image
 	"""
-	log.info('renderWOffset()')
-	log.debug(f'size: {size}')
-	log.debug(f'offsets: {offsets}')
 	imageOffset = Image.new("RGBA", size)
 	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
-	dbgimg(image, 'renderWOffset')
 	return imageOffset
 
 
@@ -650,9 +611,6 @@ def renderMaskWOffset(
 	Returns:
 		Image.Image: new image
 	"""
-	log.info('renderMaskWOffset()')
-	log.debug(f'size: {size}')
-	log.debug(f'offsets: {offsets}')
 	mode = image.mode
 	imageOffset = Image.new("RGBA", size)
 	imageOffset.paste(
@@ -660,5 +618,4 @@ def renderMaskWOffset(
 		offsets,
 		image.convert("RGBA"),
 	)
-	dbgimg(imageOffset, 'renderMaskWOffset')
 	return imageOffset.convert(mode)
