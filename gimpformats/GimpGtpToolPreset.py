@@ -47,7 +47,7 @@ class ParenFileValue:
 			elif bufArray[0] == '"':
 				self.value.append(bufArray[1:-1])
 			else:
-				raise Exception('What kind of value is "' + bufArray + '"?')
+				raise RuntimeError('What kind of value is "' + bufArray + '"?')
 
 	def __repr__(self):
 		"""Get a textual representation of this object."""
@@ -136,6 +136,7 @@ class GimpGtpToolPreset:
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
+		:param index: ignored
 		"""
 		self.values = parenFileDecode(data)
 		return index

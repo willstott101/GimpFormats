@@ -435,7 +435,7 @@ class GimpIOBase:
 			else:
 				self.textLayerFlags = int(data)
 		elif propertyType == self.PROP_OLD_SAMPLE_POINTS:
-			raise Exception("ERR: old sample points structure not supported")
+			raise RuntimeError("ERR: old sample points structure not supported")
 		elif propertyType == self.PROP_LOCK_CONTENT:
 			self.locked = ioBuf.boolean
 		elif propertyType == self.PROP_GROUP_ITEM:
@@ -464,7 +464,7 @@ class GimpIOBase:
 		elif propertyType == self.PROP_SAMPLE_POINTS:
 			self._samplePointsDecode(data)
 		else:
-			raise Exception(f"Unknown property id {propertyType}")
+			raise RuntimeError(f"Unknown property id {propertyType}")
 		return ioBuf.index
 
 	def _propertyEncode(self, propertyType):
@@ -653,7 +653,7 @@ class GimpIOBase:
 				# ioBuf.u32 = self.PROP_SAMPLE_POINTS
 				# self.addBytes(self._samplePointsEncode_())
 		else:
-			raise Exception(f"Unknown property id {propertyType}")
+			raise RuntimeError(f"Unknown property id {propertyType}")
 		return ioBuf.data
 
 	def _propertiesDecode(self, ioBuf: IO):

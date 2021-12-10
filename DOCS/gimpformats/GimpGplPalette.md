@@ -60,7 +60,7 @@ Decode a byte buffer.
 
 #### Raises
 
-- `Exception` - File format error.  Magic value mismatch.
+- `RuntimeError` - File format error.  Magic value mismatch.
 
 ### GimpGplPalette().encode
 

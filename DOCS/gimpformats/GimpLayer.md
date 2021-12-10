@@ -29,7 +29,7 @@ Represents a single layer in a gimp image.
 
 ### GimpLayer().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L179)
+[[find in source code]](../../gimpformats/GimpLayer.py#L180)
 
 ```python
 def __repr__(indent=''):
@@ -82,7 +82,7 @@ Return the data
 
 ### GimpLayer().forceFullyLoaded
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L171)
+[[find in source code]](../../gimpformats/GimpLayer.py#L172)
 
 ```python
 def forceFullyLoaded():
@@ -92,7 +92,7 @@ Make sure everything is fully loaded from the file.
 
 ### GimpLayer().image
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L123)
+[[find in source code]](../../gimpformats/GimpLayer.py#L124)
 
 ```python
 @property
@@ -105,7 +105,7 @@ NOTE: can return None!
 
 ### GimpLayer().image
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L133)
+[[find in source code]](../../gimpformats/GimpLayer.py#L134)
 
 ```python
 @image.setter
@@ -118,7 +118,7 @@ NOTE: resets layer width, height, and colorMode
 
 ### GimpLayer().imageHierarchy
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L150)
+[[find in source code]](../../gimpformats/GimpLayer.py#L151)
 
 ```python
 @property
@@ -134,7 +134,7 @@ NOTE: can return None if it has been fully read into an image
 
 ### GimpLayer().imageHierarchy
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L166)
+[[find in source code]](../../gimpformats/GimpLayer.py#L167)
 
 ```python
 @imageHierarchy.setter

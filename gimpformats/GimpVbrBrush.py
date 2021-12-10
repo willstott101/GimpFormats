@@ -55,7 +55,7 @@ class GimpVbrBrush:
 		"""
 		data = [s.strip() for s in dataIn.decode("utf-8").split("\n")]
 		if data[0] != "GIMP-VBR":
-			raise Exception("File format error.  Magic value mismatch.")
+			raise RuntimeError("File format error.  Magic value mismatch.")
 		self.version = float(data[1])
 		if self.version == 1.0:
 			self.name = data[2]  # max len 255 bytes
@@ -74,7 +74,7 @@ class GimpVbrBrush:
 			self.aspectRatio = float(data[8])
 			self.angle = float(data[9])
 		else:
-			raise Exception(f"Unknown version {self.version}")
+			raise RuntimeError(f"Unknown version {self.version}")
 
 	def encode(self):
 		"""Encode to a raw data stream."""

@@ -30,7 +30,7 @@ Pure python implementation of the gimp gtp tool preset format.
 
 ### GimpGtpToolPreset().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L163)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L164)
 
 ```python
 def __repr__(indent=''):
@@ -51,10 +51,11 @@ Decode a byte buffer.
 #### Arguments
 
 - `data` - data buffer to decode
+- `index` - ignored
 
 ### GimpGtpToolPreset().encode
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L143)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L144)
 
 ```python
 def encode():
@@ -78,7 +79,7 @@ Load a gimp file.
 
 ### GimpGtpToolPreset().save
 
-[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L147)
+[[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L148)
 
 ```python
 def save(tofileName=None, toExtension=None):

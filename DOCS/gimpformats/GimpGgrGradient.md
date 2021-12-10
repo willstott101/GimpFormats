@@ -58,7 +58,7 @@ Decode a byte buffer.
 
 #### Raises
 
-- `Exception` - File format error.  Magic value mismatch.
+- `RuntimeError` - File format error.  Magic value mismatch.
 
 ### GimpGgrGradient().encode
 
@@ -143,7 +143,7 @@ Decode a byte buffer.
 
 #### Raises
 
-- `Exception` - [description]
+- `RuntimeError` - [description]
 
 ### GradientSegment().encode
 

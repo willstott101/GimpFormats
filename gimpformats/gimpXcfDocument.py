@@ -28,7 +28,6 @@ from .GimpLayer import GimpLayer
 from .GimpPrecision import Precision
 
 
-
 class GimpDocument(GimpIOBase):
 	"""Pure python implementation of the gimp file format.
 
@@ -108,7 +107,7 @@ class GimpDocument(GimpIOBase):
 			index (int, optional): index within the buffer to start at]. Defaults to 0.
 
 		Raises:
-			Exception: "Not a valid GIMP file"
+			RuntimeError: "Not a valid GIMP file"
 
 		Returns:
 			int: offset
@@ -117,7 +116,7 @@ class GimpDocument(GimpIOBase):
 		ioBuf = IO(data, index)
 		# Check that the file is a valid gimp xcf
 		if ioBuf.getBytes(9) != b"gimp xcf ":
-			raise Exception("Not a valid GIMP file")
+			raise RuntimeError("Not a valid GIMP file")
 		# Grab the file version
 		version = ioBuf.cString
 		if version == "file":
@@ -277,7 +276,7 @@ class GimpDocument(GimpIOBase):
 		image = PIL.ImageGrab.grabclipboard()
 		if isinstance(image, Image.Image):
 			return self.newLayer(name, image, index)
-		return
+		return None
 
 	def addLayer(self, layer: GimpLayer):
 		"""Append a layer object to the document.
@@ -373,8 +372,8 @@ class GimpDocument(GimpIOBase):
 		# an except so we don't corrupt the fole
 		raise NotImplementedError
 
-		self.forceFullyLoaded()
-		utils.save(self.encode(), filename or self.fileName)
+		# self.forceFullyLoaded()
+		# utils.save(self.encode(), filename or self.fileName)
 
 	def saveNew(self, filename=None):
 		"""Save a new gimp image to a file."""
@@ -383,7 +382,7 @@ class GimpDocument(GimpIOBase):
 		# an except so we don't corrupt the fole
 		raise NotImplementedError
 
-		utils.save(self.encode(), filename or self.fileName)
+		# utils.save(self.encode(), filename or self.fileName)
 
 	def __repr__(self, indent="") -> str:
 		"""Get a textual representation of this object."""

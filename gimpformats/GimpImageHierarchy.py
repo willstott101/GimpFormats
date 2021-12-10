@@ -40,7 +40,7 @@ class GimpImageHierarchy(GimpIOBase):
 		:param index: index within the buffer to start at
 		"""
 		if not data:
-			raise Exception("No data!")
+			raise RuntimeError("No data!")
 		ioBuf = IO(data, index)
 		# print 'Decoding channel at',index
 		self.width = ioBuf.u32
@@ -53,7 +53,7 @@ class GimpImageHierarchy(GimpIOBase):
 				+ """).
 				Probably means file corruption."""
 			)
-			raise Exception(msg)
+			raise RuntimeError(msg)
 		while True:
 			ptr = self._pointerDecode(ioBuf)
 			if ptr == 0:

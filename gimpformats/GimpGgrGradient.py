@@ -54,11 +54,11 @@ class GradientSegment:
 			dataIn (str): data buffer to decode
 
 		Raises:
-			Exception: [description]
+			RuntimeError: [description]
 		"""
 		data = dataIn.split(" ")
 		if len(data) < 11 or len(data) > 15:
-			raise Exception(f"Data table is unexpected size. {len(data)}")
+			raise RuntimeError(f"Data table is unexpected size. {len(data)}")
 		self.leftPosition = float(data[0])
 		self.middlePosition = float(data[1])
 		self.rightPosition = float(data[2])
@@ -76,13 +76,13 @@ class GradientSegment:
 	def encode(self):
 		"""Encode this to a byte array."""
 		ret = []
-		ret.append("%06f" % self.leftPosition)
-		ret.append("%06f" % self.middlePosition)
-		ret.append("%06f" % self.rightPosition)
+		ret.append(f"{self.leftPosition:06f}")
+		ret.append(f"{self.middlePosition:06f}")
+		ret.append(f"{self.rightPosition:06f}")
 		for chan in self.leftColor:
-			ret.append("%06f" % chan)
+			ret.append(f"{chan:06f}")
 		for chan in self.rightColor:
-			ret.append("%06f" % chan)
+			ret.append(f"{chan:06f}")
 		if self.blendFunc is not None:
 			ret.append(f"{self.blendFunc}")
 			if self.colorType is not None:
@@ -146,12 +146,12 @@ class GimpGgrGradient:
 			dataIn (bytes): data buffer to decode
 
 		Raises:
-			Exception: File format error.  Magic value mismatch.
+			RuntimeError: File format error.  Magic value mismatch.
 		"""
 		data = dataIn.decode("utf-8").split("\n")
 		data = [l.strip() for l in data]
 		if data[0] != "GIMP Gradient":
-			raise Exception("File format error.  Magic value mismatch.")
+			raise RuntimeError("File format error.  Magic value mismatch.")
 		self.name = data[1].split(":", 1)[-1].strip()
 		numSegments = int(data[2])
 		for i in range(numSegments):

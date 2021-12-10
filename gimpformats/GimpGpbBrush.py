@@ -63,7 +63,7 @@ class GimpGpbBrush:
 
 	def save(self, tofileName=None):
 		"""Save this gimp image to a file."""
-		utils.save(tofileName, self.encode())
+		utils.save(self.encode(), tofileName)
 
 	def __repr__(self, indent=""):
 		"""Get a textual representation of this object."""

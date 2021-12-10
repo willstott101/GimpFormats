@@ -39,11 +39,11 @@ class GimpGplPalette:
 			data (str): data buffer to decode
 
 		Raises:
-			Exception: File format error.  Magic value mismatch.
+			RuntimeError: File format error.  Magic value mismatch.
 		"""
 		lines = [s.strip() for s in data.split("\n")]
 		if lines[0] != "GIMP Palette":
-			raise Exception("File format error.  Magic value mismatch.")
+			raise RuntimeError("File format error.  Magic value mismatch.")
 		self.name = lines[1].split(":", 1)[-1].lstrip()
 		self.columns = int(lines[2].split(":", 1)[-1].lstrip())
 		for line in lines[3:]:

@@ -55,8 +55,8 @@ class GimpGbrBrush:
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Raises:
-			Exception: "unknown brush version"
-			Exception: "File format error.  Magic value mismatch"
+			RuntimeError: "unknown brush version"
+			RuntimeError: "File format error.  Magic value mismatch"
 
 		Returns:
 			int: offset]
@@ -65,14 +65,14 @@ class GimpGbrBrush:
 		headerSize = ioBuf.u32
 		self.version = ioBuf.u32
 		if self.version != 2:
-			raise Exception(f"ERR: unknown brush version {self.version}")
+			raise RuntimeError(f"ERR: unknown brush version {self.version}")
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
 		self.bpp = ioBuf.u32  # only allows grayscale or RGB
 		self.mode = self.COLOR_MODES[self.bpp]
 		magic = ioBuf.getBytes(4)
 		if magic.decode("ascii") != "GIMP":
-			raise Exception(
+			raise RuntimeError(
 				'"'
 				+ magic.decode("ascii")
 				+ '" '

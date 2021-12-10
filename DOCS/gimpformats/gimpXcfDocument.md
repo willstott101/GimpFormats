@@ -106,7 +106,7 @@ Get the len.
 
 ### GimpDocument().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L377)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L387)
 
 ```python
 def __repr__(indent='') -> str:
@@ -182,7 +182,7 @@ Return the offset
 
 #### Raises
 
-- `Exception` - "Not a valid GIMP file"
+- `RuntimeError` - "Not a valid GIMP file"
 
 #### Returns
 
@@ -349,7 +349,7 @@ Save this gimp image to a file.
 
 ### GimpDocument().saveNew
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L373)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L378)
 
 ```python
 def saveNew(filename=None):
@@ -369,7 +369,7 @@ Assign to a given layer.
 
 ## blendModeLookup
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L399)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L409)
 
 ```python
 def blendModeLookup(
@@ -383,7 +383,7 @@ Get the blendmode from a lookup table.
 
 ## flattenAll
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L540)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L554)
 
 ```python
 def flattenAll(
@@ -410,7 +410,7 @@ to True.
 
 ## flattenLayerOrGroup
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L409)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L419)
 
 ```python
 def flattenLayerOrGroup(
@@ -438,7 +438,7 @@ to True.
 
 ## renderMaskWOffset
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L585)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L599)
 
 ```python
 def renderMaskWOffset(
@@ -464,7 +464,7 @@ Defaults to (0, 0).
 
 ## renderWOffset
 
-[[find in source code]](../../gimpformats/gimpXcfDocument.py#L565)
+[[find in source code]](../../gimpformats/gimpXcfDocument.py#L579)
 
 ```python
 def renderWOffset(

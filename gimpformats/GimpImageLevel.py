@@ -43,7 +43,9 @@ class GimpImageLevel(GimpIOBase):
 			currentSize = f"({self.width}" + f",{self.height})"
 			expectedSize = f"({self.parent.width}" + f",{self.parent.height})"
 			msg = " Usually this implies file corruption."
-			raise Exception("Image data size mismatch. " + currentSize + "!=" + expectedSize + msg)
+			raise RuntimeError(
+				"Image data size mismatch. " + currentSize + "!=" + expectedSize + msg
+			)
 		self._tiles = []
 		self._image = None
 		for y in range(0, self.height, 64):
@@ -60,7 +62,7 @@ class GimpImageLevel(GimpIOBase):
 						ioBuf.data[ptr : ptr + totalBytes + 24]
 					)  # guess how many bytes are needed
 				else:
-					raise Exception(f"ERR: unsupported compression mode {self.doc.compression}")
+					raise RuntimeError(f"ERR: unsupported compression mode {self.doc.compression}")
 				subImage = PIL.Image.frombytes(self.mode, size, bytes(data), decoder_name="raw")
 				self._tiles.append(subImage)
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
@@ -80,11 +82,11 @@ class GimpImageLevel(GimpIOBase):
 				pass
 			elif self.doc.compression == 1:  # RLE
 				data = self._encodeRLE(data, self.bpp)
-				# raise Exception('RLE Compression is a work in progress!')
+				# raise RuntimeError('RLE Compression is a work in progress!')
 			elif self.doc.compression == 2:  # zip
 				data = zlib.compress(data)
 			else:
-				raise Exception(f"ERR: unsupported compression mode {self.doc.compression}")
+				raise RuntimeError(f"ERR: unsupported compression mode {self.doc.compression}")
 			dataioBuf.addBytes(data)
 		ioBuf.addBytes(self._pointerEncode(0))
 		ioBuf.addBytes(dataioBuf.data)
@@ -136,7 +138,7 @@ class GimpImageLevel(GimpIOBase):
 						n += 1
 				else:
 					print("Unreachable branch", opcode)
-					raise Exception()
+					raise RuntimeError()
 		# flatten/weave the individual channels into one strream
 		flat = bytearray()
 		for i in range(pixels):

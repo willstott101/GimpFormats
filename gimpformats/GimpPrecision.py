@@ -46,11 +46,13 @@ class Precision:
 		"""
 		if gimpVersion < 4:
 			if self.bits != 8 or not (self.gamma) or self.numberFormat != int:
-				raise Exception(f"Illegal precision ({self}" + f") for gimp version {gimpVersion}")
+				raise RuntimeError(
+					f"Illegal precision ({self}" + f") for gimp version {gimpVersion}"
+				)
 		else:
 			if gimpVersion == 4:
 				if self.bits == 64:
-					raise Exception(
+					raise RuntimeError(
 						f"Illegal precision ({self}" + f") for gimp version {gimpVersion}"
 					)
 				if self.numberFormat == int:

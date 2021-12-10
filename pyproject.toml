@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gimpformats"
-version = "2021.1.3"
+version = "2021.1.4"
 license = "lgpl-3.0-only"
 description = "Pure python implementation of the gimp file format(s)"
 authors = ["FredHappyface"]
@@ -51,6 +51,7 @@ function-naming-style = "camelCase"
 method-naming-style = "camelCase"
 variable-naming-style = "camelCase"
 module-rgx = "(([A-Z][a-z0-9]+)+)|(([a-z0-9]*_?[a-z0-9]*)*)"
+good-names = "i,j,k,ex,Run,_,x,y,id"
 
 [tool.pylint.format]
 indent-string = "\t"
@@ -64,6 +65,5 @@ disable = [
 	"pointless-string-statement",
 	"superfluous-parens",
 	"bad-continuation",
-	"python3",
 	"fixme"
 ]

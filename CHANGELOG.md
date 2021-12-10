@@ -3,6 +3,16 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2021.1.4 - 2021/12/10
+
+- Raise `NotImplementedError` for XcfDocument save methods https://github.com/FHPythonUtils/GimpFormats/pull/10
+- Fix regression in flattenAll when using layer group masks https://github.com/FHPythonUtils/GimpFormats/pull/11
+
+Thanks https://github.com/hemebond for those!
+
+- Raise raise `RuntimeError` in place of generalised `Exception`
+- Minor code quality improvements
+
 ## 2021.1.2 - 2021/11/05
 
 - Use pre-commit

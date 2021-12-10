@@ -54,7 +54,7 @@ class GimpPatPattern:
 			index (int, optional): index to start from. Defaults to 0.
 
 		Raises:
-			Exception: "File format error.  Magic value mismatch."
+			RuntimeError: "File format error.  Magic value mismatch."
 
 		Returns:
 			int: pointer
@@ -68,7 +68,7 @@ class GimpPatPattern:
 		self.mode = self.COLOR_MODES[self.bpp]
 		magic = ioBuf.getBytes(4)
 		if magic.decode("ascii") != "GPAT":
-			raise Exception("File format error.  Magic value mismatch.")
+			raise RuntimeError("File format error.  Magic value mismatch.")
 		nameLen = headerSize - ioBuf.index
 		self.name = ioBuf.getBytes(nameLen).decode("UTF-8")
 		self._rawImage = ioBuf.getBytes(self.width * self.height * self.bpp)

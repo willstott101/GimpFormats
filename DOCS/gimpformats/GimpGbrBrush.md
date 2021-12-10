@@ -55,8 +55,8 @@ Decode a byte buffer.
 
 #### Raises
 
-- `Exception` - "unknown brush version"
-- `Exception` - "File format error.  Magic value mismatch"
+- `RuntimeError` - "unknown brush version"
+- `RuntimeError` - "File format error.  Magic value mismatch"
 
 #### Returns
 
