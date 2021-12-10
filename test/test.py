@@ -20,6 +20,7 @@ TESTS = [
 	"gih_brush_set",  # FIX: testWilber + testFeltPen
 	"gpb_brush",  # TODO: implement
 	"gpl_palette",
+	"group_masks",
 	"gtpToolPreset",
 	"layer_groups",  # TODO: implement
 	"pat_pattern",

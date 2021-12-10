@@ -119,6 +119,7 @@ class GimpLayer(GimpIOBase):
 			self._mask = GimpChannel(self)
 			if self._data:
 				self._mask.decode(self._data, self._maskPtr)
+		return self._mask
 
 	@property
 	def image(self) -> Image | None:

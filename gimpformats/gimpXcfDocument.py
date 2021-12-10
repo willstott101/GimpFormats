@@ -28,6 +28,7 @@ from .GimpLayer import GimpLayer
 from .GimpPrecision import Precision
 
 
+
 class GimpDocument(GimpIOBase):
 	"""Pure python implementation of the gimp file format.
 
@@ -346,32 +347,42 @@ class GimpDocument(GimpIOBase):
 		# Example Layers [layer, layer, group, layer]
 		# Example Group [Layer(Group), [layer, layer, ...]]
 		layers = self.layers[:]  # Copy the attribute rather than write to it
-		layersOut = []
-		index = 0
-		while index < len(layers):
-			layerOrGroup = layers[index]
+
+		layersOut = [None, []]  # Use None to create a dummy group for the entire hierarchy
+		for idx, layerOrGroup in enumerate(layers):
+			parent = layersOut
+
+			# Find the parent list by walking down the itemPath values
+			if layerOrGroup.itemPath is not None:
+				for level_idx in layerOrGroup.itemPath[:-1]:
+					parent = parent[1][level_idx]
+
+			layerCopy = copy.deepcopy(layerOrGroup)
+
 			if layerOrGroup.isGroup:
-				elem = [layerOrGroup, []]
-				index += 1
-				while layers[index].itemPath is not None:
-					layerCopy = copy.deepcopy(layers[index])
-					layerCopy.xOffset -= layerOrGroup.xOffset
-					layerCopy.yOffset -= layerOrGroup.yOffset
-					elem[1].append(layerCopy)
-					layers.pop(index)
-				layersOut.append(elem)
+				parent[1].append([layerCopy, []])
 			else:
-				layersOut.append(layerOrGroup)
-				index += 1
-		return flattenAll(layersOut, (self.width, self.height))
+				parent[1].append(layerCopy)
+
+		return flattenAll(layersOut[1], (self.width, self.height))
 
 	def save(self, filename: str | BytesIO = None):
 		"""Save this gimp image to a file."""
+
+		# Save not yet implemented so for now throw
+		# an except so we don't corrupt the fole
+		raise NotImplementedError
+
 		self.forceFullyLoaded()
 		utils.save(self.encode(), filename or self.fileName)
 
 	def saveNew(self, filename=None):
 		"""Save a new gimp image to a file."""
+
+		# Save not yet implemented so for now throw
+		# an except so we don't corrupt the fole
+		raise NotImplementedError
+
 		utils.save(self.encode(), filename or self.fileName)
 
 	def __repr__(self, indent="") -> str:
@@ -483,8 +494,8 @@ def flattenLayerOrGroup(
 			foregroundComposite = renderWOffset(
 				flattenAll(layerOrGroup[1], imageDimensions, ignoreHidden),
 				imageDimensions,
-				(layerOrGroup[0].xOffset, layerOrGroup[0].yOffset),
 			)
+
 			if layerOrGroup[0].mask is not None:
 				newFGComp = Image.new("RGBA", imageDimensions)
 				newFGComp.paste(
@@ -497,8 +508,10 @@ def flattenLayerOrGroup(
 					),
 				)
 				foregroundComposite = newFGComp.convert("RGBA")
+
 		if flattenedSoFar is None:
 			return foregroundComposite
+
 		return blendLayers(
 			flattenedSoFar,
 			foregroundComposite,
@@ -514,6 +527,7 @@ def flattenLayerOrGroup(
 		foregroundComposite = renderWOffset(
 			layerOrGroup.image, imageDimensions, (layerOrGroup.xOffset, layerOrGroup.yOffset)
 		)
+
 		if layerOrGroup.mask is not None:
 			newFGComp = Image.new("RGBA", imageDimensions)
 			newFGComp.paste(
@@ -526,6 +540,7 @@ def flattenLayerOrGroup(
 				),
 			)
 			foregroundComposite = newFGComp.convert("RGBA")
+
 	if flattenedSoFar is None:
 		return foregroundComposite
 
@@ -599,5 +614,9 @@ def renderMaskWOffset(
 	"""
 	mode = image.mode
 	imageOffset = Image.new("RGBA", size)
-	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
+	imageOffset.paste(
+		image.convert("RGBA"),
+		offsets,
+		image.convert("RGBA"),
+	)
 	return imageOffset.convert(mode)
