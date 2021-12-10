@@ -348,10 +348,11 @@ class GimpDocument(GimpIOBase):
 		# Example Group [Layer(Group), [layer, layer, ...]]
 		layers = self.layers[:]  # Copy the attribute rather than write to it
 
-		layersOut = [None, []]
+		layersOut = [None, []]  # Use None to create a dummy group for the entire hierarchy
 		for idx, layerOrGroup in enumerate(layers):
 			parent = layersOut
 
+			# Find the parent list by walking down the itemPath values
 			if layerOrGroup.itemPath is not None:
 				for level_idx in layerOrGroup.itemPath[:-1]:
 					parent = parent[1][level_idx]
