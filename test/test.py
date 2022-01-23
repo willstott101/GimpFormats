@@ -39,12 +39,11 @@ def suite(tests=None):
 		tests = TESTS
 	testSuite = unittest.TestSuite()
 	for dirname in TESTS:  # os.listdir(__HERE__):
-		if os.path.isdir(dirname):
-			fullDirname = __HERE__ + os.sep + dirname
-			if os.path.exists(fullDirname + os.sep + "test.py"):
-				print(f"Queueing test: {dirname}")
-				exec(f"import {dirname}")
-				exec(f"testSuite.addTest({dirname}.testSuite())")
+		fullDirname = __HERE__ + os.sep + dirname
+		if os.path.exists(fullDirname + os.sep + "test.py"):
+			print(f"Queueing test: {dirname}")
+			exec(f"import {dirname}")
+			exec(f"testSuite.addTest({dirname}.testSuite())")
 	return testSuite
 
 

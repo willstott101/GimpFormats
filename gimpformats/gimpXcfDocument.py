@@ -369,7 +369,7 @@ class GimpDocument(GimpIOBase):
 		"""Save this gimp image to a file."""
 
 		# Save not yet implemented so for now throw
-		# an except so we don't corrupt the fole
+		# an except so we don't corrupt the file
 		raise NotImplementedError
 
 		# self.forceFullyLoaded()
@@ -379,7 +379,7 @@ class GimpDocument(GimpIOBase):
 		"""Save a new gimp image to a file."""
 
 		# Save not yet implemented so for now throw
-		# an except so we don't corrupt the fole
+		# an except so we don't corrupt the file
 		raise NotImplementedError
 
 		# utils.save(self.encode(), filename or self.fileName)

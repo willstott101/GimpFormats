@@ -18,9 +18,7 @@ Forked from https://github.com/TheHeadlessSourceMan/gimpFormats
 A pure python implementation of the GIMP XCF image format. Use this to interact
 with GIMP image formats
 
-Issues and contributions very much wanted/ needed :smile:
-
-Previously under `gimpformats_unofficial` now under `gimpformats`
+Issues and contributions very much wanted/ needed 😀
 
 - [Getting started](#getting-started)
 - [Next tasks (see below)](#next-tasks-see-below)

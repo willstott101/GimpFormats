@@ -12,7 +12,7 @@ print("!! use catXCF.py to output the logical structure of an xcf !!")
 print("## Test round trip! - Saving base24.xcf as base24copy.xcf")
 
 project = GimpDocument("test_files/base24.xcf")
-project.save("test_files/base24copy.xcf")
+# project.save("test_files/base24copy.xcf")
 
 print("## Creating new test.xcf using gimp-wilber.png")
 wilber = Image.open("test_files/gimp-wilber.png")
