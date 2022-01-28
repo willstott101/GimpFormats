@@ -115,7 +115,7 @@ Get a textual representation of this object.
 [[find in source code]](../../gimpformats/GimpGtpToolPreset.py#L70)
 
 ```python
-def parenFileDecode(data):
+def parenFileDecode(data: bytes):
 ```
 
 Decode a parentheses-based file format.

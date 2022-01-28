@@ -76,7 +76,7 @@ class GimpVbrBrush:
 		else:
 			raise RuntimeError(f"Unknown version {self.version}")
 
-	def encode(self):
+	def encode(self) -> bytes:
 		"""Encode to a raw data stream."""
 		data = []
 		data.append("GIMP-VBR")

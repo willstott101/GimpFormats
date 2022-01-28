@@ -3,6 +3,7 @@
 """
 from __future__ import annotations
 
+import re
 from io import BytesIO
 
 from . import utils
@@ -41,22 +42,21 @@ class GimpGplPalette:
 		Raises:
 			RuntimeError: File format error.  Magic value mismatch.
 		"""
-		lines = [s.strip() for s in data.split("\n")]
-		if lines[0] != "GIMP Palette":
-			raise RuntimeError("File format error.  Magic value mismatch.")
-		self.name = lines[1].split(":", 1)[-1].lstrip()
-		self.columns = int(lines[2].split(":", 1)[-1].lstrip())
+		self.colors = []
+		self.colorNames = []
+		lines = data.split("\n")
+		if "gimp palette" not in lines[0].lower():
+			raise RuntimeError(f"File format error.  Magic value mismatch: '{lines[0]}'")
+		self.name = re.findall(r".*?:(.*)", lines[1])[0].strip()
+		self.columns = int(re.findall(r".*?:(.*)", lines[2])[0].strip())
 		for line in lines[3:]:
 			if len(line) < 1 or line[0] == "#":  # Commented Line
 				continue
-			line = line.split(None, 4)
-			if len(line) < 3:
+			colours = re.findall(r"(\d+) *?(\d+) *?(\d+) *([a-zA-Z0-9]*)", line)[0]
+			if len(colours) < 3:
 				continue
-			self.colors.append((int(line[0]), int(line[1]), int(line[2])))
-			if len(line) > 3:
-				self.colorNames.append(line[3])
-			else:
-				self.colorNames.append(None)
+			self.colors.append(colours[:3])
+			self.colorNames.append(colours[3] if len(colours) > 3 else None)
 
 	def encode(self):
 		"""Encode to a raw data stream."""
@@ -67,12 +67,8 @@ class GimpGplPalette:
 		data.append("#")
 		for i, color in enumerate(self.colors):
 			colorName = self.colorNames[i]
-			line = (
-				str(color[0]).rjust(3) + " " + str(color[1]).rjust(3) + " " + str(color[2]).rjust(3)
-			)
-			if colorName is not None:
-				line = line + "\t" + colorName
-			data.append(line)
+			line = f"{color[0]:>3} {color[1]:>3} {color[2]:>3}"
+			data.append((line if colorName is None else f"{line} {colorName}").rstrip())
 		return ("\n".join(data) + "\n").encode("utf-8")
 
 	def save(self, fileName: str | BytesIO):

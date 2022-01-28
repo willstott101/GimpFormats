@@ -67,7 +67,7 @@ Decode a byte buffer.
 [[find in source code]](../../gimpformats/GimpVbrBrush.py#L79)
 
 ```python
-def encode():
+def encode() -> bytes:
 ```
 
 Encode to a raw data stream.

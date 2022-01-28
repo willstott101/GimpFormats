@@ -67,12 +67,12 @@ class ParenFileValue:
 		return "".join(ret)
 
 
-def parenFileDecode(data):
+def parenFileDecode(data: bytes):
 	"""Decode a parentheses-based file format.
 
 	(possibly "scheme" language?)
 	"""
-	nodes = brackettree.Node(data)
+	nodes = brackettree.Node(data.decode("utf-8"))
 	values = walkTree(nodes.items)
 	return values
 
