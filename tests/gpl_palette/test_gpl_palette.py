@@ -19,8 +19,8 @@ def test_plasma():
 	dut.load(f"{THISDIR}/plasma.gpl")
 	# test round-trip compatibility
 	dut.save(f"{THISDIR}/actualOutput_plasma.gpl")
-	original = open(f"{THISDIR}/plasma.gpl", "r")
-	actual = open(f"{THISDIR}/actualOutput_plasma.gpl", "r")
+	original = open(f"{THISDIR}/plasma.gpl")
+	actual = open(f"{THISDIR}/actualOutput_plasma.gpl")
 	assert actual.read() == original.read()
 	original.close()
 	actual.close()
