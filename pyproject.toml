@@ -29,8 +29,10 @@ numpy = "<2,>=1.22.1"
 Pillow = "<10,>=9.0.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
+pytest = "^7.1.1"
 imgcompare = "^2.0.1"
+pylint = "^2.13.5"
+handsdown = "^1.1.0"
 
 [tool.black]
 line-length = 100
