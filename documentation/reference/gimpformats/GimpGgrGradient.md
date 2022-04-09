@@ -1,10 +1,10 @@
-# GimpGgrGradient
+# Gimpggrgradient
 
-> Auto-generated documentation for [gimpformats.GimpGgrGradient](../../gimpformats/GimpGgrGradient.py) module.
+> Auto-generated documentation for [gimpformats.GimpGgrGradient](../../../gimpformats/GimpGgrGradient.py) module.
 
 Gimp color gradient.
 
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpGgrGradient
+- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpggrgradient
     - [GimpGgrGradient](#gimpggrgradient)
         - [GimpGgrGradient().\_\_repr\_\_](#gimpggrgradient__repr__)
         - [GimpGgrGradient().decode](#gimpggrgradientdecode)
@@ -20,7 +20,7 @@ Gimp color gradient.
 
 ## GimpGgrGradient
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L115)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L115)
 
 ```python
 class GimpGgrGradient():
@@ -34,7 +34,7 @@ See:
 
 ### GimpGgrGradient().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L182)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L182)
 
 ```python
 def __repr__(indent=''):
@@ -44,7 +44,7 @@ Get a textual representation of this object.
 
 ### GimpGgrGradient().decode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L142)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L142)
 
 ```python
 def decode(dataIn: bytes):
@@ -62,7 +62,7 @@ Decode a byte buffer.
 
 ### GimpGgrGradient().encode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L162)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L162)
 
 ```python
 def encode():
@@ -72,7 +72,7 @@ Encode this to a byte array.
 
 ### GimpGgrGradient().getColor
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L175)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L175)
 
 ```python
 def getColor(percent):
@@ -84,7 +84,7 @@ the appropriate color for this point in the gradient.
 
 ### GimpGgrGradient().load
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L134)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L134)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -98,7 +98,7 @@ Load a gimp file.
 
 ### GimpGgrGradient().save
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L171)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L171)
 
 ```python
 def save(tofileName=None):
@@ -108,7 +108,7 @@ Save this gimp image to a file.
 
 ## GradientSegment
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L11)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L11)
 
 ```python
 class GradientSegment():
@@ -119,7 +119,7 @@ Single segment within a gradient.
 
 ### GradientSegment().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L96)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L96)
 
 ```python
 def __repr__(indent=''):
@@ -129,7 +129,7 @@ Get a textual representation of this object.
 
 ### GradientSegment().decode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L50)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L50)
 
 ```python
 def decode(dataIn: str):
@@ -147,7 +147,7 @@ Decode a byte buffer.
 
 ### GradientSegment().encode
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L76)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L76)
 
 ```python
 def encode():
@@ -157,7 +157,7 @@ Encode this to a byte array.
 
 ### GradientSegment().getColor
 
-[[find in source code]](../../gimpformats/GimpGgrGradient.py#L43)
+[[find in source code]](../../../gimpformats/GimpGgrGradient.py#L43)
 
 ```python
 def getColor(percent: float):

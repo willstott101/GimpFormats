@@ -1,10 +1,10 @@
-# GimpLayer
+# Gimplayer
 
-> Auto-generated documentation for [gimpformats.GimpLayer](../../gimpformats/GimpLayer.py) module.
+> Auto-generated documentation for [gimpformats.GimpLayer](../../../gimpformats/GimpLayer.py) module.
 
 Represents a single layer in a gimp image.
 
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpLayer
+- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimplayer
     - [GimpLayer](#gimplayer)
         - [GimpLayer().\_\_repr\_\_](#gimplayer__repr__)
         - [GimpLayer().decode](#gimplayerdecode)
@@ -18,7 +18,7 @@ Represents a single layer in a gimp image.
 
 ## GimpLayer
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L13)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L13)
 
 ```python
 class GimpLayer(GimpIOBase):
@@ -29,7 +29,7 @@ Represents a single layer in a gimp image.
 
 ### GimpLayer().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L180)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L180)
 
 ```python
 def __repr__(indent=''):
@@ -39,7 +39,7 @@ Get a textual representation of this object.
 
 ### GimpLayer().decode
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L47)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L47)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -65,7 +65,7 @@ Return the offset
 
 ### GimpLayer().encode
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L81)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L81)
 
 ```python
 def encode():
@@ -82,7 +82,7 @@ Return the data
 
 ### GimpLayer().forceFullyLoaded
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L172)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L172)
 
 ```python
 def forceFullyLoaded():
@@ -92,7 +92,7 @@ Make sure everything is fully loaded from the file.
 
 ### GimpLayer().image
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L124)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L124)
 
 ```python
 @property
@@ -105,7 +105,7 @@ NOTE: can return None!
 
 ### GimpLayer().image
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L134)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L134)
 
 ```python
 @image.setter
@@ -118,7 +118,7 @@ NOTE: resets layer width, height, and colorMode
 
 ### GimpLayer().imageHierarchy
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L151)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L151)
 
 ```python
 @property
@@ -134,7 +134,7 @@ NOTE: can return None if it has been fully read into an image
 
 ### GimpLayer().imageHierarchy
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L167)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L167)
 
 ```python
 @imageHierarchy.setter
@@ -145,7 +145,7 @@ Set the image hierarchy.
 
 ### GimpLayer().mask
 
-[[find in source code]](../../gimpformats/GimpLayer.py#L115)
+[[find in source code]](../../../gimpformats/GimpLayer.py#L115)
 
 ```python
 @property

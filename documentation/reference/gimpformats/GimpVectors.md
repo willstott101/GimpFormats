@@ -1,10 +1,10 @@
-# GimpVectors
+# Gimpvectors
 
-> Auto-generated documentation for [gimpformats.GimpVectors](../../gimpformats/GimpVectors.py) module.
+> Auto-generated documentation for [gimpformats.GimpVectors](../../../gimpformats/GimpVectors.py) module.
 
 Stuff related to vectors/paths within a gimp document.
 
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpVectors
+- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpvectors
     - [GimpPoint](#gimppoint)
         - [GimpPoint().\_\_repr\_\_](#gimppoint__repr__)
         - [GimpPoint().decode](#gimppointdecode)
@@ -20,7 +20,7 @@ Stuff related to vectors/paths within a gimp document.
 
 ## GimpPoint
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L140)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L140)
 
 ```python
 class GimpPoint():
@@ -31,7 +31,7 @@ A single point within a stroke.
 
 ### GimpPoint().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L204)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L204)
 
 ```python
 def __repr__(indent=''):
@@ -41,7 +41,7 @@ Get a textual representation of this object.
 
 ### GimpPoint().decode
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L155)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L155)
 
 ```python
 def decode(data: bytes, index: int = 0, numFloatsPerPoint: int = 0):
@@ -63,7 +63,7 @@ inside each point. Defaults to 0.
 
 ### GimpPoint().encode
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L188)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L188)
 
 ```python
 def encode():
@@ -73,7 +73,7 @@ Encode to binary data.
 
 ## GimpStroke
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L85)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L85)
 
 ```python
 class GimpStroke():
@@ -84,7 +84,7 @@ A single stroke within a vector.
 
 ### GimpStroke().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L129)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L129)
 
 ```python
 def __repr__(indent: str = ''):
@@ -94,7 +94,7 @@ Get a textual representation of this object.
 
 ### GimpStroke().decode
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L97)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L97)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -113,7 +113,7 @@ Decode a byte buffer.
 
 ### GimpStroke().encode
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L118)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L118)
 
 ```python
 def encode():
@@ -123,7 +123,7 @@ Encode to binary data.
 
 ## GimpVector
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L12)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L12)
 
 ```python
 class GimpVector():
@@ -134,7 +134,7 @@ A gimp brush stroke vector.
 
 ### GimpVector().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L67)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L67)
 
 ```python
 def __repr__(indent: str = '') -> str:
@@ -144,7 +144,7 @@ Get a textual representation of this object.
 
 ### GimpVector().decode
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L25)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L25)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -163,7 +163,7 @@ Decode a byte buffer.
 
 ### GimpVector().encode
 
-[[find in source code]](../../gimpformats/GimpVectors.py#L52)
+[[find in source code]](../../../gimpformats/GimpVectors.py#L52)
 
 ```python
 def encode():

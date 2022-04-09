@@ -1,10 +1,10 @@
-# GimpGplPalette
+# Gimpgplpalette
 
-> Auto-generated documentation for [gimpformats.GimpGplPalette](../../gimpformats/GimpGplPalette.py) module.
+> Auto-generated documentation for [gimpformats.GimpGplPalette](../../../gimpformats/GimpGplPalette.py) module.
 
 Pure python implementation of the gimp gpl palette format.
 
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpGplPalette
+- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpgplpalette
     - [GimpGplPalette](#gimpgplpalette)
         - [GimpGplPalette().\_\_eq\_\_](#gimpgplpalette__eq__)
         - [GimpGplPalette().\_\_repr\_\_](#gimpgplpalette__repr__)
@@ -15,7 +15,7 @@ Pure python implementation of the gimp gpl palette format.
 
 ## GimpGplPalette
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L12)
+[[find in source code]](../../../gimpformats/GimpGplPalette.py#L12)
 
 ```python
 class GimpGplPalette():
@@ -26,7 +26,7 @@ Pure python implementation of the gimp gpl palette format.
 
 ### GimpGplPalette().\_\_eq\_\_
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L93)
+[[find in source code]](../../../gimpformats/GimpGplPalette.py#L93)
 
 ```python
 def __eq__(other: GimpGplPalette):
@@ -36,7 +36,7 @@ Perform a comparison.
 
 ### GimpGplPalette().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L78)
+[[find in source code]](../../../gimpformats/GimpGplPalette.py#L78)
 
 ```python
 def __repr__():
@@ -46,7 +46,7 @@ Get a textual representation of this object.
 
 ### GimpGplPalette().decode
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L36)
+[[find in source code]](../../../gimpformats/GimpGplPalette.py#L36)
 
 ```python
 def decode(data: str) -> None:
@@ -64,7 +64,7 @@ Decode a byte buffer.
 
 ### GimpGplPalette().encode
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L61)
+[[find in source code]](../../../gimpformats/GimpGplPalette.py#L61)
 
 ```python
 def encode():
@@ -74,7 +74,7 @@ Encode to a raw data stream.
 
 ### GimpGplPalette().load
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L28)
+[[find in source code]](../../../gimpformats/GimpGplPalette.py#L28)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -88,7 +88,7 @@ Load a gimp file.
 
 ### GimpGplPalette().save
 
-[[find in source code]](../../gimpformats/GimpGplPalette.py#L74)
+[[find in source code]](../../../gimpformats/GimpGplPalette.py#L74)
 
 ```python
 def save(fileName: str | BytesIO):

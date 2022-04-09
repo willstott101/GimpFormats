@@ -1,10 +1,10 @@
-# GimpParasites
+# Gimpparasites
 
-> Auto-generated documentation for [gimpformats.GimpParasites](../../gimpformats/GimpParasites.py) module.
+> Auto-generated documentation for [gimpformats.GimpParasites](../../../gimpformats/GimpParasites.py) module.
 
 Parasites are arbitrary (meta)data strings that can be attached to a document tree item
 
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpParasites
+- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpparasites
     - [GimpParasite](#gimpparasite)
         - [GimpParasite().\_\_repr\_\_](#gimpparasite__repr__)
         - [GimpParasite().decode](#gimpparasitedecode)
@@ -17,7 +17,7 @@ Format of known parasites:
 
 ## GimpParasite
 
-[[find in source code]](../../gimpformats/GimpParasites.py#L47)
+[[find in source code]](../../../gimpformats/GimpParasites.py#L47)
 
 ```python
 class GimpParasite():
@@ -33,7 +33,7 @@ Format of known parasites:
 
 ### GimpParasite().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpParasites.py#L87)
+[[find in source code]](../../../gimpformats/GimpParasites.py#L87)
 
 ```python
 def __repr__(indent: str = '') -> str:
@@ -43,7 +43,7 @@ Get a textual representation of this object.
 
 ### GimpParasite().decode
 
-[[find in source code]](../../gimpformats/GimpParasites.py#L61)
+[[find in source code]](../../../gimpformats/GimpParasites.py#L61)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -58,7 +58,7 @@ Decode a byte buffer
 
 ### GimpParasite().encode
 
-[[find in source code]](../../gimpformats/GimpParasites.py#L74)
+[[find in source code]](../../../gimpformats/GimpParasites.py#L74)
 
 ```python
 def encode():

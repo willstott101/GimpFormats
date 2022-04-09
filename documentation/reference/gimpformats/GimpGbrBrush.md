@@ -1,10 +1,10 @@
-# GimpGbrBrush
+# Gimpgbrbrush
 
-> Auto-generated documentation for [gimpformats.GimpGbrBrush](../../gimpformats/GimpGbrBrush.py) module.
+> Auto-generated documentation for [gimpformats.GimpGbrBrush](../../../gimpformats/GimpGbrBrush.py) module.
 
 Pure python implementation of the gimp gbr brush format.
 
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpGbrBrush
+- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpgbrbrush
     - [GimpGbrBrush](#gimpgbrbrush)
         - [GimpGbrBrush().\_\_repr\_\_](#gimpgbrbrush__repr__)
         - [GimpGbrBrush().decode](#gimpgbrbrushdecode)
@@ -16,7 +16,7 @@ Pure python implementation of the gimp gbr brush format.
 
 ## GimpGbrBrush
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L15)
+[[find in source code]](../../../gimpformats/GimpGbrBrush.py#L15)
 
 ```python
 class GimpGbrBrush():
@@ -30,7 +30,7 @@ See:
 
 ### GimpGbrBrush().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L132)
+[[find in source code]](../../../gimpformats/GimpGbrBrush.py#L132)
 
 ```python
 def __repr__(indent=''):
@@ -40,7 +40,7 @@ Get a textual representation of this object.
 
 ### GimpGbrBrush().decode
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L50)
+[[find in source code]](../../../gimpformats/GimpGbrBrush.py#L50)
 
 ```python
 def decode(data: bytes, index: int = 0) -> int:
@@ -64,7 +64,7 @@ Decode a byte buffer.
 
 ### GimpGbrBrush().encode
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L88)
+[[find in source code]](../../../gimpformats/GimpGbrBrush.py#L88)
 
 ```python
 def encode() -> bytearray:
@@ -74,7 +74,7 @@ Encode this object to byte array.
 
 ### GimpGbrBrush().image
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L107)
+[[find in source code]](../../../gimpformats/GimpGbrBrush.py#L107)
 
 ```python
 @property
@@ -85,7 +85,7 @@ Get a final, compiled image.
 
 ### GimpGbrBrush().load
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L42)
+[[find in source code]](../../../gimpformats/GimpGbrBrush.py#L42)
 
 ```python
 def load(fileName: BytesIO | str):
@@ -99,7 +99,7 @@ Load a gimp file.
 
 ### GimpGbrBrush().save
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L114)
+[[find in source code]](../../../gimpformats/GimpGbrBrush.py#L114)
 
 ```python
 def save(tofileName: str, toExtension: str | None = None):
@@ -109,11 +109,11 @@ Save this gimp image to a file.
 
 ### GimpGbrBrush().size
 
-[[find in source code]](../../gimpformats/GimpGbrBrush.py#L102)
+[[find in source code]](../../../gimpformats/GimpGbrBrush.py#L102)
 
 ```python
 @property
-def size() -> tuple[(int, int)]:
+def size() -> tuple[int, int]:
 ```
 
 Get the size.

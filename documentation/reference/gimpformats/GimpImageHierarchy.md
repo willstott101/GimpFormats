@@ -1,10 +1,10 @@
-# GimpImageHierarchy
+# Gimpimagehierarchy
 
-> Auto-generated documentation for [gimpformats.GimpImageHierarchy](../../gimpformats/GimpImageHierarchy.py) module.
+> Auto-generated documentation for [gimpformats.GimpImageHierarchy](../../../gimpformats/GimpImageHierarchy.py) module.
 
 Gets packed pixels from a gimp image.
 
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../README.md#gimpformats-modules) / [gimpformats](index.md#gimpformats) / GimpImageHierarchy
+- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpimagehierarchy
     - [GimpImageHierarchy](#gimpimagehierarchy)
         - [GimpImageHierarchy().\_\_repr\_\_](#gimpimagehierarchy__repr__)
         - [GimpImageHierarchy().decode](#gimpimagehierarchydecode)
@@ -19,7 +19,7 @@ NOTE: This was originally designed to be a hierarchy, like
 
 ## GimpImageHierarchy
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L15)
+[[find in source code]](../../../gimpformats/GimpImageHierarchy.py#L15)
 
 ```python
 class GimpImageHierarchy(GimpIOBase):
@@ -34,7 +34,7 @@ NOTE: This was originally designed to be a hierarchy, like
 
 ### GimpImageHierarchy().\_\_repr\_\_
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L116)
+[[find in source code]](../../../gimpformats/GimpImageHierarchy.py#L116)
 
 ```python
 def __repr__(indent: str = ''):
@@ -44,7 +44,7 @@ Get a textual representation of this object.
 
 ### GimpImageHierarchy().decode
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L35)
+[[find in source code]](../../../gimpformats/GimpImageHierarchy.py#L35)
 
 ```python
 def decode(data: bytes, index: int = 0):
@@ -59,7 +59,7 @@ decode a byte buffer
 
 ### GimpImageHierarchy().encode
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L67)
+[[find in source code]](../../../gimpformats/GimpImageHierarchy.py#L67)
 
 ```python
 def encode():
@@ -69,7 +69,7 @@ Encode this object to a byte buffer.
 
 ### GimpImageHierarchy().image
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L98)
+[[find in source code]](../../../gimpformats/GimpImageHierarchy.py#L98)
 
 ```python
 @property
@@ -80,7 +80,7 @@ Get a final, compiled image.
 
 ### GimpImageHierarchy().image
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L105)
+[[find in source code]](../../../gimpformats/GimpImageHierarchy.py#L105)
 
 ```python
 @image.setter
@@ -91,7 +91,7 @@ Set the image.
 
 ### GimpImageHierarchy().levels
 
-[[find in source code]](../../gimpformats/GimpImageHierarchy.py#L84)
+[[find in source code]](../../../gimpformats/GimpImageHierarchy.py#L84)
 
 ```python
 @property
