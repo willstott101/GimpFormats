@@ -37,7 +37,7 @@ coverage = "^6.3.2"
 
 [tool.black]
 line-length = 100
-target-version = ["py37"]
+target-version = ["py38"]
 
 [tool.isort]
 profile = "black"
@@ -68,8 +68,20 @@ ignore-patterns = "test_.*?py"
 
 [tool.pylint.messages_control]
 enable = ["F", "E", "W", "R", "C"]
-disable = [
-	"pointless-string-statement",
-	"superfluous-parens",
-	"fixme"
-]
+disable = ["pointless-string-statement", "superfluous-parens", "fixme"]
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+env_list =
+	py311
+	py310
+	py39
+	py38
+
+[testenv]
+deps =
+	imgcompare
+	pytest
+commands = pytest tests
+"""
