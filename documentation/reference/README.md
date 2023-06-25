@@ -1,10 +1,9 @@
-# Gimpformats Modules
+# Gimpformats Index
 
-> Auto-generated documentation modules index.
+> Auto-generated documentation index.
 
-Full list of [Gimpformats](README.md#gimpformats-index) project modules.
+A full list of `Gimpformats` project modules.
 
-- [Gimpformats Index](README.md#gimpformats-index)
 - [Gimpformats](gimpformats/index.md#gimpformats)
     - [Gimpchannel](gimpformats/GimpChannel.md#gimpchannel)
     - [Gimpgbrbrush](gimpformats/GimpGbrBrush.md#gimpgbrbrush)

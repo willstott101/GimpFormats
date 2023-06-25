@@ -1,49 +1,53 @@
 # Gimplayer
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimplayer
+
 > Auto-generated documentation for [gimpformats.GimpLayer](../../../gimpformats/GimpLayer.py) module.
 
-Represents a single layer in a gimp image.
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimplayer
-    - [GimpLayer](#gimplayer)
-        - [GimpLayer().\_\_repr\_\_](#gimplayer__repr__)
-        - [GimpLayer().decode](#gimplayerdecode)
-        - [GimpLayer().encode](#gimplayerencode)
-        - [GimpLayer().forceFullyLoaded](#gimplayerforcefullyloaded)
-        - [GimpLayer().image](#gimplayerimage)
-        - [GimpLayer().image](#gimplayerimage)
-        - [GimpLayer().imageHierarchy](#gimplayerimagehierarchy)
-        - [GimpLayer().imageHierarchy](#gimplayerimagehierarchy)
-        - [GimpLayer().mask](#gimplayermask)
+- [Gimplayer](#gimplayer)
+  - [GimpLayer](#gimplayer)
+    - [GimpLayer().__repr__](#gimplayer()__repr__)
+    - [GimpLayer().decode](#gimplayer()decode)
+    - [GimpLayer().encode](#gimplayer()encode)
+    - [GimpLayer().forceFullyLoaded](#gimplayer()forcefullyloaded)
+    - [GimpLayer().image](#gimplayer()image)
+    - [GimpLayer().image](#gimplayer()image-1)
+    - [GimpLayer().imageHierarchy](#gimplayer()imagehierarchy)
+    - [GimpLayer().imageHierarchy](#gimplayer()imagehierarchy-1)
+    - [GimpLayer().mask](#gimplayer()mask)
 
 ## GimpLayer
 
-[[find in source code]](../../../gimpformats/GimpLayer.py#L13)
-
-```python
-class GimpLayer(GimpIOBase):
-    def __init__(parent, name: str | None = None, image: Image | None = None):
-```
+[Show source in GimpLayer.py:13](../../../gimpformats/GimpLayer.py#L13)
 
 Represents a single layer in a gimp image.
 
-### GimpLayer().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L180)
+#### Signature
 
 ```python
-def __repr__(indent=''):
+class GimpLayer(GimpIOBase):
+    def __init__(self, parent, name: str | None = None, image: Image | None = None):
+        ...
 ```
+
+### GimpLayer().__repr__
+
+[Show source in GimpLayer.py:180](../../../gimpformats/GimpLayer.py#L180)
 
 Get a textual representation of this object.
 
-### GimpLayer().decode
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L47)
+#### Signature
 
 ```python
-def decode(data: bytes, index: int = 0) -> int:
+def __repr__(self, indent=""):
+    ...
 ```
+
+### GimpLayer().decode
+
+[Show source in GimpLayer.py:47](../../../gimpformats/GimpLayer.py#L47)
 
 Decode a byte buffer.
 
@@ -63,13 +67,16 @@ Return the offset
 
 - `int` - offset
 
-### GimpLayer().encode
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L81)
+#### Signature
 
 ```python
-def encode():
+def decode(self, data: bytes, index: int = 0) -> int:
+    ...
 ```
+
+### GimpLayer().encode
+
+[Show source in GimpLayer.py:81](../../../gimpformats/GimpLayer.py#L81)
 
 Encode to byte array.
 
@@ -80,50 +87,61 @@ List of properties
 Set the image hierarchy and mask pointers
 Return the data
 
-### GimpLayer().forceFullyLoaded
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L172)
+#### Signature
 
 ```python
-def forceFullyLoaded():
+def encode(self):
+    ...
 ```
+
+### GimpLayer().forceFullyLoaded
+
+[Show source in GimpLayer.py:172](../../../gimpformats/GimpLayer.py#L172)
 
 Make sure everything is fully loaded from the file.
 
-### GimpLayer().image
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L124)
+#### Signature
 
 ```python
-@property
-def image() -> Image | None:
+def forceFullyLoaded(self):
+    ...
 ```
+
+### GimpLayer().image
+
+[Show source in GimpLayer.py:124](../../../gimpformats/GimpLayer.py#L124)
 
 Get the layer image.
 
 NOTE: can return None!
 
-### GimpLayer().image
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L134)
+#### Signature
 
 ```python
-@image.setter
-def image(image: Image):
+@property
+def image(self) -> Image | None:
+    ...
 ```
+
+### GimpLayer().image
+
+[Show source in GimpLayer.py:134](../../../gimpformats/GimpLayer.py#L134)
 
 Set the layer image.
 
 NOTE: resets layer width, height, and colorMode
 
-### GimpLayer().imageHierarchy
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L151)
+#### Signature
 
 ```python
-@property
-def imageHierarchy() -> GimpImageHierarchy:
+@image.setter
+def image(self, image: Image):
+    ...
 ```
+
+### GimpLayer().imageHierarchy
+
+[Show source in GimpLayer.py:151](../../../gimpformats/GimpLayer.py#L151)
 
 Get the image hierarchy objects.
 
@@ -132,24 +150,40 @@ of little use to you, the user.
 
 NOTE: can return None if it has been fully read into an image
 
-### GimpLayer().imageHierarchy
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L167)
-
-```python
-@imageHierarchy.setter
-def imageHierarchy(imgHierarchy):
-```
-
-Set the image hierarchy.
-
-### GimpLayer().mask
-
-[[find in source code]](../../../gimpformats/GimpLayer.py#L115)
+#### Signature
 
 ```python
 @property
-def mask():
+def imageHierarchy(self) -> GimpImageHierarchy:
+    ...
 ```
 
+### GimpLayer().imageHierarchy
+
+[Show source in GimpLayer.py:167](../../../gimpformats/GimpLayer.py#L167)
+
+Set the image hierarchy.
+
+#### Signature
+
+```python
+@imageHierarchy.setter
+def imageHierarchy(self, imgHierarchy):
+    ...
+```
+
+### GimpLayer().mask
+
+[Show source in GimpLayer.py:115](../../../gimpformats/GimpLayer.py#L115)
+
 Get the layer mask.
+
+#### Signature
+
+```python
+@property
+def mask(self):
+    ...
+```
+
+

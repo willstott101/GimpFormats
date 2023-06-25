@@ -1,25 +1,39 @@
 # Utils
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Utils
+
 > Auto-generated documentation for [gimpformats.utils](../../../gimpformats/utils.py) module.
 
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Utils
-    - [fileOpen](#fileopen)
-    - [save](#save)
+- [Utils](#utils)
+  - [fileOpen](#fileopen)
+  - [save](#save)
 
 ## fileOpen
 
-[[find in source code]](../../../gimpformats/utils.py#L6)
+[Show source in utils.py:6](../../../gimpformats/utils.py#L6)
+
+#### Signature
 
 ```python
 def fileOpen(fileName: BytesIO | str) -> tuple[str, bytes]:
+    ...
 ```
+
+
 
 ## save
 
-[[find in source code]](../../../gimpformats/utils.py#L17)
+[Show source in utils.py:17](../../../gimpformats/utils.py#L17)
+
+Save this gimp image to a file.
+
+#### Signature
 
 ```python
 def save(data: bytes, tofileName: BytesIO | str):
+    ...
 ```
 
-Save this gimp image to a file.
+

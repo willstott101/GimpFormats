@@ -1,50 +1,54 @@
 # Gimpgtptoolpreset
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimpgtptoolpreset
+
 > Auto-generated documentation for [gimpformats.GimpGtpToolPreset](../../../gimpformats/GimpGtpToolPreset.py) module.
 
-Pure python implementation of the gimp gtp tool preset format.
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpgtptoolpreset
-    - [GimpGtpToolPreset](#gimpgtptoolpreset)
-        - [GimpGtpToolPreset().\_\_repr\_\_](#gimpgtptoolpreset__repr__)
-        - [GimpGtpToolPreset().decode](#gimpgtptoolpresetdecode)
-        - [GimpGtpToolPreset().encode](#gimpgtptoolpresetencode)
-        - [GimpGtpToolPreset().load](#gimpgtptoolpresetload)
-        - [GimpGtpToolPreset().save](#gimpgtptoolpresetsave)
-    - [ParenFileValue](#parenfilevalue)
-        - [ParenFileValue().\_\_repr\_\_](#parenfilevalue__repr__)
-    - [parenFileDecode](#parenfiledecode)
-    - [parenFileEncode](#parenfileencode)
-    - [walkTree](#walktree)
+- [Gimpgtptoolpreset](#gimpgtptoolpreset)
+  - [GimpGtpToolPreset](#gimpgtptoolpreset)
+    - [GimpGtpToolPreset().__repr__](#gimpgtptoolpreset()__repr__)
+    - [GimpGtpToolPreset().decode](#gimpgtptoolpreset()decode)
+    - [GimpGtpToolPreset().encode](#gimpgtptoolpreset()encode)
+    - [GimpGtpToolPreset().load](#gimpgtptoolpreset()load)
+    - [GimpGtpToolPreset().save](#gimpgtptoolpreset()save)
+  - [ParenFileValue](#parenfilevalue)
+    - [ParenFileValue().__repr__](#parenfilevalue()__repr__)
+  - [parenFileDecode](#parenfiledecode)
+  - [parenFileEncode](#parenfileencode)
+  - [walkTree](#walktree)
 
 ## GimpGtpToolPreset
 
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L118)
-
-```python
-class GimpGtpToolPreset():
-    def __init__(fileName=None):
-```
+[Show source in GimpGtpToolPreset.py:118](../../../gimpformats/GimpGtpToolPreset.py#L118)
 
 Pure python implementation of the gimp gtp tool preset format.
 
-### GimpGtpToolPreset().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L164)
+#### Signature
 
 ```python
-def __repr__(indent=''):
+class GimpGtpToolPreset:
+    def __init__(self, fileName=None):
+        ...
 ```
+
+### GimpGtpToolPreset().__repr__
+
+[Show source in GimpGtpToolPreset.py:164](../../../gimpformats/GimpGtpToolPreset.py#L164)
 
 Get a textual representation of this object.
 
-### GimpGtpToolPreset().decode
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L135)
+#### Signature
 
 ```python
-def decode(data: bytes, index: int = 0):
+def __repr__(self, indent=""):
+    ...
 ```
+
+### GimpGtpToolPreset().decode
+
+[Show source in GimpGtpToolPreset.py:135](../../../gimpformats/GimpGtpToolPreset.py#L135)
 
 Decode a byte buffer.
 
@@ -53,23 +57,29 @@ Decode a byte buffer.
 - `data` - data buffer to decode
 - `index` - ignored
 
-### GimpGtpToolPreset().encode
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L144)
+#### Signature
 
 ```python
-def encode():
+def decode(self, data: bytes, index: int = 0):
+    ...
 ```
+
+### GimpGtpToolPreset().encode
+
+[Show source in GimpGtpToolPreset.py:144](../../../gimpformats/GimpGtpToolPreset.py#L144)
 
 Encode to a byte array.
 
-### GimpGtpToolPreset().load
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L127)
+#### Signature
 
 ```python
-def load(fileName: BytesIO | str):
+def encode(self):
+    ...
 ```
+
+### GimpGtpToolPreset().load
+
+[Show source in GimpGtpToolPreset.py:127](../../../gimpformats/GimpGtpToolPreset.py#L127)
 
 Load a gimp file.
 
@@ -77,67 +87,102 @@ Load a gimp file.
 
 - `fileName` - can be a file name or a file-like object
 
-### GimpGtpToolPreset().save
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L148)
+#### Signature
 
 ```python
-def save(tofileName=None, toExtension=None):
+def load(self, fileName: BytesIO | str):
+    ...
 ```
+
+### GimpGtpToolPreset().save
+
+[Show source in GimpGtpToolPreset.py:148](../../../gimpformats/GimpGtpToolPreset.py#L148)
 
 Save this gimp tool preset to a file.
 
-## ParenFileValue
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L13)
+#### Signature
 
 ```python
-class ParenFileValue():
-    def __init__(name: str = None, value: str = '', children=None):
+def save(self, tofileName=None, toExtension=None):
+    ...
 ```
+
+
+
+## ParenFileValue
+
+[Show source in GimpGtpToolPreset.py:13](../../../gimpformats/GimpGtpToolPreset.py#L13)
 
 A parentheses-based file format.
 
 (possibly "scheme" language?)
 
-### ParenFileValue().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L52)
+#### Signature
 
 ```python
-def __repr__():
+class ParenFileValue:
+    def __init__(self, name: str = None, value: str = "", children=None):
+        ...
 ```
+
+### ParenFileValue().__repr__
+
+[Show source in GimpGtpToolPreset.py:52](../../../gimpformats/GimpGtpToolPreset.py#L52)
 
 Get a textual representation of this object.
 
-## parenFileDecode
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L70)
+#### Signature
 
 ```python
-def parenFileDecode(data: bytes):
+def __repr__(self):
+    ...
 ```
+
+
+
+## parenFileDecode
+
+[Show source in GimpGtpToolPreset.py:70](../../../gimpformats/GimpGtpToolPreset.py#L70)
 
 Decode a parentheses-based file format.
 
 (possibly "scheme" language?)
 
-## parenFileEncode
-
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L104)
+#### Signature
 
 ```python
-def parenFileEncode(values):
+def parenFileDecode(data: bytes):
+    ...
 ```
+
+
+
+## parenFileEncode
+
+[Show source in GimpGtpToolPreset.py:104](../../../gimpformats/GimpGtpToolPreset.py#L104)
 
 Encode a values tree to a buffer.
 
+#### Signature
+
+```python
+def parenFileEncode(values):
+    ...
+```
+
+
+
 ## walkTree
 
-[[find in source code]](../../../gimpformats/GimpGtpToolPreset.py#L80)
+[Show source in GimpGtpToolPreset.py:80](../../../gimpformats/GimpGtpToolPreset.py#L80)
+
+Walk the tree.
+
+#### Signature
 
 ```python
 def walkTree(items):
+    ...
 ```
 
-Walk the tree.
+

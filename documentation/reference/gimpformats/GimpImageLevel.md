@@ -1,63 +1,68 @@
 # Gimpimagelevel
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimpimagelevel
+
 > Auto-generated documentation for [gimpformats.GimpImageLevel](../../../gimpformats/GimpImageLevel.py) module.
 
-Gets packed pixels from a gimp image.
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpimagelevel
-    - [GimpImageLevel](#gimpimagelevel)
-        - [GimpImageLevel().\_\_repr\_\_](#gimpimagelevel__repr__)
-        - [GimpImageLevel().bpp](#gimpimagelevelbpp)
-        - [GimpImageLevel().decode](#gimpimageleveldecode)
-        - [GimpImageLevel().encode](#gimpimagelevelencode)
-        - [GimpImageLevel().image](#gimpimagelevelimage)
-        - [GimpImageLevel().image](#gimpimagelevelimage)
-        - [GimpImageLevel().mode](#gimpimagelevelmode)
-        - [GimpImageLevel().tiles](#gimpimageleveltiles)
-
-This represents a single level in an imageHierarchy
+- [Gimpimagelevel](#gimpimagelevel)
+  - [GimpImageLevel](#gimpimagelevel)
+    - [GimpImageLevel().__repr__](#gimpimagelevel()__repr__)
+    - [GimpImageLevel().bpp](#gimpimagelevel()bpp)
+    - [GimpImageLevel().decode](#gimpimagelevel()decode)
+    - [GimpImageLevel().encode](#gimpimagelevel()encode)
+    - [GimpImageLevel().image](#gimpimagelevel()image)
+    - [GimpImageLevel().image](#gimpimagelevel()image-1)
+    - [GimpImageLevel().mode](#gimpimagelevel()mode)
+    - [GimpImageLevel().tiles](#gimpimagelevel()tiles)
 
 ## GimpImageLevel
 
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L19)
-
-```python
-class GimpImageLevel(GimpIOBase):
-    def __init__(parent):
-```
+[Show source in GimpImageLevel.py:19](../../../gimpformats/GimpImageLevel.py#L19)
 
 Gets packed pixels from a gimp image.
 
 This represents a single level in an imageHierarchy
 
-### GimpImageLevel().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L279)
+#### Signature
 
 ```python
-def __repr__(indent: str = ''):
+class GimpImageLevel(GimpIOBase):
+    def __init__(self, parent):
+        ...
 ```
+
+### GimpImageLevel().__repr__
+
+[Show source in GimpImageLevel.py:279](../../../gimpformats/GimpImageLevel.py#L279)
 
 Get a textual representation of this object.
 
-### GimpImageLevel().bpp
-
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L224)
+#### Signature
 
 ```python
-@property
-def bpp():
+def __repr__(self, indent: str = ""):
+    ...
 ```
+
+### GimpImageLevel().bpp
+
+[Show source in GimpImageLevel.py:224](../../../gimpformats/GimpImageLevel.py#L224)
 
 Get bpp.
 
-### GimpImageLevel().decode
-
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L32)
+#### Signature
 
 ```python
-def decode(data: bytes, index: int = 0):
+@property
+def bpp(self):
+    ...
 ```
+
+### GimpImageLevel().decode
+
+[Show source in GimpImageLevel.py:32](../../../gimpformats/GimpImageLevel.py#L32)
 
 Decode a byte buffer.
 
@@ -66,54 +71,78 @@ Decode a byte buffer.
 - `data` - data buffer to decode
 - `index` - index within the buffer to start at
 
-### GimpImageLevel().encode
-
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L71)
+#### Signature
 
 ```python
-def encode():
+def decode(self, data: bytes, index: int = 0):
+    ...
 ```
+
+### GimpImageLevel().encode
+
+[Show source in GimpImageLevel.py:71](../../../gimpformats/GimpImageLevel.py#L71)
 
 Encode this object to a byte buffer.
 
-### GimpImageLevel().image
-
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L255)
+#### Signature
 
 ```python
-@property
-def image() -> Image:
+def encode(self):
+    ...
 ```
+
+### GimpImageLevel().image
+
+[Show source in GimpImageLevel.py:255](../../../gimpformats/GimpImageLevel.py#L255)
 
 Get a final, compiled image
 
+#### Signature
+
+```python
+@property
+def image(self) -> Image:
+    ...
+```
+
 ### GimpImageLevel().image
 
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L271)
+[Show source in GimpImageLevel.py:271](../../../gimpformats/GimpImageLevel.py#L271)
+
+#### Signature
 
 ```python
 @image.setter
-def image(image: Image):
+def image(self, image: Image):
+    ...
 ```
 
 ### GimpImageLevel().mode
 
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L229)
-
-```python
-@property
-def mode():
-```
+[Show source in GimpImageLevel.py:229](../../../gimpformats/GimpImageLevel.py#L229)
 
 Get mode.
 
-### GimpImageLevel().tiles
-
-[[find in source code]](../../../gimpformats/GimpImageLevel.py#L235)
+#### Signature
 
 ```python
 @property
-def tiles():
+def mode(self):
+    ...
 ```
 
+### GimpImageLevel().tiles
+
+[Show source in GimpImageLevel.py:235](../../../gimpformats/GimpImageLevel.py#L235)
+
 Get tiles.
+
+#### Signature
+
+```python
+@property
+def tiles(self):
+    ...
+```
+
+

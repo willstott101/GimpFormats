@@ -1,56 +1,63 @@
 # Gimpgplpalette
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimpgplpalette
+
 > Auto-generated documentation for [gimpformats.GimpGplPalette](../../../gimpformats/GimpGplPalette.py) module.
 
-Pure python implementation of the gimp gpl palette format.
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpgplpalette
-    - [GimpGplPalette](#gimpgplpalette)
-        - [GimpGplPalette().\_\_eq\_\_](#gimpgplpalette__eq__)
-        - [GimpGplPalette().\_\_repr\_\_](#gimpgplpalette__repr__)
-        - [GimpGplPalette().decode](#gimpgplpalettedecode)
-        - [GimpGplPalette().encode](#gimpgplpaletteencode)
-        - [GimpGplPalette().load](#gimpgplpaletteload)
-        - [GimpGplPalette().save](#gimpgplpalettesave)
+- [Gimpgplpalette](#gimpgplpalette)
+  - [GimpGplPalette](#gimpgplpalette)
+    - [GimpGplPalette().__eq__](#gimpgplpalette()__eq__)
+    - [GimpGplPalette().__repr__](#gimpgplpalette()__repr__)
+    - [GimpGplPalette().decode](#gimpgplpalette()decode)
+    - [GimpGplPalette().encode](#gimpgplpalette()encode)
+    - [GimpGplPalette().load](#gimpgplpalette()load)
+    - [GimpGplPalette().save](#gimpgplpalette()save)
 
 ## GimpGplPalette
 
-[[find in source code]](../../../gimpformats/GimpGplPalette.py#L12)
-
-```python
-class GimpGplPalette():
-    def __init__(fileName: BytesIO | str | None = None):
-```
+[Show source in GimpGplPalette.py:12](../../../gimpformats/GimpGplPalette.py#L12)
 
 Pure python implementation of the gimp gpl palette format.
 
-### GimpGplPalette().\_\_eq\_\_
-
-[[find in source code]](../../../gimpformats/GimpGplPalette.py#L93)
+#### Signature
 
 ```python
-def __eq__(other: GimpGplPalette):
+class GimpGplPalette:
+    def __init__(self, fileName: BytesIO | str | None = None):
+        ...
 ```
+
+### GimpGplPalette().__eq__
+
+[Show source in GimpGplPalette.py:93](../../../gimpformats/GimpGplPalette.py#L93)
 
 Perform a comparison.
 
-### GimpGplPalette().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpGplPalette.py#L78)
+#### Signature
 
 ```python
-def __repr__():
+def __eq__(self, other: GimpGplPalette):
+    ...
 ```
+
+### GimpGplPalette().__repr__
+
+[Show source in GimpGplPalette.py:78](../../../gimpformats/GimpGplPalette.py#L78)
 
 Get a textual representation of this object.
 
-### GimpGplPalette().decode
-
-[[find in source code]](../../../gimpformats/GimpGplPalette.py#L36)
+#### Signature
 
 ```python
-def decode(data: str) -> None:
+def __repr__(self):
+    ...
 ```
+
+### GimpGplPalette().decode
+
+[Show source in GimpGplPalette.py:36](../../../gimpformats/GimpGplPalette.py#L36)
 
 Decode a byte buffer.
 
@@ -62,23 +69,29 @@ Decode a byte buffer.
 
 - `RuntimeError` - File format error.  Magic value mismatch.
 
-### GimpGplPalette().encode
-
-[[find in source code]](../../../gimpformats/GimpGplPalette.py#L61)
+#### Signature
 
 ```python
-def encode():
+def decode(self, data: str) -> None:
+    ...
 ```
+
+### GimpGplPalette().encode
+
+[Show source in GimpGplPalette.py:61](../../../gimpformats/GimpGplPalette.py#L61)
 
 Encode to a raw data stream.
 
-### GimpGplPalette().load
-
-[[find in source code]](../../../gimpformats/GimpGplPalette.py#L28)
+#### Signature
 
 ```python
-def load(fileName: BytesIO | str):
+def encode(self):
+    ...
 ```
+
+### GimpGplPalette().load
+
+[Show source in GimpGplPalette.py:28](../../../gimpformats/GimpGplPalette.py#L28)
 
 Load a gimp file.
 
@@ -86,12 +99,24 @@ Load a gimp file.
 
 - `fileName` - can be a file name or a file-like object
 
-### GimpGplPalette().save
-
-[[find in source code]](../../../gimpformats/GimpGplPalette.py#L74)
+#### Signature
 
 ```python
-def save(fileName: str | BytesIO):
+def load(self, fileName: BytesIO | str):
+    ...
 ```
 
+### GimpGplPalette().save
+
+[Show source in GimpGplPalette.py:74](../../../gimpformats/GimpGplPalette.py#L74)
+
 Save this gimp image to a file.
+
+#### Signature
+
+```python
+def save(self, fileName: str | BytesIO):
+    ...
+```
+
+

@@ -1,47 +1,51 @@
 # Gimpchannel
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimpchannel
+
 > Auto-generated documentation for [gimpformats.GimpChannel](../../../gimpformats/GimpChannel.py) module.
 
-Represents a single channel or mask in a gimp image.
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpchannel
-    - [GimpChannel](#gimpchannel)
-        - [GimpChannel().\_\_repr\_\_](#gimpchannel__repr__)
-        - [GimpChannel().decode](#gimpchanneldecode)
-        - [GimpChannel().encode](#gimpchannelencode)
-        - [GimpChannel().forceFullyLoaded](#gimpchannelforcefullyloaded)
-        - [GimpChannel().image](#gimpchannelimage)
-        - [GimpChannel().image](#gimpchannelimage)
-        - [GimpChannel().imageHierarchy](#gimpchannelimagehierarchy)
+- [Gimpchannel](#gimpchannel)
+  - [GimpChannel](#gimpchannel)
+    - [GimpChannel().__repr__](#gimpchannel()__repr__)
+    - [GimpChannel().decode](#gimpchannel()decode)
+    - [GimpChannel().encode](#gimpchannel()encode)
+    - [GimpChannel().forceFullyLoaded](#gimpchannel()forcefullyloaded)
+    - [GimpChannel().image](#gimpchannel()image)
+    - [GimpChannel().image](#gimpchannel()image-1)
+    - [GimpChannel().imageHierarchy](#gimpchannel()imagehierarchy)
 
 ## GimpChannel
 
-[[find in source code]](../../../gimpformats/GimpChannel.py#L12)
-
-```python
-class GimpChannel(GimpIOBase):
-    def __init__(parent, name: str = '', image: Image.Image | None = None):
-```
+[Show source in GimpChannel.py:12](../../../gimpformats/GimpChannel.py#L12)
 
 Represents a single channel or mask in a gimp image.
 
-### GimpChannel().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpChannel.py#L101)
+#### Signature
 
 ```python
-def __repr__(indent: str = '') -> str:
+class GimpChannel(GimpIOBase):
+    def __init__(self, parent, name: str = "", image: Image.Image | None = None):
+        ...
 ```
+
+### GimpChannel().__repr__
+
+[Show source in GimpChannel.py:101](../../../gimpformats/GimpChannel.py#L101)
 
 Get a textual representation of this object.
 
-### GimpChannel().decode
-
-[[find in source code]](../../../gimpformats/GimpChannel.py#L33)
+#### Signature
 
 ```python
-def decode(data: bytes, index: int = 0) -> int:
+def __repr__(self, indent: str = "") -> str:
+    ...
 ```
+
+### GimpChannel().decode
+
+[Show source in GimpChannel.py:33](../../../gimpformats/GimpChannel.py#L33)
 
 Decode a byte buffer.
 
@@ -54,58 +58,82 @@ Decode a byte buffer.
 
 - `int` - pointer
 
-### GimpChannel().encode
-
-[[find in source code]](../../../gimpformats/GimpChannel.py#L53)
+#### Signature
 
 ```python
-def encode() -> bytearray:
+def decode(self, data: bytes, index: int = 0) -> int:
+    ...
 ```
+
+### GimpChannel().encode
+
+[Show source in GimpChannel.py:53](../../../gimpformats/GimpChannel.py#L53)
 
 Encode this object to a byte buffer.
 
-### GimpChannel().forceFullyLoaded
-
-[[find in source code]](../../../gimpformats/GimpChannel.py#L81)
+#### Signature
 
 ```python
-def forceFullyLoaded():
+def encode(self) -> bytearray:
+    ...
 ```
+
+### GimpChannel().forceFullyLoaded
+
+[Show source in GimpChannel.py:81](../../../gimpformats/GimpChannel.py#L81)
 
 Make sure everything is fully loaded from the file.
 
-### GimpChannel().image
-
-[[find in source code]](../../../gimpformats/GimpChannel.py#L66)
+#### Signature
 
 ```python
-@property
-def image() -> Image.Image | None:
+def forceFullyLoaded(self):
+    ...
 ```
+
+### GimpChannel().image
+
+[Show source in GimpChannel.py:66](../../../gimpformats/GimpChannel.py#L66)
 
 Get a final, compiled image.
 
+#### Signature
+
+```python
+@property
+def image(self) -> Image.Image | None:
+    ...
+```
+
 ### GimpChannel().image
 
-[[find in source code]](../../../gimpformats/GimpChannel.py#L71)
+[Show source in GimpChannel.py:71](../../../gimpformats/GimpChannel.py#L71)
+
+Get a final, compiled image.
+
+#### Signature
 
 ```python
 @image.setter
-def image(image: Image.Image):
+def image(self, image: Image.Image):
+    ...
 ```
-
-Get a final, compiled image.
 
 ### GimpChannel().imageHierarchy
 
-[[find in source code]](../../../gimpformats/GimpChannel.py#L87)
-
-```python
-@property
-def imageHierarchy():
-```
+[Show source in GimpChannel.py:87](../../../gimpformats/GimpChannel.py#L87)
 
 Get the image hierarchy.
 
 This is mainly used for decoding the image, so
 not much use to you.
+
+#### Signature
+
+```python
+@property
+def imageHierarchy(self):
+    ...
+```
+
+

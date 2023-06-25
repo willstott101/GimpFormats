@@ -1,28 +1,22 @@
 # Gimpgihbrushset
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimpgihbrushset
+
 > Auto-generated documentation for [gimpformats.GimpGihBrushSet](../../../gimpformats/GimpGihBrushSet.py) module.
 
-Gimp Image Pipe Format.
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpgihbrushset
-    - [GimpGihBrushSet](#gimpgihbrushset)
-        - [GimpGihBrushSet().\_\_repr\_\_](#gimpgihbrushset__repr__)
-        - [GimpGihBrushSet().decode](#gimpgihbrushsetdecode)
-        - [GimpGihBrushSet().encode](#gimpgihbrushsetencode)
-        - [GimpGihBrushSet().load](#gimpgihbrushsetload)
-        - [GimpGihBrushSet().save](#gimpgihbrushsetsave)
-
-The gih format is use to store a series of brushes, and some extra info
-for how to use them.
+- [Gimpgihbrushset](#gimpgihbrushset)
+  - [GimpGihBrushSet](#gimpgihbrushset)
+    - [GimpGihBrushSet().__repr__](#gimpgihbrushset()__repr__)
+    - [GimpGihBrushSet().decode](#gimpgihbrushset()decode)
+    - [GimpGihBrushSet().encode](#gimpgihbrushset()encode)
+    - [GimpGihBrushSet().load](#gimpgihbrushset()load)
+    - [GimpGihBrushSet().save](#gimpgihbrushset()save)
 
 ## GimpGihBrushSet
 
-[[find in source code]](../../../gimpformats/GimpGihBrushSet.py#L17)
-
-```python
-class GimpGihBrushSet():
-    def __init__(fileName: str = None):
-```
+[Show source in GimpGihBrushSet.py:17](../../../gimpformats/GimpGihBrushSet.py#L17)
 
 Gimp Image Pipe Format.
 
@@ -32,23 +26,30 @@ for how to use them.
 See:
  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/gih.txt
 
-### GimpGihBrushSet().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpGihBrushSet.py#L94)
+#### Signature
 
 ```python
-def __repr__(indent=''):
+class GimpGihBrushSet:
+    def __init__(self, fileName: str = None):
+        ...
 ```
+
+### GimpGihBrushSet().__repr__
+
+[Show source in GimpGihBrushSet.py:94](../../../gimpformats/GimpGihBrushSet.py#L94)
 
 Get a textual representation of this object.
 
-### GimpGihBrushSet().decode
-
-[[find in source code]](../../../gimpformats/GimpGihBrushSet.py#L48)
+#### Signature
 
 ```python
-def decode(data: bytes, index: int = 0) -> int:
+def __repr__(self, indent=""):
+    ...
 ```
+
+### GimpGihBrushSet().decode
+
+[Show source in GimpGihBrushSet.py:48](../../../gimpformats/GimpGihBrushSet.py#L48)
 
 Decode a byte buffer.
 
@@ -61,23 +62,29 @@ Decode a byte buffer.
 
 - `int` - offset
 
-### GimpGihBrushSet().encode
-
-[[find in source code]](../../../gimpformats/GimpGihBrushSet.py#L76)
+#### Signature
 
 ```python
-def encode():
+def decode(self, data: bytes, index: int = 0) -> int:
+    ...
 ```
+
+### GimpGihBrushSet().encode
+
+[Show source in GimpGihBrushSet.py:76](../../../gimpformats/GimpGihBrushSet.py#L76)
 
 Encode this object to a byte array.
 
-### GimpGihBrushSet().load
-
-[[find in source code]](../../../gimpformats/GimpGihBrushSet.py#L40)
+#### Signature
 
 ```python
-def load(fileName: BytesIO | str):
+def encode(self):
+    ...
 ```
+
+### GimpGihBrushSet().load
+
+[Show source in GimpGihBrushSet.py:40](../../../gimpformats/GimpGihBrushSet.py#L40)
 
 Load a gimp file.
 
@@ -85,12 +92,24 @@ Load a gimp file.
 
 - `fileName` - can be a file name or a file-like object
 
-### GimpGihBrushSet().save
-
-[[find in source code]](../../../gimpformats/GimpGihBrushSet.py#L90)
+#### Signature
 
 ```python
-def save(tofileName: str):
+def load(self, fileName: BytesIO | str):
+    ...
 ```
 
+### GimpGihBrushSet().save
+
+[Show source in GimpGihBrushSet.py:90](../../../gimpformats/GimpGihBrushSet.py#L90)
+
 Save this gimp image to a file.
+
+#### Signature
+
+```python
+def save(self, tofileName: str):
+    ...
+```
+
+

@@ -1,164 +1,197 @@
 # Gimpiobase
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimpiobase
+
 > Auto-generated documentation for [gimpformats.GimpIOBase](../../../gimpformats/GimpIOBase.py) module.
 
-A specialized binary file base for Gimp files.
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpiobase
-    - [GimpIOBase](#gimpiobase)
-        - [GimpIOBase().\_\_repr\_\_](#gimpiobase__repr__)
-        - [GimpIOBase().activeVector](#gimpiobaseactivevector)
-        - [GimpIOBase().doc](#gimpiobasedoc)
-        - [GimpIOBase().expanded](#gimpiobaseexpanded)
-        - [GimpIOBase().expanded](#gimpiobaseexpanded)
-        - [GimpIOBase().getBlendMode](#gimpiobasegetblendmode)
-        - [GimpIOBase().getCompositeModes](#gimpiobasegetcompositemodes)
-        - [GimpIOBase().getCompositeSpaces](#gimpiobasegetcompositespaces)
-        - [GimpIOBase().getCompression](#gimpiobasegetcompression)
-        - [GimpIOBase().getTagColours](#gimpiobasegettagcolours)
-        - [GimpIOBase().getUnits](#gimpiobasegetunits)
-        - [GimpIOBase().pointerSize](#gimpiobasepointersize)
-        - [GimpIOBase().root](#gimpiobaseroot)
-        - [GimpIOBase().tattoo](#gimpiobasetattoo)
-        - [GimpIOBase().tattoo](#gimpiobasetattoo)
-    - [GimpUserUnits](#gimpuserunits)
-        - [GimpUserUnits().\_\_repr\_\_](#gimpuserunits__repr__)
-        - [GimpUserUnits().decode](#gimpuserunitsdecode)
-        - [GimpUserUnits().encode](#gimpuserunitsencode)
+- [Gimpiobase](#gimpiobase)
+  - [GimpIOBase](#gimpiobase)
+    - [GimpIOBase().__repr__](#gimpiobase()__repr__)
+    - [GimpIOBase().activeVector](#gimpiobase()activevector)
+    - [GimpIOBase().doc](#gimpiobase()doc)
+    - [GimpIOBase().expanded](#gimpiobase()expanded)
+    - [GimpIOBase().expanded](#gimpiobase()expanded-1)
+    - [GimpIOBase().getBlendMode](#gimpiobase()getblendmode)
+    - [GimpIOBase().getCompositeModes](#gimpiobase()getcompositemodes)
+    - [GimpIOBase().getCompositeSpaces](#gimpiobase()getcompositespaces)
+    - [GimpIOBase().getCompression](#gimpiobase()getcompression)
+    - [GimpIOBase().getTagColours](#gimpiobase()gettagcolours)
+    - [GimpIOBase().getUnits](#gimpiobase()getunits)
+    - [GimpIOBase().pointerSize](#gimpiobase()pointersize)
+    - [GimpIOBase().root](#gimpiobase()root)
+    - [GimpIOBase().tattoo](#gimpiobase()tattoo)
+    - [GimpIOBase().tattoo](#gimpiobase()tattoo-1)
+  - [GimpUserUnits](#gimpuserunits)
+    - [GimpUserUnits().__repr__](#gimpuserunits()__repr__)
+    - [GimpUserUnits().decode](#gimpuserunits()decode)
+    - [GimpUserUnits().encode](#gimpuserunits()encode)
 
 ## GimpIOBase
 
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L13)
-
-```python
-class GimpIOBase():
-    def __init__(parent):
-```
+[Show source in GimpIOBase.py:13](../../../gimpformats/GimpIOBase.py#L13)
 
 A specialized binary file base for Gimp files.
 
-### GimpIOBase().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L681)
+#### Signature
 
 ```python
-def __repr__(indent: str = ''):
+class GimpIOBase:
+    def __init__(self, parent):
+        ...
 ```
+
+### GimpIOBase().__repr__
+
+[Show source in GimpIOBase.py:681](../../../gimpformats/GimpIOBase.py#L681)
 
 Get a textual representation of this object.
 
-### GimpIOBase().activeVector
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L297)
+#### Signature
 
 ```python
-@property
-def activeVector():
+def __repr__(self, indent: str = ""):
+    ...
 ```
+
+### GimpIOBase().activeVector
+
+[Show source in GimpIOBase.py:297](../../../gimpformats/GimpIOBase.py#L297)
 
 Get the vector that is currently active.
 
-### GimpIOBase().doc
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L224)
+#### Signature
 
 ```python
 @property
-def doc():
+def activeVector(self):
+    ...
 ```
+
+### GimpIOBase().doc
+
+[Show source in GimpIOBase.py:224](../../../gimpformats/GimpIOBase.py#L224)
 
 Get the main document object.
 
-### GimpIOBase().expanded
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L302)
+#### Signature
 
 ```python
 @property
-def expanded() -> bool:
+def doc(self):
+    ...
 ```
-
-Is the group layer expanded.
 
 ### GimpIOBase().expanded
 
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L307)
+[Show source in GimpIOBase.py:302](../../../gimpformats/GimpIOBase.py#L302)
+
+Is the group layer expanded.
+
+#### Signature
+
+```python
+@property
+def expanded(self) -> bool:
+    ...
+```
+
+### GimpIOBase().expanded
+
+[Show source in GimpIOBase.py:307](../../../gimpformats/GimpIOBase.py#L307)
+
+Is the group layer expanded.
+
+#### Signature
 
 ```python
 @expanded.setter
-def expanded(expanded):
+def expanded(self, expanded):
+    ...
 ```
-
-Is the group layer expanded.
 
 ### GimpIOBase().getBlendMode
 
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L174)
-
-```python
-def getBlendMode() -> str:
-```
+[Show source in GimpIOBase.py:174](../../../gimpformats/GimpIOBase.py#L174)
 
 Return the blend mode as a string.
 
-### GimpIOBase().getCompositeModes
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L190)
+#### Signature
 
 ```python
-def getCompositeModes():
+def getBlendMode(self) -> str:
+    ...
 ```
+
+### GimpIOBase().getCompositeModes
+
+[Show source in GimpIOBase.py:190](../../../gimpformats/GimpIOBase.py#L190)
 
 Return the composite mode as a string.
 
-### GimpIOBase().getCompositeSpaces
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L194)
+#### Signature
 
 ```python
-def getCompositeSpaces():
+def getCompositeModes(self):
+    ...
 ```
+
+### GimpIOBase().getCompositeSpaces
+
+[Show source in GimpIOBase.py:194](../../../gimpformats/GimpIOBase.py#L194)
 
 Return the composite spaces as a string.
 
-### GimpIOBase().getCompression
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L178)
+#### Signature
 
 ```python
-def getCompression() -> str:
+def getCompositeSpaces(self):
+    ...
 ```
+
+### GimpIOBase().getCompression
+
+[Show source in GimpIOBase.py:178](../../../gimpformats/GimpIOBase.py#L178)
 
 Return the compression as a string.
 
-### GimpIOBase().getTagColours
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L186)
+#### Signature
 
 ```python
-def getTagColours():
+def getCompression(self) -> str:
+    ...
 ```
+
+### GimpIOBase().getTagColours
+
+[Show source in GimpIOBase.py:186](../../../gimpformats/GimpIOBase.py#L186)
 
 Return the tag colours as a string.
 
-### GimpIOBase().getUnits
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L182)
+#### Signature
 
 ```python
-def getUnits() -> str:
+def getTagColours(self):
+    ...
 ```
+
+### GimpIOBase().getUnits
+
+[Show source in GimpIOBase.py:182](../../../gimpformats/GimpIOBase.py#L182)
 
 Return the units as a string.
 
-### GimpIOBase().pointerSize
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L198)
+#### Signature
 
 ```python
-@property
-def pointerSize() -> int:
+def getUnits(self) -> str:
+    ...
 ```
+
+### GimpIOBase().pointerSize
+
+[Show source in GimpIOBase.py:198](../../../gimpformats/GimpIOBase.py#L198)
 
 Determine the size of the "pointer" datatype based on the document version.
 
@@ -166,67 +199,88 @@ NOTE: prior to version 11, it was 32-bit,
  since then it is 64-bit, thus supporting
  larger image files
 
-### GimpIOBase().root
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L232)
+#### Signature
 
 ```python
 @property
-def root():
+def pointerSize(self) -> int:
+    ...
 ```
+
+### GimpIOBase().root
+
+[Show source in GimpIOBase.py:232](../../../gimpformats/GimpIOBase.py#L232)
 
 Get the root of the file object tree (Which is the same as self.doc).
 
-### GimpIOBase().tattoo
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L237)
+#### Signature
 
 ```python
 @property
-def tattoo():
+def root(self):
+    ...
 ```
-
-Gimp nomenclature for the item's unique id.
 
 ### GimpIOBase().tattoo
 
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L242)
-
-```python
-@tattoo.setter
-def tattoo(tattoo):
-```
+[Show source in GimpIOBase.py:237](../../../gimpformats/GimpIOBase.py#L237)
 
 Gimp nomenclature for the item's unique id.
 
-## GimpUserUnits
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L764)
+#### Signature
 
 ```python
-class GimpUserUnits():
-    def __init__():
+@property
+def tattoo(self):
+    ...
 ```
+
+### GimpIOBase().tattoo
+
+[Show source in GimpIOBase.py:242](../../../gimpformats/GimpIOBase.py#L242)
+
+Gimp nomenclature for the item's unique id.
+
+#### Signature
+
+```python
+@tattoo.setter
+def tattoo(self, tattoo):
+    ...
+```
+
+
+
+## GimpUserUnits
+
+[Show source in GimpIOBase.py:764](../../../gimpformats/GimpIOBase.py#L764)
 
 User-defined measurement units.
 
-### GimpUserUnits().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L808)
+#### Signature
 
 ```python
-def __repr__(indent: str = ''):
+class GimpUserUnits:
+    def __init__(self):
+        ...
 ```
+
+### GimpUserUnits().__repr__
+
+[Show source in GimpIOBase.py:808](../../../gimpformats/GimpIOBase.py#L808)
 
 Get a textual representation of this object.
 
-### GimpUserUnits().decode
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L776)
+#### Signature
 
 ```python
-def decode(data: bytes, index: int = 0) -> int:
+def __repr__(self, indent: str = ""):
+    ...
 ```
+
+### GimpUserUnits().decode
+
+[Show source in GimpIOBase.py:776](../../../gimpformats/GimpIOBase.py#L776)
 
 Decode a byte buffer.
 
@@ -239,12 +293,24 @@ Decode a byte buffer.
 
 - `int` - offset
 
-### GimpUserUnits().encode
-
-[[find in source code]](../../../gimpformats/GimpIOBase.py#L796)
+#### Signature
 
 ```python
-def encode():
+def decode(self, data: bytes, index: int = 0) -> int:
+    ...
 ```
 
+### GimpUserUnits().encode
+
+[Show source in GimpIOBase.py:796](../../../gimpformats/GimpIOBase.py#L796)
+
 Convert this object to raw bytes.
+
+#### Signature
+
+```python
+def encode(self):
+    ...
+```
+
+

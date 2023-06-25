@@ -1,55 +1,43 @@
 # Gimpxcfdocument
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimpxcfdocument
+
 > Auto-generated documentation for [gimpformats.gimpXcfDocument](../../../gimpformats/gimpXcfDocument.py) module.
 
-Pure python implementation of the gimp xcf file format.
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpxcfdocument
-    - [GimpDocument](#gimpdocument)
-        - [GimpDocument().\_\_delitem\_\_](#gimpdocument__delitem__)
-        - [GimpDocument().\_\_getitem\_\_](#gimpdocument__getitem__)
-        - [GimpDocument().\_\_len\_\_](#gimpdocument__len__)
-        - [GimpDocument().\_\_repr\_\_](#gimpdocument__repr__)
-        - [GimpDocument().\_\_setitem\_\_](#gimpdocument__setitem__)
-        - [GimpDocument().addLayer](#gimpdocumentaddlayer)
-        - [GimpDocument().appendLayer](#gimpdocumentappendlayer)
-        - [GimpDocument().decode](#gimpdocumentdecode)
-        - [GimpDocument().deleteLayer](#gimpdocumentdeletelayer)
-        - [GimpDocument().encode](#gimpdocumentencode)
-        - [GimpDocument().forceFullyLoaded](#gimpdocumentforcefullyloaded)
-        - [GimpDocument().getLayer](#gimpdocumentgetlayer)
-        - [GimpDocument().image](#gimpdocumentimage)
-        - [GimpDocument().insertLayer](#gimpdocumentinsertlayer)
-        - [GimpDocument().layers](#gimpdocumentlayers)
-        - [GimpDocument().load](#gimpdocumentload)
-        - [GimpDocument().newLayer](#gimpdocumentnewlayer)
-        - [GimpDocument().newLayerFromClipboard](#gimpdocumentnewlayerfromclipboard)
-        - [GimpDocument().save](#gimpdocumentsave)
-        - [GimpDocument().saveNew](#gimpdocumentsavenew)
-        - [GimpDocument().setLayer](#gimpdocumentsetlayer)
-    - [blendModeLookup](#blendmodelookup)
-    - [flattenAll](#flattenall)
-    - [flattenLayerOrGroup](#flattenlayerorgroup)
-    - [renderMaskWOffset](#rendermaskwoffset)
-    - [renderWOffset](#renderwoffset)
-
-Currently supports:
- Loading xcf files
- Getting image hierarchy and info
- Getting image for each layer (PIL image)
-Currently not supporting:
- Saving
- Programatically alter documents (add layer, etc)
- Rendering a final, compositied image
+- [Gimpxcfdocument](#gimpxcfdocument)
+  - [GimpDocument](#gimpdocument)
+    - [GimpDocument().__delitem__](#gimpdocument()__delitem__)
+    - [GimpDocument().__getitem__](#gimpdocument()__getitem__)
+    - [GimpDocument().__len__](#gimpdocument()__len__)
+    - [GimpDocument().__repr__](#gimpdocument()__repr__)
+    - [GimpDocument().__setitem__](#gimpdocument()__setitem__)
+    - [GimpDocument().addLayer](#gimpdocument()addlayer)
+    - [GimpDocument().appendLayer](#gimpdocument()appendlayer)
+    - [GimpDocument().decode](#gimpdocument()decode)
+    - [GimpDocument().deleteLayer](#gimpdocument()deletelayer)
+    - [GimpDocument().encode](#gimpdocument()encode)
+    - [GimpDocument().forceFullyLoaded](#gimpdocument()forcefullyloaded)
+    - [GimpDocument().getLayer](#gimpdocument()getlayer)
+    - [GimpDocument().image](#gimpdocument()image)
+    - [GimpDocument().insertLayer](#gimpdocument()insertlayer)
+    - [GimpDocument().layers](#gimpdocument()layers)
+    - [GimpDocument().load](#gimpdocument()load)
+    - [GimpDocument().newLayer](#gimpdocument()newlayer)
+    - [GimpDocument().newLayerFromClipboard](#gimpdocument()newlayerfromclipboard)
+    - [GimpDocument().save](#gimpdocument()save)
+    - [GimpDocument().saveNew](#gimpdocument()savenew)
+    - [GimpDocument().setLayer](#gimpdocument()setlayer)
+  - [blendModeLookup](#blendmodelookup)
+  - [flattenAll](#flattenall)
+  - [flattenLayerOrGroup](#flattenlayerorgroup)
+  - [renderMaskWOffset](#rendermaskwoffset)
+  - [renderWOffset](#renderwoffset)
 
 ## GimpDocument
 
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L31)
-
-```python
-class GimpDocument(GimpIOBase):
-    def __init__(fileName=None):
-```
+[Show source in gimpXcfDocument.py:31](../../../gimpformats/gimpXcfDocument.py#L31)
 
 Pure python implementation of the gimp file format.
 
@@ -68,85 +56,107 @@ self._data = None
 See:
  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 
-### GimpDocument().\_\_delitem\_\_
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L329)
+#### Signature
 
 ```python
-def __delitem__(index: int) -> None:
+class GimpDocument(GimpIOBase):
+    def __init__(self, fileName=None):
+        ...
 ```
+
+### GimpDocument().__delitem__
+
+[Show source in gimpXcfDocument.py:329](../../../gimpformats/gimpXcfDocument.py#L329)
 
 Make this class act like this class is an array of layers...
 
 Delete a layer at an index.
 
-### GimpDocument().\_\_getitem\_\_
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L315)
+#### Signature
 
 ```python
-def __getitem__(index: int) -> GimpLayer:
+def __delitem__(self, index: int) -> None:
+    ...
 ```
+
+### GimpDocument().__getitem__
+
+[Show source in gimpXcfDocument.py:315](../../../gimpformats/gimpXcfDocument.py#L315)
 
 Make this class act like this class is an array of layers...
 
 Get the layer at an index.
 
-### GimpDocument().\_\_len\_\_
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L308)
+#### Signature
 
 ```python
-def __len__() -> int:
+def __getitem__(self, index: int) -> GimpLayer:
+    ...
 ```
+
+### GimpDocument().__len__
+
+[Show source in gimpXcfDocument.py:308](../../../gimpformats/gimpXcfDocument.py#L308)
 
 Make this class act like this class is an array of layers...
 
 Get the len.
 
-### GimpDocument().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L387)
+#### Signature
 
 ```python
-def __repr__(indent='') -> str:
+def __len__(self) -> int:
+    ...
 ```
+
+### GimpDocument().__repr__
+
+[Show source in gimpXcfDocument.py:387](../../../gimpformats/gimpXcfDocument.py#L387)
 
 Get a textual representation of this object.
 
-### GimpDocument().\_\_setitem\_\_
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L322)
+#### Signature
 
 ```python
-def __setitem__(index: int, layer) -> None:
+def __repr__(self, indent="") -> str:
+    ...
 ```
+
+### GimpDocument().__setitem__
+
+[Show source in gimpXcfDocument.py:322](../../../gimpformats/gimpXcfDocument.py#L322)
 
 Make this class act like this class is an array of layers...
 
 Set a layer at an index.
 
-### GimpDocument().addLayer
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L281)
+#### Signature
 
 ```python
-def addLayer(layer: GimpLayer):
+def __setitem__(self, index: int, layer) -> None:
+    ...
 ```
+
+### GimpDocument().addLayer
+
+[Show source in gimpXcfDocument.py:281](../../../gimpformats/gimpXcfDocument.py#L281)
 
 Append a layer object to the document.
 
 #### Arguments
 
 - `layer` - the new layer to append
+
+#### Signature
+
+```python
+def addLayer(self, layer: GimpLayer):
+    ...
+```
 
 ### GimpDocument().appendLayer
 
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L288)
-
-```python
-def appendLayer(layer: GimpLayer):
-```
+[Show source in gimpXcfDocument.py:288](../../../gimpformats/gimpXcfDocument.py#L288)
 
 Append a layer object to the document.
 
@@ -154,13 +164,16 @@ Append a layer object to the document.
 
 - `layer` - the new layer to append
 
-### GimpDocument().decode
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L91)
+#### Signature
 
 ```python
-def decode(data: bytes, index: int = 0) -> int:
+def appendLayer(self, layer: GimpLayer):
+    ...
 ```
+
+### GimpDocument().decode
+
+[Show source in gimpXcfDocument.py:91](../../../gimpformats/gimpXcfDocument.py#L91)
 
 Decode a byte buffer.
 
@@ -188,23 +201,29 @@ Return the offset
 
 - `int` - offset
 
-### GimpDocument().deleteLayer
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L303)
+#### Signature
 
 ```python
-def deleteLayer(index: int) -> None:
+def decode(self, data: bytes, index: int = 0) -> int:
+    ...
 ```
+
+### GimpDocument().deleteLayer
+
+[Show source in gimpXcfDocument.py:303](../../../gimpformats/gimpXcfDocument.py#L303)
 
 Delete a layer.
 
-### GimpDocument().encode
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L160)
+#### Signature
 
 ```python
-def encode():
+def deleteLayer(self, index: int) -> None:
+    ...
 ```
+
+### GimpDocument().encode
+
+[Show source in gimpXcfDocument.py:160](../../../gimpformats/gimpXcfDocument.py#L160)
 
 Encode to a byte array.
 
@@ -219,44 +238,56 @@ Set the layers and add the pointers to them
 Set the channels and add the pointers to them
 Return the data
 
-### GimpDocument().forceFullyLoaded
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L205)
+#### Signature
 
 ```python
-def forceFullyLoaded():
+def encode(self):
+    ...
 ```
+
+### GimpDocument().forceFullyLoaded
+
+[Show source in gimpXcfDocument.py:205](../../../gimpformats/gimpXcfDocument.py#L205)
 
 Make sure everything is fully loaded from the file.
 
-### GimpDocument().getLayer
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L237)
+#### Signature
 
 ```python
-def getLayer(index: int):
+def forceFullyLoaded(self):
+    ...
 ```
+
+### GimpDocument().getLayer
+
+[Show source in gimpXcfDocument.py:237](../../../gimpformats/gimpXcfDocument.py#L237)
 
 Return a given layer.
 
-### GimpDocument().image
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L340)
+#### Signature
 
 ```python
-@property
-def image():
+def getLayer(self, index: int):
+    ...
 ```
+
+### GimpDocument().image
+
+[Show source in gimpXcfDocument.py:340](../../../gimpformats/gimpXcfDocument.py#L340)
 
 Get a final, compiled image.
 
-### GimpDocument().insertLayer
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L295)
+#### Signature
 
 ```python
-def insertLayer(layer: GimpLayer, index: int = -1):
+@property
+def image(self):
+    ...
 ```
+
+### GimpDocument().insertLayer
+
+[Show source in gimpXcfDocument.py:295](../../../gimpformats/gimpXcfDocument.py#L295)
 
 Insert a layer object at a specific position.
 
@@ -265,26 +296,32 @@ Insert a layer object at a specific position.
 - `layer` - the new layer to insert
 - `index` - where to insert the new layer (default=top)
 
-### GimpDocument().layers
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L216)
+#### Signature
 
 ```python
-@property
-def layers():
+def insertLayer(self, layer: GimpLayer, index: int = -1):
+    ...
 ```
+
+### GimpDocument().layers
+
+[Show source in gimpXcfDocument.py:216](../../../gimpformats/gimpXcfDocument.py#L216)
 
 Decode the image's layers if necessary.
 
 TODO: need to do the same thing with self.Channels
 
-### GimpDocument().load
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L83)
+#### Signature
 
 ```python
-def load(fileName: BytesIO | str):
+@property
+def layers(self):
+    ...
 ```
+
+### GimpDocument().load
+
+[Show source in gimpXcfDocument.py:83](../../../gimpformats/gimpXcfDocument.py#L83)
 
 Load a gimp xcf and decode the file. See decode for more on this process.
 
@@ -292,36 +329,39 @@ Load a gimp xcf and decode the file. See decode for more on this process.
 
 - `fileName` - can be a file name or a file-like object
 
-### GimpDocument().newLayer
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L247)
+#### Signature
 
 ```python
-def newLayer(name: str, image: Image.Image, index: int = -1) -> GimpLayer:
+def load(self, fileName: BytesIO | str):
+    ...
 ```
+
+### GimpDocument().newLayer
+
+[Show source in gimpXcfDocument.py:247](../../../gimpformats/gimpXcfDocument.py#L247)
 
 Create a new layer based on a PIL image.
 
 #### Arguments
 
 - `name` *str* - a name for the new layer
-- `image` *Image.Image* - pil image
+- [GimpDocument().image](#gimpdocumentimage) *Image.Image* - pil image
 - `index` *int, optional* - where to insert the new layer (default=top). Defaults to -1.
 
 #### Returns
 
 - `GimpLayer` - newly created GimpLayer object
 
-### GimpDocument().newLayerFromClipboard
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L263)
+#### Signature
 
 ```python
-def newLayerFromClipboard(
-    name: str = 'pasted',
-    index: int = -1,
-) -> GimpLayer | None:
+def newLayer(self, name: str, image: Image.Image, index: int = -1) -> GimpLayer:
+    ...
 ```
+
+### GimpDocument().newLayerFromClipboard
+
+[Show source in gimpXcfDocument.py:263](../../../gimpformats/gimpXcfDocument.py#L263)
 
 Create a new image from the system clipboard.
 
@@ -337,39 +377,63 @@ NOTE: only works on OSX and Windows
 
 - `GimpLayer` - newly created GimpLayer object
 
-### GimpDocument().save
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L368)
+#### Signature
 
 ```python
-def save(filename: str | BytesIO = None):
+def newLayerFromClipboard(
+    self, name: str = "pasted", index: int = -1
+) -> GimpLayer | None:
+    ...
 ```
+
+### GimpDocument().save
+
+[Show source in gimpXcfDocument.py:368](../../../gimpformats/gimpXcfDocument.py#L368)
 
 Save this gimp image to a file.
 
-### GimpDocument().saveNew
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L378)
+#### Signature
 
 ```python
-def saveNew(filename=None):
+def save(self, filename: str | BytesIO = None):
+    ...
 ```
+
+### GimpDocument().saveNew
+
+[Show source in gimpXcfDocument.py:378](../../../gimpformats/gimpXcfDocument.py#L378)
 
 Save a new gimp image to a file.
 
-### GimpDocument().setLayer
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L241)
+#### Signature
 
 ```python
-def setLayer(index, layer):
+def saveNew(self, filename=None):
+    ...
 ```
+
+### GimpDocument().setLayer
+
+[Show source in gimpXcfDocument.py:241](../../../gimpformats/gimpXcfDocument.py#L241)
 
 Assign to a given layer.
 
+#### Signature
+
+```python
+def setLayer(self, index, layer):
+    ...
+```
+
+
+
 ## blendModeLookup
 
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L409)
+[Show source in gimpXcfDocument.py:409](../../../gimpformats/gimpXcfDocument.py#L409)
+
+Get the blendmode from a lookup table.
+
+#### Signature
 
 ```python
 def blendModeLookup(
@@ -377,21 +441,14 @@ def blendModeLookup(
     blendLookup: dict[int, BlendType],
     default: BlendType = BlendType.NORMAL,
 ):
+    ...
 ```
 
-Get the blendmode from a lookup table.
+
 
 ## flattenAll
 
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L554)
-
-```python
-def flattenAll(
-    layers: list[GimpLayer],
-    imageDimensions: tuple[int, int],
-    ignoreHidden: bool = True,
-) -> Image.Image:
-```
+[Show source in gimpXcfDocument.py:554](../../../gimpformats/gimpXcfDocument.py#L554)
 
 Flatten a list of layers and groups.
 
@@ -408,18 +465,20 @@ to True.
 
 - `PIL.Image` - Flattened image
 
-## flattenLayerOrGroup
-
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L419)
+#### Signature
 
 ```python
-def flattenLayerOrGroup(
-    layerOrGroup: list[GimpLayer] | GimpLayer,
-    imageDimensions: tuple[int, int],
-    flattenedSoFar: Image.Image | None = None,
-    ignoreHidden: bool = True,
+def flattenAll(
+    layers: list[GimpLayer], imageDimensions: tuple[int, int], ignoreHidden: bool = True
 ) -> Image.Image:
+    ...
 ```
+
+
+
+## flattenLayerOrGroup
+
+[Show source in gimpXcfDocument.py:419](../../../gimpformats/gimpXcfDocument.py#L419)
 
 Flatten a layer or group on to an image of what has already been	flattened.
 
@@ -436,43 +495,52 @@ to True.
 
 - `PIL.Image` - Flattened image
 
+#### Signature
+
+```python
+def flattenLayerOrGroup(
+    layerOrGroup: list[GimpLayer] | GimpLayer,
+    imageDimensions: tuple[int, int],
+    flattenedSoFar: Image.Image | None = None,
+    ignoreHidden: bool = True,
+) -> Image.Image:
+    ...
+```
+
+
+
 ## renderMaskWOffset
 
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L599)
+[Show source in gimpXcfDocument.py:599](../../../gimpformats/gimpXcfDocument.py#L599)
+
+Render an image with offset and alpha to a given size.
+
+#### Arguments
+
+- `image` *Image.Image* - pil image to draw
+size (tuple[int, int]): width, height as a tuple
+- `alpha` *float, optional* - alpha transparency. Defaults to 1.0.
+offsets (tuple[int, int], optional): x, y offsets as a tuple.
+Defaults to (0, 0).
+
+#### Returns
+
+- `Image.Image` - new image
+
+#### Signature
 
 ```python
 def renderMaskWOffset(
-    image: Image.Image,
-    size: tuple[int, int],
-    offsets: tuple[int, int] = (0, 0),
+    image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
 ) -> Image.Image:
+    ...
 ```
 
-Render an image with offset and alpha to a given size.
 
-#### Arguments
-
-- `image` *Image.Image* - pil image to draw
-size (tuple[int, int]): width, height as a tuple
-- `alpha` *float, optional* - alpha transparency. Defaults to 1.0.
-offsets (tuple[int, int], optional): x, y offsets as a tuple.
-Defaults to (0, 0).
-
-#### Returns
-
-- `Image.Image` - new image
 
 ## renderWOffset
 
-[[find in source code]](../../../gimpformats/gimpXcfDocument.py#L579)
-
-```python
-def renderWOffset(
-    image: Image.Image,
-    size: tuple[int, int],
-    offsets: tuple[int, int] = (0, 0),
-) -> Image.Image:
-```
+[Show source in gimpXcfDocument.py:579](../../../gimpformats/gimpXcfDocument.py#L579)
 
 Render an image with offset and alpha to a given size.
 
@@ -487,3 +555,14 @@ Defaults to (0, 0).
 #### Returns
 
 - `Image.Image` - new image
+
+#### Signature
+
+```python
+def renderWOffset(
+    image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
+) -> Image.Image:
+    ...
+```
+
+

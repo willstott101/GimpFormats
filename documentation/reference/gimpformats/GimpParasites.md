@@ -1,28 +1,20 @@
 # Gimpparasites
 
+[Gimpformats Index](../README.md#gimpformats-index) /
+[Gimpformats](./index.md#gimpformats) /
+Gimpparasites
+
 > Auto-generated documentation for [gimpformats.GimpParasites](../../../gimpformats/GimpParasites.py) module.
 
-Parasites are arbitrary (meta)data strings that can be attached to a document tree item
-
-- [Gimpformats](../README.md#gimpformats-index) / [Modules](../MODULES.md#gimpformats-modules) / [Gimpformats](index.md#gimpformats) / Gimpparasites
-    - [GimpParasite](#gimpparasite)
-        - [GimpParasite().\_\_repr\_\_](#gimpparasite__repr__)
-        - [GimpParasite().decode](#gimpparasitedecode)
-        - [GimpParasite().encode](#gimpparasiteencode)
-
-They are used to store things like last-used plugin settings, gamma adjuetments, etc.
-
-Format of known parasites:
- https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
+- [Gimpparasites](#gimpparasites)
+  - [GimpParasite](#gimpparasite)
+    - [GimpParasite().__repr__](#gimpparasite()__repr__)
+    - [GimpParasite().decode](#gimpparasite()decode)
+    - [GimpParasite().encode](#gimpparasite()encode)
 
 ## GimpParasite
 
-[[find in source code]](../../../gimpformats/GimpParasites.py#L47)
-
-```python
-class GimpParasite():
-    def __init__():
-```
+[Show source in GimpParasites.py:47](../../../gimpformats/GimpParasites.py#L47)
 
 Parasites are arbitrary (meta)data strings that can be attached to a document tree item
 
@@ -31,23 +23,30 @@ They are used to store things like last-used plugin settings, gamma adjuetments,
 Format of known parasites:
  https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
 
-### GimpParasite().\_\_repr\_\_
-
-[[find in source code]](../../../gimpformats/GimpParasites.py#L87)
+#### Signature
 
 ```python
-def __repr__(indent: str = '') -> str:
+class GimpParasite:
+    def __init__(self):
+        ...
 ```
+
+### GimpParasite().__repr__
+
+[Show source in GimpParasites.py:87](../../../gimpformats/GimpParasites.py#L87)
 
 Get a textual representation of this object.
 
-### GimpParasite().decode
-
-[[find in source code]](../../../gimpformats/GimpParasites.py#L61)
+#### Signature
 
 ```python
-def decode(data: bytes, index: int = 0) -> int:
+def __repr__(self, indent: str = "") -> str:
+    ...
 ```
+
+### GimpParasite().decode
+
+[Show source in GimpParasites.py:61](../../../gimpformats/GimpParasites.py#L61)
 
 Decode a byte buffer
 
@@ -56,13 +55,16 @@ Decode a byte buffer
 - `data` - data buffer to decode
 - `index` - index within the buffer to start at
 
-### GimpParasite().encode
-
-[[find in source code]](../../../gimpformats/GimpParasites.py#L74)
+#### Signature
 
 ```python
-def encode():
+def decode(self, data: bytes, index: int = 0) -> int:
+    ...
 ```
+
+### GimpParasite().encode
+
+[Show source in GimpParasites.py:74](../../../gimpformats/GimpParasites.py#L74)
 
 Encode a byte buffer
 
@@ -70,3 +72,12 @@ Encode a byte buffer
 
 - `data` - data buffer to encode
 - `index` - index within the buffer to start at
+
+#### Signature
+
+```python
+def encode(self):
+    ...
+```
+
+
