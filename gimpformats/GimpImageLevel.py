@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Gets packed pixels from a gimp image.
 
 This represents a single level in an imageHierarchy

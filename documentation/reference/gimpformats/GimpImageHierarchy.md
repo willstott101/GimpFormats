@@ -121,5 +121,3 @@ so this returns an array of one item
 def levels(self):
     ...
 ```
-
-

@@ -2,9 +2,9 @@
 """
 from __future__ import annotations
 
-from binaryiotools import IO
 from PIL import Image
 
+from .binaryiotools import IO
 from .GimpImageHierarchy import GimpImageHierarchy
 from .GimpIOBase import GimpIOBase
 

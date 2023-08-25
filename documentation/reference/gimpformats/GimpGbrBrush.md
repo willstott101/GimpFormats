@@ -18,7 +18,7 @@ Gimpgbrbrush
 
 ## GimpGbrBrush
 
-[Show source in GimpGbrBrush.py:15](../../../gimpformats/GimpGbrBrush.py#L15)
+[Show source in GimpGbrBrush.py:14](../../../gimpformats/GimpGbrBrush.py#L14)
 
 Pure python implementation of the gimp gbr brush format.
 
@@ -35,7 +35,7 @@ class GimpGbrBrush:
 
 ### GimpGbrBrush().__repr__
 
-[Show source in GimpGbrBrush.py:132](../../../gimpformats/GimpGbrBrush.py#L132)
+[Show source in GimpGbrBrush.py:131](../../../gimpformats/GimpGbrBrush.py#L131)
 
 Get a textual representation of this object.
 
@@ -48,7 +48,7 @@ def __repr__(self, indent=""):
 
 ### GimpGbrBrush().decode
 
-[Show source in GimpGbrBrush.py:50](../../../gimpformats/GimpGbrBrush.py#L50)
+[Show source in GimpGbrBrush.py:49](../../../gimpformats/GimpGbrBrush.py#L49)
 
 Decode a byte buffer.
 
@@ -75,7 +75,7 @@ def decode(self, data: bytes, index: int = 0) -> int:
 
 ### GimpGbrBrush().encode
 
-[Show source in GimpGbrBrush.py:88](../../../gimpformats/GimpGbrBrush.py#L88)
+[Show source in GimpGbrBrush.py:87](../../../gimpformats/GimpGbrBrush.py#L87)
 
 Encode this object to byte array.
 
@@ -88,7 +88,7 @@ def encode(self) -> bytearray:
 
 ### GimpGbrBrush().image
 
-[Show source in GimpGbrBrush.py:107](../../../gimpformats/GimpGbrBrush.py#L107)
+[Show source in GimpGbrBrush.py:106](../../../gimpformats/GimpGbrBrush.py#L106)
 
 Get a final, compiled image.
 
@@ -102,7 +102,7 @@ def image(self) -> PIL.Image.Image | None:
 
 ### GimpGbrBrush().load
 
-[Show source in GimpGbrBrush.py:42](../../../gimpformats/GimpGbrBrush.py#L42)
+[Show source in GimpGbrBrush.py:41](../../../gimpformats/GimpGbrBrush.py#L41)
 
 Load a gimp file.
 
@@ -119,7 +119,7 @@ def load(self, fileName: BytesIO | str):
 
 ### GimpGbrBrush().save
 
-[Show source in GimpGbrBrush.py:114](../../../gimpformats/GimpGbrBrush.py#L114)
+[Show source in GimpGbrBrush.py:113](../../../gimpformats/GimpGbrBrush.py#L113)
 
 Save this gimp image to a file.
 
@@ -132,7 +132,7 @@ def save(self, tofileName: str, toExtension: str | None = None):
 
 ### GimpGbrBrush().size
 
-[Show source in GimpGbrBrush.py:102](../../../gimpformats/GimpGbrBrush.py#L102)
+[Show source in GimpGbrBrush.py:101](../../../gimpformats/GimpGbrBrush.py#L101)
 
 Get the size.
 
@@ -143,5 +143,3 @@ Get the size.
 def size(self) -> tuple[int, int]:
     ...
 ```
-
-

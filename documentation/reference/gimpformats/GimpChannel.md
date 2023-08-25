@@ -135,5 +135,3 @@ not much use to you.
 def imageHierarchy(self):
     ...
 ```
-
-

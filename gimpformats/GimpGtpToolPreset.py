@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Pure python implementation of the gimp gtp tool preset format.
 """
 from __future__ import annotations

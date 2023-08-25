@@ -17,7 +17,7 @@ Gimpgplpalette
 
 ## GimpGplPalette
 
-[Show source in GimpGplPalette.py:12](../../../gimpformats/GimpGplPalette.py#L12)
+[Show source in GimpGplPalette.py:11](../../../gimpformats/GimpGplPalette.py#L11)
 
 Pure python implementation of the gimp gpl palette format.
 
@@ -31,7 +31,7 @@ class GimpGplPalette:
 
 ### GimpGplPalette().__eq__
 
-[Show source in GimpGplPalette.py:93](../../../gimpformats/GimpGplPalette.py#L93)
+[Show source in GimpGplPalette.py:92](../../../gimpformats/GimpGplPalette.py#L92)
 
 Perform a comparison.
 
@@ -44,7 +44,7 @@ def __eq__(self, other: GimpGplPalette):
 
 ### GimpGplPalette().__repr__
 
-[Show source in GimpGplPalette.py:78](../../../gimpformats/GimpGplPalette.py#L78)
+[Show source in GimpGplPalette.py:77](../../../gimpformats/GimpGplPalette.py#L77)
 
 Get a textual representation of this object.
 
@@ -57,7 +57,7 @@ def __repr__(self):
 
 ### GimpGplPalette().decode
 
-[Show source in GimpGplPalette.py:36](../../../gimpformats/GimpGplPalette.py#L36)
+[Show source in GimpGplPalette.py:35](../../../gimpformats/GimpGplPalette.py#L35)
 
 Decode a byte buffer.
 
@@ -78,7 +78,7 @@ def decode(self, data: str) -> None:
 
 ### GimpGplPalette().encode
 
-[Show source in GimpGplPalette.py:61](../../../gimpformats/GimpGplPalette.py#L61)
+[Show source in GimpGplPalette.py:60](../../../gimpformats/GimpGplPalette.py#L60)
 
 Encode to a raw data stream.
 
@@ -91,7 +91,7 @@ def encode(self):
 
 ### GimpGplPalette().load
 
-[Show source in GimpGplPalette.py:28](../../../gimpformats/GimpGplPalette.py#L28)
+[Show source in GimpGplPalette.py:27](../../../gimpformats/GimpGplPalette.py#L27)
 
 Load a gimp file.
 
@@ -108,7 +108,7 @@ def load(self, fileName: BytesIO | str):
 
 ### GimpGplPalette().save
 
-[Show source in GimpGplPalette.py:74](../../../gimpformats/GimpGplPalette.py#L74)
+[Show source in GimpGplPalette.py:73](../../../gimpformats/GimpGplPalette.py#L73)
 
 Save this gimp image to a file.
 
@@ -118,5 +118,3 @@ Save this gimp image to a file.
 def save(self, fileName: str | BytesIO):
     ...
 ```
-
-

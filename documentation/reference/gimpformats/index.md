@@ -10,6 +10,7 @@ Gimpformats
 
 ## Modules
 
+- [Binaryiotools](./binaryiotools.md)
 - [Gimpchannel](./GimpChannel.md)
 - [Gimpgbrbrush](./GimpGbrBrush.md)
 - [Gimpggrgradient](./GimpGgrGradient.md)

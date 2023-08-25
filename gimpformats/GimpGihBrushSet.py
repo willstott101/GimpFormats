@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Gimp Image Pipe Format.
 
 The gih format is use to store a series of brushes, and some extra info
@@ -8,9 +7,8 @@ from __future__ import annotations
 
 from io import BytesIO
 
-from binaryiotools import IO
-
 from . import utils
+from .binaryiotools import IO
 from .GimpGbrBrush import GimpGbrBrush
 
 

@@ -4,8 +4,7 @@ from __future__ import annotations
 
 import struct
 
-from binaryiotools import IO
-
+from .binaryiotools import IO
 from .GimpParasites import GimpParasite
 from .GimpVectors import GimpVector
 

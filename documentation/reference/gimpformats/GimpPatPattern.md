@@ -19,7 +19,7 @@ Gimppatpattern
 
 ## GimpPatPattern
 
-[Show source in GimpPatPattern.py:14](../../../gimpformats/GimpPatPattern.py#L14)
+[Show source in GimpPatPattern.py:13](../../../gimpformats/GimpPatPattern.py#L13)
 
 Pure python implementation of a gimp pattern file.
 
@@ -36,7 +36,7 @@ class GimpPatPattern:
 
 ### GimpPatPattern().__repr__
 
-[Show source in GimpPatPattern.py:138](../../../gimpformats/GimpPatPattern.py#L138)
+[Show source in GimpPatPattern.py:137](../../../gimpformats/GimpPatPattern.py#L137)
 
 Get a textual representation of this object.
 
@@ -49,7 +49,7 @@ def __repr__(self):
 
 ### GimpPatPattern().decode
 
-[Show source in GimpPatPattern.py:49](../../../gimpformats/GimpPatPattern.py#L49)
+[Show source in GimpPatPattern.py:48](../../../gimpformats/GimpPatPattern.py#L48)
 
 Decode a byte buffer.
 
@@ -75,7 +75,7 @@ def decode(self, data: bytes, index: int = 0):
 
 ### GimpPatPattern().encode
 
-[Show source in GimpPatPattern.py:78](../../../gimpformats/GimpPatPattern.py#L78)
+[Show source in GimpPatPattern.py:77](../../../gimpformats/GimpPatPattern.py#L77)
 
 Encode to a byte buffer.
 
@@ -88,7 +88,7 @@ def encode(self):
 
 ### GimpPatPattern().image
 
-[Show source in GimpPatPattern.py:100](../../../gimpformats/GimpPatPattern.py#L100)
+[Show source in GimpPatPattern.py:99](../../../gimpformats/GimpPatPattern.py#L99)
 
 Get a final, compiled image.
 
@@ -102,7 +102,7 @@ def image(self):
 
 ### GimpPatPattern().image
 
-[Show source in GimpPatPattern.py:111](../../../gimpformats/GimpPatPattern.py#L111)
+[Show source in GimpPatPattern.py:110](../../../gimpformats/GimpPatPattern.py#L110)
 
 #### Signature
 
@@ -114,7 +114,7 @@ def image(self, image):
 
 ### GimpPatPattern().load
 
-[Show source in GimpPatPattern.py:41](../../../gimpformats/GimpPatPattern.py#L41)
+[Show source in GimpPatPattern.py:40](../../../gimpformats/GimpPatPattern.py#L40)
 
 Load a gimp file.
 
@@ -131,7 +131,7 @@ def load(self, fileName: BytesIO | str):
 
 ### GimpPatPattern().save
 
-[Show source in GimpPatPattern.py:116](../../../gimpformats/GimpPatPattern.py#L116)
+[Show source in GimpPatPattern.py:115](../../../gimpformats/GimpPatPattern.py#L115)
 
 Save this gimp image to a file.
 
@@ -144,7 +144,7 @@ def save(self, tofileName=None, toExtension=None):
 
 ### GimpPatPattern().size
 
-[Show source in GimpPatPattern.py:95](../../../gimpformats/GimpPatPattern.py#L95)
+[Show source in GimpPatPattern.py:94](../../../gimpformats/GimpPatPattern.py#L94)
 
 The size of the pattern.
 
@@ -155,5 +155,3 @@ The size of the pattern.
 def size(self):
     ...
 ```
-
-

@@ -35,5 +35,3 @@ Save this gimp image to a file.
 def save(data: bytes, tofileName: BytesIO | str):
     ...
 ```
-
-

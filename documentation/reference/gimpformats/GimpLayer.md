@@ -185,5 +185,3 @@ Get the layer mask.
 def mask(self):
     ...
 ```
-
-

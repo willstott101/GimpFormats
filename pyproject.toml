@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gimpformats"
-version = "2022.0.1"
+version = "2023"
 license = "lgpl-3.0-only"
 description = "Pure python implementation of the gimp file format(s)"
 authors = ["FredHappyface"]
@@ -22,7 +22,6 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-binaryiotools = "<2023,>=2021.0.3"
 blendmodes = "<2024,>=2022"
 brackettree = "<2,>=0.2.5"
 numpy = "<2,>=1.22.1"

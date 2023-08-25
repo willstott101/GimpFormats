@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Pure python implementation of the gimp xcf file format.
 
 Currently supports:
@@ -16,11 +15,11 @@ import copy
 from io import BytesIO
 
 import PIL.ImageGrab
-from binaryiotools import IO
 from blendmodes.blend import BlendType, blendLayers
 from PIL import Image
 
 from . import utils
+from .binaryiotools import IO
 from .GimpChannel import GimpChannel
 from .GimpImageHierarchy import GimpImageHierarchy
 from .GimpIOBase import GimpIOBase

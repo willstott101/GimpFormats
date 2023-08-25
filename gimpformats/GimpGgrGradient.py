@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Gimp color gradient.
 """
 from __future__ import annotations

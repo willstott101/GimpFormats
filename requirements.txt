@@ -1,5 +1,4 @@
 Pillow<10,>=9.0.0
-binaryiotools<2023,>=2021.0.3
 blendmodes<2024,>=2022
 brackettree<2,>=0.2.5
 numpy<2,>=1.22.1

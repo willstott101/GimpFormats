@@ -80,5 +80,3 @@ Return the lowest gimp version that supports this precision.
 def requiredGimpVersion(self):
     ...
 ```
-
-

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Parasites are arbitrary (meta)data strings that can be attached to a document tree item
 
 They are used to store things like last-used plugin settings, gamma adjuetments, etc.
@@ -8,7 +7,7 @@ Format of known parasites:
 """
 from __future__ import annotations
 
-from binaryiotools import IO
+from .binaryiotools import IO
 
 # TODO: how to best use these for our puproses??
 KNOWN_DOCUMENT_PARASITES = [

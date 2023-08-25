@@ -1,13 +1,11 @@
-#!/usr/bin/env python3
 """Pure python implementation of the OLD gimp gpb brush format.
 """
 from __future__ import annotations
 
 from io import BytesIO
 
-from binaryiotools import IO
-
 from . import utils
+from .binaryiotools import IO
 from .GimpGbrBrush import GimpGbrBrush
 from .GimpPatPattern import GimpPatPattern
 

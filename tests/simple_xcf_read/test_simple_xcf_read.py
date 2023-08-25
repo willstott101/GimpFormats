@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """python3 -m pytest in project root
 """
 from __future__ import annotations

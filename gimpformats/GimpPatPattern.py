@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Pure python implementation of a gimp pattern file.
 """
 from __future__ import annotations
@@ -6,9 +5,9 @@ from __future__ import annotations
 from io import BytesIO
 
 import PIL.Image
-from binaryiotools import IO
 
 from . import utils
+from .binaryiotools import IO
 
 
 class GimpPatPattern:

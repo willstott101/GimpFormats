@@ -5,6 +5,7 @@
 A full list of `Gimpformats` project modules.
 
 - [Gimpformats](gimpformats/index.md#gimpformats)
+    - [Binaryiotools](gimpformats/binaryiotools.md#binaryiotools)
     - [Gimpchannel](gimpformats/GimpChannel.md#gimpchannel)
     - [Gimpgbrbrush](gimpformats/GimpGbrBrush.md#gimpgbrbrush)
     - [Gimpggrgradient](gimpformats/GimpGgrGradient.md#gimpggrgradient)

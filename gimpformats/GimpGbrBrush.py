@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Pure python implementation of the gimp gbr brush format.
 """
 from __future__ import annotations
@@ -7,9 +6,9 @@ from io import BytesIO
 from pathlib import Path
 
 import PIL.Image
-from binaryiotools import IO
 
 from . import utils
+from .binaryiotools import IO
 
 
 class GimpGbrBrush:
