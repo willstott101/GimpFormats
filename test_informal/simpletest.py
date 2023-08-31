@@ -3,7 +3,12 @@
 
 from __future__ import annotations
 
+
 from PIL import Image
+from pathlib import Path
+import sys
+THISDIR = str(Path(__file__).resolve().parent.parent)
+sys.path.insert(0, THISDIR)
 
 from gimpformats.gimpXcfDocument import GimpDocument
 

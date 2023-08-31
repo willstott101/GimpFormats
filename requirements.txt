@@ -1,4 +1,4 @@
-Pillow<10,>=9.0.0
-blendmodes<2024,>=2022
+Pillow<11,>=10.0.0
+blendmodes<2025,>=2023
 brackettree<2,>=0.2.5
 numpy<2,>=1.22.1
