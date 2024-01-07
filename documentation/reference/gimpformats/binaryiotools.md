@@ -151,8 +151,7 @@ class IO:
         littleEndian: bool = False,
         boolSize: int = 8,
         stringEncoding: str = "U",
-    ):
-        ...
+    ): ...
 ```
 
 ### IO().__getitem__
@@ -164,8 +163,7 @@ Get data at a specific idx.
 #### Signature
 
 ```python
-def __getitem__(self, idx: int):
-    ...
+def __getitem__(self, idx: int): ...
 ```
 
 ### IO().__len__
@@ -177,8 +175,7 @@ Length of data.
 #### Signature
 
 ```python
-def __len__(self) -> int:
-    ...
+def __len__(self) -> int: ...
 ```
 
 ### IO().addBytes
@@ -196,8 +193,7 @@ alias for setBytes()
 #### Signature
 
 ```python
-def addBytes(self, ioBytes: Any):
-    ...
+def addBytes(self, ioBytes: Any): ...
 ```
 
 ### IO().beginContext
@@ -211,8 +207,7 @@ and when endContext() is called, it will be restored to the current position
 #### Signature
 
 ```python
-def beginContext(self, newIndex: int):
-    ...
+def beginContext(self, newIndex: int): ...
 ```
 
 ### IO().bool16
@@ -225,8 +220,7 @@ Get bool16.
 
 ```python
 @property
-def bool16(self) -> bool:
-    ...
+def bool16(self) -> bool: ...
 ```
 
 ### IO().bool16
@@ -239,8 +233,7 @@ Set bool16.
 
 ```python
 @bool16.setter
-def bool16(self, ioBool: bool):
-    ...
+def bool16(self, ioBool: bool): ...
 ```
 
 ### IO().bool32
@@ -253,8 +246,7 @@ Get bool32.
 
 ```python
 @property
-def bool32(self) -> bool:
-    ...
+def bool32(self) -> bool: ...
 ```
 
 ### IO().bool32
@@ -267,8 +259,7 @@ Set bool32.
 
 ```python
 @bool32.setter
-def bool32(self, ioBool: bool):
-    ...
+def bool32(self, ioBool: bool): ...
 ```
 
 ### IO().bool64
@@ -281,8 +272,7 @@ Get bool64.
 
 ```python
 @property
-def bool64(self) -> bool:
-    ...
+def bool64(self) -> bool: ...
 ```
 
 ### IO().bool64
@@ -295,8 +285,7 @@ Set bool64.
 
 ```python
 @bool64.setter
-def bool64(self, ioBool: bool):
-    ...
+def bool64(self, ioBool: bool): ...
 ```
 
 ### IO().bool8
@@ -309,8 +298,7 @@ Get bool8.
 
 ```python
 @property
-def bool8(self) -> bool:
-    ...
+def bool8(self) -> bool: ...
 ```
 
 ### IO().bool8
@@ -323,8 +311,7 @@ Set a bool8.
 
 ```python
 @bool8.setter
-def bool8(self, ioBool: bool):
-    ...
+def bool8(self, ioBool: bool): ...
 ```
 
 ### IO().boolean
@@ -337,8 +324,7 @@ Return bool.
 
 ```python
 @property
-def boolean(self) -> bool:
-    ...
+def boolean(self) -> bool: ...
 ```
 
 ### IO().boolean
@@ -351,8 +337,7 @@ Set bool.
 
 ```python
 @boolean.setter
-def boolean(self, ioBool: bool):
-    ...
+def boolean(self, ioBool: bool): ...
 ```
 
 ### IO().byte
@@ -365,8 +350,7 @@ Get byte.
 
 ```python
 @property
-def byte(self) -> Any:
-    ...
+def byte(self) -> Any: ...
 ```
 
 ### IO().byte
@@ -379,8 +363,7 @@ Set byte.
 
 ```python
 @byte.setter
-def byte(self, byte: Any):
-    ...
+def byte(self, byte: Any): ...
 ```
 
 ### IO().cString
@@ -393,8 +376,7 @@ Read a sequence of chars until the next null byte.
 
 ```python
 @property
-def cString(self) -> str:
-    ...
+def cString(self) -> str: ...
 ```
 
 ### IO().cString
@@ -407,8 +389,7 @@ Set a sequence of chars and add a null byte.
 
 ```python
 @cString.setter
-def cString(self, text: str):
-    ...
+def cString(self, text: str): ...
 ```
 
 ### IO().cStringA
@@ -421,8 +402,7 @@ Read a sequence of chars until the next null byte in ascii.
 
 ```python
 @property
-def cStringA(self) -> str:
-    ...
+def cStringA(self) -> str: ...
 ```
 
 ### IO().cStringA
@@ -435,8 +415,7 @@ Set a sequence of chars and add a null byte in ascii.
 
 ```python
 @cStringA.setter
-def cStringA(self, text: str):
-    ...
+def cStringA(self, text: str): ...
 ```
 
 ### IO().cStringU
@@ -449,8 +428,7 @@ Read a sequence of chars until the next null byte in utf-8.
 
 ```python
 @property
-def cStringU(self) -> str:
-    ...
+def cStringU(self) -> str: ...
 ```
 
 ### IO().cStringU
@@ -463,8 +441,7 @@ Set a sequence of chars and add a null byte in utf-8.
 
 ```python
 @cStringU.setter
-def cStringU(self, text: str):
-    ...
+def cStringU(self, text: str): ...
 ```
 
 ### IO().cStringW
@@ -477,8 +454,7 @@ Read a sequence of chars until the next null byte in ucs-2.
 
 ```python
 @property
-def cStringW(self) -> str:
-    ...
+def cStringW(self) -> str: ...
 ```
 
 ### IO().cStringW
@@ -491,8 +467,7 @@ Set a sequence of chars and add a null byte in ucs-2.
 
 ```python
 @cStringW.setter
-def cStringW(self, text: str):
-    ...
+def cStringW(self, text: str): ...
 ```
 
 ### IO().data
@@ -505,8 +480,7 @@ Return data.
 
 ```python
 @property
-def data(self) -> bytearray:
-    ...
+def data(self) -> bytearray: ...
 ```
 
 ### IO().data
@@ -519,8 +493,7 @@ Set data.
 
 ```python
 @data.setter
-def data(self, data: bytearray) -> None:
-    ...
+def data(self, data: bytearray) -> None: ...
 ```
 
 ### IO().double
@@ -533,8 +506,7 @@ Get a double.
 
 ```python
 @property
-def double(self) -> float:
-    ...
+def double(self) -> float: ...
 ```
 
 ### IO().double
@@ -547,8 +519,7 @@ Set a double.
 
 ```python
 @double.setter
-def double(self, floating: float):
-    ...
+def double(self, floating: float): ...
 ```
 
 ### IO().dword
@@ -561,8 +532,7 @@ Get a dword.
 
 ```python
 @property
-def dword(self) -> Any:
-    ...
+def dword(self) -> Any: ...
 ```
 
 ### IO().dword
@@ -575,8 +545,7 @@ Set a dword.
 
 ```python
 @dword.setter
-def dword(self, dword: Any):
-    ...
+def dword(self, dword: Any): ...
 ```
 
 ### IO().endContext
@@ -588,8 +557,7 @@ Restore the index to the previous location where it was when	beginContext() was 
 #### Signature
 
 ```python
-def endContext(self):
-    ...
+def endContext(self): ...
 ```
 
 ### IO().float32
@@ -602,8 +570,7 @@ Get a float32.
 
 ```python
 @property
-def float32(self) -> float:
-    ...
+def float32(self) -> float: ...
 ```
 
 ### IO().float32
@@ -616,8 +583,7 @@ Set a float32.
 
 ```python
 @float32.setter
-def float32(self, float32: float):
-    ...
+def float32(self, float32: float): ...
 ```
 
 ### IO().float32be
@@ -630,8 +596,7 @@ Read the next 32 bit float and advance the index.
 
 ```python
 @property
-def float32be(self) -> float:
-    ...
+def float32be(self) -> float: ...
 ```
 
 ### IO().float32be
@@ -644,8 +609,7 @@ Set a 32 bit float.
 
 ```python
 @float32be.setter
-def float32be(self, float32be: float):
-    ...
+def float32be(self, float32be: float): ...
 ```
 
 ### IO().float32le
@@ -658,8 +622,7 @@ Read the next 32 bit float and advance the index.
 
 ```python
 @property
-def float32le(self) -> float:
-    ...
+def float32le(self) -> float: ...
 ```
 
 ### IO().float32le
@@ -672,8 +635,7 @@ Set a 32 bit float.
 
 ```python
 @float32le.setter
-def float32le(self, float32le: float):
-    ...
+def float32le(self, float32le: float): ...
 ```
 
 ### IO().float64
@@ -686,8 +648,7 @@ Get a float64.
 
 ```python
 @property
-def float64(self) -> float:
-    ...
+def float64(self) -> float: ...
 ```
 
 ### IO().float64
@@ -700,8 +661,7 @@ Set a float64.
 
 ```python
 @float64.setter
-def float64(self, float64: float):
-    ...
+def float64(self, float64: float): ...
 ```
 
 ### IO().float64be
@@ -714,8 +674,7 @@ Read the next 64 bit float and advance the index.
 
 ```python
 @property
-def float64be(self) -> float:
-    ...
+def float64be(self) -> float: ...
 ```
 
 ### IO().float64be
@@ -728,8 +687,7 @@ Set a 64 bit float.
 
 ```python
 @float64be.setter
-def float64be(self, float64be: float):
-    ...
+def float64be(self, float64be: float): ...
 ```
 
 ### IO().float64le
@@ -742,8 +700,7 @@ Read the next 64 bit float and advance the index.
 
 ```python
 @property
-def float64le(self) -> float:
-    ...
+def float64le(self) -> float: ...
 ```
 
 ### IO().float64le
@@ -756,8 +713,7 @@ Set a 64 bit float.
 
 ```python
 @float64le.setter
-def float64le(self, float64le: float):
-    ...
+def float64le(self, float64le: float): ...
 ```
 
 ### IO().floating
@@ -770,8 +726,7 @@ Get a float.
 
 ```python
 @property
-def floating(self) -> float:
-    ...
+def floating(self) -> float: ...
 ```
 
 ### IO().floating
@@ -784,8 +739,7 @@ Set a float.
 
 ```python
 @floating.setter
-def floating(self, floating: float):
-    ...
+def floating(self, floating: float): ...
 ```
 
 ### IO().getBytes
@@ -797,8 +751,7 @@ Grab some raw bytes and advance the index.
 #### Signature
 
 ```python
-def getBytes(self, nbytes: int):
-    ...
+def getBytes(self, nbytes: int): ...
 ```
 
 ### IO().i16
@@ -811,8 +764,7 @@ Get an int16.
 
 ```python
 @property
-def i16(self) -> int:
-    ...
+def i16(self) -> int: ...
 ```
 
 ### IO().i16
@@ -825,8 +777,7 @@ Set an int16.
 
 ```python
 @i16.setter
-def i16(self, i16: int):
-    ...
+def i16(self, i16: int): ...
 ```
 
 ### IO().i16be
@@ -839,8 +790,7 @@ Read the next signed int16 and advance the index.
 
 ```python
 @property
-def i16be(self) -> int:
-    ...
+def i16be(self) -> int: ...
 ```
 
 ### IO().i16be
@@ -853,8 +803,7 @@ Set the int16.
 
 ```python
 @i16be.setter
-def i16be(self, i16be: int):
-    ...
+def i16be(self, i16be: int): ...
 ```
 
 ### IO().i16le
@@ -867,8 +816,7 @@ Read the next signed int16 and advance the index.
 
 ```python
 @property
-def i16le(self) -> int:
-    ...
+def i16le(self) -> int: ...
 ```
 
 ### IO().i16le
@@ -881,8 +829,7 @@ Set the int16.
 
 ```python
 @i16le.setter
-def i16le(self, i16le: int):
-    ...
+def i16le(self, i16le: int): ...
 ```
 
 ### IO().i32
@@ -895,8 +842,7 @@ Get an int32.
 
 ```python
 @property
-def i32(self) -> int:
-    ...
+def i32(self) -> int: ...
 ```
 
 ### IO().i32
@@ -909,8 +855,7 @@ Set an int32.
 
 ```python
 @i32.setter
-def i32(self, i32: int):
-    ...
+def i32(self, i32: int): ...
 ```
 
 ### IO().i32be
@@ -923,8 +868,7 @@ Read the next signed int32 and advance the index.
 
 ```python
 @property
-def i32be(self) -> int:
-    ...
+def i32be(self) -> int: ...
 ```
 
 ### IO().i32be
@@ -937,8 +881,7 @@ Set the int32.
 
 ```python
 @i32be.setter
-def i32be(self, i32be: int):
-    ...
+def i32be(self, i32be: int): ...
 ```
 
 ### IO().i32le
@@ -951,8 +894,7 @@ Read the next signed int32 and advance the index.
 
 ```python
 @property
-def i32le(self) -> int:
-    ...
+def i32le(self) -> int: ...
 ```
 
 ### IO().i32le
@@ -965,8 +907,7 @@ Set the int32.
 
 ```python
 @i32le.setter
-def i32le(self, i32le: int):
-    ...
+def i32le(self, i32le: int): ...
 ```
 
 ### IO().i64
@@ -979,8 +920,7 @@ Get an int64.
 
 ```python
 @property
-def i64(self) -> int:
-    ...
+def i64(self) -> int: ...
 ```
 
 ### IO().i64
@@ -993,8 +933,7 @@ Set an int64.
 
 ```python
 @i64.setter
-def i64(self, i64: int):
-    ...
+def i64(self, i64: int): ...
 ```
 
 ### IO().i64be
@@ -1007,8 +946,7 @@ Read the next signed int64 and advance the index.
 
 ```python
 @property
-def i64be(self) -> int:
-    ...
+def i64be(self) -> int: ...
 ```
 
 ### IO().i64be
@@ -1021,8 +959,7 @@ Set the int64.
 
 ```python
 @i64be.setter
-def i64be(self, i64be: int):
-    ...
+def i64be(self, i64be: int): ...
 ```
 
 ### IO().i64le
@@ -1035,8 +972,7 @@ Read the next signed int64 and advance the index.
 
 ```python
 @property
-def i64le(self) -> int:
-    ...
+def i64le(self) -> int: ...
 ```
 
 ### IO().i64le
@@ -1049,8 +985,7 @@ Set the int64.
 
 ```python
 @i64le.setter
-def i64le(self, i64le: int):
-    ...
+def i64le(self, i64le: int): ...
 ```
 
 ### IO().i8
@@ -1063,8 +998,7 @@ Get an int8.
 
 ```python
 @property
-def i8(self) -> int:
-    ...
+def i8(self) -> int: ...
 ```
 
 ### IO().i8
@@ -1077,8 +1011,7 @@ Set an int8.
 
 ```python
 @i8.setter
-def i8(self, i8: int):
-    ...
+def i8(self, i8: int): ...
 ```
 
 ### IO().i8be
@@ -1091,8 +1024,7 @@ Read the next signed int8 and advance the index.
 
 ```python
 @property
-def i8be(self) -> int:
-    ...
+def i8be(self) -> int: ...
 ```
 
 ### IO().i8be
@@ -1105,8 +1037,7 @@ Set the int8.
 
 ```python
 @i8be.setter
-def i8be(self, i8be: int):
-    ...
+def i8be(self, i8be: int): ...
 ```
 
 ### IO().i8le
@@ -1119,8 +1050,7 @@ Read the next signed int8 and advance the index.
 
 ```python
 @property
-def i8le(self) -> int:
-    ...
+def i8le(self) -> int: ...
 ```
 
 ### IO().i8le
@@ -1133,8 +1063,7 @@ Set the int8.
 
 ```python
 @i8le.setter
-def i8le(self, i8le: int):
-    ...
+def i8le(self, i8le: int): ...
 ```
 
 ### IO().index
@@ -1147,8 +1076,7 @@ Return data.
 
 ```python
 @property
-def index(self) -> int:
-    ...
+def index(self) -> int: ...
 ```
 
 ### IO().index
@@ -1161,8 +1089,7 @@ Set index.
 
 ```python
 @index.setter
-def index(self, index: int) -> None:
-    ...
+def index(self, index: int) -> None: ...
 ```
 
 ### IO().qword
@@ -1175,8 +1102,7 @@ Get a qword.
 
 ```python
 @property
-def qword(self) -> Any:
-    ...
+def qword(self) -> Any: ...
 ```
 
 ### IO().qword
@@ -1189,8 +1115,7 @@ Set a qword.
 
 ```python
 @qword.setter
-def qword(self, qword: Any):
-    ...
+def qword(self, qword: Any): ...
 ```
 
 ### IO().setBytes
@@ -1208,8 +1133,7 @@ alias for addBytes()
 #### Signature
 
 ```python
-def setBytes(self, ioBytes: Any):
-    ...
+def setBytes(self, ioBytes: Any): ...
 ```
 
 ### IO().sz754
@@ -1222,8 +1146,7 @@ sz754.
 
 ```python
 @property
-def sz754(self) -> Any:
-    ...
+def sz754(self) -> Any: ...
 ```
 
 ### IO().sz754
@@ -1236,8 +1159,7 @@ Set sz754.
 
 ```python
 @sz754.setter
-def sz754(self, sz754: Any):
-    ...
+def sz754(self, sz754: Any): ...
 ```
 
 ### IO().sz754A
@@ -1250,8 +1172,7 @@ sz754A.
 
 ```python
 @property
-def sz754A(self) -> Any:
-    ...
+def sz754A(self) -> Any: ...
 ```
 
 ### IO().sz754A
@@ -1264,8 +1185,7 @@ Set sz754A.
 
 ```python
 @sz754A.setter
-def sz754A(self, sz754: Any):
-    ...
+def sz754A(self, sz754: Any): ...
 ```
 
 ### IO().sz754U
@@ -1278,8 +1198,7 @@ sz754U.
 
 ```python
 @property
-def sz754U(self) -> Any:
-    ...
+def sz754U(self) -> Any: ...
 ```
 
 ### IO().sz754U
@@ -1292,8 +1211,7 @@ Set sz754U.
 
 ```python
 @sz754U.setter
-def sz754U(self, sz754: Any):
-    ...
+def sz754U(self, sz754: Any): ...
 ```
 
 ### IO().sz754W
@@ -1306,8 +1224,7 @@ sz754W.
 
 ```python
 @property
-def sz754W(self) -> Any:
-    ...
+def sz754W(self) -> Any: ...
 ```
 
 ### IO().sz754W
@@ -1320,8 +1237,7 @@ Set sz754W.
 
 ```python
 @sz754W.setter
-def sz754W(self, sz754: Any):
-    ...
+def sz754W(self, sz754: Any): ...
 ```
 
 ### IO().textLine
@@ -1334,8 +1250,7 @@ Read a sequence of chars until the next new line char.
 
 ```python
 @property
-def textLine(self) -> str:
-    ...
+def textLine(self) -> str: ...
 ```
 
 ### IO().textLine
@@ -1348,8 +1263,7 @@ Set a sequence of chars until the next new line char.
 
 ```python
 @textLine.setter
-def textLine(self, text: str):
-    ...
+def textLine(self, text: str): ...
 ```
 
 ### IO().textLineA
@@ -1362,8 +1276,7 @@ Read a sequence of chars until the next new line char in ascii.
 
 ```python
 @property
-def textLineA(self) -> str:
-    ...
+def textLineA(self) -> str: ...
 ```
 
 ### IO().textLineA
@@ -1376,8 +1289,7 @@ Set a sequence of chars until the next new line char in ascii.
 
 ```python
 @textLineA.setter
-def textLineA(self, text: str):
-    ...
+def textLineA(self, text: str): ...
 ```
 
 ### IO().textLineU
@@ -1390,8 +1302,7 @@ Read a sequence of chars until the next new line char in utf-8.
 
 ```python
 @property
-def textLineU(self) -> str:
-    ...
+def textLineU(self) -> str: ...
 ```
 
 ### IO().textLineU
@@ -1404,8 +1315,7 @@ Set a sequence of chars until the next new line char in utf-8.
 
 ```python
 @textLineU.setter
-def textLineU(self, text: str):
-    ...
+def textLineU(self, text: str): ...
 ```
 
 ### IO().textLineW
@@ -1418,8 +1328,7 @@ Read a sequence of chars until the next new line char in ucs-2.
 
 ```python
 @property
-def textLineW(self) -> str:
-    ...
+def textLineW(self) -> str: ...
 ```
 
 ### IO().textLineW
@@ -1432,8 +1341,7 @@ Set a sequence of chars until the next new line char in ucs-2.
 
 ```python
 @textLineW.setter
-def textLineW(self, text: str):
-    ...
+def textLineW(self, text: str): ...
 ```
 
 ### IO().u16
@@ -1446,8 +1354,7 @@ Get an uint16.
 
 ```python
 @property
-def u16(self) -> int:
-    ...
+def u16(self) -> int: ...
 ```
 
 ### IO().u16
@@ -1460,8 +1367,7 @@ Set an unint16.
 
 ```python
 @u16.setter
-def u16(self, u16: int):
-    ...
+def u16(self, u16: int): ...
 ```
 
 ### IO().u16be
@@ -1474,8 +1380,7 @@ Read the next uint16 and advance the index.
 
 ```python
 @property
-def u16be(self) -> int:
-    ...
+def u16be(self) -> int: ...
 ```
 
 ### IO().u16be
@@ -1488,8 +1393,7 @@ Set the uint16.
 
 ```python
 @u16be.setter
-def u16be(self, u16be: int):
-    ...
+def u16be(self, u16be: int): ...
 ```
 
 ### IO().u16le
@@ -1502,8 +1406,7 @@ Read the next uint16 and advance the index.
 
 ```python
 @property
-def u16le(self) -> int:
-    ...
+def u16le(self) -> int: ...
 ```
 
 ### IO().u16le
@@ -1516,8 +1419,7 @@ Set the uint16.
 
 ```python
 @u16le.setter
-def u16le(self, u16le: int):
-    ...
+def u16le(self, u16le: int): ...
 ```
 
 ### IO().u32
@@ -1530,8 +1432,7 @@ Get a uint32.
 
 ```python
 @property
-def u32(self) -> int:
-    ...
+def u32(self) -> int: ...
 ```
 
 ### IO().u32
@@ -1544,8 +1445,7 @@ Set a unint32.
 
 ```python
 @u32.setter
-def u32(self, u32: int):
-    ...
+def u32(self, u32: int): ...
 ```
 
 ### IO().u32be
@@ -1558,8 +1458,7 @@ Read the next uint32 and advance the index.
 
 ```python
 @property
-def u32be(self) -> int:
-    ...
+def u32be(self) -> int: ...
 ```
 
 ### IO().u32be
@@ -1572,8 +1471,7 @@ Set the uint32.
 
 ```python
 @u32be.setter
-def u32be(self, u32be: int):
-    ...
+def u32be(self, u32be: int): ...
 ```
 
 ### IO().u32le
@@ -1586,8 +1484,7 @@ Read the next uint32 and advance the index.
 
 ```python
 @property
-def u32le(self) -> int:
-    ...
+def u32le(self) -> int: ...
 ```
 
 ### IO().u32le
@@ -1600,8 +1497,7 @@ Set the uint32.
 
 ```python
 @u32le.setter
-def u32le(self, u32le: int):
-    ...
+def u32le(self, u32le: int): ...
 ```
 
 ### IO().u64
@@ -1614,8 +1510,7 @@ Get a uint64.
 
 ```python
 @property
-def u64(self) -> int:
-    ...
+def u64(self) -> int: ...
 ```
 
 ### IO().u64
@@ -1628,8 +1523,7 @@ Set a uint64.
 
 ```python
 @u64.setter
-def u64(self, u64: int):
-    ...
+def u64(self, u64: int): ...
 ```
 
 ### IO().u64be
@@ -1642,8 +1536,7 @@ Read the next uint64 and advance the index.
 
 ```python
 @property
-def u64be(self) -> int:
-    ...
+def u64be(self) -> int: ...
 ```
 
 ### IO().u64be
@@ -1656,8 +1549,7 @@ Set the uint64.
 
 ```python
 @u64be.setter
-def u64be(self, u64be: int):
-    ...
+def u64be(self, u64be: int): ...
 ```
 
 ### IO().u64le
@@ -1670,8 +1562,7 @@ Read the next uint64 and advance the index.
 
 ```python
 @property
-def u64le(self) -> int:
-    ...
+def u64le(self) -> int: ...
 ```
 
 ### IO().u64le
@@ -1684,8 +1575,7 @@ Set the uint64.
 
 ```python
 @u64le.setter
-def u64le(self, u64le: int):
-    ...
+def u64le(self, u64le: int): ...
 ```
 
 ### IO().u8
@@ -1698,8 +1588,7 @@ Get an unsigned int.
 
 ```python
 @property
-def u8(self) -> int:
-    ...
+def u8(self) -> int: ...
 ```
 
 ### IO().u8
@@ -1712,8 +1601,7 @@ Set an unsigned int.
 
 ```python
 @u8.setter
-def u8(self, u8: int):
-    ...
+def u8(self, u8: int): ...
 ```
 
 ### IO().u8be
@@ -1726,8 +1614,7 @@ Read the next uint8 and advance the index.
 
 ```python
 @property
-def u8be(self) -> int:
-    ...
+def u8be(self) -> int: ...
 ```
 
 ### IO().u8be
@@ -1740,8 +1627,7 @@ Set the uint8.
 
 ```python
 @u8be.setter
-def u8be(self, u8be: int):
-    ...
+def u8be(self, u8be: int): ...
 ```
 
 ### IO().u8le
@@ -1754,8 +1640,7 @@ Read the next uint8 and advance the index.
 
 ```python
 @property
-def u8le(self) -> int:
-    ...
+def u8le(self) -> int: ...
 ```
 
 ### IO().u8le
@@ -1768,8 +1653,7 @@ Set the uint8.
 
 ```python
 @u8le.setter
-def u8le(self, u8le: int):
-    ...
+def u8le(self, u8le: int): ...
 ```
 
 ### IO().unsignedByte
@@ -1782,8 +1666,7 @@ Get unsigned byte.
 
 ```python
 @property
-def unsignedByte(self) -> Any:
-    ...
+def unsignedByte(self) -> Any: ...
 ```
 
 ### IO().unsignedByte
@@ -1796,8 +1679,7 @@ Set unsigned byte.
 
 ```python
 @unsignedByte.setter
-def unsignedByte(self, byte: Any):
-    ...
+def unsignedByte(self, byte: Any): ...
 ```
 
 ### IO().unsignedDword
@@ -1810,8 +1692,7 @@ Get a unsigned dword.
 
 ```python
 @property
-def unsignedDword(self) -> Any:
-    ...
+def unsignedDword(self) -> Any: ...
 ```
 
 ### IO().unsignedDword
@@ -1824,8 +1705,7 @@ Set an unsigned dword.
 
 ```python
 @unsignedDword.setter
-def unsignedDword(self, unsignedDword: Any):
-    ...
+def unsignedDword(self, unsignedDword: Any): ...
 ```
 
 ### IO().unsignedQword
@@ -1838,8 +1718,7 @@ Get an unsigned qword.
 
 ```python
 @property
-def unsignedQword(self) -> Any:
-    ...
+def unsignedQword(self) -> Any: ...
 ```
 
 ### IO().unsignedQword
@@ -1852,8 +1731,7 @@ Set an unsigned qword.
 
 ```python
 @unsignedQword.setter
-def unsignedQword(self, unsignedQword: Any):
-    ...
+def unsignedQword(self, unsignedQword: Any): ...
 ```
 
 ### IO().unsignedWord
@@ -1866,8 +1744,7 @@ Get an unsigned word.
 
 ```python
 @property
-def unsignedWord(self) -> Any:
-    ...
+def unsignedWord(self) -> Any: ...
 ```
 
 ### IO().unsignedWord
@@ -1880,8 +1757,7 @@ Set an unsigned word.
 
 ```python
 @unsignedWord.setter
-def unsignedWord(self, unsignedWord: Any):
-    ...
+def unsignedWord(self, unsignedWord: Any): ...
 ```
 
 ### IO().word
@@ -1894,8 +1770,7 @@ Get a word.
 
 ```python
 @property
-def word(self) -> Any:
-    ...
+def word(self) -> Any: ...
 ```
 
 ### IO().word
@@ -1908,6 +1783,5 @@ Set a word.
 
 ```python
 @word.setter
-def word(self, word: Any):
-    ...
+def word(self, word: Any): ...
 ```

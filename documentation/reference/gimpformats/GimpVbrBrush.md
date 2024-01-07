@@ -29,8 +29,7 @@ See:
 
 ```python
 class GimpVbrBrush:
-    def __init__(self, fileName: BytesIO | str | None = None):
-        ...
+    def __init__(self, fileName: BytesIO | str | None = None): ...
 ```
 
 ### GimpVbrBrush().__eq__
@@ -42,8 +41,7 @@ Perform a comparison.
 #### Signature
 
 ```python
-def __eq__(self, other):
-    ...
+def __eq__(self, other): ...
 ```
 
 ### GimpVbrBrush().__repr__
@@ -55,8 +53,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self):
-    ...
+def __repr__(self): ...
 ```
 
 ### GimpVbrBrush().decode
@@ -72,8 +69,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, dataIn: bytes):
-    ...
+def decode(self, dataIn: bytes): ...
 ```
 
 ### GimpVbrBrush().encode
@@ -85,8 +81,7 @@ Encode to a raw data stream.
 #### Signature
 
 ```python
-def encode(self) -> bytes:
-    ...
+def encode(self) -> bytes: ...
 ```
 
 ### GimpVbrBrush().image
@@ -99,8 +94,7 @@ This parametric brush converted to a useable PIL image.
 
 ```python
 @property
-def image(self):
-    ...
+def image(self): ...
 ```
 
 ### GimpVbrBrush().load
@@ -116,8 +110,7 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str):
-    ...
+def load(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpVbrBrush().save
@@ -129,6 +122,5 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, tofileName=None, toExtension=None):
-    ...
+def save(self, tofileName=None, toExtension=None): ...
 ```

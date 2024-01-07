@@ -30,8 +30,7 @@ See:
 
 ```python
 class GimpGihBrushSet:
-    def __init__(self, fileName: str = None):
-        ...
+    def __init__(self, fileName: str = None): ...
 ```
 
 ### GimpGihBrushSet().__repr__
@@ -43,8 +42,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent=""):
-    ...
+def __repr__(self, indent=""): ...
 ```
 
 ### GimpGihBrushSet().decode
@@ -65,8 +63,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpGihBrushSet().encode
@@ -78,8 +75,7 @@ Encode this object to a byte array.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpGihBrushSet().load
@@ -95,8 +91,7 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str):
-    ...
+def load(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpGihBrushSet().save
@@ -108,6 +103,5 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, tofileName: str):
-    ...
+def save(self, tofileName: str): ...
 ```

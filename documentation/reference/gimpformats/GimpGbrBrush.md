@@ -29,8 +29,7 @@ See:
 
 ```python
 class GimpGbrBrush:
-    def __init__(self, fileName: str = None):
-        ...
+    def __init__(self, fileName: str = None): ...
 ```
 
 ### GimpGbrBrush().__repr__
@@ -42,8 +41,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent=""):
-    ...
+def __repr__(self, indent=""): ...
 ```
 
 ### GimpGbrBrush().decode
@@ -69,8 +67,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpGbrBrush().encode
@@ -82,8 +79,7 @@ Encode this object to byte array.
 #### Signature
 
 ```python
-def encode(self) -> bytearray:
-    ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpGbrBrush().image
@@ -96,8 +92,7 @@ Get a final, compiled image.
 
 ```python
 @property
-def image(self) -> PIL.Image.Image | None:
-    ...
+def image(self) -> PIL.Image.Image | None: ...
 ```
 
 ### GimpGbrBrush().load
@@ -113,8 +108,7 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str):
-    ...
+def load(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpGbrBrush().save
@@ -126,8 +120,7 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, tofileName: str, toExtension: str | None = None):
-    ...
+def save(self, tofileName: str, toExtension: str | None = None): ...
 ```
 
 ### GimpGbrBrush().size
@@ -140,6 +133,5 @@ Get the size.
 
 ```python
 @property
-def size(self) -> tuple[int, int]:
-    ...
+def size(self) -> tuple[int, int]: ...
 ```

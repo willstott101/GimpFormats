@@ -30,8 +30,7 @@ See:
 
 ```python
 class GimpPatPattern:
-    def __init__(self, fileName: BytesIO | str = None):
-        ...
+    def __init__(self, fileName: BytesIO | str = None): ...
 ```
 
 ### GimpPatPattern().__repr__
@@ -43,8 +42,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self):
-    ...
+def __repr__(self): ...
 ```
 
 ### GimpPatPattern().decode
@@ -69,8 +67,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0):
-    ...
+def decode(self, data: bytes, index: int = 0): ...
 ```
 
 ### GimpPatPattern().encode
@@ -82,8 +79,7 @@ Encode to a byte buffer.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpPatPattern().image
@@ -96,8 +92,7 @@ Get a final, compiled image.
 
 ```python
 @property
-def image(self):
-    ...
+def image(self): ...
 ```
 
 ### GimpPatPattern().image
@@ -108,8 +103,7 @@ def image(self):
 
 ```python
 @image.setter
-def image(self, image):
-    ...
+def image(self, image): ...
 ```
 
 ### GimpPatPattern().load
@@ -125,8 +119,7 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str):
-    ...
+def load(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpPatPattern().save
@@ -138,8 +131,7 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, tofileName=None, toExtension=None):
-    ...
+def save(self, tofileName=None, toExtension=None): ...
 ```
 
 ### GimpPatPattern().size
@@ -152,6 +144,5 @@ The size of the pattern.
 
 ```python
 @property
-def size(self):
-    ...
+def size(self): ...
 ```

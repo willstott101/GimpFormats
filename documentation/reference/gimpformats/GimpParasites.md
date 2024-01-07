@@ -27,8 +27,7 @@ Format of known parasites:
 
 ```python
 class GimpParasite:
-    def __init__(self):
-        ...
+    def __init__(self): ...
 ```
 
 ### GimpParasite().__repr__
@@ -40,8 +39,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str:
-    ...
+def __repr__(self, indent: str = "") -> str: ...
 ```
 
 ### GimpParasite().decode
@@ -58,8 +56,7 @@ Decode a byte buffer
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpParasite().encode
@@ -76,6 +73,5 @@ Encode a byte buffer
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```

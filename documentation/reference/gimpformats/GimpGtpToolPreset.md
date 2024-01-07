@@ -29,8 +29,7 @@ Pure python implementation of the gimp gtp tool preset format.
 
 ```python
 class GimpGtpToolPreset:
-    def __init__(self, fileName=None):
-        ...
+    def __init__(self, fileName=None): ...
 ```
 
 ### GimpGtpToolPreset().__repr__
@@ -42,8 +41,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent=""):
-    ...
+def __repr__(self, indent=""): ...
 ```
 
 ### GimpGtpToolPreset().decode
@@ -60,8 +58,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0):
-    ...
+def decode(self, data: bytes, index: int = 0): ...
 ```
 
 ### GimpGtpToolPreset().encode
@@ -73,8 +70,7 @@ Encode to a byte array.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpGtpToolPreset().load
@@ -90,8 +86,7 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str):
-    ...
+def load(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpGtpToolPreset().save
@@ -103,8 +98,7 @@ Save this gimp tool preset to a file.
 #### Signature
 
 ```python
-def save(self, tofileName=None, toExtension=None):
-    ...
+def save(self, tofileName=None, toExtension=None): ...
 ```
 
 
@@ -121,8 +115,7 @@ A parentheses-based file format.
 
 ```python
 class ParenFileValue:
-    def __init__(self, name: str = None, value: str = "", children=None):
-        ...
+    def __init__(self, name: str = None, value: str = "", children=None): ...
 ```
 
 ### ParenFileValue().__repr__
@@ -134,8 +127,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self):
-    ...
+def __repr__(self): ...
 ```
 
 
@@ -151,8 +143,7 @@ Decode a parentheses-based file format.
 #### Signature
 
 ```python
-def parenFileDecode(data: bytes):
-    ...
+def parenFileDecode(data: bytes): ...
 ```
 
 
@@ -166,8 +157,7 @@ Encode a values tree to a buffer.
 #### Signature
 
 ```python
-def parenFileEncode(values):
-    ...
+def parenFileEncode(values): ...
 ```
 
 
@@ -181,6 +171,5 @@ Walk the tree.
 #### Signature
 
 ```python
-def walkTree(items):
-    ...
+def walkTree(items): ...
 ```

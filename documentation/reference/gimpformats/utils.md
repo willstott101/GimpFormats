@@ -17,8 +17,7 @@ Utils
 #### Signature
 
 ```python
-def fileOpen(fileName: BytesIO | str) -> tuple[str, bytes]:
-    ...
+def fileOpen(fileName: BytesIO | str) -> tuple[str, bytes]: ...
 ```
 
 
@@ -32,6 +31,5 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(data: bytes, tofileName: BytesIO | str):
-    ...
+def save(data: bytes, tofileName: BytesIO | str): ...
 ```

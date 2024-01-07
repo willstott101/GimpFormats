@@ -27,8 +27,7 @@ See:
 
 ```python
 class GimpGpbBrush:
-    def __init__(self, fileName: BytesIO | str):
-        ...
+    def __init__(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpGpbBrush().__repr__
@@ -40,8 +39,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent=""):
-    ...
+def __repr__(self, indent=""): ...
 ```
 
 ### GimpGpbBrush().decode
@@ -62,8 +60,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0):
-    ...
+def decode(self, data: bytes, index: int = 0): ...
 ```
 
 ### GimpGpbBrush().encode
@@ -75,8 +72,7 @@ Encode this object to a byte array.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpGpbBrush().load
@@ -92,8 +88,7 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str):
-    ...
+def load(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpGpbBrush().save
@@ -105,6 +100,5 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, tofileName=None):
-    ...
+def save(self, tofileName=None): ...
 ```

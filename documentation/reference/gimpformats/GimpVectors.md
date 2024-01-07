@@ -30,8 +30,7 @@ A single point within a stroke.
 
 ```python
 class GimpPoint:
-    def __init__(self, parent):
-        ...
+    def __init__(self, parent): ...
 ```
 
 ### GimpPoint().__repr__
@@ -43,8 +42,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent=""):
-    ...
+def __repr__(self, indent=""): ...
 ```
 
 ### GimpPoint().decode
@@ -68,8 +66,7 @@ inside each point. Defaults to 0.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0, numFloatsPerPoint: int = 0):
-    ...
+def decode(self, data: bytes, index: int = 0, numFloatsPerPoint: int = 0): ...
 ```
 
 ### GimpPoint().encode
@@ -81,8 +78,7 @@ Encode to binary data.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 
@@ -97,8 +93,7 @@ A single stroke within a vector.
 
 ```python
 class GimpStroke:
-    def __init__(self, parent):
-        ...
+    def __init__(self, parent): ...
 ```
 
 ### GimpStroke().__repr__
@@ -110,8 +105,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = ""):
-    ...
+def __repr__(self, indent: str = ""): ...
 ```
 
 ### GimpStroke().decode
@@ -132,8 +126,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpStroke().encode
@@ -145,8 +138,7 @@ Encode to binary data.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 
@@ -161,8 +153,7 @@ A gimp brush stroke vector.
 
 ```python
 class GimpVector:
-    def __init__(self, parent):
-        ...
+    def __init__(self, parent): ...
 ```
 
 ### GimpVector().__repr__
@@ -174,8 +165,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str:
-    ...
+def __repr__(self, indent: str = "") -> str: ...
 ```
 
 ### GimpVector().decode
@@ -196,8 +186,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpVector().encode
@@ -209,6 +198,5 @@ Encode to binary data.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```

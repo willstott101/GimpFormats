@@ -29,8 +29,7 @@ This represents a single level in an imageHierarchy
 
 ```python
 class GimpImageLevel(GimpIOBase):
-    def __init__(self, parent):
-        ...
+    def __init__(self, parent): ...
 ```
 
 ### GimpImageLevel().__repr__
@@ -42,8 +41,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = ""):
-    ...
+def __repr__(self, indent: str = ""): ...
 ```
 
 ### GimpImageLevel().bpp
@@ -56,8 +54,7 @@ Get bpp.
 
 ```python
 @property
-def bpp(self):
-    ...
+def bpp(self): ...
 ```
 
 ### GimpImageLevel().decode
@@ -74,8 +71,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0):
-    ...
+def decode(self, data: bytes, index: int = 0): ...
 ```
 
 ### GimpImageLevel().encode
@@ -87,8 +83,7 @@ Encode this object to a byte buffer.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpImageLevel().image
@@ -101,8 +96,7 @@ Get a final, compiled image
 
 ```python
 @property
-def image(self) -> Image:
-    ...
+def image(self) -> Image: ...
 ```
 
 ### GimpImageLevel().image
@@ -113,8 +107,7 @@ def image(self) -> Image:
 
 ```python
 @image.setter
-def image(self, image: Image):
-    ...
+def image(self, image: Image): ...
 ```
 
 ### GimpImageLevel().mode
@@ -127,8 +120,7 @@ Get mode.
 
 ```python
 @property
-def mode(self):
-    ...
+def mode(self): ...
 ```
 
 ### GimpImageLevel().tiles
@@ -141,6 +133,5 @@ Get tiles.
 
 ```python
 @property
-def tiles(self):
-    ...
+def tiles(self): ...
 ```

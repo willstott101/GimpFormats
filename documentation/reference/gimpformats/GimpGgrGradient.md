@@ -33,8 +33,7 @@ See:
 
 ```python
 class GimpGgrGradient:
-    def __init__(self, fileName: str | None = None):
-        ...
+    def __init__(self, fileName: str | None = None): ...
 ```
 
 ### GimpGgrGradient().__repr__
@@ -46,8 +45,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent=""):
-    ...
+def __repr__(self, indent=""): ...
 ```
 
 ### GimpGgrGradient().decode
@@ -67,8 +65,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, dataIn: bytes):
-    ...
+def decode(self, dataIn: bytes): ...
 ```
 
 ### GimpGgrGradient().encode
@@ -80,8 +77,7 @@ Encode this to a byte array.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpGgrGradient().getColor
@@ -95,8 +91,7 @@ the appropriate color for this point in the gradient.
 #### Signature
 
 ```python
-def getColor(self, percent):
-    ...
+def getColor(self, percent): ...
 ```
 
 ### GimpGgrGradient().load
@@ -112,8 +107,7 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str):
-    ...
+def load(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpGgrGradient().save
@@ -125,8 +119,7 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, tofileName=None):
-    ...
+def save(self, tofileName=None): ...
 ```
 
 
@@ -141,8 +134,7 @@ Single segment within a gradient.
 
 ```python
 class GradientSegment:
-    def __init__(self):
-        ...
+    def __init__(self): ...
 ```
 
 ### GradientSegment().__repr__
@@ -154,8 +146,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent=""):
-    ...
+def __repr__(self, indent=""): ...
 ```
 
 ### GradientSegment().decode
@@ -175,8 +166,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, dataIn: str):
-    ...
+def decode(self, dataIn: str): ...
 ```
 
 ### GradientSegment().encode
@@ -188,8 +178,7 @@ Encode this to a byte array.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GradientSegment().getColor
@@ -202,6 +191,5 @@ for this point in the gradient.
 #### Signature
 
 ```python
-def getColor(self, percent: float):
-    ...
+def getColor(self, percent: float): ...
 ```

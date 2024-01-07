@@ -23,8 +23,7 @@ Since the precision code is so unusual, I decided to create a class to parse it.
 
 ```python
 class Precision:
-    def __init__(self):
-        ...
+    def __init__(self): ...
 ```
 
 ### Precision().__repr__
@@ -36,8 +35,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self):
-    ...
+def __repr__(self): ...
 ```
 
 ### Precision().decode
@@ -49,8 +47,7 @@ Decode the precision code from the file.
 #### Signature
 
 ```python
-def decode(self, gimpVersion: int, ioBuf: IO):
-    ...
+def decode(self, gimpVersion: int, ioBuf: IO): ...
 ```
 
 ### Precision().encode
@@ -64,8 +61,7 @@ NOTE: will not mess with development versions 5 or 6
 #### Signature
 
 ```python
-def encode(self, gimpVersion: int, ioBuf: IO):
-    ...
+def encode(self, gimpVersion: int, ioBuf: IO): ...
 ```
 
 ### Precision().requiredGimpVersion
@@ -77,6 +73,5 @@ Return the lowest gimp version that supports this precision.
 #### Signature
 
 ```python
-def requiredGimpVersion(self):
-    ...
+def requiredGimpVersion(self): ...
 ```

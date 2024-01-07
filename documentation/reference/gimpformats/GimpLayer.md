@@ -28,8 +28,7 @@ Represents a single layer in a gimp image.
 
 ```python
 class GimpLayer(GimpIOBase):
-    def __init__(self, parent, name: str | None = None, image: Image | None = None):
-        ...
+    def __init__(self, parent, name: str | None = None, image: Image | None = None): ...
 ```
 
 ### GimpLayer().__repr__
@@ -41,8 +40,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent=""):
-    ...
+def __repr__(self, indent=""): ...
 ```
 
 ### GimpLayer().decode
@@ -70,8 +68,7 @@ Return the offset
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpLayer().encode
@@ -90,8 +87,7 @@ Return the data
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpLayer().forceFullyLoaded
@@ -103,8 +99,7 @@ Make sure everything is fully loaded from the file.
 #### Signature
 
 ```python
-def forceFullyLoaded(self):
-    ...
+def forceFullyLoaded(self): ...
 ```
 
 ### GimpLayer().image
@@ -119,8 +114,7 @@ NOTE: can return None!
 
 ```python
 @property
-def image(self) -> Image | None:
-    ...
+def image(self) -> Image | None: ...
 ```
 
 ### GimpLayer().image
@@ -135,8 +129,7 @@ NOTE: resets layer width, height, and colorMode
 
 ```python
 @image.setter
-def image(self, image: Image):
-    ...
+def image(self, image: Image): ...
 ```
 
 ### GimpLayer().imageHierarchy
@@ -154,8 +147,7 @@ NOTE: can return None if it has been fully read into an image
 
 ```python
 @property
-def imageHierarchy(self) -> GimpImageHierarchy:
-    ...
+def imageHierarchy(self) -> GimpImageHierarchy: ...
 ```
 
 ### GimpLayer().imageHierarchy
@@ -168,8 +160,7 @@ Set the image hierarchy.
 
 ```python
 @imageHierarchy.setter
-def imageHierarchy(self, imgHierarchy):
-    ...
+def imageHierarchy(self, imgHierarchy): ...
 ```
 
 ### GimpLayer().mask
@@ -182,6 +173,5 @@ Get the layer mask.
 
 ```python
 @property
-def mask(self):
-    ...
+def mask(self): ...
 ```

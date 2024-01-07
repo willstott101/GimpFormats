@@ -26,8 +26,7 @@ Represents a single channel or mask in a gimp image.
 
 ```python
 class GimpChannel(GimpIOBase):
-    def __init__(self, parent, name: str = "", image: Image.Image | None = None):
-        ...
+    def __init__(self, parent, name: str = "", image: Image.Image | None = None): ...
 ```
 
 ### GimpChannel().__repr__
@@ -39,8 +38,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str:
-    ...
+def __repr__(self, indent: str = "") -> str: ...
 ```
 
 ### GimpChannel().decode
@@ -61,8 +59,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpChannel().encode
@@ -74,8 +71,7 @@ Encode this object to a byte buffer.
 #### Signature
 
 ```python
-def encode(self) -> bytearray:
-    ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpChannel().forceFullyLoaded
@@ -87,8 +83,7 @@ Make sure everything is fully loaded from the file.
 #### Signature
 
 ```python
-def forceFullyLoaded(self):
-    ...
+def forceFullyLoaded(self): ...
 ```
 
 ### GimpChannel().image
@@ -101,8 +96,7 @@ Get a final, compiled image.
 
 ```python
 @property
-def image(self) -> Image.Image | None:
-    ...
+def image(self) -> Image.Image | None: ...
 ```
 
 ### GimpChannel().image
@@ -115,8 +109,7 @@ Get a final, compiled image.
 
 ```python
 @image.setter
-def image(self, image: Image.Image):
-    ...
+def image(self, image: Image.Image): ...
 ```
 
 ### GimpChannel().imageHierarchy
@@ -132,6 +125,5 @@ not much use to you.
 
 ```python
 @property
-def imageHierarchy(self):
-    ...
+def imageHierarchy(self): ...
 ```

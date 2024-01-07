@@ -60,8 +60,7 @@ See:
 
 ```python
 class GimpDocument(GimpIOBase):
-    def __init__(self, fileName=None):
-        ...
+    def __init__(self, fileName=None): ...
 ```
 
 ### GimpDocument().__delitem__
@@ -75,8 +74,7 @@ Delete a layer at an index.
 #### Signature
 
 ```python
-def __delitem__(self, index: int) -> None:
-    ...
+def __delitem__(self, index: int) -> None: ...
 ```
 
 ### GimpDocument().__getitem__
@@ -90,8 +88,7 @@ Get the layer at an index.
 #### Signature
 
 ```python
-def __getitem__(self, index: int) -> GimpLayer:
-    ...
+def __getitem__(self, index: int) -> GimpLayer: ...
 ```
 
 ### GimpDocument().__len__
@@ -105,8 +102,7 @@ Get the len.
 #### Signature
 
 ```python
-def __len__(self) -> int:
-    ...
+def __len__(self) -> int: ...
 ```
 
 ### GimpDocument().__repr__
@@ -118,8 +114,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent="") -> str:
-    ...
+def __repr__(self, indent="") -> str: ...
 ```
 
 ### GimpDocument().__setitem__
@@ -133,8 +128,7 @@ Set a layer at an index.
 #### Signature
 
 ```python
-def __setitem__(self, index: int, layer) -> None:
-    ...
+def __setitem__(self, index: int, layer) -> None: ...
 ```
 
 ### GimpDocument().addLayer
@@ -150,8 +144,7 @@ Append a layer object to the document.
 #### Signature
 
 ```python
-def addLayer(self, layer: GimpLayer):
-    ...
+def addLayer(self, layer: GimpLayer): ...
 ```
 
 ### GimpDocument().appendLayer
@@ -167,8 +160,7 @@ Append a layer object to the document.
 #### Signature
 
 ```python
-def appendLayer(self, layer: GimpLayer):
-    ...
+def appendLayer(self, layer: GimpLayer): ...
 ```
 
 ### GimpDocument().decode
@@ -204,8 +196,7 @@ Return the offset
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpDocument().deleteLayer
@@ -217,8 +208,7 @@ Delete a layer.
 #### Signature
 
 ```python
-def deleteLayer(self, index: int) -> None:
-    ...
+def deleteLayer(self, index: int) -> None: ...
 ```
 
 ### GimpDocument().encode
@@ -241,8 +231,7 @@ Return the data
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpDocument().forceFullyLoaded
@@ -254,8 +243,7 @@ Make sure everything is fully loaded from the file.
 #### Signature
 
 ```python
-def forceFullyLoaded(self):
-    ...
+def forceFullyLoaded(self): ...
 ```
 
 ### GimpDocument().getLayer
@@ -267,8 +255,7 @@ Return a given layer.
 #### Signature
 
 ```python
-def getLayer(self, index: int):
-    ...
+def getLayer(self, index: int): ...
 ```
 
 ### GimpDocument().image
@@ -281,8 +268,7 @@ Get a final, compiled image.
 
 ```python
 @property
-def image(self):
-    ...
+def image(self): ...
 ```
 
 ### GimpDocument().insertLayer
@@ -299,8 +285,7 @@ Insert a layer object at a specific position.
 #### Signature
 
 ```python
-def insertLayer(self, layer: GimpLayer, index: int = -1):
-    ...
+def insertLayer(self, layer: GimpLayer, index: int = -1): ...
 ```
 
 ### GimpDocument().layers
@@ -315,8 +300,7 @@ TODO: need to do the same thing with self.Channels
 
 ```python
 @property
-def layers(self):
-    ...
+def layers(self): ...
 ```
 
 ### GimpDocument().load
@@ -332,8 +316,7 @@ Load a gimp xcf and decode the file. See decode for more on this process.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str):
-    ...
+def load(self, fileName: BytesIO | str): ...
 ```
 
 ### GimpDocument().newLayer
@@ -355,8 +338,7 @@ Create a new layer based on a PIL image.
 #### Signature
 
 ```python
-def newLayer(self, name: str, image: Image.Image, index: int = -1) -> GimpLayer:
-    ...
+def newLayer(self, name: str, image: Image.Image, index: int = -1) -> GimpLayer: ...
 ```
 
 ### GimpDocument().newLayerFromClipboard
@@ -382,8 +364,7 @@ NOTE: only works on OSX and Windows
 ```python
 def newLayerFromClipboard(
     self, name: str = "pasted", index: int = -1
-) -> GimpLayer | None:
-    ...
+) -> GimpLayer | None: ...
 ```
 
 ### GimpDocument().save
@@ -395,8 +376,7 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, filename: str | BytesIO = None):
-    ...
+def save(self, filename: str | BytesIO = None): ...
 ```
 
 ### GimpDocument().saveNew
@@ -408,8 +388,7 @@ Save a new gimp image to a file.
 #### Signature
 
 ```python
-def saveNew(self, filename=None):
-    ...
+def saveNew(self, filename=None): ...
 ```
 
 ### GimpDocument().setLayer
@@ -421,8 +400,7 @@ Assign to a given layer.
 #### Signature
 
 ```python
-def setLayer(self, index, layer):
-    ...
+def setLayer(self, index, layer): ...
 ```
 
 
@@ -440,8 +418,7 @@ def blendModeLookup(
     blendmode: int,
     blendLookup: dict[int, BlendType],
     default: BlendType = BlendType.NORMAL,
-):
-    ...
+): ...
 ```
 
 
@@ -470,8 +447,7 @@ to True.
 ```python
 def flattenAll(
     layers: list[GimpLayer], imageDimensions: tuple[int, int], ignoreHidden: bool = True
-) -> Image.Image:
-    ...
+) -> Image.Image: ...
 ```
 
 
@@ -503,8 +479,7 @@ def flattenLayerOrGroup(
     imageDimensions: tuple[int, int],
     flattenedSoFar: Image.Image | None = None,
     ignoreHidden: bool = True,
-) -> Image.Image:
-    ...
+) -> Image.Image: ...
 ```
 
 
@@ -532,8 +507,7 @@ Defaults to (0, 0).
 ```python
 def renderMaskWOffset(
     image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
-) -> Image.Image:
-    ...
+) -> Image.Image: ...
 ```
 
 
@@ -561,6 +535,5 @@ Defaults to (0, 0).
 ```python
 def renderWOffset(
     image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
-) -> Image.Image:
-    ...
+) -> Image.Image: ...
 ```

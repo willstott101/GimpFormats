@@ -38,8 +38,7 @@ A specialized binary file base for Gimp files.
 
 ```python
 class GimpIOBase:
-    def __init__(self, parent):
-        ...
+    def __init__(self, parent): ...
 ```
 
 ### GimpIOBase().__repr__
@@ -51,8 +50,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = ""):
-    ...
+def __repr__(self, indent: str = ""): ...
 ```
 
 ### GimpIOBase().activeVector
@@ -65,8 +63,7 @@ Get the vector that is currently active.
 
 ```python
 @property
-def activeVector(self):
-    ...
+def activeVector(self): ...
 ```
 
 ### GimpIOBase().doc
@@ -79,8 +76,7 @@ Get the main document object.
 
 ```python
 @property
-def doc(self):
-    ...
+def doc(self): ...
 ```
 
 ### GimpIOBase().expanded
@@ -93,8 +89,7 @@ Is the group layer expanded.
 
 ```python
 @property
-def expanded(self) -> bool:
-    ...
+def expanded(self) -> bool: ...
 ```
 
 ### GimpIOBase().expanded
@@ -107,8 +102,7 @@ Is the group layer expanded.
 
 ```python
 @expanded.setter
-def expanded(self, expanded):
-    ...
+def expanded(self, expanded): ...
 ```
 
 ### GimpIOBase().getBlendMode
@@ -120,8 +114,7 @@ Return the blend mode as a string.
 #### Signature
 
 ```python
-def getBlendMode(self) -> str:
-    ...
+def getBlendMode(self) -> str: ...
 ```
 
 ### GimpIOBase().getCompositeModes
@@ -133,8 +126,7 @@ Return the composite mode as a string.
 #### Signature
 
 ```python
-def getCompositeModes(self):
-    ...
+def getCompositeModes(self): ...
 ```
 
 ### GimpIOBase().getCompositeSpaces
@@ -146,8 +138,7 @@ Return the composite spaces as a string.
 #### Signature
 
 ```python
-def getCompositeSpaces(self):
-    ...
+def getCompositeSpaces(self): ...
 ```
 
 ### GimpIOBase().getCompression
@@ -159,8 +150,7 @@ Return the compression as a string.
 #### Signature
 
 ```python
-def getCompression(self) -> str:
-    ...
+def getCompression(self) -> str: ...
 ```
 
 ### GimpIOBase().getTagColours
@@ -172,8 +162,7 @@ Return the tag colours as a string.
 #### Signature
 
 ```python
-def getTagColours(self):
-    ...
+def getTagColours(self): ...
 ```
 
 ### GimpIOBase().getUnits
@@ -185,8 +174,7 @@ Return the units as a string.
 #### Signature
 
 ```python
-def getUnits(self) -> str:
-    ...
+def getUnits(self) -> str: ...
 ```
 
 ### GimpIOBase().pointerSize
@@ -203,8 +191,7 @@ NOTE: prior to version 11, it was 32-bit,
 
 ```python
 @property
-def pointerSize(self) -> int:
-    ...
+def pointerSize(self) -> int: ...
 ```
 
 ### GimpIOBase().root
@@ -217,8 +204,7 @@ Get the root of the file object tree (Which is the same as self.doc).
 
 ```python
 @property
-def root(self):
-    ...
+def root(self): ...
 ```
 
 ### GimpIOBase().tattoo
@@ -231,8 +217,7 @@ Gimp nomenclature for the item's unique id.
 
 ```python
 @property
-def tattoo(self):
-    ...
+def tattoo(self): ...
 ```
 
 ### GimpIOBase().tattoo
@@ -245,8 +230,7 @@ Gimp nomenclature for the item's unique id.
 
 ```python
 @tattoo.setter
-def tattoo(self, tattoo):
-    ...
+def tattoo(self, tattoo): ...
 ```
 
 
@@ -261,8 +245,7 @@ User-defined measurement units.
 
 ```python
 class GimpUserUnits:
-    def __init__(self):
-        ...
+    def __init__(self): ...
 ```
 
 ### GimpUserUnits().__repr__
@@ -274,8 +257,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = ""):
-    ...
+def __repr__(self, indent: str = ""): ...
 ```
 
 ### GimpUserUnits().decode
@@ -296,8 +278,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int:
-    ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpUserUnits().encode
@@ -309,6 +290,5 @@ Convert this object to raw bytes.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```

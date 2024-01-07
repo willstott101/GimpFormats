@@ -29,8 +29,7 @@ NOTE: This was originally designed to be a hierarchy, like
 
 ```python
 class GimpImageHierarchy(GimpIOBase):
-    def __init__(self, parent, image: Image.Image | None = None):
-        ...
+    def __init__(self, parent, image: Image.Image | None = None): ...
 ```
 
 ### GimpImageHierarchy().__repr__
@@ -42,8 +41,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = ""):
-    ...
+def __repr__(self, indent: str = ""): ...
 ```
 
 ### GimpImageHierarchy().decode
@@ -60,8 +58,7 @@ decode a byte buffer
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0):
-    ...
+def decode(self, data: bytes, index: int = 0): ...
 ```
 
 ### GimpImageHierarchy().encode
@@ -73,8 +70,7 @@ Encode this object to a byte buffer.
 #### Signature
 
 ```python
-def encode(self):
-    ...
+def encode(self): ...
 ```
 
 ### GimpImageHierarchy().image
@@ -87,8 +83,7 @@ Get a final, compiled image.
 
 ```python
 @property
-def image(self) -> Image.Image | None:
-    ...
+def image(self) -> Image.Image | None: ...
 ```
 
 ### GimpImageHierarchy().image
@@ -101,8 +96,7 @@ Set the image.
 
 ```python
 @image.setter
-def image(self, image: Image.Image):
-    ...
+def image(self, image: Image.Image): ...
 ```
 
 ### GimpImageHierarchy().levels
@@ -118,6 +112,5 @@ so this returns an array of one item
 
 ```python
 @property
-def levels(self):
-    ...
+def levels(self): ...
 ```
