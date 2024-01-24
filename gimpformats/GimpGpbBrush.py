@@ -61,7 +61,7 @@ class GimpGpbBrush:
 		ioBuf.addBytes(self.pattern.encode())
 		return ioBuf.data
 
-	def save(self, tofileName: str|BytesIO|None=None) -> None:
+	def save(self, tofileName: str | BytesIO | None = None) -> None:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), tofileName)
 

@@ -53,7 +53,7 @@ class GimpIOBase:
 
 ### GimpIOBase().__repr__
 
-[Show source in GimpIOBase.py:681](../../../gimpformats/GimpIOBase.py#L681)
+[Show source in GimpIOBase.py:691](../../../gimpformats/GimpIOBase.py#L691)
 
 Get a textual representation of this object.
 
@@ -65,7 +65,7 @@ def __repr__(self, indent: str = "") -> str: ...
 
 ### GimpIOBase()._colormapDecode
 
-[Show source in GimpIOBase.py:315](../../../gimpformats/GimpIOBase.py#L315)
+[Show source in GimpIOBase.py:325](../../../gimpformats/GimpIOBase.py#L325)
 
 _colormapDecode_.
 
@@ -83,7 +83,7 @@ def _colormapDecode(self, data: bytes | IO, index: int = 0) -> None: ...
 
 ### GimpIOBase()._guidelinesDecode
 
-[Show source in GimpIOBase.py:263](../../../gimpformats/GimpIOBase.py#L263)
+[Show source in GimpIOBase.py:273](../../../gimpformats/GimpIOBase.py#L273)
 
 Decode guidelines.
 
@@ -95,7 +95,7 @@ def _guidelinesDecode(self, data: bytes) -> None: ...
 
 ### GimpIOBase()._itemPathDecode
 
-[Show source in GimpIOBase.py:273](../../../gimpformats/GimpIOBase.py#L273)
+[Show source in GimpIOBase.py:283](../../../gimpformats/GimpIOBase.py#L283)
 
 Decode item path.
 
@@ -107,7 +107,7 @@ def _itemPathDecode(self, data: bytes) -> None: ...
 
 ### GimpIOBase()._parasitesDecode
 
-[Show source in GimpIOBase.py:247](../../../gimpformats/GimpIOBase.py#L247)
+[Show source in GimpIOBase.py:257](../../../gimpformats/GimpIOBase.py#L257)
 
 Decode list of parasites.
 
@@ -119,7 +119,7 @@ def _parasitesDecode(self, data: bytes) -> int: ...
 
 ### GimpIOBase()._parasitesEncode
 
-[Show source in GimpIOBase.py:256](../../../gimpformats/GimpIOBase.py#L256)
+[Show source in GimpIOBase.py:266](../../../gimpformats/GimpIOBase.py#L266)
 
 Encode list of parasites.
 
@@ -131,7 +131,7 @@ def _parasitesEncode(self) -> bytearray: ...
 
 ### GimpIOBase()._propertiesDecode
 
-[Show source in GimpIOBase.py:659](../../../gimpformats/GimpIOBase.py#L659)
+[Show source in GimpIOBase.py:669](../../../gimpformats/GimpIOBase.py#L669)
 
 Decode a list of properties.
 
@@ -143,7 +143,7 @@ def _propertiesDecode(self, ioBuf: IO) -> int: ...
 
 ### GimpIOBase()._propertiesEncode
 
-[Show source in GimpIOBase.py:672](../../../gimpformats/GimpIOBase.py#L672)
+[Show source in GimpIOBase.py:682](../../../gimpformats/GimpIOBase.py#L682)
 
 Encode a list of properties.
 
@@ -155,7 +155,7 @@ def _propertiesEncode(self) -> bytearray: ...
 
 ### GimpIOBase()._propertyDecode
 
-[Show source in GimpIOBase.py:360](../../../gimpformats/GimpIOBase.py#L360)
+[Show source in GimpIOBase.py:370](../../../gimpformats/GimpIOBase.py#L370)
 
 Decode a single property.
 
@@ -172,7 +172,7 @@ def _propertyDecode(self, propertyType: int, data: bytes) -> int: ...
 
 ### GimpIOBase()._propertyEncode
 
-[Show source in GimpIOBase.py:471](../../../gimpformats/GimpIOBase.py#L471)
+[Show source in GimpIOBase.py:481](../../../gimpformats/GimpIOBase.py#L481)
 
 Encode a single property.
 
@@ -191,7 +191,7 @@ def _propertyEncode(self, propertyType: int) -> bytearray: ...
 
 ### GimpIOBase()._samplePointsDecode
 
-[Show source in GimpIOBase.py:348](../../../gimpformats/GimpIOBase.py#L348)
+[Show source in GimpIOBase.py:358](../../../gimpformats/GimpIOBase.py#L358)
 
 Decode a series of points.
 
@@ -203,7 +203,7 @@ def _samplePointsDecode(self, data: bytes) -> None: ...
 
 ### GimpIOBase()._userUnitsDecode
 
-[Show source in GimpIOBase.py:342](../../../gimpformats/GimpIOBase.py#L342)
+[Show source in GimpIOBase.py:352](../../../gimpformats/GimpIOBase.py#L352)
 
 Decode a set of user-defined measurement units.
 
@@ -215,7 +215,7 @@ def _userUnitsDecode(self, data: bytes) -> None: ...
 
 ### GimpIOBase()._vectorsDecode
 
-[Show source in GimpIOBase.py:283](../../../gimpformats/GimpIOBase.py#L283)
+[Show source in GimpIOBase.py:293](../../../gimpformats/GimpIOBase.py#L293)
 
 Decode vectors.
 
@@ -227,7 +227,7 @@ def _vectorsDecode(self, data: bytes) -> None: ...
 
 ### GimpIOBase().activeVector
 
-[Show source in GimpIOBase.py:297](../../../gimpformats/GimpIOBase.py#L297)
+[Show source in GimpIOBase.py:307](../../../gimpformats/GimpIOBase.py#L307)
 
 Get the vector that is currently active.
 
@@ -240,7 +240,7 @@ def activeVector(self) -> GimpVector: ...
 
 ### GimpIOBase().doc
 
-[Show source in GimpIOBase.py:224](../../../gimpformats/GimpIOBase.py#L224)
+[Show source in GimpIOBase.py:234](../../../gimpformats/GimpIOBase.py#L234)
 
 Get the main document object.
 
@@ -253,7 +253,7 @@ def doc(self) -> GimpIOBase: ...
 
 ### GimpIOBase().expanded
 
-[Show source in GimpIOBase.py:302](../../../gimpformats/GimpIOBase.py#L302)
+[Show source in GimpIOBase.py:312](../../../gimpformats/GimpIOBase.py#L312)
 
 Is the group layer expanded.
 
@@ -266,7 +266,7 @@ def expanded(self) -> bool: ...
 
 ### GimpIOBase().expanded
 
-[Show source in GimpIOBase.py:307](../../../gimpformats/GimpIOBase.py#L307)
+[Show source in GimpIOBase.py:317](../../../gimpformats/GimpIOBase.py#L317)
 
 Is the group layer expanded.
 
@@ -279,7 +279,7 @@ def expanded(self, expanded: bool) -> None: ...
 
 ### GimpIOBase().getBlendMode
 
-[Show source in GimpIOBase.py:174](../../../gimpformats/GimpIOBase.py#L174)
+[Show source in GimpIOBase.py:184](../../../gimpformats/GimpIOBase.py#L184)
 
 Return the blend mode as a string.
 
@@ -291,7 +291,7 @@ def getBlendMode(self) -> str: ...
 
 ### GimpIOBase().getCompositeModes
 
-[Show source in GimpIOBase.py:190](../../../gimpformats/GimpIOBase.py#L190)
+[Show source in GimpIOBase.py:200](../../../gimpformats/GimpIOBase.py#L200)
 
 Return the composite mode as a string.
 
@@ -303,7 +303,7 @@ def getCompositeModes(self) -> str: ...
 
 ### GimpIOBase().getCompositeSpaces
 
-[Show source in GimpIOBase.py:194](../../../gimpformats/GimpIOBase.py#L194)
+[Show source in GimpIOBase.py:204](../../../gimpformats/GimpIOBase.py#L204)
 
 Return the composite spaces as a string.
 
@@ -315,7 +315,7 @@ def getCompositeSpaces(self) -> str: ...
 
 ### GimpIOBase().getCompression
 
-[Show source in GimpIOBase.py:178](../../../gimpformats/GimpIOBase.py#L178)
+[Show source in GimpIOBase.py:188](../../../gimpformats/GimpIOBase.py#L188)
 
 Return the compression as a string.
 
@@ -327,7 +327,7 @@ def getCompression(self) -> str: ...
 
 ### GimpIOBase().getTagColours
 
-[Show source in GimpIOBase.py:186](../../../gimpformats/GimpIOBase.py#L186)
+[Show source in GimpIOBase.py:196](../../../gimpformats/GimpIOBase.py#L196)
 
 Return the tag colours as a string.
 
@@ -339,7 +339,7 @@ def getTagColours(self) -> str: ...
 
 ### GimpIOBase().getUnits
 
-[Show source in GimpIOBase.py:182](../../../gimpformats/GimpIOBase.py#L182)
+[Show source in GimpIOBase.py:192](../../../gimpformats/GimpIOBase.py#L192)
 
 Return the units as a string.
 
@@ -351,7 +351,7 @@ def getUnits(self) -> str: ...
 
 ### GimpIOBase().pointerSize
 
-[Show source in GimpIOBase.py:198](../../../gimpformats/GimpIOBase.py#L198)
+[Show source in GimpIOBase.py:208](../../../gimpformats/GimpIOBase.py#L208)
 
 Determine the size of the "pointer" datatype based on the document version.
 
@@ -368,7 +368,7 @@ def pointerSize(self) -> int: ...
 
 ### GimpIOBase().root
 
-[Show source in GimpIOBase.py:232](../../../gimpformats/GimpIOBase.py#L232)
+[Show source in GimpIOBase.py:242](../../../gimpformats/GimpIOBase.py#L242)
 
 Get the root of the file object tree (Which is the same as self.doc).
 
@@ -381,7 +381,7 @@ def root(self) -> GimpIOBase: ...
 
 ### GimpIOBase().tattoo
 
-[Show source in GimpIOBase.py:237](../../../gimpformats/GimpIOBase.py#L237)
+[Show source in GimpIOBase.py:247](../../../gimpformats/GimpIOBase.py#L247)
 
 Gimp nomenclature for the item's unique id.
 
@@ -394,7 +394,7 @@ def tattoo(self) -> Any | None: ...
 
 ### GimpIOBase().tattoo
 
-[Show source in GimpIOBase.py:242](../../../gimpformats/GimpIOBase.py#L242)
+[Show source in GimpIOBase.py:252](../../../gimpformats/GimpIOBase.py#L252)
 
 Gimp nomenclature for the item's unique id.
 
@@ -409,7 +409,7 @@ def tattoo(self, tattoo: Any | None) -> None: ...
 
 ## GimpUserUnits
 
-[Show source in GimpIOBase.py:764](../../../gimpformats/GimpIOBase.py#L764)
+[Show source in GimpIOBase.py:774](../../../gimpformats/GimpIOBase.py#L774)
 
 User-defined measurement units.
 
@@ -422,7 +422,7 @@ class GimpUserUnits:
 
 ### GimpUserUnits().__repr__
 
-[Show source in GimpIOBase.py:810](../../../gimpformats/GimpIOBase.py#L810)
+[Show source in GimpIOBase.py:820](../../../gimpformats/GimpIOBase.py#L820)
 
 Get a textual representation of this object.
 
@@ -434,7 +434,7 @@ def __repr__(self, indent: str = "") -> str: ...
 
 ### GimpUserUnits().decode
 
-[Show source in GimpIOBase.py:776](../../../gimpformats/GimpIOBase.py#L776)
+[Show source in GimpIOBase.py:786](../../../gimpformats/GimpIOBase.py#L786)
 
 Decode a byte buffer.
 
@@ -457,7 +457,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpUserUnits().encode
 
-[Show source in GimpIOBase.py:798](../../../gimpformats/GimpIOBase.py#L798)
+[Show source in GimpIOBase.py:808](../../../gimpformats/GimpIOBase.py#L808)
 
 Convert this object to raw bytes.
 

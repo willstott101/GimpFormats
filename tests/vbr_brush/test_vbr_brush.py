@@ -15,6 +15,7 @@ from gimpformats.GimpVbrBrush import GimpVbrBrush
 
 dut = GimpVbrBrush()
 
+
 @pytest.mark.skip("NotImplementedError")
 def test_DiagonalStar() -> None:
 	"""Test diagonal star."""

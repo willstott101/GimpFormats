@@ -35,7 +35,7 @@ class ParenFileValue:
 			self.value = value
 		self.children = children
 
-	def _addValue(self, bufArray:str) -> None:
+	def _addValue(self, bufArray: str) -> None:
 		if self.name is None:  # first value is the name
 			self.name = bufArray
 		if bufArray:
@@ -117,7 +117,7 @@ def parenFileEncode(values: list[ParenFileValue]) -> str:
 class GimpGtpToolPreset:
 	"""Pure python implementation of the gimp gtp tool preset format."""
 
-	def __init__(self, fileName: BytesIO | str | None=None) -> None:
+	def __init__(self, fileName: BytesIO | str | None = None) -> None:
 		"""Pure python implementation of the gimp gtp tool preset format."""
 		self.fileName = None
 		self.values = []
@@ -145,7 +145,7 @@ class GimpGtpToolPreset:
 		"""Encode to bytes."""
 		return parenFileEncode(self.values).encode("utf-8")
 
-	def save(self, tofileName: str| BytesIO|None=None) -> None:
+	def save(self, tofileName: str | BytesIO | None = None) -> None:
 		"""Save this gimp tool preset to a file."""
 		file = tofileName if hasattr(tofileName, "write") else open(tofileName, "wb")
 		file.write(self.encode())

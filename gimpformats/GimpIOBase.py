@@ -14,11 +14,21 @@ class GimpIOBase:
 	"""A specialized binary file base for Gimp files."""
 
 	COLOR_MODES: ClassVar[list] = ["RGB", "Grayscale", "Indexed"]
-	UNITS : ClassVar[list]= ["Inches", "Millimeters", "Points", "Picas"]
-	UNITS_TO_MM : ClassVar[list]= [25.4, 1, 127 / 360.0, 127 / 30.0]
+	UNITS: ClassVar[list] = ["Inches", "Millimeters", "Points", "Picas"]
+	UNITS_TO_MM: ClassVar[list] = [25.4, 1, 127 / 360.0, 127 / 30.0]
 	COMPOSITE_MODES: ClassVar[list] = ["Union", "Clip to backdrop", "Clip to layer", "Intersection"]
 	COMPOSITE_SPACES: ClassVar[list] = ["RGB (linear)", "RGB (perceptual)", "LAB"]
-	TAG_COLORS : ClassVar[list]= ["None", "Blue", "Green", "Yellow", "Orange", "Brown", "Red", "Violet", "Gray"]
+	TAG_COLORS: ClassVar[list] = [
+		"None",
+		"Blue",
+		"Green",
+		"Yellow",
+		"Orange",
+		"Brown",
+		"Red",
+		"Violet",
+		"Gray",
+	]
 	COMPRESSION_MODES: ClassVar[list] = ["None", "RLE", "Zlib", "Fractal"]
 
 	BLEND_MODES: ClassVar[list] = [
@@ -240,7 +250,7 @@ class GimpIOBase:
 		return self.uniqueId
 
 	@tattoo.setter
-	def tattoo(self, tattoo: Any|None) -> None:
+	def tattoo(self, tattoo: Any | None) -> None:
 		"""Gimp nomenclature for the item's unique id."""
 		self.uniqueId = tattoo
 
@@ -260,7 +270,7 @@ class GimpIOBase:
 			ioBuf.addBytes(parasite.encode())
 		return ioBuf.data
 
-	def _guidelinesDecode(self, data:bytes) -> None:
+	def _guidelinesDecode(self, data: bytes) -> None:
 		"""Decode guidelines."""
 		index: int = 0
 		while index < len(data):
@@ -270,7 +280,7 @@ class GimpIOBase:
 			index += 1
 			self.guidelines.append((isVertical, position))
 
-	def _itemPathDecode(self, data:bytes) -> None:
+	def _itemPathDecode(self, data: bytes) -> None:
 		"""Decode item path."""
 		index: int = 0
 		path = []
@@ -280,7 +290,7 @@ class GimpIOBase:
 			path.append(pathElem)
 		self.itemPath = path
 
-	def _vectorsDecode(self, data:bytes) -> None:
+	def _vectorsDecode(self, data: bytes) -> None:
 		"""Decode vectors."""
 		index: int = 0
 		self.vectorsVersion = struct.unpack(">I", data[index : index + 4])[0]
@@ -305,14 +315,14 @@ class GimpIOBase:
 		return self.groupItemFlags & 0x00000001 > 0
 
 	@expanded.setter
-	def expanded(self, expanded:bool) -> None:
+	def expanded(self, expanded: bool) -> None:
 		"""Is the group layer expanded."""
 		if expanded:
 			self.groupItemFlags |= 0x00000001
 		else:
 			self.groupItemFlags &= ~0x00000001
 
-	def _colormapDecode(self, data: bytes|IO, index:int=0) -> None:
+	def _colormapDecode(self, data: bytes | IO, index: int = 0) -> None:
 		"""_colormapDecode_.
 
 		:param data: can be bytes or an IO object
@@ -339,13 +349,13 @@ class GimpIOBase:
 		if ioObj is not None:
 			ioObj.index = index
 
-	def _userUnitsDecode(self, data:bytes) -> None:
+	def _userUnitsDecode(self, data: bytes) -> None:
 		"""Decode a set of user-defined measurement units."""
 		userUnits = GimpUserUnits()
 		userUnits.decode(data)
 		self.userUnits = userUnits
 
-	def _samplePointsDecode(self, data:bytes) -> None:
+	def _samplePointsDecode(self, data: bytes) -> None:
 		"""Decode a series of points."""
 		index: int = 0
 		samplePoints = []
@@ -357,7 +367,7 @@ class GimpIOBase:
 			samplePoints.append((x, y))
 		self.samplePoints = samplePoints
 
-	def _propertyDecode(self, propertyType:int, data:bytes) -> int:
+	def _propertyDecode(self, propertyType: int, data: bytes) -> int:
 		"""Decode a single property.
 
 		Many properties are in the form

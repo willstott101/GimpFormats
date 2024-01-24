@@ -19,6 +19,7 @@ from gimpformats.GimpGihBrushSet import GimpGihBrushSet
 
 dut = GimpGihBrushSet()
 
+
 @pytest.mark.skip("RuntimeError")
 def test_wilber() -> None:
 	"""test wilber."""
@@ -34,6 +35,7 @@ def test_wilber() -> None:
 	actual = open(f"{THISDIR}/actualOutput_Wilber.gih", "rb").read()
 	assert actual == original
 	os.remove(f"{THISDIR}/actualOutput_Wilber.gih")
+
 
 @pytest.mark.skip("RuntimeError")
 def test_feltpen() -> None:
