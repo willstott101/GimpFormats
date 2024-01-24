@@ -10,7 +10,7 @@ from .GimpParasites import GimpParasite
 class GimpVector:
 	"""A gimp brush stroke vector."""
 
-	def __init__(self, parent):
+	def __init__(self, parent) -> None:
 		# GimpIOBase.__init__(self, parent)
 		_ = parent
 		self.name = ""
@@ -24,10 +24,12 @@ class GimpVector:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			data (bytes): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Returns:
+		-------
 			int: offset
 		"""
 		ioBuf = IO(data, index, boolSize=32)
@@ -85,7 +87,7 @@ class GimpStroke:
 
 	STROKE_TYPES = ["None", "Bezier"]
 
-	def __init__(self, parent):
+	def __init__(self, parent) -> None:
 		# GimpIOBase.__init__(self, parent)
 		_ = parent
 		self.strokeType = 1  # one of self.STROKE_TYPES
@@ -96,10 +98,12 @@ class GimpStroke:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			data (bytes): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Returns:
+		-------
 			int: offset
 		"""
 		ioBuf = IO(data, index, boolSize=32)
@@ -124,7 +128,7 @@ class GimpStroke:
 			ioBuf.addBytes(gimpPoint.encode())
 		return ioBuf.data
 
-	def __repr__(self, indent: str = ""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Stroke Type: {self.STROKE_TYPES[self.strokeType]}")
@@ -140,7 +144,7 @@ class GimpPoint:
 
 	POINT_TYPES = ["Anchor", "Bezier control point"]
 
-	def __init__(self, parent):
+	def __init__(self, parent) -> None:
 		_ = parent
 		self.x = 0
 		self.y = 0
@@ -154,6 +158,7 @@ class GimpPoint:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			data (bytes): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 			numFloatsPerPoint (int, optional): required so we know
@@ -161,6 +166,7 @@ class GimpPoint:
 			inside each point. Defaults to 0.
 
 		Returns:
+		-------
 			int: offset
 		"""
 		ioBuf = IO(data, index, boolSize=32)
@@ -199,7 +205,7 @@ class GimpPoint:
 						ioBuf.float32 = self.wheel
 		return ioBuf.data
 
-	def __repr__(self, indent=""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Location: ({self.x}" + f",{self.y})")

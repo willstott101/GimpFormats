@@ -2,7 +2,6 @@
 """
 from __future__ import annotations
 
-import os
 import sys
 from pathlib import Path
 
@@ -16,7 +15,7 @@ from gimpformats.gimpXcfDocument import GimpDocument
 dut = GimpDocument()
 
 
-def test_oneLayerWithTransparency():
+def test_oneLayerWithTransparency() -> None:
 	"""test an image."""
 	dut.load(f"{THISDIR}/testOneLayerWithTransparency.xcf")
 	dut.image.save(f"{THISDIR}/testOneLayerWithTransparency.png")
@@ -25,7 +24,7 @@ def test_oneLayerWithTransparency():
 	)
 
 
-def test_complexImage():
+def test_complexImage() -> None:
 	"""test an image."""
 	dut.load(f"{THISDIR}/testComplexImage.xcf")
 	dut.image.save(f"{THISDIR}/testComplexImage.png")

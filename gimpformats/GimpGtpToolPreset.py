@@ -15,10 +15,11 @@ class ParenFileValue:
 	(possibly "scheme" language?)
 	"""
 
-	def __init__(self, name: str = None, value: str = "", children=None):
-		"""parenthesis based file
+	def __init__(self, name: str | None = None, value: str = "", children=None) -> None:
+		"""Parenthesis based file.
 
 		Args:
+		----
 			name (str, optional): name of the file. Defaults to None.
 			value (str, optional): some value, str(float) or str. Defaults to "".
 			children ([type], optional): children. Defaults to None.
@@ -34,7 +35,7 @@ class ParenFileValue:
 			self.value = value
 		self.children = children
 
-	def _addValue(self, bufArray):
+	def _addValue(self, bufArray:str) -> None:
 		if self.name is None:  # first value is the name
 			self.name = bufArray
 		if bufArray:
@@ -48,7 +49,7 @@ class ParenFileValue:
 			else:
 				raise RuntimeError('What kind of value is "' + bufArray + '"?')
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"({self.name}")
@@ -66,17 +67,16 @@ class ParenFileValue:
 		return "".join(ret)
 
 
-def parenFileDecode(data: bytes):
+def parenFileDecode(data: bytes) -> list[ParenFileValue]:
 	"""Decode a parentheses-based file format.
 
 	(possibly "scheme" language?)
 	"""
 	nodes = brackettree.Node(data.decode("utf-8"))
-	values = walkTree(nodes.items)
-	return values
+	return walkTree(nodes.items)
 
 
-def walkTree(items):
+def walkTree(items: list[brackettree.RoundNode]) -> list[ParenFileValue]:
 	"""Walk the tree."""
 	values = []
 	for item in items:
@@ -100,7 +100,7 @@ def walkTree(items):
 	return values
 
 
-def parenFileEncode(values):
+def parenFileEncode(values: list[ParenFileValue]) -> str:
 	"""Encode a values tree to a buffer."""
 	ret = []
 	ret.append("# GIMP tool preset file\n\n")
@@ -117,13 +117,14 @@ def parenFileEncode(values):
 class GimpGtpToolPreset:
 	"""Pure python implementation of the gimp gtp tool preset format."""
 
-	def __init__(self, fileName=None):
+	def __init__(self, fileName: BytesIO | str | None=None) -> None:
+		"""Pure python implementation of the gimp gtp tool preset format."""
 		self.fileName = None
 		self.values = []
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: BytesIO | str):
+	def load(self, fileName: BytesIO | str) -> None:
 		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
@@ -131,7 +132,7 @@ class GimpGtpToolPreset:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0):
+	def decode(self, data: bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
@@ -140,27 +141,17 @@ class GimpGtpToolPreset:
 		self.values = parenFileDecode(data)
 		return index
 
-	def encode(self):
-		"""Encode to a byte array."""
+	def encode(self) -> bytes:
+		"""Encode to bytes."""
 		return parenFileEncode(self.values).encode("utf-8")
 
-	def save(self, tofileName=None, toExtension=None):
+	def save(self, tofileName: str| BytesIO|None=None) -> None:
 		"""Save this gimp tool preset to a file."""
-		if toExtension is None:
-			if tofileName is not None:
-				toExtension = tofileName.rsplit(".", 1)
-				if len(toExtension) > 1:
-					toExtension = toExtension[-1]
-				else:
-					toExtension = None
-		if hasattr(tofileName, "write"):
-			file = tofileName
-		else:
-			file = open(tofileName, "wb")
+		file = tofileName if hasattr(tofileName, "write") else open(tofileName, "wb")
 		file.write(self.encode())
 		file.close()
 
-	def __repr__(self, indent=""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		for value in self.values:

@@ -15,7 +15,7 @@ from gimpformats.GimpGbrBrush import GimpGbrBrush
 dut = GimpGbrBrush()
 
 
-def test_pepper():
+def test_pepper() -> None:
 	"""test pepper"""
 	dut.load(f"{THISDIR}/pepper.gbr")
 	# test image saving (implicit)
@@ -33,7 +33,7 @@ def test_pepper():
 	os.remove(f"{THISDIR}/actualOutput_pepper.gbr")
 
 
-def test_dunes():
+def test_dunes() -> None:
 	"""test dunes"""
 	dut.load(f"{THISDIR}/dunes.gbr")
 	# test image saving (explicit)

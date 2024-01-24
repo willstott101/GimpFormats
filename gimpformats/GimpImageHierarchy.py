@@ -14,14 +14,14 @@ from .GimpIOBase import IO, GimpIOBase
 
 class GimpImageHierarchy(GimpIOBase):
 	"""
-	Gets packed pixels from a gimp image
+	Gets packed pixels from a gimp image.
 
 	NOTE: This was originally designed to be a hierarchy, like
 		an image pyramid, through in practice they only use the
 		top level of the pyramid (64x64) and ignore the rest.
 	"""
 
-	def __init__(self, parent, image: Image.Image | None = None):
+	def __init__(self, parent, image: Image.Image | None = None) -> None:
 		GimpIOBase.__init__(self, parent)
 		self.width: int = 0
 		self.height: int = 0
@@ -34,13 +34,14 @@ class GimpImageHierarchy(GimpIOBase):
 
 	def decode(self, data: bytes, index: int = 0):
 		"""
-		decode a byte buffer
+		decode a byte buffer.
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
 		if not data:
-			raise RuntimeError("No data!")
+			msg = "No data!"
+			raise RuntimeError(msg)
 		ioBuf = IO(data, index)
 		# print 'Decoding channel at',index
 		self.width = ioBuf.u32
@@ -103,17 +104,18 @@ class GimpImageHierarchy(GimpIOBase):
 		return self.levels[0].image
 
 	@image.setter
-	def image(self, image: Image.Image):
+	def image(self, image: Image.Image) -> None:
 		"""Set the image."""
 		self.width = image.width
 		self.height = image.height
 		if image.mode not in ["L", "LA", "RGB", "RGBA"]:
-			raise NotImplementedError("Unsupported PIL image type")
+			msg = "Unsupported PIL image type"
+			raise NotImplementedError(msg)
 		self.bpp = len(image.mode)
 		self._levelPtrs = None
 		# self._levels = [GimpImageLevel(self, image)]
 
-	def __repr__(self, indent: str = ""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Size: {self.width} x {self.height}")

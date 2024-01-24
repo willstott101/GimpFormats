@@ -14,7 +14,7 @@ from gimpformats.gimpXcfDocument import GimpDocument
 dut = GimpDocument()
 
 
-def test_singleMaskedGroup():
+def test_singleMaskedGroup() -> None:
 	"""Test a single group with layer mask."""
 	dut.load(f"{THISDIR}/single-masked-group.xcf")
 	result = dut.image
@@ -25,7 +25,7 @@ def test_singleMaskedGroup():
 	)
 
 
-def test_multipleMaskedGroups():
+def test_multipleMaskedGroups() -> None:
 	"""Test multiple layer groups with masks."""
 	dut.load(f"{THISDIR}/multiple-masked-groups.xcf")
 	result = dut.image
@@ -36,7 +36,7 @@ def test_multipleMaskedGroups():
 	)
 
 
-def test_multipleOffsetMaskedGroups():
+def test_multipleOffsetMaskedGroups() -> None:
 	"""Test multiple offset layer groups with masks."""
 	dut.load(f"{THISDIR}/multiple-offset-masked-groups.xcf")
 	result = dut.image

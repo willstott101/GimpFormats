@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from io import BytesIO
+from typing import NoReturn
 
 from . import utils
 
@@ -16,10 +17,11 @@ class GimpVbrBrush:
 
 	BRUSH_SHAPES = ["circle", "square", "diamond"]
 
-	def __init__(self, fileName: BytesIO | str | None = None):
+	def __init__(self, fileName: BytesIO | str | None = None) -> None:
 		"""Pure python implementation of the gimp vbr brush format.
 
 		Args:
+		----
 			fileName (BytesIO, str, optional): filename. Defaults to None.
 		"""
 		self.version = 1.0
@@ -34,7 +36,7 @@ class GimpVbrBrush:
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: BytesIO | str):
+	def load(self, fileName: BytesIO | str) -> None:
 		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
@@ -43,18 +45,19 @@ class GimpVbrBrush:
 		self.decode(data)
 
 	@property
-	def image(self):
+	def image(self) -> NoReturn:
 		"""This parametric brush converted to a useable PIL image."""
-		raise NotImplementedError()  # TODO:
+		raise NotImplementedError  # TODO:
 
-	def decode(self, dataIn: bytes):
+	def decode(self, dataIn: bytes) -> None:
 		"""Decode a byte buffer.
 
 		:param dataIn: data buffer to decode
 		"""
 		data = [s.strip() for s in dataIn.decode("utf-8").split("\n")]
 		if data[0] != "GIMP-VBR":
-			raise RuntimeError("File format error.  Magic value mismatch.")
+			msg = "File format error.  Magic value mismatch."
+			raise RuntimeError(msg)
 		self.version = float(data[1])
 		if self.version == 1.0:
 			self.name = data[2]  # max len 255 bytes
@@ -73,7 +76,8 @@ class GimpVbrBrush:
 			self.aspectRatio = float(data[8])
 			self.angle = float(data[9])
 		else:
-			raise RuntimeError(f"Unknown version {self.version}")
+			msg = f"Unknown version {self.version}"
+			raise RuntimeError(msg)
 
 	def encode(self) -> bytes:
 		"""Encode to a raw data stream."""
@@ -98,29 +102,22 @@ class GimpVbrBrush:
 			data.append(str(self.angle))
 		return ("\n".join(data) + "\n").encode("utf-8")
 
-	def save(self, tofileName=None, toExtension=None):
+	def save(self, tofileName=None, toExtension=None) -> None:
 		"""Save this gimp image to a file."""
 		asImage = False
-		if toExtension is None:
-			if tofileName is not None:
-				toExtension = tofileName.rsplit(".", 1)
-				if len(toExtension) > 1:
-					toExtension = toExtension[-1]
-				else:
-					toExtension = None
+		if toExtension is None and tofileName is not None:
+			toExtension = tofileName.rsplit(".", 1)
+			toExtension = toExtension[-1] if len(toExtension) > 1 else None
 		if toExtension is not None and toExtension != "vbr":
 			asImage = True
 		if asImage:
 			self.image.save(tofileName)
 		else:
-			if hasattr(tofileName, "write"):
-				file = tofileName
-			else:
-				file = open(tofileName, "wb")
+			file = tofileName if hasattr(tofileName, "write") else open(tofileName, "wb")
 			file.write(self.encode())
 			file.close()
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:

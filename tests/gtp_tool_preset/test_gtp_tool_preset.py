@@ -16,7 +16,7 @@ from gimpformats.GimpGtpToolPreset import GimpGtpToolPreset
 dut = GimpGtpToolPreset()
 
 
-def test_smudgeRough():
+def test_smudgeRough() -> None:
 	"""test smudge rough."""
 	dut.load(f"{THISDIR}/Smudge-Rough.gtp")
 	# test round-trip compatibility

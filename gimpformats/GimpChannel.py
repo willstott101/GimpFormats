@@ -12,10 +12,13 @@ from .GimpIOBase import GimpIOBase
 class GimpChannel(GimpIOBase):
 	"""Represents a single channel or mask in a gimp image."""
 
-	def __init__(self, parent, name: str = "", image: Image.Image | None = None):
+	def __init__(
+		self, parent: GimpIOBase, name: str = "", image: Image.Image | None = None
+	) -> None:
 		"""GimpChannel.
 
 		Args:
+		----
 			parent ([type]): some parent node/ object
 			name (str, optional): name of the channel. Defaults to "".
 			image (Image.Image, optional): image to set. Defaults to None.
@@ -34,10 +37,12 @@ class GimpChannel(GimpIOBase):
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			data (bytes): data to decode
 			index (int, optional): index to start from. Defaults to 0.
 
 		Returns:
+		-------
 			int: pointer
 		"""
 		ioBuf = IO(data, index)
@@ -69,7 +74,7 @@ class GimpChannel(GimpIOBase):
 		return self.imageHierarchy.image
 
 	@image.setter
-	def image(self, image: Image.Image):
+	def image(self, image: Image.Image) -> None:
 		"""Get a final, compiled image."""
 		self.width = image.width
 		self.height = image.height
@@ -78,14 +83,14 @@ class GimpChannel(GimpIOBase):
 			self.name = image.rsplit("\\", 1)[-1].rsplit("/", 1)[-1]
 		self._imageHierarchy = GimpImageHierarchy(self, image)
 
-	def forceFullyLoaded(self):
+	def forceFullyLoaded(self) -> None:
 		"""Make sure everything is fully loaded from the file."""
 		_ = self.image  # make sure the image is loaded so we can delete the hierarchy nonsense
 		self._imageHierarchyPtr = None
 		self._data = None
 
 	@property
-	def imageHierarchy(self):
+	def imageHierarchy(self) -> GimpImageHierarchy:
 		"""Get the image hierarchy.
 
 		This is mainly used for decoding the image, so
@@ -96,7 +101,8 @@ class GimpChannel(GimpIOBase):
 				self._imageHierarchy = GimpImageHierarchy(self)
 				self._imageHierarchy.decode(self._data, self._imageHierarchyPtr)
 			return self._imageHierarchy
-		raise RuntimeError("self._data or self._imageHierarchyPtr is None")
+		msg = "self._data or self._imageHierarchyPtr is None"
+		raise RuntimeError(msg)
 
 	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""

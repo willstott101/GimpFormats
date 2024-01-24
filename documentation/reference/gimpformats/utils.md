@@ -1,8 +1,6 @@
 # Utils
 
-[Gimpformats Index](../README.md#gimpformats-index) /
-[Gimpformats](./index.md#gimpformats) /
-Utils
+[Gimpformats Index](../README.md#gimpformats-index) / [Gimpformats](./index.md#gimpformats) / Utils
 
 > Auto-generated documentation for [gimpformats.utils](../../../gimpformats/utils.py) module.
 
@@ -31,5 +29,5 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(data: bytes, tofileName: BytesIO | str): ...
+def save(data: bytes, tofileName: BytesIO | str) -> None: ...
 ```

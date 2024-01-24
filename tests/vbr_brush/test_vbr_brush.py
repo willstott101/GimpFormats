@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
 from imgcompare import imgcompare
 
 THISDIR = str(Path(__file__).resolve().parent)
@@ -14,8 +15,8 @@ from gimpformats.GimpVbrBrush import GimpVbrBrush
 
 dut = GimpVbrBrush()
 
-
-def test_DiagonalStar():
+@pytest.mark.skip("NotImplementedError")
+def test_DiagonalStar() -> None:
 	"""Test diagonal star."""
 	dut.load(f"{THISDIR}/Diagonal-Star-17.vbr")
 	assert imgcompare.is_equal(

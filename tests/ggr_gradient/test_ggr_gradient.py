@@ -24,7 +24,7 @@ def colorArray(numPoints):
 	return colors
 
 
-def saveColors(f, colorArray):
+def saveColors(f, colorArray) -> None:
 	"""save colours."""
 	f.write(b"r, g, b, a\n")
 	for c in colorArray:
@@ -35,7 +35,7 @@ def saveColors(f, colorArray):
 			f.write(line.encode("utf-8"))
 
 
-def test_coldSteel():
+def test_coldSteel() -> None:
 	"""test cold steel."""
 	dut.load(f"{THISDIR}/Cold_Steel_2.ggr")
 	# test round-trip compatibility

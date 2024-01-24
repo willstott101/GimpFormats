@@ -6,7 +6,7 @@ from gimpformats.gimpXcfDocument import GimpDocument
 
 
 #### XCF ####
-def catXCF(file: str):
+def catXCF(file: str) -> None:
 	"""Open an .xcf file into a layered image."""
 	project = GimpDocument(file)
 	# Iterate the layers and create a list of layers for each group, then remove
@@ -71,8 +71,6 @@ def catXCF(file: str):
 					layerOrGroup.blendMode,
 				)
 			)
-
-	print(layersAndGroups, (project.width, project.height))
 
 
 catXCF("test_files/test.xcf")

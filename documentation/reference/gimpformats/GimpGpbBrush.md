@@ -1,8 +1,6 @@
 # Gimpgpbbrush
 
-[Gimpformats Index](../README.md#gimpformats-index) /
-[Gimpformats](./index.md#gimpformats) /
-Gimpgpbbrush
+[Gimpformats Index](../README.md#gimpformats-index) / [Gimpformats](./index.md#gimpformats) / Gimpgpbbrush
 
 > Auto-generated documentation for [gimpformats.GimpGpbBrush](../../../gimpformats/GimpGpbBrush.py) module.
 
@@ -27,57 +25,59 @@ See:
 
 ```python
 class GimpGpbBrush:
-    def __init__(self, fileName: BytesIO | str): ...
+    def __init__(self, fileName: BytesIO | str) -> None: ...
 ```
 
 ### GimpGpbBrush().__repr__
 
-[Show source in GimpGpbBrush.py:66](../../../gimpformats/GimpGpbBrush.py#L66)
+[Show source in GimpGpbBrush.py:68](../../../gimpformats/GimpGpbBrush.py#L68)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent=""): ...
+def __repr__(self, indent: str = "") -> str: ...
 ```
 
 ### GimpGpbBrush().decode
 
-[Show source in GimpGpbBrush.py:41](../../../gimpformats/GimpGpbBrush.py#L41)
+[Show source in GimpGpbBrush.py:42](../../../gimpformats/GimpGpbBrush.py#L42)
 
 Decode a byte buffer.
 
 #### Arguments
 
-- `data` *bytes* - data to decode
-- `index` *int, optional* - index to start from. Defaults to 0.
+----
+ - `data` *bytes* - data to decode
+ - `index` *int, optional* - index to start from. Defaults to 0.
 
 #### Returns
 
-- `int` - pointer
+-------
+ - `int` - pointer
 
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0): ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpGpbBrush().encode
 
-[Show source in GimpGpbBrush.py:55](../../../gimpformats/GimpGpbBrush.py#L55)
+[Show source in GimpGpbBrush.py:57](../../../gimpformats/GimpGpbBrush.py#L57)
 
-Encode this object to a byte array.
+Encode this object to bytes.
 
 #### Signature
 
 ```python
-def encode(self): ...
+def encode(self) -> bytes: ...
 ```
 
 ### GimpGpbBrush().load
 
-[Show source in GimpGpbBrush.py:33](../../../gimpformats/GimpGpbBrush.py#L33)
+[Show source in GimpGpbBrush.py:34](../../../gimpformats/GimpGpbBrush.py#L34)
 
 Load a gimp file.
 
@@ -88,17 +88,17 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str): ...
+def load(self, fileName: BytesIO | str) -> None: ...
 ```
 
 ### GimpGpbBrush().save
 
-[Show source in GimpGpbBrush.py:62](../../../gimpformats/GimpGpbBrush.py#L62)
+[Show source in GimpGpbBrush.py:64](../../../gimpformats/GimpGpbBrush.py#L64)
 
 Save this gimp image to a file.
 
 #### Signature
 
 ```python
-def save(self, tofileName=None): ...
+def save(self, tofileName: str | BytesIO | None = None) -> None: ...
 ```

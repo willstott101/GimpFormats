@@ -1,4 +1,4 @@
-"""Parasites are arbitrary (meta)data strings that can be attached to a document tree item
+"""Parasites are arbitrary (meta)data strings that can be attached to a document tree item.
 
 They are used to store things like last-used plugin settings, gamma adjuetments, etc.
 
@@ -44,7 +44,7 @@ KNOWN_LAYER_PARASITES = ["gimp-text-layer", "gfig"]
 
 
 class GimpParasite:
-	"""Parasites are arbitrary (meta)data strings that can be attached to a document tree item
+	"""Parasites are arbitrary (meta)data strings that can be attached to a document tree item.
 
 	They are used to store things like last-used plugin settings, gamma adjuetments, etc.
 
@@ -52,13 +52,13 @@ class GimpParasite:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
 	"""
 
-	def __init__(self):
+	def __init__(self) -> None:
 		self.name = ""
 		self.flags = 0
 		self.data = None
 
 	def decode(self, data: bytes, index: int = 0) -> int:
-		"""Decode a byte buffer
+		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
@@ -71,7 +71,7 @@ class GimpParasite:
 		return ioBuf.index
 
 	def encode(self):
-		"""Encode a byte buffer
+		"""Encode a byte buffer.
 
 		:param data: data buffer to encode
 		:param index: index within the buffer to start at

@@ -22,10 +22,11 @@ class GimpGihBrushSet:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/gih.txt
 	"""
 
-	def __init__(self, fileName: str = None):
+	def __init__(self, fileName: str | None = None) -> None:
 		"""Gimp Image Pipe Format.
 
 		Args:
+		----
 			fileName (str, optional): filename. Defaults to None.
 		"""
 		self.fileName = None
@@ -35,7 +36,7 @@ class GimpGihBrushSet:
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: BytesIO | str):
+	def load(self, fileName: BytesIO | str) -> None:
 		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
@@ -47,10 +48,12 @@ class GimpGihBrushSet:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			data (bytes): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Returns:
+		-------
 			int: offset
 		"""
 		ioBuf = IO(data, index)
@@ -71,8 +74,8 @@ class GimpGihBrushSet:
 			self.brushes.append(brush)
 		return ioBuf.index
 
-	def encode(self):
-		"""Encode this object to a byte array."""
+	def encode(self) -> bytes:
+		"""Encode this object to bytes."""
 		ioBuf = IO()
 		ioBuf.textLine = self.name
 		# add the second line of data
@@ -85,11 +88,11 @@ class GimpGihBrushSet:
 			ioBuf.addBytes(brush.encode())
 		return ioBuf.data
 
-	def save(self, tofileName: str):
+	def save(self, tofileName: str) -> None:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), tofileName)
 
-	def __repr__(self, indent=""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:

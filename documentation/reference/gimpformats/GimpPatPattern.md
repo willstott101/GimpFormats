@@ -1,8 +1,6 @@
 # Gimppatpattern
 
-[Gimpformats Index](../README.md#gimpformats-index) /
-[Gimpformats](./index.md#gimpformats) /
-Gimppatpattern
+[Gimpformats Index](../README.md#gimpformats-index) / [Gimpformats](./index.md#gimpformats) / Gimppatpattern
 
 > Auto-generated documentation for [gimpformats.GimpPatPattern](../../../gimpformats/GimpPatPattern.py) module.
 
@@ -30,39 +28,42 @@ See:
 
 ```python
 class GimpPatPattern:
-    def __init__(self, fileName: BytesIO | str = None): ...
+    def __init__(self, fileName: BytesIO | str | None = None) -> None: ...
 ```
 
 ### GimpPatPattern().__repr__
 
-[Show source in GimpPatPattern.py:137](../../../gimpformats/GimpPatPattern.py#L137)
+[Show source in GimpPatPattern.py:135](../../../gimpformats/GimpPatPattern.py#L135)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self): ...
+def __repr__(self) -> str: ...
 ```
 
 ### GimpPatPattern().decode
 
-[Show source in GimpPatPattern.py:48](../../../gimpformats/GimpPatPattern.py#L48)
+[Show source in GimpPatPattern.py:49](../../../gimpformats/GimpPatPattern.py#L49)
 
 Decode a byte buffer.
 
 #### Arguments
 
-- `data` *bytes* - data to decode
-- `index` *int, optional* - index to start from. Defaults to 0.
+----
+ - `data` *bytes* - data to decode
+ - `index` *int, optional* - index to start from. Defaults to 0.
 
 #### Raises
 
-- `RuntimeError` - "File format error.  Magic value mismatch."
+------
+ - `RuntimeError` - "File format error.  Magic value mismatch."
 
 #### Returns
 
-- `int` - pointer
+-------
+ - `int` - pointer
 
 #### Signature
 
@@ -72,7 +73,7 @@ def decode(self, data: bytes, index: int = 0): ...
 
 ### GimpPatPattern().encode
 
-[Show source in GimpPatPattern.py:77](../../../gimpformats/GimpPatPattern.py#L77)
+[Show source in GimpPatPattern.py:82](../../../gimpformats/GimpPatPattern.py#L82)
 
 Encode to a byte buffer.
 
@@ -84,7 +85,7 @@ def encode(self): ...
 
 ### GimpPatPattern().image
 
-[Show source in GimpPatPattern.py:99](../../../gimpformats/GimpPatPattern.py#L99)
+[Show source in GimpPatPattern.py:104](../../../gimpformats/GimpPatPattern.py#L104)
 
 Get a final, compiled image.
 
@@ -97,18 +98,18 @@ def image(self): ...
 
 ### GimpPatPattern().image
 
-[Show source in GimpPatPattern.py:110](../../../gimpformats/GimpPatPattern.py#L110)
+[Show source in GimpPatPattern.py:115](../../../gimpformats/GimpPatPattern.py#L115)
 
 #### Signature
 
 ```python
 @image.setter
-def image(self, image): ...
+def image(self, image) -> None: ...
 ```
 
 ### GimpPatPattern().load
 
-[Show source in GimpPatPattern.py:40](../../../gimpformats/GimpPatPattern.py#L40)
+[Show source in GimpPatPattern.py:41](../../../gimpformats/GimpPatPattern.py#L41)
 
 Load a gimp file.
 
@@ -119,24 +120,24 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str): ...
+def load(self, fileName: BytesIO | str) -> None: ...
 ```
 
 ### GimpPatPattern().save
 
-[Show source in GimpPatPattern.py:115](../../../gimpformats/GimpPatPattern.py#L115)
+[Show source in GimpPatPattern.py:120](../../../gimpformats/GimpPatPattern.py#L120)
 
 Save this gimp image to a file.
 
 #### Signature
 
 ```python
-def save(self, tofileName=None, toExtension=None): ...
+def save(self, tofileName=None, toExtension=None) -> None: ...
 ```
 
 ### GimpPatPattern().size
 
-[Show source in GimpPatPattern.py:94](../../../gimpformats/GimpPatPattern.py#L94)
+[Show source in GimpPatPattern.py:99](../../../gimpformats/GimpPatPattern.py#L99)
 
 The size of the pattern.
 

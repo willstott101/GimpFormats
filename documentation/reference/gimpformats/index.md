@@ -1,7 +1,6 @@
 # Gimpformats
 
-[Gimpformats Index](../README.md#gimpformats-index) /
-Gimpformats
+[Gimpformats Index](../README.md#gimpformats-index) / Gimpformats
 
 > Auto-generated documentation for [gimpformats](../../../gimpformats/__init__.py) module.
 

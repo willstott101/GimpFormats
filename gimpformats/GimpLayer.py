@@ -23,10 +23,11 @@ class GimpLayer(GimpIOBase):
 	]
 	PIL_MODE_TO_LAYER_MODE = {"L": 2, "LA": 3, "RGB": 0, "RGBA": 1}
 
-	def __init__(self, parent, name: str | None = None, image: Image | None = None):
+	def __init__(self, parent, name: str | None = None, image: Image | None = None) -> None:
 		"""Represents a single layer in a gimp image.
 
 		Args:
+		----
 			parent ([type]): some parent node/ layer
 			name (str, optional): name of the layer. Defaults to None.
 			image (Image, optional): image stored in the layer. Defaults to None.
@@ -55,10 +56,12 @@ class GimpLayer(GimpIOBase):
 		Return the offset
 
 		Args:
+		----
 			data (bytes): data buffer to decode
 			index (int, optional): index within the buffer to start at]. Defaults to 0.
 
 		Returns:
+		-------
 			int: offset
 		"""
 		# Create a new IO buffer (array of binary values)
@@ -132,7 +135,7 @@ class GimpLayer(GimpIOBase):
 		return self.imageHierarchy.image
 
 	@image.setter
-	def image(self, image: Image):
+	def image(self, image: Image) -> None:
 		"""Set the layer image.
 
 		NOTE: resets layer width, height, and colorMode
@@ -162,14 +165,15 @@ class GimpLayer(GimpIOBase):
 		if self._imageHierarchy and self._data and self._imageHierarchyPtr:
 			self._imageHierarchy.decode(self._data, self._imageHierarchyPtr)
 			return self._imageHierarchy
-		raise RuntimeError("self._imageHierarchy or self._data or self._imageHierarchyPtr is None")
+		msg = "self._imageHierarchy or self._data or self._imageHierarchyPtr is None"
+		raise RuntimeError(msg)
 
 	@imageHierarchy.setter
-	def imageHierarchy(self, imgHierarchy):
+	def imageHierarchy(self, imgHierarchy) -> None:
 		"""Set the image hierarchy."""
 		self._imageHierarchy = imgHierarchy
 
-	def forceFullyLoaded(self):
+	def forceFullyLoaded(self) -> None:
 		"""Make sure everything is fully loaded from the file."""
 		if self.mask is not None:
 			self.mask.forceFullyLoaded()
@@ -177,7 +181,7 @@ class GimpLayer(GimpIOBase):
 		# self._imageHierarchy = None
 		# self._data = None
 
-	def __repr__(self, indent=""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Name: {self.name}")

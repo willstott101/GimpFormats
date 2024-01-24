@@ -1,8 +1,6 @@
 # Gimpggrgradient
 
-[Gimpformats Index](../README.md#gimpformats-index) /
-[Gimpformats](./index.md#gimpformats) /
-Gimpggrgradient
+[Gimpformats Index](../README.md#gimpformats-index) / [Gimpformats](./index.md#gimpformats) / Gimpggrgradient
 
 > Auto-generated documentation for [gimpformats.GimpGgrGradient](../../../gimpformats/GimpGgrGradient.py) module.
 
@@ -22,7 +20,7 @@ Gimpggrgradient
 
 ## GimpGgrGradient
 
-[Show source in GimpGgrGradient.py:114](../../../gimpformats/GimpGgrGradient.py#L114)
+[Show source in GimpGgrGradient.py:118](../../../gimpformats/GimpGgrGradient.py#L118)
 
 Gimp color gradient.
 
@@ -33,56 +31,58 @@ See:
 
 ```python
 class GimpGgrGradient:
-    def __init__(self, fileName: str | None = None): ...
+    def __init__(self, fileName: str | None = None) -> None: ...
 ```
 
 ### GimpGgrGradient().__repr__
 
-[Show source in GimpGgrGradient.py:181](../../../gimpformats/GimpGgrGradient.py#L181)
+[Show source in GimpGgrGradient.py:189](../../../gimpformats/GimpGgrGradient.py#L189)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent=""): ...
+def __repr__(self, indent: str = "") -> str: ...
 ```
 
 ### GimpGgrGradient().decode
 
-[Show source in GimpGgrGradient.py:141](../../../gimpformats/GimpGgrGradient.py#L141)
+[Show source in GimpGgrGradient.py:146](../../../gimpformats/GimpGgrGradient.py#L146)
 
 Decode a byte buffer.
 
 #### Arguments
 
-- `dataIn` *bytes* - data buffer to decode
+----
+ - `dataIn` *bytes* - data buffer to decode
 
 #### Raises
 
-- `RuntimeError` - File format error.  Magic value mismatch.
+------
+ - `RuntimeError` - File format error.  Magic value mismatch.
 
 #### Signature
 
 ```python
-def decode(self, dataIn: bytes): ...
+def decode(self, dataIn: bytes) -> None: ...
 ```
 
 ### GimpGgrGradient().encode
 
-[Show source in GimpGgrGradient.py:161](../../../gimpformats/GimpGgrGradient.py#L161)
+[Show source in GimpGgrGradient.py:169](../../../gimpformats/GimpGgrGradient.py#L169)
 
-Encode this to a byte array.
+Encode this to bytes.
 
 #### Signature
 
 ```python
-def encode(self): ...
+def encode(self) -> bytes: ...
 ```
 
 ### GimpGgrGradient().getColor
 
-[Show source in GimpGgrGradient.py:174](../../../gimpformats/GimpGgrGradient.py#L174)
+[Show source in GimpGgrGradient.py:182](../../../gimpformats/GimpGgrGradient.py#L182)
 
 Given a decimal percent (1.0 = 100%) retrieve...
 
@@ -91,12 +91,12 @@ the appropriate color for this point in the gradient.
 #### Signature
 
 ```python
-def getColor(self, percent): ...
+def getColor(self, percent: float) -> NoReturn: ...
 ```
 
 ### GimpGgrGradient().load
 
-[Show source in GimpGgrGradient.py:133](../../../gimpformats/GimpGgrGradient.py#L133)
+[Show source in GimpGgrGradient.py:138](../../../gimpformats/GimpGgrGradient.py#L138)
 
 Load a gimp file.
 
@@ -107,26 +107,26 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str): ...
+def load(self, fileName: BytesIO | str) -> None: ...
 ```
 
 ### GimpGgrGradient().save
 
-[Show source in GimpGgrGradient.py:170](../../../gimpformats/GimpGgrGradient.py#L170)
+[Show source in GimpGgrGradient.py:178](../../../gimpformats/GimpGgrGradient.py#L178)
 
 Save this gimp image to a file.
 
 #### Signature
 
 ```python
-def save(self, tofileName=None): ...
+def save(self, tofileName: str | BytesIO | None = None) -> None: ...
 ```
 
 
 
 ## GradientSegment
 
-[Show source in GimpGgrGradient.py:10](../../../gimpformats/GimpGgrGradient.py#L10)
+[Show source in GimpGgrGradient.py:11](../../../gimpformats/GimpGgrGradient.py#L11)
 
 Single segment within a gradient.
 
@@ -134,56 +134,58 @@ Single segment within a gradient.
 
 ```python
 class GradientSegment:
-    def __init__(self): ...
+    def __init__(self) -> None: ...
 ```
 
 ### GradientSegment().__repr__
 
-[Show source in GimpGgrGradient.py:95](../../../gimpformats/GimpGgrGradient.py#L95)
+[Show source in GimpGgrGradient.py:99](../../../gimpformats/GimpGgrGradient.py#L99)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent=""): ...
+def __repr__(self, indent: str = "") -> str: ...
 ```
 
 ### GradientSegment().decode
 
-[Show source in GimpGgrGradient.py:49](../../../gimpformats/GimpGgrGradient.py#L49)
+[Show source in GimpGgrGradient.py:50](../../../gimpformats/GimpGgrGradient.py#L50)
 
 Decode a byte buffer.
 
 #### Arguments
 
-- `dataIn` *str* - data buffer to decode
+----
+ - `dataIn` *str* - data buffer to decode
 
 #### Raises
 
-- `RuntimeError` - [description]
+------
+ - `RuntimeError` - [description]
 
 #### Signature
 
 ```python
-def decode(self, dataIn: str): ...
+def decode(self, dataIn: str) -> None: ...
 ```
 
 ### GradientSegment().encode
 
-[Show source in GimpGgrGradient.py:75](../../../gimpformats/GimpGgrGradient.py#L75)
+[Show source in GimpGgrGradient.py:79](../../../gimpformats/GimpGgrGradient.py#L79)
 
-Encode this to a byte array.
+Encode this to a string.
 
 #### Signature
 
 ```python
-def encode(self): ...
+def encode(self) -> str: ...
 ```
 
 ### GradientSegment().getColor
 
-[Show source in GimpGgrGradient.py:42](../../../gimpformats/GimpGgrGradient.py#L42)
+[Show source in GimpGgrGradient.py:43](../../../gimpformats/GimpGgrGradient.py#L43)
 
 Given a decimal percent (1.0 = 100%) retrieve the appropriate color
 for this point in the gradient.
@@ -191,5 +193,5 @@ for this point in the gradient.
 #### Signature
 
 ```python
-def getColor(self, percent: float): ...
+def getColor(self, percent: float) -> NoReturn: ...
 ```

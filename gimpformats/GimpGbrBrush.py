@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from io import BytesIO
 from pathlib import Path
+from typing import ClassVar
 
 import PIL.Image
 
@@ -18,12 +19,13 @@ class GimpGbrBrush:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/gbr.txt
 	"""
 
-	COLOR_MODES = [None, "L", "LA", "RGB", "RGBA"]  # only L or RGB allowed
+	COLOR_MODES: ClassVar[list] = [None, "L", "LA", "RGB", "RGBA"]  # only L or RGB allowed
 
-	def __init__(self, fileName: str = None):
+	def __init__(self, fileName: str | None = None) -> None:
 		"""Pure python implementation of the gimp gbr brush format.
 
 		Args:
+		----
 			fileName (str, optional): filename for the brush. Defaults to None.
 		"""
 		self.fileName = None
@@ -38,7 +40,7 @@ class GimpGbrBrush:
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: BytesIO | str):
+	def load(self, fileName: BytesIO | str) -> None:
 		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
@@ -50,21 +52,25 @@ class GimpGbrBrush:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			data (bytes): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Raises:
+		------
 			RuntimeError: "unknown brush version"
 			RuntimeError: "File format error.  Magic value mismatch"
 
 		Returns:
+		-------
 			int: offset]
 		"""
 		ioBuf = IO(data, index)
 		headerSize = ioBuf.u32
 		self.version = ioBuf.u32
 		if self.version != 2:
-			raise RuntimeError(f"ERR: unknown brush version {self.version}")
+			msg = f"ERR: unknown brush version {self.version}"
+			raise RuntimeError(msg)
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
 		self.bpp = ioBuf.u32  # only allows grayscale or RGB
@@ -110,16 +116,12 @@ class GimpGbrBrush:
 			return None
 		return PIL.Image.frombytes(self.mode, self.size, self.rawImage, decoder_name="raw")
 
-	def save(self, tofileName: str, toExtension: str | None = None):
+	def save(self, tofileName: str, toExtension: str | None = None) -> None:
 		"""Save this gimp image to a file."""
 		asImage = False
-		if toExtension is None:
-			if tofileName is not None:
-				extParts = tofileName.rsplit(".", 1)
-				if len(extParts) > 0:
-					toExtension = extParts[-1]
-				else:
-					toExtension = None
+		if toExtension is None and tofileName is not None:
+			extParts = tofileName.rsplit(".", 1)
+			toExtension = extParts[-1] if len(extParts) > 0 else None
 		if toExtension is not None and toExtension != "gbr":
 			asImage = True
 		if asImage and self.image:
@@ -128,7 +130,7 @@ class GimpGbrBrush:
 		else:
 			Path(tofileName).write_bytes(self.encode())
 
-	def __repr__(self, indent=""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:

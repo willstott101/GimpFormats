@@ -13,7 +13,7 @@ from gimpformats.GimpGplPalette import GimpGplPalette
 dut = GimpGplPalette()
 
 
-def test_plasma():
+def test_plasma() -> None:
 	"""test plasma."""
 	dut.load(f"{THISDIR}/plasma.gpl")
 	# test round-trip compatibility
@@ -26,7 +26,7 @@ def test_plasma():
 	os.remove(f"{THISDIR}/actualOutput_plasma.gpl")
 
 
-def test_web():
+def test_web() -> None:
 	"""test web."""
 	dut.load(f"{THISDIR}/web.gpl")
 	assert dut.name == "Web Safe Colors"
@@ -35,7 +35,7 @@ def test_web():
 	assert len(dut.colors) == 216
 
 
-def test_pantone():
+def test_pantone() -> None:
 	"""test pantone."""
 	dut.load(f"{THISDIR}/pantone.gpl")
 	assert dut.name == "Pantone colors"

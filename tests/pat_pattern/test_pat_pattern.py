@@ -16,7 +16,7 @@ from gimpformats.GimpPatPattern import GimpPatPattern
 dut = GimpPatPattern()
 
 
-def test_3dgreen():
+def test_3dgreen() -> None:
 	dut.load(f"{THISDIR}/3dgreen.pat")
 	# test image saving (implicit)
 	dut.save(f"{THISDIR}/actualOutput_3dgreen.png")
@@ -33,7 +33,7 @@ def test_3dgreen():
 	os.remove(f"{THISDIR}/actualOutput_3dgreen.pat")
 
 
-def test_leopard():
+def test_leopard() -> None:
 	dut.load(f"{THISDIR}/leopard.pat")
 	# test image saving (explicit)
 	dut.image.save(f"{THISDIR}/actualOutput_leopard.png")

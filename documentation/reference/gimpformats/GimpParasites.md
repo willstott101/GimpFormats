@@ -1,8 +1,6 @@
 # Gimpparasites
 
-[Gimpformats Index](../README.md#gimpformats-index) /
-[Gimpformats](./index.md#gimpformats) /
-Gimpparasites
+[Gimpformats Index](../README.md#gimpformats-index) / [Gimpformats](./index.md#gimpformats) / Gimpparasites
 
 > Auto-generated documentation for [gimpformats.GimpParasites](../../../gimpformats/GimpParasites.py) module.
 
@@ -16,7 +14,7 @@ Gimpparasites
 
 [Show source in GimpParasites.py:46](../../../gimpformats/GimpParasites.py#L46)
 
-Parasites are arbitrary (meta)data strings that can be attached to a document tree item
+Parasites are arbitrary (meta)data strings that can be attached to a document tree item.
 
 They are used to store things like last-used plugin settings, gamma adjuetments, etc.
 
@@ -27,7 +25,7 @@ Format of known parasites:
 
 ```python
 class GimpParasite:
-    def __init__(self): ...
+    def __init__(self) -> None: ...
 ```
 
 ### GimpParasite().__repr__
@@ -46,7 +44,7 @@ def __repr__(self, indent: str = "") -> str: ...
 
 [Show source in GimpParasites.py:60](../../../gimpformats/GimpParasites.py#L60)
 
-Decode a byte buffer
+Decode a byte buffer.
 
 #### Arguments
 
@@ -63,7 +61,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 [Show source in GimpParasites.py:73](../../../gimpformats/GimpParasites.py#L73)
 
-Encode a byte buffer
+Encode a byte buffer.
 
 #### Arguments
 

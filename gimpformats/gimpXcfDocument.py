@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import copy
 from io import BytesIO
+from typing import NoReturn
 
 import PIL.ImageGrab
 from blendmodes.blend import BlendType, blendLayers
@@ -46,7 +47,7 @@ class GimpDocument(GimpIOBase):
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 	"""
 
-	def __init__(self, fileName=None):
+	def __init__(self, fileName=None) -> None:
 		"""Pure python implementation of the gimp file format.
 
 		Has a series of attributes including the following:
@@ -79,7 +80,7 @@ class GimpDocument(GimpIOBase):
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: BytesIO | str):
+	def load(self, fileName: BytesIO | str) -> None:
 		"""Load a gimp xcf and decode the file. See decode for more on this process.
 
 		:param fileName: can be a file name or a file-like object
@@ -102,20 +103,24 @@ class GimpDocument(GimpIOBase):
 		Return the offset
 
 		Args:
+		----
 			data (bytes): data buffer to decode
 			index (int, optional): index within the buffer to start at]. Defaults to 0.
 
 		Raises:
+		------
 			RuntimeError: "Not a valid GIMP file"
 
 		Returns:
+		-------
 			int: offset
 		"""
 		# Create a new IO buffer (array of binary values)
 		ioBuf = IO(data, index)
 		# Check that the file is a valid gimp xcf
 		if ioBuf.getBytes(9) != b"gimp xcf ":
-			raise RuntimeError("Not a valid GIMP file")
+			msg = "Not a valid GIMP file"
+			raise RuntimeError(msg)
 		# Grab the file version
 		version = ioBuf.cString
 		if version == "file":
@@ -157,7 +162,7 @@ class GimpDocument(GimpIOBase):
 		return ioBuf.index
 
 	def encode(self):
-		"""Encode to a byte array.
+		"""Encode to bytes.
 
 		Steps:
 		Create a new IO buffer (array of binary values)
@@ -201,7 +206,7 @@ class GimpDocument(GimpIOBase):
 		# Return the data
 		return ioBuf.data
 
-	def forceFullyLoaded(self):
+	def forceFullyLoaded(self) -> None:
 		"""Make sure everything is fully loaded from the file."""
 		for layer in self.layers:
 			layer.forceFullyLoaded()
@@ -237,7 +242,7 @@ class GimpDocument(GimpIOBase):
 		"""Return a given layer."""
 		return self.layers[index]
 
-	def setLayer(self, index, layer):
+	def setLayer(self, index, layer) -> None:
 		"""Assign to a given layer."""
 		self.forceFullyLoaded()
 		self._layerPtr = None  # no longer try to use the pointers to get data
@@ -247,11 +252,13 @@ class GimpDocument(GimpIOBase):
 		"""Create a new layer based on a PIL image.
 
 		Args:
+		----
 			name (str): a name for the new layer
 			image (Image.Image): pil image
 			index (int, optional): where to insert the new layer (default=top). Defaults to -1.
 
 		Returns:
+		-------
 			GimpLayer: newly created GimpLayer object
 		"""
 		layer = GimpLayer(self, name, image)
@@ -266,10 +273,12 @@ class GimpDocument(GimpIOBase):
 		NOTE: only works on OSX and Windows
 
 		Args:
+		----
 			name (str): a name for the new layer
 			index (int, optional): where to insert the new layer (default=top). Defaults to -1.
 
 		Returns:
+		-------
 			GimpLayer: newly created GimpLayer object
 		"""
 		image = PIL.ImageGrab.grabclipboard()
@@ -277,21 +286,21 @@ class GimpDocument(GimpIOBase):
 			return self.newLayer(name, image, index)
 		return None
 
-	def addLayer(self, layer: GimpLayer):
+	def addLayer(self, layer: GimpLayer) -> None:
 		"""Append a layer object to the document.
 
 		:param layer: the new layer to append
 		"""
 		self.insertLayer(layer, -1)
 
-	def appendLayer(self, layer: GimpLayer):
+	def appendLayer(self, layer: GimpLayer) -> None:
 		"""Append a layer object to the document.
 
 		:param layer: the new layer to append
 		"""
 		self.insertLayer(layer, -1)
 
-	def insertLayer(self, layer: GimpLayer, index: int = -1):
+	def insertLayer(self, layer: GimpLayer, index: int = -1) -> None:
 		"""Insert a layer object at a specific position.
 
 		:param layer: the new layer to insert
@@ -347,7 +356,7 @@ class GimpDocument(GimpIOBase):
 		layers = self.layers[:]  # Copy the attribute rather than write to it
 
 		layersOut = [None, []]  # Use None to create a dummy group for the entire hierarchy
-		for idx, layerOrGroup in enumerate(layers):
+		for _idx, layerOrGroup in enumerate(layers):
 			parent = layersOut
 
 			# Find the parent list by walking down the itemPath values
@@ -364,7 +373,7 @@ class GimpDocument(GimpIOBase):
 
 		return flattenAll(layersOut[1], (self.width, self.height))
 
-	def save(self, filename: str | BytesIO = None):
+	def save(self, filename: str | BytesIO | None = None) -> NoReturn:
 		"""Save this gimp image to a file."""
 
 		# Save not yet implemented so for now throw
@@ -374,7 +383,7 @@ class GimpDocument(GimpIOBase):
 		# self.forceFullyLoaded()
 		# utils.save(self.encode(), filename or self.fileName)
 
-	def saveNew(self, filename=None):
+	def saveNew(self, filename=None) -> NoReturn:
 		"""Save a new gimp image to a file."""
 
 		# Save not yet implemented so for now throw
@@ -383,7 +392,7 @@ class GimpDocument(GimpIOBase):
 
 		# utils.save(self.encode(), filename or self.fileName)
 
-	def __repr__(self, indent="") -> str:
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		del indent
 		ret = []
@@ -410,7 +419,6 @@ def blendModeLookup(
 ):
 	"""Get the blendmode from a lookup table."""
 	if blendmode not in blendLookup:
-		print(f"WARNING {blendmode} is not currently supported!")
 		return default
 	return blendLookup[blendmode]
 
@@ -424,6 +432,7 @@ def flattenLayerOrGroup(
 	"""Flatten a layer or group on to an image of what has already been	flattened.
 
 	Args:
+	----
 		layerOrGroup (Layer,Group): A layer or a group of layers
 		imageDimensions (tuple[int, int]): size of the image
 		flattenedSoFar (PIL.Image, optional): the image of what has already
@@ -432,6 +441,7 @@ def flattenLayerOrGroup(
 		to True.
 
 	Returns:
+	-------
 		PIL.Image: Flattened image
 	"""
 	blendLookup = {
@@ -558,12 +568,14 @@ def flattenAll(
 	Note the bottom layer is at the end of the list
 
 	Args:
+	----
 		layers (list[GimpLayer]): A list of layers and groups
 		imageDimensions (tuple[int, int]): size of the image been flattened. Defaults to None.
 		ignoreHidden (bool, optional): ignore layers that are hidden. Defaults
 		to True.
 
 	Returns:
+	-------
 		PIL.Image: Flattened image
 	"""
 	end = len(layers) - 1
@@ -581,6 +593,7 @@ def renderWOffset(
 	"""Render an image with offset and alpha to a given size.
 
 	Args:
+	----
 		image (Image.Image): pil image to draw
 		size (tuple[int, int]): width, height as a tuple
 		alpha (float, optional): alpha transparency. Defaults to 1.0.
@@ -588,6 +601,7 @@ def renderWOffset(
 		Defaults to (0, 0).
 
 	Returns:
+	-------
 		Image.Image: new image
 	"""
 	imageOffset = Image.new("RGBA", size)
@@ -601,6 +615,7 @@ def renderMaskWOffset(
 	"""Render an image with offset and alpha to a given size.
 
 	Args:
+	----
 		image (Image.Image): pil image to draw
 		size (tuple[int, int]): width, height as a tuple
 		alpha (float, optional): alpha transparency. Defaults to 1.0.
@@ -608,6 +623,7 @@ def renderMaskWOffset(
 		Defaults to (0, 0).
 
 	Returns:
+	-------
 		Image.Image: new image
 	"""
 	mode = image.mode

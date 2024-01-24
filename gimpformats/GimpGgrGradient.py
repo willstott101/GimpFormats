@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from io import BytesIO
+from typing import ClassVar, NoReturn
 
 from . import utils
 
@@ -10,7 +11,7 @@ from . import utils
 class GradientSegment:
 	"""Single segment within a gradient."""
 
-	BLEND_FUNCTIONS = [
+	BLEND_FUNCTIONS: ClassVar[list] = [
 		"linear",
 		"curved",
 		"sinusoidal",
@@ -18,8 +19,8 @@ class GradientSegment:
 		"spherical (decreasing)",
 		"step",
 	]
-	COLOR_TYPES = ["RGB", "HSV CCW", "HSV CW"]
-	ENDPOINT_COLOR_TYPES = [
+	COLOR_TYPES: ClassVar[list] = ["RGB", "HSV CCW", "HSV CW"]
+	ENDPOINT_COLOR_TYPES: ClassVar[list] = [
 		"fixed",
 		"foreground",
 		"foreground transparent",
@@ -27,7 +28,7 @@ class GradientSegment:
 		"background transparent",
 	]
 
-	def __init__(self):
+	def __init__(self) -> None:
 		"""Single segment within a gradient."""
 		self.leftPosition = 0
 		self.middlePosition = 0.5
@@ -39,25 +40,28 @@ class GradientSegment:
 		self.leftColorType = None  # one of self.ENDPOINT_COLOR_TYPES
 		self.rightColorType = None  # one of self.ENDPOINT_COLOR_TYPES
 
-	def getColor(self, percent: float):
+	def getColor(self, percent: float) -> NoReturn:
 		"""Given a decimal percent (1.0 = 100%) retrieve the appropriate color
 		for this point in the gradient.
 		"""
 		_ = self, percent
-		raise NotImplementedError()
+		raise NotImplementedError
 
-	def decode(self, dataIn: str):
+	def decode(self, dataIn: str) -> None:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			dataIn (str): data buffer to decode
 
 		Raises:
+		------
 			RuntimeError: [description]
 		"""
 		data = dataIn.split(" ")
 		if len(data) < 11 or len(data) > 15:
-			raise RuntimeError(f"Data table is unexpected size. {len(data)}")
+			msg = f"Data table is unexpected size. {len(data)}"
+			raise RuntimeError(msg)
 		self.leftPosition = float(data[0])
 		self.middlePosition = float(data[1])
 		self.rightPosition = float(data[2])
@@ -72,8 +76,8 @@ class GradientSegment:
 					if len(data) >= 15:
 						self.rightColorType = int(data[14])
 
-	def encode(self):
-		"""Encode this to a byte array."""
+	def encode(self) -> str:
+		"""Encode this to a string."""
 		ret = []
 		ret.append(f"{self.leftPosition:06f}")
 		ret.append(f"{self.middlePosition:06f}")
@@ -92,7 +96,7 @@ class GradientSegment:
 						ret.append(f"{self.rightColorType}")
 		return " ".join(ret)
 
-	def __repr__(self, indent=""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Left Position: {self.leftPosition}")
@@ -118,10 +122,11 @@ class GimpGgrGradient:
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/ggr.txt
 	"""
 
-	def __init__(self, fileName: str | None = None):
+	def __init__(self, fileName: str | None = None) -> None:
 		"""GimpGgrGradient.
 
 		Args:
+		----
 			fileName (str, optional): filename. Defaults to None.
 		"""
 		self.fileName = None
@@ -130,7 +135,7 @@ class GimpGgrGradient:
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: BytesIO | str):
+	def load(self, fileName: BytesIO | str) -> None:
 		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
@@ -138,19 +143,22 @@ class GimpGgrGradient:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, dataIn: bytes):
+	def decode(self, dataIn: bytes) -> None:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			dataIn (bytes): data buffer to decode
 
 		Raises:
+		------
 			RuntimeError: File format error.  Magic value mismatch.
 		"""
 		data = dataIn.decode("utf-8").split("\n")
-		data = [l.strip() for l in data]
+		data = [line.strip() for line in data]
 		if data[0] != "GIMP Gradient":
-			raise RuntimeError("File format error.  Magic value mismatch.")
+			msg = "File format error.  Magic value mismatch."
+			raise RuntimeError(msg)
 		self.name = data[1].split(":", 1)[-1].strip()
 		numSegments = int(data[2])
 		for i in range(numSegments):
@@ -158,8 +166,8 @@ class GimpGgrGradient:
 			gSeg.decode(data[i + 3])
 			self.segments.append(gSeg)
 
-	def encode(self):
-		"""Encode this to a byte array."""
+	def encode(self) -> bytes:
+		"""Encode this to bytes."""
 		ret = ["GIMP Gradient"]
 		ret.append(f"Name: {self.name}")
 		ret.append(str(len(self.segments)))
@@ -167,18 +175,18 @@ class GimpGgrGradient:
 			ret.append(segment.encode())
 		return ("\n".join(ret) + "\n").encode("utf-8")
 
-	def save(self, tofileName=None):
+	def save(self, tofileName: str | BytesIO | None = None) -> None:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), tofileName)
 
-	def getColor(self, percent):
+	def getColor(self, percent: float) -> NoReturn:
 		"""Given a decimal percent (1.0 = 100%) retrieve...
 
 		the appropriate color for this point in the gradient.
 		"""
-		raise NotImplementedError()
+		raise NotImplementedError
 
-	def __repr__(self, indent=""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:

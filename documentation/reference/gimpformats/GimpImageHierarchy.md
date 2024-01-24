@@ -1,8 +1,6 @@
 # Gimpimagehierarchy
 
-[Gimpformats Index](../README.md#gimpformats-index) /
-[Gimpformats](./index.md#gimpformats) /
-Gimpimagehierarchy
+[Gimpformats Index](../README.md#gimpformats-index) / [Gimpformats](./index.md#gimpformats) / Gimpimagehierarchy
 
 > Auto-generated documentation for [gimpformats.GimpImageHierarchy](../../../gimpformats/GimpImageHierarchy.py) module.
 
@@ -19,7 +17,7 @@ Gimpimagehierarchy
 
 [Show source in GimpImageHierarchy.py:15](../../../gimpformats/GimpImageHierarchy.py#L15)
 
-Gets packed pixels from a gimp image
+Gets packed pixels from a gimp image.
 
 NOTE: This was originally designed to be a hierarchy, like
  an image pyramid, through in practice they only use the
@@ -29,26 +27,26 @@ NOTE: This was originally designed to be a hierarchy, like
 
 ```python
 class GimpImageHierarchy(GimpIOBase):
-    def __init__(self, parent, image: Image.Image | None = None): ...
+    def __init__(self, parent, image: Image.Image | None = None) -> None: ...
 ```
 
 ### GimpImageHierarchy().__repr__
 
-[Show source in GimpImageHierarchy.py:116](../../../gimpformats/GimpImageHierarchy.py#L116)
+[Show source in GimpImageHierarchy.py:118](../../../gimpformats/GimpImageHierarchy.py#L118)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = ""): ...
+def __repr__(self, indent: str = "") -> str: ...
 ```
 
 ### GimpImageHierarchy().decode
 
 [Show source in GimpImageHierarchy.py:35](../../../gimpformats/GimpImageHierarchy.py#L35)
 
-decode a byte buffer
+decode a byte buffer.
 
 #### Arguments
 
@@ -63,7 +61,7 @@ def decode(self, data: bytes, index: int = 0): ...
 
 ### GimpImageHierarchy().encode
 
-[Show source in GimpImageHierarchy.py:67](../../../gimpformats/GimpImageHierarchy.py#L67)
+[Show source in GimpImageHierarchy.py:68](../../../gimpformats/GimpImageHierarchy.py#L68)
 
 Encode this object to a byte buffer.
 
@@ -75,7 +73,7 @@ def encode(self): ...
 
 ### GimpImageHierarchy().image
 
-[Show source in GimpImageHierarchy.py:98](../../../gimpformats/GimpImageHierarchy.py#L98)
+[Show source in GimpImageHierarchy.py:99](../../../gimpformats/GimpImageHierarchy.py#L99)
 
 Get a final, compiled image.
 
@@ -88,7 +86,7 @@ def image(self) -> Image.Image | None: ...
 
 ### GimpImageHierarchy().image
 
-[Show source in GimpImageHierarchy.py:105](../../../gimpformats/GimpImageHierarchy.py#L105)
+[Show source in GimpImageHierarchy.py:106](../../../gimpformats/GimpImageHierarchy.py#L106)
 
 Set the image.
 
@@ -96,12 +94,12 @@ Set the image.
 
 ```python
 @image.setter
-def image(self, image: Image.Image): ...
+def image(self, image: Image.Image) -> None: ...
 ```
 
 ### GimpImageHierarchy().levels
 
-[Show source in GimpImageHierarchy.py:84](../../../gimpformats/GimpImageHierarchy.py#L84)
+[Show source in GimpImageHierarchy.py:85](../../../gimpformats/GimpImageHierarchy.py#L85)
 
 Get the levels within this hierarchy.
 

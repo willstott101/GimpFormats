@@ -10,13 +10,13 @@ from .binaryiotools import IO
 class Precision:
 	"""Since the precision code is so unusual, I decided to create a class to parse it."""
 
-	def __init__(self):
+	def __init__(self) -> None:
 		"""Since the precision code is so unusual, I decided to create a class to parse it."""
 		self.bits = 8
 		self.gamma = True
 		self.numberFormat = int
 
-	def decode(self, gimpVersion: int, ioBuf: IO):
+	def decode(self, gimpVersion: int, ioBuf: IO) -> None:
 		"""Decode the precision code from the file."""
 		if gimpVersion < 4:
 			self.bits = 8
@@ -39,7 +39,7 @@ class Precision:
 				self.bits = (8, 16, 32, 16, 32, 64)[code]
 				self.numberFormat = (int, int, int, float, float, float)[code]
 
-	def encode(self, gimpVersion: int, ioBuf: IO):
+	def encode(self, gimpVersion: int, ioBuf: IO) -> None:
 		"""Encode this to the file.
 
 		NOTE: will not mess with development versions 5 or 6
@@ -63,7 +63,8 @@ class Precision:
 				if self.gamma:
 					code += 50
 			elif gimpVersion in (5, 6):
-				raise NotImplementedError(f"Cannot save to gimp developer version {gimpVersion}")
+				msg = f"Cannot save to gimp developer version {gimpVersion}"
+				raise NotImplementedError(msg)
 			else:  # version 7 or above
 				if self.numberFormat == int:
 					code = (8, 16, 32).index(self.bits)
@@ -74,7 +75,7 @@ class Precision:
 					code += 50
 			ioBuf.u32 = code
 
-	def requiredGimpVersion(self):
+	def requiredGimpVersion(self) -> int:
 		"""Return the lowest gimp version that supports this precision."""
 		if self.bits == 8 and self.gamma and self.numberFormat == int:
 			return 0
@@ -82,7 +83,7 @@ class Precision:
 			return 7
 		return 4
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(str(self.bits) + "-bit")

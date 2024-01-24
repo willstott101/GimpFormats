@@ -1,8 +1,6 @@
 # Gimpgtptoolpreset
 
-[Gimpformats Index](../README.md#gimpformats-index) /
-[Gimpformats](./index.md#gimpformats) /
-Gimpgtptoolpreset
+[Gimpformats Index](../README.md#gimpformats-index) / [Gimpformats](./index.md#gimpformats) / Gimpgtptoolpreset
 
 > Auto-generated documentation for [gimpformats.GimpGtpToolPreset](../../../gimpformats/GimpGtpToolPreset.py) module.
 
@@ -29,24 +27,24 @@ Pure python implementation of the gimp gtp tool preset format.
 
 ```python
 class GimpGtpToolPreset:
-    def __init__(self, fileName=None): ...
+    def __init__(self, fileName: BytesIO | str | None = None) -> None: ...
 ```
 
 ### GimpGtpToolPreset().__repr__
 
-[Show source in GimpGtpToolPreset.py:163](../../../gimpformats/GimpGtpToolPreset.py#L163)
+[Show source in GimpGtpToolPreset.py:154](../../../gimpformats/GimpGtpToolPreset.py#L154)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent=""): ...
+def __repr__(self, indent: str = "") -> str: ...
 ```
 
 ### GimpGtpToolPreset().decode
 
-[Show source in GimpGtpToolPreset.py:134](../../../gimpformats/GimpGtpToolPreset.py#L134)
+[Show source in GimpGtpToolPreset.py:135](../../../gimpformats/GimpGtpToolPreset.py#L135)
 
 Decode a byte buffer.
 
@@ -58,24 +56,24 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0): ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpGtpToolPreset().encode
 
-[Show source in GimpGtpToolPreset.py:143](../../../gimpformats/GimpGtpToolPreset.py#L143)
+[Show source in GimpGtpToolPreset.py:144](../../../gimpformats/GimpGtpToolPreset.py#L144)
 
-Encode to a byte array.
+Encode to bytes.
 
 #### Signature
 
 ```python
-def encode(self): ...
+def encode(self) -> bytes: ...
 ```
 
 ### GimpGtpToolPreset().load
 
-[Show source in GimpGtpToolPreset.py:126](../../../gimpformats/GimpGtpToolPreset.py#L126)
+[Show source in GimpGtpToolPreset.py:127](../../../gimpformats/GimpGtpToolPreset.py#L127)
 
 Load a gimp file.
 
@@ -86,19 +84,19 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str): ...
+def load(self, fileName: BytesIO | str) -> None: ...
 ```
 
 ### GimpGtpToolPreset().save
 
-[Show source in GimpGtpToolPreset.py:147](../../../gimpformats/GimpGtpToolPreset.py#L147)
+[Show source in GimpGtpToolPreset.py:148](../../../gimpformats/GimpGtpToolPreset.py#L148)
 
 Save this gimp tool preset to a file.
 
 #### Signature
 
 ```python
-def save(self, tofileName=None, toExtension=None): ...
+def save(self, tofileName: str | BytesIO | None = None) -> None: ...
 ```
 
 
@@ -115,26 +113,28 @@ A parentheses-based file format.
 
 ```python
 class ParenFileValue:
-    def __init__(self, name: str = None, value: str = "", children=None): ...
+    def __init__(
+        self, name: str | None = None, value: str = "", children=None
+    ) -> None: ...
 ```
 
 ### ParenFileValue().__repr__
 
-[Show source in GimpGtpToolPreset.py:51](../../../gimpformats/GimpGtpToolPreset.py#L51)
+[Show source in GimpGtpToolPreset.py:52](../../../gimpformats/GimpGtpToolPreset.py#L52)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self): ...
+def __repr__(self) -> str: ...
 ```
 
 
 
 ## parenFileDecode
 
-[Show source in GimpGtpToolPreset.py:69](../../../gimpformats/GimpGtpToolPreset.py#L69)
+[Show source in GimpGtpToolPreset.py:70](../../../gimpformats/GimpGtpToolPreset.py#L70)
 
 Decode a parentheses-based file format.
 
@@ -143,8 +143,12 @@ Decode a parentheses-based file format.
 #### Signature
 
 ```python
-def parenFileDecode(data: bytes): ...
+def parenFileDecode(data: bytes) -> list[ParenFileValue]: ...
 ```
+
+#### See also
+
+- [ParenFileValue](#parenfilevalue)
 
 
 
@@ -157,8 +161,12 @@ Encode a values tree to a buffer.
 #### Signature
 
 ```python
-def parenFileEncode(values): ...
+def parenFileEncode(values: list[ParenFileValue]) -> str: ...
 ```
+
+#### See also
+
+- [ParenFileValue](#parenfilevalue)
 
 
 
@@ -171,5 +179,9 @@ Walk the tree.
 #### Signature
 
 ```python
-def walkTree(items): ...
+def walkTree(items: list[brackettree.RoundNode]) -> list[ParenFileValue]: ...
 ```
+
+#### See also
+
+- [ParenFileValue](#parenfilevalue)

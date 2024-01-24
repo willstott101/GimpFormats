@@ -11,10 +11,11 @@ from . import utils
 class GimpGplPalette:
 	"""Pure python implementation of the gimp gpl palette format."""
 
-	def __init__(self, fileName: BytesIO | str | None = None):
+	def __init__(self, fileName: BytesIO | str | None = None) -> None:
 		"""Pure python implementation of the gimp gpl palette format.
 
 		Args:
+		----
 			fileName (BytesIO, str, optional): filename. Defaults to None.
 		"""
 		self.name = ""
@@ -24,7 +25,7 @@ class GimpGplPalette:
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: BytesIO | str):
+	def load(self, fileName: BytesIO | str) -> None:
 		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
@@ -36,16 +37,19 @@ class GimpGplPalette:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			data (str): data buffer to decode
 
 		Raises:
+		------
 			RuntimeError: File format error.  Magic value mismatch.
 		"""
 		self.colors = []
 		self.colorNames = []
 		lines = data.split("\n")
 		if "gimp palette" not in lines[0].lower():
-			raise RuntimeError(f"File format error.  Magic value mismatch: '{lines[0]}'")
+			msg = f"File format error.  Magic value mismatch: '{lines[0]}'"
+			raise RuntimeError(msg)
 		self.name = re.findall(r".*?:(.*)", lines[1])[0].strip()
 		self.columns = int(re.findall(r".*?:(.*)", lines[2])[0].strip())
 		for line in lines[3:]:
@@ -57,7 +61,7 @@ class GimpGplPalette:
 			self.colors.append(colours[:3])
 			self.colorNames.append(colours[3] if len(colours) > 3 else None)
 
-	def encode(self):
+	def encode(self) -> bytes:
 		"""Encode to a raw data stream."""
 		data = []
 		data.append("GIMP Palette")
@@ -70,11 +74,11 @@ class GimpGplPalette:
 			data.append((line if colorName is None else f"{line} {colorName}").rstrip())
 		return ("\n".join(data) + "\n").encode("utf-8")
 
-	def save(self, fileName: str | BytesIO):
+	def save(self, fileName: str | BytesIO) -> None:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), fileName)
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
@@ -89,7 +93,7 @@ class GimpGplPalette:
 				line = line + " " + colorName
 		return "\n".join(ret)
 
-	def __eq__(self, other: GimpGplPalette):
+	def __eq__(self, other: GimpGplPalette) -> bool:
 		"""Perform a comparison."""
 		if other.name != self.name:
 			return False

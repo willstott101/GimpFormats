@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import struct
+from typing import Any, ClassVar
 
 from .binaryiotools import IO
 from .GimpParasites import GimpParasite
@@ -12,15 +13,15 @@ from .GimpVectors import GimpVector
 class GimpIOBase:
 	"""A specialized binary file base for Gimp files."""
 
-	COLOR_MODES = ["RGB", "Grayscale", "Indexed"]
-	UNITS = ["Inches", "Millimeters", "Points", "Picas"]
-	UNITS_TO_MM = [25.4, 1, 127 / 360.0, 127 / 30.0]
-	COMPOSITE_MODES = ["Union", "Clip to backdrop", "Clip to layer", "Intersection"]
-	COMPOSITE_SPACES = ["RGB (linear)", "RGB (perceptual)", "LAB"]
-	TAG_COLORS = ["None", "Blue", "Green", "Yellow", "Orange", "Brown", "Red", "Violet", "Gray"]
-	COMPRESSION_MODES = ["None", "RLE", "Zlib", "Fractal"]
+	COLOR_MODES: ClassVar[list] = ["RGB", "Grayscale", "Indexed"]
+	UNITS : ClassVar[list]= ["Inches", "Millimeters", "Points", "Picas"]
+	UNITS_TO_MM : ClassVar[list]= [25.4, 1, 127 / 360.0, 127 / 30.0]
+	COMPOSITE_MODES: ClassVar[list] = ["Union", "Clip to backdrop", "Clip to layer", "Intersection"]
+	COMPOSITE_SPACES: ClassVar[list] = ["RGB (linear)", "RGB (perceptual)", "LAB"]
+	TAG_COLORS : ClassVar[list]= ["None", "Blue", "Green", "Yellow", "Orange", "Brown", "Red", "Violet", "Gray"]
+	COMPRESSION_MODES: ClassVar[list] = ["None", "RLE", "Zlib", "Fractal"]
 
-	BLEND_MODES = [
+	BLEND_MODES: ClassVar[list] = [
 		"Normal (legacy)",
 		"Dissolve (legacy)",
 		"Behind (legacy)",
@@ -85,50 +86,50 @@ class GimpIOBase:
 		"Pass through",
 	]
 
-	PROP_END: int = 0
-	PROP_COLORMAP = 1
-	PROP_ACTIVE_LAYER = 2
-	PROP_ACTIVE_CHANNEL = 3
-	PROP_SELECTION = 4
-	PROP_FLOATING_SELECTION = 5
-	PROP_OPACITY = 6
-	PROP_MODE = 7
-	PROP_VISIBLE = 8
-	PROP_LINKED = 9
-	PROP_LOCK_ALPHA = 10
-	PROP_APPLY_MASK = 11
-	PROP_EDIT_MASK = 12
-	PROP_SHOW_MASK = 13
-	PROP_SHOW_MASKED = 14
-	PROP_OFFSETS = 15
-	PROP_COLOR = 16
-	PROP_COMPRESSION = 17
-	PROP_GUIDES = 18
-	PROP_RESOLUTION = 19
-	PROP_TATTOO = 20
-	PROP_PARASITES = 21
-	PROP_UNIT = 22
-	PROP_PATHS = 23
-	PROP_USER_UNIT = 24
-	PROP_VECTORS = 25
-	PROP_TEXT_LAYER_FLAGS = 26
-	PROP_OLD_SAMPLE_POINTS = 27
-	PROP_LOCK_CONTENT = 28
-	PROP_GROUP_ITEM = 29
-	PROP_ITEM_PATH = 30
-	PROP_GROUP_ITEM_FLAGS = 31
-	PROP_LOCK_POSITION = 32
-	PROP_FLOAT_OPACITY = 33
-	PROP_COLOR_TAG = 34
-	PROP_COMPOSITE_MODE = 35
-	PROP_COMPOSITE_SPACE = 36
-	PROP_BLEND_SPACE = 37
-	PROP_FLOAT_COLOR = 38
-	PROP_SAMPLE_POINTS = 39
-	PROP_NUM_PROPS = 40
+	PROP_END: ClassVar[int] = 0
+	PROP_COLORMAP: ClassVar[int] = 1
+	PROP_ACTIVE_LAYER: ClassVar[int] = 2
+	PROP_ACTIVE_CHANNEL: ClassVar[int] = 3
+	PROP_SELECTION: ClassVar[int] = 4
+	PROP_FLOATING_SELECTION: ClassVar[int] = 5
+	PROP_OPACITY: ClassVar[int] = 6
+	PROP_MODE: ClassVar[int] = 7
+	PROP_VISIBLE: ClassVar[int] = 8
+	PROP_LINKED: ClassVar[int] = 9
+	PROP_LOCK_ALPHA: ClassVar[int] = 10
+	PROP_APPLY_MASK: ClassVar[int] = 11
+	PROP_EDIT_MASK: ClassVar[int] = 12
+	PROP_SHOW_MASK: ClassVar[int] = 13
+	PROP_SHOW_MASKED: ClassVar[int] = 14
+	PROP_OFFSETS: ClassVar[int] = 15
+	PROP_COLOR: ClassVar[int] = 16
+	PROP_COMPRESSION: ClassVar[int] = 17
+	PROP_GUIDES: ClassVar[int] = 18
+	PROP_RESOLUTION: ClassVar[int] = 19
+	PROP_TATTOO: ClassVar[int] = 20
+	PROP_PARASITES: ClassVar[int] = 21
+	PROP_UNIT: ClassVar[int] = 22
+	PROP_PATHS: ClassVar[int] = 23
+	PROP_USER_UNIT: ClassVar[int] = 24
+	PROP_VECTORS: ClassVar[int] = 25
+	PROP_TEXT_LAYER_FLAGS: ClassVar[int] = 26
+	PROP_OLD_SAMPLE_POINTS: ClassVar[int] = 27
+	PROP_LOCK_CONTENT: ClassVar[int] = 28
+	PROP_GROUP_ITEM: ClassVar[int] = 29
+	PROP_ITEM_PATH: ClassVar[int] = 30
+	PROP_GROUP_ITEM_FLAGS: ClassVar[int] = 31
+	PROP_LOCK_POSITION: ClassVar[int] = 32
+	PROP_FLOAT_OPACITY: ClassVar[int] = 33
+	PROP_COLOR_TAG: ClassVar[int] = 34
+	PROP_COMPOSITE_MODE: ClassVar[int] = 35
+	PROP_COMPOSITE_SPACE: ClassVar[int] = 36
+	PROP_BLEND_SPACE: ClassVar[int] = 37
+	PROP_FLOAT_COLOR: ClassVar[int] = 38
+	PROP_SAMPLE_POINTS: ClassVar[int] = 39
+	PROP_NUM_PROPS: ClassVar[int] = 40
 
-	def __init__(self, parent):
-		"""A specialized binary file base for Gimp files."""
+	def __init__(self, parent: GimpIOBase) -> None:
+		"""Binary file base for Gimp files."""
 		self.parent = parent
 		self.parasites: list[GimpParasite] = []
 		self.guidelines: list[tuple[bool, int]] = []
@@ -182,15 +183,15 @@ class GimpIOBase:
 		"""Return the units as a string."""
 		return self.UNITS[self.units]
 
-	def getTagColours(self):
+	def getTagColours(self) -> str:
 		"""Return the tag colours as a string."""
 		return self.TAG_COLORS[self.colorTag]
 
-	def getCompositeModes(self):
+	def getCompositeModes(self) -> str:
 		"""Return the composite mode as a string."""
 		return self.COMPOSITE_MODES[abs(self.compositeMode)]
 
-	def getCompositeSpaces(self):
+	def getCompositeSpaces(self) -> str:
 		"""Return the composite spaces as a string."""
 		return self.COMPOSITE_SPACES[abs(self.compositeSpace)]
 
@@ -221,7 +222,7 @@ class GimpIOBase:
 		return ioBuf.data
 
 	@property
-	def doc(self):
+	def doc(self) -> GimpIOBase:
 		"""Get the main document object."""
 		item = self
 		while item.parent != item:
@@ -229,17 +230,17 @@ class GimpIOBase:
 		return item
 
 	@property
-	def root(self):
+	def root(self) -> GimpIOBase:
 		"""Get the root of the file object tree (Which is the same as self.doc)."""
 		return self.doc
 
 	@property
-	def tattoo(self):
+	def tattoo(self) -> Any | None:
 		"""Gimp nomenclature for the item's unique id."""
 		return self.uniqueId
 
 	@tattoo.setter
-	def tattoo(self, tattoo):
+	def tattoo(self, tattoo: Any|None) -> None:
 		"""Gimp nomenclature for the item's unique id."""
 		self.uniqueId = tattoo
 
@@ -252,14 +253,14 @@ class GimpIOBase:
 			self.parasites.append(parasite)
 		return index
 
-	def _parasitesEncode(self):
+	def _parasitesEncode(self) -> bytearray:
 		"""Encode list of parasites."""
 		ioBuf = IO()
 		for parasite in self.parasites:
 			ioBuf.addBytes(parasite.encode())
 		return ioBuf.data
 
-	def _guidelinesDecode(self, data):
+	def _guidelinesDecode(self, data:bytes) -> None:
 		"""Decode guidelines."""
 		index: int = 0
 		while index < len(data):
@@ -269,7 +270,7 @@ class GimpIOBase:
 			index += 1
 			self.guidelines.append((isVertical, position))
 
-	def _itemPathDecode(self, data):
+	def _itemPathDecode(self, data:bytes) -> None:
 		"""Decode item path."""
 		index: int = 0
 		path = []
@@ -279,7 +280,7 @@ class GimpIOBase:
 			path.append(pathElem)
 		self.itemPath = path
 
-	def _vectorsDecode(self, data):
+	def _vectorsDecode(self, data:bytes) -> None:
 		"""Decode vectors."""
 		index: int = 0
 		self.vectorsVersion = struct.unpack(">I", data[index : index + 4])[0]
@@ -294,7 +295,7 @@ class GimpIOBase:
 			self.vectors.append(gimpV)
 
 	@property
-	def activeVector(self):
+	def activeVector(self) -> GimpVector:
 		"""Get the vector that is currently active."""
 		return self.vectors[self.activeVectorIndex]
 
@@ -304,14 +305,14 @@ class GimpIOBase:
 		return self.groupItemFlags & 0x00000001 > 0
 
 	@expanded.setter
-	def expanded(self, expanded):
+	def expanded(self, expanded:bool) -> None:
 		"""Is the group layer expanded."""
 		if expanded:
 			self.groupItemFlags |= 0x00000001
 		else:
 			self.groupItemFlags &= ~0x00000001
 
-	def _colormapDecode(self, data, index=None):
+	def _colormapDecode(self, data: bytes|IO, index:int=0) -> None:
 		"""_colormapDecode_.
 
 		:param data: can be bytes or an IO object
@@ -338,13 +339,13 @@ class GimpIOBase:
 		if ioObj is not None:
 			ioObj.index = index
 
-	def _userUnitsDecode(self, data):
+	def _userUnitsDecode(self, data:bytes) -> None:
 		"""Decode a set of user-defined measurement units."""
 		userUnits = GimpUserUnits()
 		userUnits.decode(data)
 		self.userUnits = userUnits
 
-	def _samplePointsDecode(self, data):
+	def _samplePointsDecode(self, data:bytes) -> None:
 		"""Decode a series of points."""
 		index: int = 0
 		samplePoints = []
@@ -356,7 +357,7 @@ class GimpIOBase:
 			samplePoints.append((x, y))
 		self.samplePoints = samplePoints
 
-	def _propertyDecode(self, propertyType, data):
+	def _propertyDecode(self, propertyType:int, data:bytes) -> int:
 		"""Decode a single property.
 
 		Many properties are in the form
@@ -368,10 +369,9 @@ class GimpIOBase:
 		# print('DECODING PROPERTY',propertyType,len(data))
 		if propertyType == self.PROP_COLORMAP:
 			self._colormapDecode(ioBuf)
-		elif propertyType == self.PROP_ACTIVE_LAYER:
+		elif propertyType in [self.PROP_ACTIVE_LAYER, self.PROP_ACTIVE_CHANNEL]:
 			self.selected = True
-		elif propertyType == self.PROP_ACTIVE_CHANNEL:
-			self.selected = True
+
 		elif propertyType == self.PROP_SELECTION:
 			self.isSelection = True
 		elif propertyType == self.PROP_FLOATING_SELECTION:
@@ -434,7 +434,8 @@ class GimpIOBase:
 			else:
 				self.textLayerFlags = int(data)
 		elif propertyType == self.PROP_OLD_SAMPLE_POINTS:
-			raise RuntimeError("ERR: old sample points structure not supported")
+			msg = "ERR: old sample points structure not supported"
+			raise RuntimeError(msg)
 		elif propertyType == self.PROP_LOCK_CONTENT:
 			self.locked = ioBuf.boolean
 		elif propertyType == self.PROP_GROUP_ITEM:
@@ -463,10 +464,11 @@ class GimpIOBase:
 		elif propertyType == self.PROP_SAMPLE_POINTS:
 			self._samplePointsDecode(data)
 		else:
-			raise RuntimeError(f"Unknown property id {propertyType}")
+			msg = f"Unknown property id {propertyType}"
+			raise RuntimeError(msg)
 		return ioBuf.index
 
-	def _propertyEncode(self, propertyType):
+	def _propertyEncode(self, propertyType: int) -> bytearray:
 		"""Encode a single property.
 
 		Many properties are in the form
@@ -481,12 +483,10 @@ class GimpIOBase:
 			if self.colorMap is not None and self.colorMap:
 				ioBuf.u32 = self.PROP_COLORMAP
 				# ioBuf.addBytes(self._colormapEncode_())
-		elif propertyType == self.PROP_ACTIVE_LAYER:
+		elif propertyType == [self.PROP_ACTIVE_LAYER in self.PROP_ACTIVE_CHANNEL]:
 			if self.selected is not None and self.selected:
 				ioBuf.u32 = self.PROP_ACTIVE_LAYER
-		elif propertyType == self.PROP_ACTIVE_CHANNEL:
-			if self.selected is not None and self.selected:
-				ioBuf.u32 = self.PROP_ACTIVE_LAYER
+
 		elif propertyType == self.PROP_SELECTION:
 			if self.isSelection is not None and self.isSelection:
 				ioBuf.u32 = self.PROP_SELECTION
@@ -652,10 +652,11 @@ class GimpIOBase:
 				# ioBuf.u32 = self.PROP_SAMPLE_POINTS
 				# self.addBytes(self._samplePointsEncode_())
 		else:
-			raise RuntimeError(f"Unknown property id {propertyType}")
+			msg = f"Unknown property id {propertyType}"
+			raise RuntimeError(msg)
 		return ioBuf.data
 
-	def _propertiesDecode(self, ioBuf: IO):
+	def _propertiesDecode(self, ioBuf: IO) -> int:
 		"""Decode a list of properties."""
 		while True:
 			try:
@@ -668,7 +669,7 @@ class GimpIOBase:
 			self._propertyDecode(propertyType, ioBuf.getBytes(dataLength))
 		return ioBuf.index
 
-	def _propertiesEncode(self):
+	def _propertiesEncode(self) -> bytearray:
 		"""Encode a list of properties."""
 		ioBuf = IO()
 		for propertyType in range(1, self.PROP_NUM_PROPS):
@@ -677,7 +678,7 @@ class GimpIOBase:
 				ioBuf.addBytes(moData)
 		return ioBuf.data
 
-	def __repr__(self, indent: str = ""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret: list[str] = []
 		attrs = [
@@ -763,7 +764,7 @@ class GimpIOBase:
 class GimpUserUnits:
 	"""User-defined measurement units."""
 
-	def __init__(self):
+	def __init__(self) -> None:
 		self.factor: int = 0
 		self.numDigits: int = 0
 		self.id = ""
@@ -776,10 +777,12 @@ class GimpUserUnits:
 		"""Decode a byte buffer.
 
 		Args:
+		----
 			data (bytes): data buffer to decode
 			index (int, optional): index within the buffer to start at]. Defaults to 0.
 
 		Returns:
+		-------
 			int: offset
 		"""
 		ioBuf = IO(data, index)
@@ -804,7 +807,7 @@ class GimpUserUnits:
 		ioBuf.sz754 = self.pname
 		return ioBuf.data
 
-	def __repr__(self, indent: str = ""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Factor: {self.factor}")

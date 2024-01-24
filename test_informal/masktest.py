@@ -1,10 +1,11 @@
-"""Feature: https://github.com/FHPythonUtils/GimpFormats/issues/6
+"""Feature: https://github.com/FHPythonUtils/GimpFormats/issues/6.
 """
 
 from __future__ import annotations
 
-from pathlib import Path
 import sys
+from pathlib import Path
+
 THISDIR = str(Path(__file__).resolve().parent.parent)
 sys.path.insert(0, THISDIR)
 

@@ -14,11 +14,8 @@ def fileOpen(fileName: BytesIO | str) -> tuple[str, bytes]:
 	return fileName, data
 
 
-def save(data: bytes, tofileName: BytesIO | str):
+def save(data: bytes, tofileName: BytesIO | str) -> None:
 	"""Save this gimp image to a file."""
-	if isinstance(tofileName, str):
-		file = open(tofileName, "wb")
-	else:
-		file = tofileName
+	file = open(tofileName, "wb") if isinstance(tofileName, str) else tofileName
 	file.write(data)
 	file.close()

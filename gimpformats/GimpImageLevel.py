@@ -21,7 +21,7 @@ class GimpImageLevel(GimpIOBase):
 	This represents a single level in an imageHierarchy
 	"""
 
-	def __init__(self, parent):
+	def __init__(self, parent) -> None:
 		GimpIOBase.__init__(self, parent)
 		self.width = 0
 		self.height = 0
@@ -61,7 +61,8 @@ class GimpImageLevel(GimpIOBase):
 						ioBuf.data[ptr : ptr + totalBytes + 24]
 					)  # guess how many bytes are needed
 				else:
-					raise RuntimeError(f"ERR: unsupported compression mode {self.doc.compression}")
+					msg = f"ERR: unsupported compression mode {self.doc.compression}"
+					raise RuntimeError(msg)
 				subImage = PIL.Image.frombytes(self.mode, size, bytes(data), decoder_name="raw")
 				self._tiles.append(subImage)
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
@@ -85,7 +86,8 @@ class GimpImageLevel(GimpIOBase):
 			elif self.doc.compression == 2:  # zip
 				data = zlib.compress(data)
 			else:
-				raise RuntimeError(f"ERR: unsupported compression mode {self.doc.compression}")
+				msg = f"ERR: unsupported compression mode {self.doc.compression}"
+				raise RuntimeError(msg)
 			dataioBuf.addBytes(data)
 		ioBuf.addBytes(self._pointerEncode(0))
 		ioBuf.addBytes(dataioBuf.data)
@@ -136,8 +138,7 @@ class GimpImageLevel(GimpIOBase):
 						ret[chan].append(val)
 						n += 1
 				else:
-					print("Unreachable branch", opcode)
-					raise RuntimeError()
+					raise RuntimeError
 		# flatten/weave the individual channels into one strream
 		flat = bytearray()
 		for i in range(pixels):
@@ -242,7 +243,7 @@ class GimpImageLevel(GimpIOBase):
 
 	def _imgToTiles(self, image):
 		"""
-		break an image into a series of tiles, each<=64x64
+		break an image into a series of tiles, each<=64x64.
 		"""
 		ret = []
 		for y in range(0, self.height, 64):
@@ -254,7 +255,7 @@ class GimpImageLevel(GimpIOBase):
 	@property
 	def image(self) -> Image:
 		"""
-		Get a final, compiled image
+		Get a final, compiled image.
 		"""
 		if self._image is None:
 			self._image = PIL.Image.new(self.mode, (self.width, self.height), color=None)
@@ -268,14 +269,14 @@ class GimpImageLevel(GimpIOBase):
 		return self._image
 
 	@image.setter
-	def image(self, image: Image):
+	def image(self, image: Image) -> None:
 		self._image = image
 		self._tiles = None
 		self.width = image.width
 		self.height = image.height
 		self.tiles = None
 
-	def __repr__(self, indent: str = ""):
+	def __repr__(self, indent: str = "") -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Size: {self.width} x {self.height}")

@@ -6,7 +6,8 @@ Does boilerplate things like reading the next uint32 from a file or binary strea
 
 Create a new IO object and initialize/ set data
 
-Example
+Example:
+-------
 ```python
 f = open(fileName, 'rb')
 data = f.read()
@@ -26,6 +27,7 @@ For a file starting with the bytes:
 ```
 
 The values for width and height would be 200, 400
+
 """
 from __future__ import annotations
 
@@ -43,7 +45,7 @@ class IO:
 		littleEndian: bool = False,
 		boolSize: int = 8,
 		stringEncoding: str = "U",
-	):
+	) -> None:
 		"""Class to handle i/o to a byte buffer or file-like object.
 
 		:param data: can be a data buffer or a file-like object
@@ -91,18 +93,18 @@ class IO:
 		"""Set index."""
 		self._index = index
 
-	def beginContext(self, newIndex: int):
+	def beginContext(self, newIndex: int) -> None:
 		"""Start a new context where the index can be changed all you want...
 
 		and when endContext() is called, it will be restored to the current position
 		"""
 		self._contexts.append(newIndex)
 
-	def endContext(self):
+	def endContext(self) -> None:
 		"""Restore the index to the previous location where it was when	beginContext() was called."""
 		self.index = self._contexts.pop()
 
-	def _write(self, size: int, fmt: str, data: Any):
+	def _write(self, size: int, fmt: str, data: Any) -> None:
 		"""General formatted write."""
 		if self.index + size >= len(self.data):
 			self.data.extend(bytearray((self.index + size) - len(self.data)))
@@ -146,7 +148,7 @@ class IO:
 		raise Exception("Unknown bool size " + str(self.boolSize))
 
 	@boolean.setter
-	def boolean(self, ioBool: bool):
+	def boolean(self, ioBool: bool) -> None:
 		"""Set bool."""
 		if self.boolSize == 8:
 			self.bool8 = ioBool
@@ -165,7 +167,7 @@ class IO:
 		return self.u8 != 0
 
 	@bool8.setter
-	def bool8(self, ioBool: bool):
+	def bool8(self, ioBool: bool) -> None:
 		"""Set a bool8."""
 		self.u8 = ioBool
 
@@ -175,7 +177,7 @@ class IO:
 		return self.u16 != 0
 
 	@bool16.setter
-	def bool16(self, ioBool: bool):
+	def bool16(self, ioBool: bool) -> None:
 		"""Set bool16."""
 		self.u16 = ioBool
 
@@ -185,7 +187,7 @@ class IO:
 		return self.u32 != 0
 
 	@bool32.setter
-	def bool32(self, ioBool: bool):
+	def bool32(self, ioBool: bool) -> None:
 		"""Set bool32."""
 		self.u32 = ioBool
 
@@ -195,7 +197,7 @@ class IO:
 		return self.u64 != 0
 
 	@bool64.setter
-	def bool64(self, ioBool: bool):
+	def bool64(self, ioBool: bool) -> None:
 		"""Set bool64."""
 		self.u64 = ioBool
 
@@ -205,7 +207,7 @@ class IO:
 		return self.i8
 
 	@byte.setter
-	def byte(self, byte: Any):
+	def byte(self, byte: Any) -> None:
 		"""Set byte."""
 		self.i8 = byte
 
@@ -215,7 +217,7 @@ class IO:
 		return self.u8
 
 	@unsignedByte.setter
-	def unsignedByte(self, byte: Any):
+	def unsignedByte(self, byte: Any) -> None:
 		"""Set unsigned byte."""
 		self.u8 = byte
 
@@ -225,7 +227,7 @@ class IO:
 		return self.i16
 
 	@word.setter
-	def word(self, word: Any):
+	def word(self, word: Any) -> None:
 		"""Set a word."""
 		self.i16 = word
 
@@ -235,7 +237,7 @@ class IO:
 		return self.u16
 
 	@unsignedWord.setter
-	def unsignedWord(self, unsignedWord: Any):
+	def unsignedWord(self, unsignedWord: Any) -> None:
 		"""Set an unsigned word."""
 		self.u16 = unsignedWord
 
@@ -245,7 +247,7 @@ class IO:
 		return self.i32
 
 	@dword.setter
-	def dword(self, dword: Any):
+	def dword(self, dword: Any) -> None:
 		"""Set a dword."""
 		self.i32 = dword
 
@@ -255,7 +257,7 @@ class IO:
 		return self.u32
 
 	@unsignedDword.setter
-	def unsignedDword(self, unsignedDword: Any):
+	def unsignedDword(self, unsignedDword: Any) -> None:
 		"""Set an unsigned dword."""
 		self.u32 = unsignedDword
 
@@ -265,7 +267,7 @@ class IO:
 		return self.i64
 
 	@qword.setter
-	def qword(self, qword: Any):
+	def qword(self, qword: Any) -> None:
 		"""Set a qword."""
 		self.i64 = qword
 
@@ -275,7 +277,7 @@ class IO:
 		return self.u64
 
 	@unsignedQword.setter
-	def unsignedQword(self, unsignedQword: Any):
+	def unsignedQword(self, unsignedQword: Any) -> None:
 		"""Set an unsigned qword."""
 		self.u64 = unsignedQword
 
@@ -287,7 +289,7 @@ class IO:
 		return self.i8be
 
 	@i8.setter
-	def i8(self, i8: int):
+	def i8(self, i8: int) -> None:
 		"""Set an int8."""
 		if self.littleEndian:
 			self.i8le = i8
@@ -302,7 +304,7 @@ class IO:
 		return self.u8be
 
 	@u8.setter
-	def u8(self, u8: int):
+	def u8(self, u8: int) -> None:
 		"""Set an unsigned int."""
 		if self.littleEndian:
 			self.u8le = u8
@@ -317,7 +319,7 @@ class IO:
 		return self.i16be
 
 	@i16.setter
-	def i16(self, i16: int):
+	def i16(self, i16: int) -> None:
 		"""Set an int16."""
 		if self.littleEndian:
 			self.i16le = i16
@@ -332,7 +334,7 @@ class IO:
 		return self.u16be
 
 	@u16.setter
-	def u16(self, u16: int):
+	def u16(self, u16: int) -> None:
 		"""Set an unint16."""
 		if self.littleEndian:
 			self.u16le = u16
@@ -347,7 +349,7 @@ class IO:
 		return self.i32be
 
 	@i32.setter
-	def i32(self, i32: int):
+	def i32(self, i32: int) -> None:
 		"""Set an int32."""
 		if self.littleEndian:
 			self.i32le = i32
@@ -362,7 +364,7 @@ class IO:
 		return self.u32be
 
 	@u32.setter
-	def u32(self, u32: int):
+	def u32(self, u32: int) -> None:
 		"""Set a unint32."""
 		if self.littleEndian:
 			self.u32le = u32
@@ -377,7 +379,7 @@ class IO:
 		return self.i64be
 
 	@i64.setter
-	def i64(self, i64: int):
+	def i64(self, i64: int) -> None:
 		"""Set an int64."""
 		if self.littleEndian:
 			self.i64le = i64
@@ -392,7 +394,7 @@ class IO:
 		return self.u64be
 
 	@u64.setter
-	def u64(self, u64: int):
+	def u64(self, u64: int) -> None:
 		"""Set a uint64."""
 		if self.littleEndian:
 			self.u64le = u64
@@ -407,7 +409,7 @@ class IO:
 		return self.float32be
 
 	@float32.setter
-	def float32(self, float32: float):
+	def float32(self, float32: float) -> None:
 		"""Set a float32."""
 		if self.littleEndian:
 			self.float32le = float32
@@ -422,7 +424,7 @@ class IO:
 		return self.float64be
 
 	@float64.setter
-	def float64(self, float64: float):
+	def float64(self, float64: float) -> None:
 		"""Set a float64."""
 		if self.littleEndian:
 			self.float64le = float64
@@ -435,7 +437,7 @@ class IO:
 		return self._read(1, ">B")
 
 	@u8be.setter
-	def u8be(self, u8be: int):
+	def u8be(self, u8be: int) -> None:
 		"""Set the uint8."""
 		self._write(1, ">B", u8be)
 
@@ -445,7 +447,7 @@ class IO:
 		return self._read(1, "<B")
 
 	@u8le.setter
-	def u8le(self, u8le: int):
+	def u8le(self, u8le: int) -> None:
 		"""Set the uint8."""
 		self._write(1, "<B", u8le)
 
@@ -455,7 +457,7 @@ class IO:
 		return self._read(1, "<b")
 
 	@i8le.setter
-	def i8le(self, i8le: int):
+	def i8le(self, i8le: int) -> None:
 		"""Set the int8."""
 		self._write(1, "<b", i8le)
 
@@ -465,7 +467,7 @@ class IO:
 		return self._read(1, ">b")
 
 	@i8be.setter
-	def i8be(self, i8be: int):
+	def i8be(self, i8be: int) -> None:
 		"""Set the int8."""
 		self._write(1, ">b", i8be)
 
@@ -475,7 +477,7 @@ class IO:
 		return self._read(2, ">H")
 
 	@u16be.setter
-	def u16be(self, u16be: int):
+	def u16be(self, u16be: int) -> None:
 		"""Set the uint16."""
 		self._write(2, ">H", u16be)
 
@@ -485,7 +487,7 @@ class IO:
 		return self._read(2, "<H")
 
 	@u16le.setter
-	def u16le(self, u16le: int):
+	def u16le(self, u16le: int) -> None:
 		"""Set the uint16."""
 		self._write(2, "<H", u16le)
 
@@ -495,7 +497,7 @@ class IO:
 		return self._read(2, "<h")
 
 	@i16le.setter
-	def i16le(self, i16le: int):
+	def i16le(self, i16le: int) -> None:
 		"""Set the int16."""
 		self._write(2, "<h", i16le)
 
@@ -505,7 +507,7 @@ class IO:
 		return self._read(2, ">h")
 
 	@i16be.setter
-	def i16be(self, i16be: int):
+	def i16be(self, i16be: int) -> None:
 		"""Set the int16."""
 		self._write(2, ">h", i16be)
 
@@ -515,7 +517,7 @@ class IO:
 		return self._read(4, ">I")
 
 	@u32be.setter
-	def u32be(self, u32be: int):
+	def u32be(self, u32be: int) -> None:
 		"""Set the uint32."""
 		self._write(4, ">I", u32be)
 
@@ -525,7 +527,7 @@ class IO:
 		return self._read(4, "<I")
 
 	@u32le.setter
-	def u32le(self, u32le: int):
+	def u32le(self, u32le: int) -> None:
 		"""Set the uint32."""
 		self._write(4, "<I", u32le)
 
@@ -535,7 +537,7 @@ class IO:
 		return self._read(4, "<i")
 
 	@i32le.setter
-	def i32le(self, i32le: int):
+	def i32le(self, i32le: int) -> None:
 		"""Set the int32."""
 		self._write(4, "<i", i32le)
 
@@ -545,7 +547,7 @@ class IO:
 		return self._read(4, ">i")
 
 	@i32be.setter
-	def i32be(self, i32be: int):
+	def i32be(self, i32be: int) -> None:
 		"""Set the int32."""
 		self._write(4, ">i", i32be)
 
@@ -555,7 +557,7 @@ class IO:
 		return self._read(8, ">Q")
 
 	@u64be.setter
-	def u64be(self, u64be: int):
+	def u64be(self, u64be: int) -> None:
 		"""Set the uint64."""
 		self._write(8, ">Q", u64be)
 
@@ -565,7 +567,7 @@ class IO:
 		return self._read(8, "<Q")
 
 	@u64le.setter
-	def u64le(self, u64le: int):
+	def u64le(self, u64le: int) -> None:
 		"""Set the uint64."""
 		self._write(8, "<Q", u64le)
 
@@ -575,7 +577,7 @@ class IO:
 		return self._read(8, "<q")
 
 	@i64le.setter
-	def i64le(self, i64le: int):
+	def i64le(self, i64le: int) -> None:
 		"""Set the int64."""
 		self._write(8, "<q", i64le)
 
@@ -585,7 +587,7 @@ class IO:
 		return self._read(8, ">q")
 
 	@i64be.setter
-	def i64be(self, i64be: int):
+	def i64be(self, i64be: int) -> None:
 		"""Set the int64."""
 		self._write(8, ">q", i64be)
 
@@ -595,7 +597,7 @@ class IO:
 		return self.float32
 
 	@floating.setter
-	def floating(self, floating: float):
+	def floating(self, floating: float) -> None:
 		"""Set a float."""
 		self.float32 = floating
 
@@ -605,7 +607,7 @@ class IO:
 		return self.float64
 
 	@double.setter
-	def double(self, floating: float):
+	def double(self, floating: float) -> None:
 		"""Set a double."""
 		self.float64 = floating
 
@@ -615,7 +617,7 @@ class IO:
 		return self._read(4, ">f")
 
 	@float32be.setter
-	def float32be(self, float32be: float):
+	def float32be(self, float32be: float) -> None:
 		"""Set a 32 bit float."""
 		self._write(4, ">f", float32be)
 
@@ -625,7 +627,7 @@ class IO:
 		return self._read(4, "<f")
 
 	@float32le.setter
-	def float32le(self, float32le: float):
+	def float32le(self, float32le: float) -> None:
 		"""Set a 32 bit float."""
 		self._write(4, "<f", float32le)
 
@@ -635,7 +637,7 @@ class IO:
 		return self._read(8, ">d")
 
 	@float64be.setter
-	def float64be(self, float64be: float):
+	def float64be(self, float64be: float) -> None:
 		"""Set a 64 bit float."""
 		self._write(8, ">d", float64be)
 
@@ -645,7 +647,7 @@ class IO:
 		return self._read(8, "<d")
 
 	@float64le.setter
-	def float64le(self, float64le: float):
+	def float64le(self, float64le: float) -> None:
 		"""Set a 64 bit float."""
 		self._write(8, "<d", float64le)
 
@@ -655,7 +657,7 @@ class IO:
 		self.index += nbytes
 		return data
 
-	def addBytes(self, ioBytes: Any):
+	def addBytes(self, ioBytes: Any) -> None:
 		"""Add some raw bytes and advance the index.
 
 		alias for setBytes()
@@ -664,7 +666,7 @@ class IO:
 		"""
 		self.setBytes(ioBytes)
 
-	def setBytes(self, ioBytes: Any):
+	def setBytes(self, ioBytes: Any) -> None:
 		"""Add some raw bytes and advance the index.
 
 		alias for addBytes()
@@ -706,9 +708,9 @@ class IO:
 			return data.decode("UTF-8", errors="replace")
 		if encoding == "W":
 			return data.decode("UTF-16", errors="replace")
-		raise Exception()
+		raise Exception
 
-	def _sz754set(self, sz754: Any, _encoding: str):
+	def _sz754set(self, sz754: Any, _encoding: str) -> None:
 		"""_sz754set."""
 		self.u32 = len(sz754)
 		self.setBytes(sz754)
@@ -768,7 +770,8 @@ class IO:
 		elif encoding == "W":
 			encoding = "UCS-2"
 		else:
-			raise Exception("bogus encoding")
+			msg = "bogus encoding"
+			raise Exception(msg)
 		untilB = until.encode("ascii")[0]  # always ascii
 		while True:
 			char = self.data[self.index]
@@ -791,7 +794,7 @@ class IO:
 		return ret
 
 	@textLine.setter
-	def textLine(self, text: str):
+	def textLine(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char."""
 		self.setBytes(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
@@ -806,7 +809,7 @@ class IO:
 		return ret
 
 	@textLineA.setter
-	def textLineA(self, text: str):
+	def textLineA(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in ascii."""
 		self.setBytes(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
@@ -821,7 +824,7 @@ class IO:
 		return ret
 
 	@textLineW.setter
-	def textLineW(self, text: str):
+	def textLineW(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in ucs-2."""
 		self.setBytes(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
@@ -836,7 +839,7 @@ class IO:
 		return ret
 
 	@textLineU.setter
-	def textLineU(self, text: str):
+	def textLineU(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in utf-8."""
 		self.setBytes(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
@@ -848,7 +851,7 @@ class IO:
 		return self._readUntil("\0", self.stringEncoding)
 
 	@cString.setter
-	def cString(self, text: str):
+	def cString(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte."""
 		self.setBytes(text)
 		self.setBytes("\0")
@@ -859,7 +862,7 @@ class IO:
 		return self._readUntil("\0", "A")
 
 	@cStringA.setter
-	def cStringA(self, text: str):
+	def cStringA(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in ascii."""
 		self.setBytes(text)
 		self.setBytes("\0")
@@ -870,7 +873,7 @@ class IO:
 		return self._readUntil("\0", "W")
 
 	@cStringW.setter
-	def cStringW(self, text: str):
+	def cStringW(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in ucs-2."""
 		self.setBytes(text)
 		self.setBytes("\0\0")
@@ -881,7 +884,7 @@ class IO:
 		return self._readUntil("\0", "U")
 
 	@cStringU.setter
-	def cStringU(self, text: str):
+	def cStringU(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in utf-8."""
 		self.setBytes(text)
 		self.setBytes("\0")
