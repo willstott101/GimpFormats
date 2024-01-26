@@ -78,6 +78,10 @@ class GimpGplPalette:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), fileName)
 
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
 	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
 		ret = []

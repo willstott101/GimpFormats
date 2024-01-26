@@ -7,20 +7,23 @@
 - [Gimpvectors](#gimpvectors)
   - [GimpPoint](#gimppoint)
     - [GimpPoint().__repr__](#gimppoint()__repr__)
+    - [GimpPoint().__str__](#gimppoint()__str__)
     - [GimpPoint().decode](#gimppoint()decode)
     - [GimpPoint().encode](#gimppoint()encode)
   - [GimpStroke](#gimpstroke)
     - [GimpStroke().__repr__](#gimpstroke()__repr__)
+    - [GimpStroke().__str__](#gimpstroke()__str__)
     - [GimpStroke().decode](#gimpstroke()decode)
     - [GimpStroke().encode](#gimpstroke()encode)
   - [GimpVector](#gimpvector)
     - [GimpVector().__repr__](#gimpvector()__repr__)
+    - [GimpVector().__str__](#gimpvector()__str__)
     - [GimpVector().decode](#gimpvector()decode)
     - [GimpVector().encode](#gimpvector()encode)
 
 ## GimpPoint
 
-[Show source in GimpVectors.py:142](../../../gimpformats/GimpVectors.py#L142)
+[Show source in GimpVectors.py:149](../../../gimpformats/GimpVectors.py#L149)
 
 A single point within a stroke.
 
@@ -33,19 +36,31 @@ class GimpPoint:
 
 ### GimpPoint().__repr__
 
-[Show source in GimpVectors.py:208](../../../gimpformats/GimpVectors.py#L208)
+[Show source in GimpVectors.py:219](../../../gimpformats/GimpVectors.py#L219)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpPoint().__str__
+
+[Show source in GimpVectors.py:215](../../../gimpformats/GimpVectors.py#L215)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpPoint().decode
 
-[Show source in GimpVectors.py:157](../../../gimpformats/GimpVectors.py#L157)
+[Show source in GimpVectors.py:164](../../../gimpformats/GimpVectors.py#L164)
 
 Decode a byte buffer.
 
@@ -71,7 +86,7 @@ def decode(self, data: bytes, index: int = 0, numFloatsPerPoint: int = 0): ...
 
 ### GimpPoint().encode
 
-[Show source in GimpVectors.py:192](../../../gimpformats/GimpVectors.py#L192)
+[Show source in GimpVectors.py:199](../../../gimpformats/GimpVectors.py#L199)
 
 Encode to binary data.
 
@@ -85,7 +100,7 @@ def encode(self): ...
 
 ## GimpStroke
 
-[Show source in GimpVectors.py:85](../../../gimpformats/GimpVectors.py#L85)
+[Show source in GimpVectors.py:88](../../../gimpformats/GimpVectors.py#L88)
 
 A single stroke within a vector.
 
@@ -98,19 +113,31 @@ class GimpStroke:
 
 ### GimpStroke().__repr__
 
-[Show source in GimpVectors.py:131](../../../gimpformats/GimpVectors.py#L131)
+[Show source in GimpVectors.py:138](../../../gimpformats/GimpVectors.py#L138)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpStroke().__str__
+
+[Show source in GimpVectors.py:134](../../../gimpformats/GimpVectors.py#L134)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpStroke().decode
 
-[Show source in GimpVectors.py:97](../../../gimpformats/GimpVectors.py#L97)
+[Show source in GimpVectors.py:100](../../../gimpformats/GimpVectors.py#L100)
 
 Decode a byte buffer.
 
@@ -133,7 +160,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpStroke().encode
 
-[Show source in GimpVectors.py:120](../../../gimpformats/GimpVectors.py#L120)
+[Show source in GimpVectors.py:123](../../../gimpformats/GimpVectors.py#L123)
 
 Encode to binary data.
 
@@ -147,7 +174,7 @@ def encode(self): ...
 
 ## GimpVector
 
-[Show source in GimpVectors.py:10](../../../gimpformats/GimpVectors.py#L10)
+[Show source in GimpVectors.py:9](../../../gimpformats/GimpVectors.py#L9)
 
 A gimp brush stroke vector.
 
@@ -160,19 +187,31 @@ class GimpVector:
 
 ### GimpVector().__repr__
 
-[Show source in GimpVectors.py:67](../../../gimpformats/GimpVectors.py#L67)
+[Show source in GimpVectors.py:70](../../../gimpformats/GimpVectors.py#L70)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpVector().__str__
+
+[Show source in GimpVectors.py:66](../../../gimpformats/GimpVectors.py#L66)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpVector().decode
 
-[Show source in GimpVectors.py:23](../../../gimpformats/GimpVectors.py#L23)
+[Show source in GimpVectors.py:22](../../../gimpformats/GimpVectors.py#L22)
 
 Decode a byte buffer.
 
@@ -195,7 +234,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpVector().encode
 
-[Show source in GimpVectors.py:52](../../../gimpformats/GimpVectors.py#L52)
+[Show source in GimpVectors.py:51](../../../gimpformats/GimpVectors.py#L51)
 
 Encode to binary data.
 

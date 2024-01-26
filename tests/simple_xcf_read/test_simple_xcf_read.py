@@ -15,12 +15,28 @@ from gimpformats.gimpXcfDocument import GimpDocument
 dut = GimpDocument()
 
 
+def test_oneLayerWithTransparency_repr() -> None:
+	dut.load(f"{THISDIR}/testOneLayerWithTransparency.xcf")
+	assert (
+		str(dut).split("\n", 1)[1]
+		== Path(f"{THISDIR}/testOneLayerWithTransparency.txt").read_text("utf-8").strip()
+	)
+
+
 def test_oneLayerWithTransparency() -> None:
 	"""test an image."""
 	dut.load(f"{THISDIR}/testOneLayerWithTransparency.xcf")
 	dut.image.save(f"{THISDIR}/testOneLayerWithTransparency.png")
 	assert imgcompare.is_equal(
 		dut.image, f"{THISDIR}/testOneLayerWithTransparency_expected.png", tolerance=0.2
+	)
+
+
+def test_testComplexImage_repr() -> None:
+	dut.load(f"{THISDIR}/testComplexImage.xcf")
+	assert (
+		str(dut).split("\n", 1)[1]
+		== Path(f"{THISDIR}/testComplexImage.txt").read_text("utf-8").strip()
 	)
 
 

@@ -7,6 +7,7 @@
 - [Gimpimagelevel](#gimpimagelevel)
   - [GimpImageLevel](#gimpimagelevel)
     - [GimpImageLevel().__repr__](#gimpimagelevel()__repr__)
+    - [GimpImageLevel().__str__](#gimpimagelevel()__str__)
     - [GimpImageLevel()._encodeRLE](#gimpimagelevel()_encoderle)
     - [GimpImageLevel()._imgToTiles](#gimpimagelevel()_imgtotiles)
     - [GimpImageLevel().bpp](#gimpimagelevel()bpp)
@@ -34,6 +35,18 @@ class GimpImageLevel(GimpIOBase):
 
 ### GimpImageLevel().__repr__
 
+[Show source in GimpImageLevel.py:283](../../../gimpformats/GimpImageLevel.py#L283)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpImageLevel().__str__
+
 [Show source in GimpImageLevel.py:279](../../../gimpformats/GimpImageLevel.py#L279)
 
 Get a textual representation of this object.
@@ -41,7 +54,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __str__(self) -> str: ...
 ```
 
 ### GimpImageLevel()._encodeRLE
@@ -95,7 +108,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0): ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpImageLevel().encode
@@ -107,7 +120,7 @@ Encode this object to a byte buffer.
 #### Signature
 
 ```python
-def encode(self): ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpImageLevel().image

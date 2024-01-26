@@ -7,6 +7,7 @@
 - [Gimpgpbbrush](#gimpgpbbrush)
   - [GimpGpbBrush](#gimpgpbbrush)
     - [GimpGpbBrush().__repr__](#gimpgpbbrush()__repr__)
+    - [GimpGpbBrush().__str__](#gimpgpbbrush()__str__)
     - [GimpGpbBrush().decode](#gimpgpbbrush()decode)
     - [GimpGpbBrush().encode](#gimpgpbbrush()encode)
     - [GimpGpbBrush().load](#gimpgpbbrush()load)
@@ -30,6 +31,18 @@ class GimpGpbBrush:
 
 ### GimpGpbBrush().__repr__
 
+[Show source in GimpGpbBrush.py:72](../../../gimpformats/GimpGpbBrush.py#L72)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpGpbBrush().__str__
+
 [Show source in GimpGpbBrush.py:68](../../../gimpformats/GimpGpbBrush.py#L68)
 
 Get a textual representation of this object.
@@ -37,7 +50,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __str__(self) -> str: ...
 ```
 
 ### GimpGpbBrush().decode

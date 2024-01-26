@@ -65,11 +65,15 @@ class GimpGpbBrush:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), tofileName)
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
 			ret.append(f"fileName: {self.fileName}")
-		ret.append(self.brush.__repr__(indent + "\t"))
+		ret.append(self.brush.__repr__(indent=indent + 1))
 		ret.append(self.pattern.__repr__())
-		return (f"\n{indent}").join(ret)
+		return repr_indent_lines(indent, ret)

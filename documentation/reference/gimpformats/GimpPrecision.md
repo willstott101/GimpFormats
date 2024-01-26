@@ -7,6 +7,7 @@
 - [Gimpprecision](#gimpprecision)
   - [Precision](#precision)
     - [Precision().__repr__](#precision()__repr__)
+    - [Precision().__str__](#precision()__str__)
     - [Precision().decode](#precision()decode)
     - [Precision().encode](#precision()encode)
     - [Precision().requiredGimpVersion](#precision()requiredgimpversion)
@@ -26,7 +27,7 @@ class Precision:
 
 ### Precision().__repr__
 
-[Show source in GimpPrecision.py:86](../../../gimpformats/GimpPrecision.py#L86)
+[Show source in GimpPrecision.py:90](../../../gimpformats/GimpPrecision.py#L90)
 
 Get a textual representation of this object.
 
@@ -34,6 +35,18 @@ Get a textual representation of this object.
 
 ```python
 def __repr__(self) -> str: ...
+```
+
+### Precision().__str__
+
+[Show source in GimpPrecision.py:86](../../../gimpformats/GimpPrecision.py#L86)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### Precision().decode

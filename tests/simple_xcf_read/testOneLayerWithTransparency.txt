@@ -1,0 +1,70 @@
+Version: 11
+Size: 536 x 480
+Base Color Mode: 0
+Precision: 16-bit gamma integer
+Selected: False
+Is selection: False
+Blend mode: BlendMode.ADDITION
+Visible: False
+Is linked: False
+Lock alpha: False
+Apply mask: False
+Editing mask: False
+Show mask: False
+Show masked: False
+X offset: 0
+Y offset: 0
+Compression: CompressionMode.RLE
+Horizontal resolution: 300.0
+Vertical resolution: 300.0
+Unique id: 00000002
+Units: 1
+Group item flags: 0
+Position locked: False
+Opacity: 1.0
+Color tag: TagColor.Blue
+Composite mode: CompositeMode.Union
+Composite space: CompositeSpace.RGB_linear
+Vectors version: 0
+Active vector index: 0
+Paths: []
+Offset: 0 x 0
+Resolution: 300.0ppi x 300.0ppi
+Parasites:
+	Name: gimp-image-metadata
+	Flags: 1
+	Data Len: 353
+	Name: gimp-image-grid
+	Flags: 1
+	Data Len: 256
+Layers:
+	Name: 536px-Gimp-wilber-scalable.svg.png
+	Size: 536 x 480
+	colorMode: RGB color with alpha
+		Selected: True
+	Is selection: False
+	Blend mode: BlendMode.NORMAL
+	Visible: True
+	Is linked: False
+	Lock alpha: False
+	Apply mask: False
+	Editing mask: False
+	Show mask: False
+	Show masked: False
+	X offset: 0
+	Y offset: 0
+	Compression: CompressionMode.None_Compression
+	Unique id: 00000002
+	Units: Units.Inches
+	Locked: False
+	Group item flags: 0
+	Position locked: False
+	Opacity: 1.0
+	Color tag: 0
+	Composite mode: -1
+	Composite space: -1
+	Blend space: 0
+	Vectors version: 0
+	Active vector index: 0
+	Paths: []
+	Offset: 0 x 0

@@ -7,6 +7,7 @@
 - [Gimppatpattern](#gimppatpattern)
   - [GimpPatPattern](#gimppatpattern)
     - [GimpPatPattern().__repr__](#gimppatpattern()__repr__)
+    - [GimpPatPattern().__str__](#gimppatpattern()__str__)
     - [GimpPatPattern().decode](#gimppatpattern()decode)
     - [GimpPatPattern().encode](#gimppatpattern()encode)
     - [GimpPatPattern().image](#gimppatpattern()image)
@@ -33,7 +34,7 @@ class GimpPatPattern:
 
 ### GimpPatPattern().__repr__
 
-[Show source in GimpPatPattern.py:135](../../../gimpformats/GimpPatPattern.py#L135)
+[Show source in GimpPatPattern.py:139](../../../gimpformats/GimpPatPattern.py#L139)
 
 Get a textual representation of this object.
 
@@ -41,6 +42,18 @@ Get a textual representation of this object.
 
 ```python
 def __repr__(self) -> str: ...
+```
+
+### GimpPatPattern().__str__
+
+[Show source in GimpPatPattern.py:135](../../../gimpformats/GimpPatPattern.py#L135)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpPatPattern().decode

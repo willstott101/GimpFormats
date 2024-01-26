@@ -19,6 +19,12 @@ import PIL.ImageGrab
 from blendmodes.blend import BlendType, blendLayers
 from PIL import Image
 
+from enum import Enum
+
+from PIL import Image
+
+
+
 from . import utils
 from .binaryiotools import IO
 from .GimpChannel import GimpChannel
@@ -392,25 +398,28 @@ class GimpDocument(GimpIOBase):
 
 		# utils.save(self.encode(), filename or self.fileName)
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
-		del indent
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
+		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
 			ret.append(f"fileName: {self.fileName}")
 		ret.append(f"Version: {self.version}")
 		ret.append(f"Size: {self.width} x {self.height}")
-		ret.append(f"Base Color Mode: {self.COLOR_MODES[self.baseColorMode]}")
+		ret.append(f"Base Color Mode: {self.baseColorMode}")
 		ret.append(f"Precision: {self.precision}")
 		ret.append(GimpIOBase.__repr__(self))
 		if self._layerPtr:
-			ret.append("Layers: ")
+			ret.append("Layers:")
 			for layer in self.layers:
-				ret.append(layer.__repr__("\t"))
+				ret.append(layer.__repr__(indent=indent + 1))
 		if self._channelPtr:
-			ret.append("Channels: ")
+			ret.append("Channels:")
 			for channel in self._channels:
-				ret.append(channel.__repr__("\t"))
+				ret.append(channel.__repr__(indent=indent + 1))
 		return "\n".join(ret)
 
 
@@ -423,83 +432,95 @@ def blendModeLookup(
 	return blendLookup[blendmode]
 
 
+class BlendType(Enum):
+	NORMAL = 0
+	MULTIPLY = 3
+	SCREEN = 4
+	OVERLAY = 5
+	DIFFERENCE = 6
+	ADDITIVE = 7
+	NEGATION = 8
+	DARKEN = 9
+	LIGHTEN = 10
+	HUE = 11
+	SATURATION = 12
+	COLOUR = 13
+	LUMINOSITY = 14
+	DIVIDE = 15
+	COLOURDODGE = 16
+	COLOURBURN = 17
+	HARDLIGHT = 18
+	SOFTLIGHT = 19
+	GRAINEXTRACT = 20
+	GRAINMERGE = 21
+	VIVIDLIGHT = 48
+	PINLIGHT = 49
+	EXCLUSION = 52
+
+
+blendLookup = {
+	0: BlendType.NORMAL,
+	3: BlendType.MULTIPLY,
+	4: BlendType.SCREEN,
+	5: BlendType.OVERLAY,
+	6: BlendType.DIFFERENCE,
+	7: BlendType.ADDITIVE,
+	8: BlendType.NEGATION,
+	9: BlendType.DARKEN,
+	10: BlendType.LIGHTEN,
+	11: BlendType.HUE,
+	12: BlendType.SATURATION,
+	13: BlendType.COLOUR,
+	14: BlendType.LUMINOSITY,
+	15: BlendType.DIVIDE,
+	16: BlendType.COLOURDODGE,
+	17: BlendType.COLOURBURN,
+	18: BlendType.HARDLIGHT,
+	19: BlendType.SOFTLIGHT,
+	20: BlendType.GRAINEXTRACT,
+	21: BlendType.GRAINMERGE,
+	23: BlendType.OVERLAY,
+	24: BlendType.HUE,
+	25: BlendType.SATURATION,
+	26: BlendType.COLOUR,
+	27: BlendType.LUMINOSITY,
+	28: BlendType.NORMAL,
+	30: BlendType.MULTIPLY,
+	31: BlendType.SCREEN,
+	32: BlendType.DIFFERENCE,
+	33: BlendType.ADDITIVE,
+	34: BlendType.NEGATION,
+	35: BlendType.DARKEN,
+	36: BlendType.LIGHTEN,
+	37: BlendType.HUE,
+	38: BlendType.SATURATION,
+	39: BlendType.COLOUR,
+	40: BlendType.LUMINOSITY,
+	41: BlendType.DIVIDE,
+	42: BlendType.COLOURDODGE,
+	43: BlendType.COLOURBURN,
+	44: BlendType.HARDLIGHT,
+	45: BlendType.SOFTLIGHT,
+	46: BlendType.GRAINEXTRACT,
+	47: BlendType.GRAINMERGE,
+	48: BlendType.VIVIDLIGHT,
+	49: BlendType.PINLIGHT,
+	52: BlendType.EXCLUSION,
+}
+
+
 def flattenLayerOrGroup(
-	layerOrGroup: list[GimpLayer] | GimpLayer,
+	layerOrGroup: GimpLayer | list[GimpLayer],
 	imageDimensions: tuple[int, int],
 	flattenedSoFar: Image.Image | None = None,
 	ignoreHidden: bool = True,
 ) -> Image.Image:
-	"""Flatten a layer or group on to an image of what has already been	flattened.
-
-	Args:
-	----
-		layerOrGroup (Layer,Group): A layer or a group of layers
-		imageDimensions (tuple[int, int]): size of the image
-		flattenedSoFar (PIL.Image, optional): the image of what has already
-		been flattened. Defaults to None.
-		ignoreHidden (bool, optional): ignore layers that are hidden. Defaults
-		to True.
-
-	Returns:
-	-------
-		PIL.Image: Flattened image
-	"""
-	blendLookup = {
-		0: BlendType.NORMAL,
-		3: BlendType.MULTIPLY,
-		4: BlendType.SCREEN,
-		5: BlendType.OVERLAY,
-		6: BlendType.DIFFERENCE,
-		7: BlendType.ADDITIVE,
-		8: BlendType.NEGATION,
-		9: BlendType.DARKEN,
-		10: BlendType.LIGHTEN,
-		11: BlendType.HUE,
-		12: BlendType.SATURATION,
-		13: BlendType.COLOUR,
-		14: BlendType.LUMINOSITY,
-		15: BlendType.DIVIDE,
-		16: BlendType.COLOURDODGE,
-		17: BlendType.COLOURBURN,
-		18: BlendType.HARDLIGHT,
-		19: BlendType.SOFTLIGHT,
-		20: BlendType.GRAINEXTRACT,
-		21: BlendType.GRAINMERGE,
-		23: BlendType.OVERLAY,
-		24: BlendType.HUE,
-		25: BlendType.SATURATION,
-		26: BlendType.COLOUR,
-		27: BlendType.LUMINOSITY,
-		28: BlendType.NORMAL,
-		30: BlendType.MULTIPLY,
-		31: BlendType.SCREEN,
-		32: BlendType.DIFFERENCE,
-		33: BlendType.ADDITIVE,
-		34: BlendType.NEGATION,
-		35: BlendType.DARKEN,
-		36: BlendType.LIGHTEN,
-		37: BlendType.HUE,
-		38: BlendType.SATURATION,
-		39: BlendType.COLOUR,
-		40: BlendType.LUMINOSITY,
-		41: BlendType.DIVIDE,
-		42: BlendType.COLOURDODGE,
-		43: BlendType.COLOURBURN,
-		44: BlendType.HARDLIGHT,
-		45: BlendType.SOFTLIGHT,
-		46: BlendType.GRAINEXTRACT,
-		47: BlendType.GRAINMERGE,
-		48: BlendType.VIVIDLIGHT,
-		49: BlendType.PINLIGHT,
-		52: BlendType.EXCLUSION,
-	}
-	# Group
 	if isinstance(layerOrGroup, list):
 		if ignoreHidden and not layerOrGroup[0].visible:
 			foregroundComposite = Image.new("RGBA", imageDimensions)
 		else:  # A group is a list of layers
 			# (see flattenAll)
-			foregroundComposite = renderWOffset(
+			foregroundComposite = renderLayerOrGroup(
 				flattenAll(layerOrGroup[1], imageDimensions, ignoreHidden),
 				imageDimensions,
 			)
@@ -527,15 +548,12 @@ def flattenLayerOrGroup(
 			layerOrGroup[0].opacity,
 		)
 
-	# Layer
 	if ignoreHidden and not layerOrGroup.visible:
 		foregroundComposite = Image.new("RGBA", imageDimensions)
 	else:
-		# Get a raster image and apply blending
-		foregroundComposite = renderWOffset(
+		foregroundComposite = renderLayerOrGroup(
 			layerOrGroup.image, imageDimensions, (layerOrGroup.xOffset, layerOrGroup.yOffset)
 		)
-
 		if layerOrGroup.mask is not None:
 			newFGComp = Image.new("RGBA", imageDimensions)
 			newFGComp.paste(
@@ -563,47 +581,17 @@ def flattenLayerOrGroup(
 def flattenAll(
 	layers: list[GimpLayer], imageDimensions: tuple[int, int], ignoreHidden: bool = True
 ) -> Image.Image:
-	"""Flatten a list of layers and groups.
-
-	Note the bottom layer is at the end of the list
-
-	Args:
-	----
-		layers (list[GimpLayer]): A list of layers and groups
-		imageDimensions (tuple[int, int]): size of the image been flattened. Defaults to None.
-		ignoreHidden (bool, optional): ignore layers that are hidden. Defaults
-		to True.
-
-	Returns:
-	-------
-		PIL.Image: Flattened image
-	"""
-	end = len(layers) - 1
-	flattenedSoFar = flattenLayerOrGroup(layers[end], imageDimensions, ignoreHidden=ignoreHidden)
-	for layer in range(end - 1, -1, -1):
+	flattenedSoFar = flattenLayerOrGroup(layers[-1], imageDimensions, ignoreHidden=ignoreHidden)
+	for layer in reversed(layers[:-1]):
 		flattenedSoFar = flattenLayerOrGroup(
-			layers[layer], imageDimensions, flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden
+			layer, imageDimensions, flattenedSoFar=flattenedSoFar, ignoreHidden=ignoreHidden
 		)
 	return flattenedSoFar
 
 
-def renderWOffset(
+def renderLayerOrGroup(
 	image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
 ) -> Image.Image:
-	"""Render an image with offset and alpha to a given size.
-
-	Args:
-	----
-		image (Image.Image): pil image to draw
-		size (tuple[int, int]): width, height as a tuple
-		alpha (float, optional): alpha transparency. Defaults to 1.0.
-		offsets (tuple[int, int], optional): x, y offsets as a tuple.
-		Defaults to (0, 0).
-
-	Returns:
-	-------
-		Image.Image: new image
-	"""
 	imageOffset = Image.new("RGBA", size)
 	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
 	return imageOffset
@@ -612,25 +600,11 @@ def renderWOffset(
 def renderMaskWOffset(
 	image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
 ) -> Image.Image:
-	"""Render an image with offset and alpha to a given size.
-
-	Args:
-	----
-		image (Image.Image): pil image to draw
-		size (tuple[int, int]): width, height as a tuple
-		alpha (float, optional): alpha transparency. Defaults to 1.0.
-		offsets (tuple[int, int], optional): x, y offsets as a tuple.
-		Defaults to (0, 0).
-
-	Returns:
-	-------
-		Image.Image: new image
-	"""
 	mode = image.mode
 	imageOffset = Image.new("RGBA", size)
-	imageOffset.paste(
-		image.convert("RGBA"),
-		offsets,
-		image.convert("RGBA"),
-	)
+	imageOffset.paste(image.convert("RGBA"), offsets, image.convert("RGBA"))
 	return imageOffset.convert(mode)
+
+
+def blendModeLookup(blend_mode, blendLookup):
+	return blendLookup.get(blend_mode, BlendType.NORMAL)

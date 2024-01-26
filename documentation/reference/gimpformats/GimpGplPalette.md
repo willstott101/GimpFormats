@@ -8,6 +8,7 @@
   - [GimpGplPalette](#gimpgplpalette)
     - [GimpGplPalette().__eq__](#gimpgplpalette()__eq__)
     - [GimpGplPalette().__repr__](#gimpgplpalette()__repr__)
+    - [GimpGplPalette().__str__](#gimpgplpalette()__str__)
     - [GimpGplPalette().decode](#gimpgplpalette()decode)
     - [GimpGplPalette().encode](#gimpgplpalette()encode)
     - [GimpGplPalette().load](#gimpgplpalette()load)
@@ -28,7 +29,7 @@ class GimpGplPalette:
 
 ### GimpGplPalette().__eq__
 
-[Show source in GimpGplPalette.py:96](../../../gimpformats/GimpGplPalette.py#L96)
+[Show source in GimpGplPalette.py:100](../../../gimpformats/GimpGplPalette.py#L100)
 
 Perform a comparison.
 
@@ -40,7 +41,7 @@ def __eq__(self, other: GimpGplPalette) -> bool: ...
 
 ### GimpGplPalette().__repr__
 
-[Show source in GimpGplPalette.py:81](../../../gimpformats/GimpGplPalette.py#L81)
+[Show source in GimpGplPalette.py:85](../../../gimpformats/GimpGplPalette.py#L85)
 
 Get a textual representation of this object.
 
@@ -48,6 +49,18 @@ Get a textual representation of this object.
 
 ```python
 def __repr__(self) -> str: ...
+```
+
+### GimpGplPalette().__str__
+
+[Show source in GimpGplPalette.py:81](../../../gimpformats/GimpGplPalette.py#L81)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpGplPalette().decode

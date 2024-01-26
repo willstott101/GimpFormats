@@ -10,6 +10,7 @@ from PIL import Image
 
 from .GimpImageLevel import GimpImageLevel
 from .GimpIOBase import IO, GimpIOBase
+from .utils import repr_indent_lines
 
 
 class GimpImageHierarchy(GimpIOBase):
@@ -83,7 +84,7 @@ class GimpImageHierarchy(GimpIOBase):
 		return ioBuf.data
 
 	@property
-	def levels(self):
+	def levels(self) -> list[GimpImageLevel]:
 		"""Get the levels within this hierarchy.
 
 		Presently hierarchy is not really used by gimp,
@@ -115,9 +116,13 @@ class GimpImageHierarchy(GimpIOBase):
 		self._levelPtrs = None
 		# self._levels = [GimpImageLevel(self, image)]
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Size: {self.width} x {self.height}")
 		ret.append(f"Bytes Per Pixel: {self.bpp}")
-		return indent + ((f"\n{indent}").join(ret))
+		return repr_indent_lines(indent, ret)

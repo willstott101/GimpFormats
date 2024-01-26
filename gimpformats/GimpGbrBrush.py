@@ -10,6 +10,7 @@ import PIL.Image
 
 from . import utils
 from .binaryiotools import IO
+from .utils import repr_indent_lines
 
 
 class GimpGbrBrush:
@@ -130,7 +131,11 @@ class GimpGbrBrush:
 		else:
 			Path(tofileName).write_bytes(self.encode())
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
@@ -141,4 +146,4 @@ class GimpGbrBrush:
 		ret.append(f"Spacing: {self.spacing}")
 		ret.append(f"BPP: {self.bpp}")
 		ret.append(f"Mode: {self.mode}")
-		return (f"\n{indent}").join(ret)
+		return repr_indent_lines(indent, ret)

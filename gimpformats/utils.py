@@ -1,21 +1,32 @@
 from __future__ import annotations
 
 from io import BytesIO
+from pathlib import Path
 
 
-def fileOpen(fileName: BytesIO | str) -> tuple[str, bytes]:
-	if isinstance(fileName, str):
-		file = open(fileName, "rb")
-	else:
-		fileName = fileName.name
-		file = fileName
-	data = file.read()
-	file.close()
-	return fileName, data
+def fileOpen(file: BytesIO | str | Path) -> tuple[str, bytes]:
+	"""Load a file.
+
+	:param fileName: can be a file name or a file-like object
+	"""
+	if isinstance(file, BytesIO):
+		with file as file:
+			return file.name, file.read()
+	pth = Path(file)
+	return pth.name, pth.read_bytes()
 
 
-def save(data: bytes, tofileName: BytesIO | str) -> None:
+def save(data: bytes, file: BytesIO | str| Path ) -> None:
 	"""Save this gimp image to a file."""
-	file = open(tofileName, "wb") if isinstance(tofileName, str) else tofileName
-	file.write(data)
-	file.close()
+	if isinstance(file, BytesIO):
+		with file as file:
+			file.write(data)
+		return
+	pth = Path(file)
+	pth.write_bytes(data)
+
+
+
+def repr_indent_lines(indent: int, lines: list[str]):
+	indentstr = indent * "\t"
+	return (indentstr) + ((f"\n{indentstr}").join(lines))

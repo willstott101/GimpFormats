@@ -8,6 +8,7 @@ from .binaryiotools import IO
 from .GimpChannel import GimpChannel
 from .GimpImageHierarchy import GimpImageHierarchy
 from .GimpIOBase import GimpIOBase
+from .utils import repr_indent_lines
 
 
 class GimpLayer(GimpIOBase):
@@ -181,7 +182,11 @@ class GimpLayer(GimpIOBase):
 		# self._imageHierarchy = None
 		# self._data = None
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Name: {self.name}")
@@ -191,5 +196,5 @@ class GimpLayer(GimpIOBase):
 		mask = self.mask
 		if mask is not None:
 			ret.append("Mask:")
-			ret.append(mask.__repr__(indent + "\t"))
-		return indent + ((f"\n{indent}").join(ret))
+			ret.append(mask.__repr__(indent=indent + 1))
+		return repr_indent_lines(indent, ret)

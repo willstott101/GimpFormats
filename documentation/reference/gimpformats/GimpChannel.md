@@ -7,6 +7,7 @@
 - [Gimpchannel](#gimpchannel)
   - [GimpChannel](#gimpchannel)
     - [GimpChannel().__repr__](#gimpchannel()__repr__)
+    - [GimpChannel().__str__](#gimpchannel()__str__)
     - [GimpChannel().decode](#gimpchannel()decode)
     - [GimpChannel().encode](#gimpchannel()encode)
     - [GimpChannel().forceFullyLoaded](#gimpchannel()forcefullyloaded)
@@ -16,7 +17,7 @@
 
 ## GimpChannel
 
-[Show source in GimpChannel.py:12](../../../gimpformats/GimpChannel.py#L12)
+[Show source in GimpChannel.py:13](../../../gimpformats/GimpChannel.py#L13)
 
 Represents a single channel or mask in a gimp image.
 
@@ -31,19 +32,31 @@ class GimpChannel(GimpIOBase):
 
 ### GimpChannel().__repr__
 
-[Show source in GimpChannel.py:107](../../../gimpformats/GimpChannel.py#L107)
+[Show source in GimpChannel.py:112](../../../gimpformats/GimpChannel.py#L112)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpChannel().__str__
+
+[Show source in GimpChannel.py:108](../../../gimpformats/GimpChannel.py#L108)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpChannel().decode
 
-[Show source in GimpChannel.py:36](../../../gimpformats/GimpChannel.py#L36)
+[Show source in GimpChannel.py:37](../../../gimpformats/GimpChannel.py#L37)
 
 Decode a byte buffer.
 
@@ -66,7 +79,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpChannel().encode
 
-[Show source in GimpChannel.py:58](../../../gimpformats/GimpChannel.py#L58)
+[Show source in GimpChannel.py:59](../../../gimpformats/GimpChannel.py#L59)
 
 Encode this object to a byte buffer.
 
@@ -78,7 +91,7 @@ def encode(self) -> bytearray: ...
 
 ### GimpChannel().forceFullyLoaded
 
-[Show source in GimpChannel.py:86](../../../gimpformats/GimpChannel.py#L86)
+[Show source in GimpChannel.py:87](../../../gimpformats/GimpChannel.py#L87)
 
 Make sure everything is fully loaded from the file.
 
@@ -90,7 +103,7 @@ def forceFullyLoaded(self) -> None: ...
 
 ### GimpChannel().image
 
-[Show source in GimpChannel.py:71](../../../gimpformats/GimpChannel.py#L71)
+[Show source in GimpChannel.py:72](../../../gimpformats/GimpChannel.py#L72)
 
 Get a final, compiled image.
 
@@ -103,7 +116,7 @@ def image(self) -> Image.Image | None: ...
 
 ### GimpChannel().image
 
-[Show source in GimpChannel.py:76](../../../gimpformats/GimpChannel.py#L76)
+[Show source in GimpChannel.py:77](../../../gimpformats/GimpChannel.py#L77)
 
 Get a final, compiled image.
 
@@ -116,7 +129,7 @@ def image(self, image: Image.Image) -> None: ...
 
 ### GimpChannel().imageHierarchy
 
-[Show source in GimpChannel.py:92](../../../gimpformats/GimpChannel.py#L92)
+[Show source in GimpChannel.py:93](../../../gimpformats/GimpChannel.py#L93)
 
 Get the image hierarchy.
 

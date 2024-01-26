@@ -6,28 +6,47 @@
 
 - [Utils](#utils)
   - [fileOpen](#fileopen)
+  - [repr_indent_lines](#repr_indent_lines)
   - [save](#save)
 
 ## fileOpen
 
-[Show source in utils.py:6](../../../gimpformats/utils.py#L6)
+[Show source in utils.py:7](../../../gimpformats/utils.py#L7)
+
+Load a file.
+
+#### Arguments
+
+- `fileName` - can be a file name or a file-like object
 
 #### Signature
 
 ```python
-def fileOpen(fileName: BytesIO | str) -> tuple[str, bytes]: ...
+def fileOpen(file: BytesIO | str | Path) -> tuple[str, bytes]: ...
+```
+
+
+
+## repr_indent_lines
+
+[Show source in utils.py:30](../../../gimpformats/utils.py#L30)
+
+#### Signature
+
+```python
+def repr_indent_lines(indent: int, lines: list[str]): ...
 ```
 
 
 
 ## save
 
-[Show source in utils.py:17](../../../gimpformats/utils.py#L17)
+[Show source in utils.py:19](../../../gimpformats/utils.py#L19)
 
 Save this gimp image to a file.
 
 #### Signature
 
 ```python
-def save(data: bytes, tofileName: BytesIO | str) -> None: ...
+def save(data: bytes, file: BytesIO | str | Path) -> None: ...
 ```

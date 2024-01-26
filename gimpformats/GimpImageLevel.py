@@ -10,7 +10,7 @@ import zlib
 import PIL.Image
 from PIL.Image import Image
 
-from .GimpIOBase import IO, GimpIOBase
+from .GimpIOBase import IO, CompressionMode, GimpIOBase
 
 # pylint:disable=invalid-name
 
@@ -28,7 +28,7 @@ class GimpImageLevel(GimpIOBase):
 		self._tiles = None  # tile PIL images
 		self._image = None
 
-	def decode(self, data: bytes, index: int = 0):
+	def decode(self, data: bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
@@ -52,11 +52,11 @@ class GimpImageLevel(GimpIOBase):
 				ptr = self._pointerDecode(ioBuf)
 				size = (min(self.width - x, 64), min(self.height - y, 64))
 				totalBytes = size[0] * size[1] * self.bpp
-				if self.doc.compression == 0:  # none
+				if self.doc.compression == CompressionMode.None_Compression:  # none
 					data = ioBuf.data[ptr : ptr + totalBytes]
-				elif self.doc.compression == 1:  # RLE
+				elif self.doc.compression == CompressionMode.RLE:  # RLE
 					data = self._decodeRLE(ioBuf.data, size[0] * size[1], self.bpp, ptr)
-				elif self.doc.compression == 2:  # zip
+				elif self.doc.compression == CompressionMode.Zlib:  # zip
 					data = zlib.decompress(
 						ioBuf.data[ptr : ptr + totalBytes + 24]
 					)  # guess how many bytes are needed
@@ -68,7 +68,7 @@ class GimpImageLevel(GimpIOBase):
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
 		return ioBuf.index
 
-	def encode(self):
+	def encode(self) -> bytearray:
 		"""Encode this object to a byte buffer."""
 		dataioBuf = IO()
 		ioBuf = IO()
@@ -276,8 +276,12 @@ class GimpImageLevel(GimpIOBase):
 		self.height = image.height
 		self.tiles = None
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Size: {self.width} x {self.height}")
-		return indent + ((f"\n{indent}").join(ret))
+		return repr_indent_lines(indent, ret)

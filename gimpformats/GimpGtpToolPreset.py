@@ -49,6 +49,10 @@ class ParenFileValue:
 			else:
 				raise RuntimeError('What kind of value is "' + bufArray + '"?')
 
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
 	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
@@ -151,9 +155,13 @@ class GimpGtpToolPreset:
 		file.write(self.encode())
 		file.close()
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		for value in self.values:
-			ret.append(value.__repr__(indent + "\t"))
-		return "\n".join(ret)
+			ret.append(value.__repr__(indent=indent + 1))
+		return repr_indent_lines(indent, ret)

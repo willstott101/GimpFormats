@@ -8,6 +8,7 @@
   - [GimpVbrBrush](#gimpvbrbrush)
     - [GimpVbrBrush().__eq__](#gimpvbrbrush()__eq__)
     - [GimpVbrBrush().__repr__](#gimpvbrbrush()__repr__)
+    - [GimpVbrBrush().__str__](#gimpvbrbrush()__str__)
     - [GimpVbrBrush().decode](#gimpvbrbrush()decode)
     - [GimpVbrBrush().encode](#gimpvbrbrush()encode)
     - [GimpVbrBrush().image](#gimpvbrbrush()image)
@@ -32,7 +33,7 @@ class GimpVbrBrush:
 
 ### GimpVbrBrush().__eq__
 
-[Show source in GimpVbrBrush.py:136](../../../gimpformats/GimpVbrBrush.py#L136)
+[Show source in GimpVbrBrush.py:140](../../../gimpformats/GimpVbrBrush.py#L140)
 
 Perform a comparison.
 
@@ -44,7 +45,7 @@ def __eq__(self, other): ...
 
 ### GimpVbrBrush().__repr__
 
-[Show source in GimpVbrBrush.py:120](../../../gimpformats/GimpVbrBrush.py#L120)
+[Show source in GimpVbrBrush.py:124](../../../gimpformats/GimpVbrBrush.py#L124)
 
 Get a textual representation of this object.
 
@@ -52,6 +53,18 @@ Get a textual representation of this object.
 
 ```python
 def __repr__(self) -> str: ...
+```
+
+### GimpVbrBrush().__str__
+
+[Show source in GimpVbrBrush.py:120](../../../gimpformats/GimpVbrBrush.py#L120)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpVbrBrush().decode

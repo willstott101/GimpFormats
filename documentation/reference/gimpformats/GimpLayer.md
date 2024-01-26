@@ -7,6 +7,7 @@
 - [Gimplayer](#gimplayer)
   - [GimpLayer](#gimplayer)
     - [GimpLayer().__repr__](#gimplayer()__repr__)
+    - [GimpLayer().__str__](#gimplayer()__str__)
     - [GimpLayer().decode](#gimplayer()decode)
     - [GimpLayer().encode](#gimplayer()encode)
     - [GimpLayer().forceFullyLoaded](#gimplayer()forcefullyloaded)
@@ -18,7 +19,7 @@
 
 ## GimpLayer
 
-[Show source in GimpLayer.py:13](../../../gimpformats/GimpLayer.py#L13)
+[Show source in GimpLayer.py:14](../../../gimpformats/GimpLayer.py#L14)
 
 Represents a single layer in a gimp image.
 
@@ -33,19 +34,31 @@ class GimpLayer(GimpIOBase):
 
 ### GimpLayer().__repr__
 
-[Show source in GimpLayer.py:184](../../../gimpformats/GimpLayer.py#L184)
+[Show source in GimpLayer.py:189](../../../gimpformats/GimpLayer.py#L189)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpLayer().__str__
+
+[Show source in GimpLayer.py:185](../../../gimpformats/GimpLayer.py#L185)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpLayer().decode
 
-[Show source in GimpLayer.py:48](../../../gimpformats/GimpLayer.py#L48)
+[Show source in GimpLayer.py:49](../../../gimpformats/GimpLayer.py#L49)
 
 Decode a byte buffer.
 
@@ -75,7 +88,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpLayer().encode
 
-[Show source in GimpLayer.py:84](../../../gimpformats/GimpLayer.py#L84)
+[Show source in GimpLayer.py:85](../../../gimpformats/GimpLayer.py#L85)
 
 Encode to byte array.
 
@@ -94,7 +107,7 @@ def encode(self): ...
 
 ### GimpLayer().forceFullyLoaded
 
-[Show source in GimpLayer.py:176](../../../gimpformats/GimpLayer.py#L176)
+[Show source in GimpLayer.py:177](../../../gimpformats/GimpLayer.py#L177)
 
 Make sure everything is fully loaded from the file.
 
@@ -106,7 +119,7 @@ def forceFullyLoaded(self) -> None: ...
 
 ### GimpLayer().image
 
-[Show source in GimpLayer.py:127](../../../gimpformats/GimpLayer.py#L127)
+[Show source in GimpLayer.py:128](../../../gimpformats/GimpLayer.py#L128)
 
 Get the layer image.
 
@@ -121,7 +134,7 @@ def image(self) -> Image | None: ...
 
 ### GimpLayer().image
 
-[Show source in GimpLayer.py:137](../../../gimpformats/GimpLayer.py#L137)
+[Show source in GimpLayer.py:138](../../../gimpformats/GimpLayer.py#L138)
 
 Set the layer image.
 
@@ -136,7 +149,7 @@ def image(self, image: Image) -> None: ...
 
 ### GimpLayer().imageHierarchy
 
-[Show source in GimpLayer.py:154](../../../gimpformats/GimpLayer.py#L154)
+[Show source in GimpLayer.py:155](../../../gimpformats/GimpLayer.py#L155)
 
 Get the image hierarchy objects.
 
@@ -154,7 +167,7 @@ def imageHierarchy(self) -> GimpImageHierarchy: ...
 
 ### GimpLayer().imageHierarchy
 
-[Show source in GimpLayer.py:171](../../../gimpformats/GimpLayer.py#L171)
+[Show source in GimpLayer.py:172](../../../gimpformats/GimpLayer.py#L172)
 
 Set the image hierarchy.
 
@@ -167,7 +180,7 @@ def imageHierarchy(self, imgHierarchy) -> None: ...
 
 ### GimpLayer().mask
 
-[Show source in GimpLayer.py:118](../../../gimpformats/GimpLayer.py#L118)
+[Show source in GimpLayer.py:119](../../../gimpformats/GimpLayer.py#L119)
 
 Get the layer mask.
 

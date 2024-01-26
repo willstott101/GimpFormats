@@ -10,6 +10,7 @@ from io import BytesIO
 from . import utils
 from .binaryiotools import IO
 from .GimpGbrBrush import GimpGbrBrush
+from .utils import repr_indent_lines
 
 
 class GimpGihBrushSet:
@@ -92,7 +93,11 @@ class GimpGihBrushSet:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), tofileName)
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
@@ -102,5 +107,5 @@ class GimpGihBrushSet:
 			ret.append(k + f": {val}")
 		for i, brush in enumerate(self.brushes):
 			ret.append(f"Brush {i}")
-			ret.append(brush.__repr__(indent + "\t"))
-		return (f"\n{indent}").join(ret)
+			ret.append(brush.__repr__(indent=indent + 1))
+		return repr_indent_lines(indent, ret)

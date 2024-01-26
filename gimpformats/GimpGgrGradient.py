@@ -6,6 +6,7 @@ from io import BytesIO
 from typing import ClassVar, NoReturn
 
 from . import utils
+from .utils import repr_indent_lines
 
 
 class GradientSegment:
@@ -96,7 +97,11 @@ class GradientSegment:
 						ret.append(f"{self.rightColorType}")
 		return " ".join(ret)
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Left Position: {self.leftPosition}")
@@ -112,7 +117,7 @@ class GradientSegment:
 			ret.append(f"Left Color Type: {self.ENDPOINT_COLOR_TYPES[self.leftColorType]}")
 		if self.rightColorType:
 			ret.append(f"Right Color Type: {self.ENDPOINT_COLOR_TYPES[self.rightColorType]}")
-		return (f"\n{indent}").join(ret)
+		return repr_indent_lines(indent, ret)
 
 
 class GimpGgrGradient:
@@ -186,12 +191,16 @@ class GimpGgrGradient:
 		"""
 		raise NotImplementedError
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
 			ret.append(f"fileName: {self.fileName}")
 		ret.append(f"Name: {self.name}")
 		for seg in self.segments:
-			ret.append(seg.__repr__(indent + "\t"))
-		return (f"\n{indent}").join(ret)
+			ret.append(seg.__repr__(indent=indent + 1))
+		return repr_indent_lines(indent, ret)

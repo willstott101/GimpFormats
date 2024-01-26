@@ -1,6 +1,5 @@
 """Stuff related to vectors/paths within a gimp document.
 """
-# from .GimpIOBase import GimpIOBase
 from __future__ import annotations
 
 from .binaryiotools import IO
@@ -64,7 +63,11 @@ class GimpVector:
 			ioBuf.addBytes(gimpstroke.encode())
 		return ioBuf.data
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Name: {self.name}")
@@ -74,12 +77,12 @@ class GimpVector:
 		if self.parasites:
 			ret.append("Parasites: ")
 			for item in self.parasites:
-				ret.append(item.__repr__(indent + "\t"))
+				ret.append(item.__repr__(indent=indent + 1))
 		if self.strokes:
 			ret.append("Strokes: ")
 			for item in self.strokes:
-				ret.append(item.__repr__(indent + "\t"))
-		return indent + ((f"\n{indent}").join(ret))
+				ret.append(item.__repr__(indent=indent + 1))
+		return repr_indent_lines(indent, ret)
 
 
 class GimpStroke:
@@ -128,15 +131,19 @@ class GimpStroke:
 			ioBuf.addBytes(gimpPoint.encode())
 		return ioBuf.data
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Stroke Type: {self.STROKE_TYPES[self.strokeType]}")
 		ret.append(f"Closed: {self.closedShape}")
 		ret.append("Points: ")
 		for point in self.points:
-			ret.append(point.__repr__(indent + "\t"))
-		return indent + ((f"\n{indent}").join(ret))
+			ret.append(point.__repr__(indent=indent + 1))
+		return repr_indent_lines(indent, ret)
 
 
 class GimpPoint:
@@ -205,11 +212,15 @@ class GimpPoint:
 						ioBuf.float32 = self.wheel
 		return ioBuf.data
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Location: ({self.x}" + f",{self.y})")
 		ret.append(f"Pressure: {self.pressure}")
 		ret.append(f"Location: ({self.xTilt}" + f",{self.yTilt})")
 		ret.append(f"Wheel: {self.wheel}")
-		return indent + ((f"\n{indent}").join(ret))
+		return repr_indent_lines(indent, ret)

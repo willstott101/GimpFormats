@@ -83,10 +83,19 @@ class GimpParasite:
 		ioBuf.addBytes(self.data)
 		return ioBuf.data
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Name: {self.name}")
 		ret.append(f"Flags: {self.flags}")
 		ret.append(f"Data Len: {len(self.data)}")
-		return indent + ((f"\n{indent}").join(ret))
+		return repr_indent_lines(indent, ret)
+
+
+def repr_indent_lines(indent: int, lines: list[str]):
+	indentstr = indent * "\t"
+	return (indentstr) + ((f"\n{indentstr}").join(lines))

@@ -7,8 +7,10 @@
 - [Gimpparasites](#gimpparasites)
   - [GimpParasite](#gimpparasite)
     - [GimpParasite().__repr__](#gimpparasite()__repr__)
+    - [GimpParasite().__str__](#gimpparasite()__str__)
     - [GimpParasite().decode](#gimpparasite()decode)
     - [GimpParasite().encode](#gimpparasite()encode)
+  - [repr_indent_lines](#repr_indent_lines)
 
 ## GimpParasite
 
@@ -30,6 +32,18 @@ class GimpParasite:
 
 ### GimpParasite().__repr__
 
+[Show source in GimpParasites.py:90](../../../gimpformats/GimpParasites.py#L90)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpParasite().__str__
+
 [Show source in GimpParasites.py:86](../../../gimpformats/GimpParasites.py#L86)
 
 Get a textual representation of this object.
@@ -37,7 +51,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __str__(self) -> str: ...
 ```
 
 ### GimpParasite().decode
@@ -72,4 +86,16 @@ Encode a byte buffer.
 
 ```python
 def encode(self): ...
+```
+
+
+
+## repr_indent_lines
+
+[Show source in GimpParasites.py:99](../../../gimpformats/GimpParasites.py#L99)
+
+#### Signature
+
+```python
+def repr_indent_lines(indent: int, lines: list[str]): ...
 ```

@@ -7,6 +7,7 @@
 - [Gimpgihbrushset](#gimpgihbrushset)
   - [GimpGihBrushSet](#gimpgihbrushset)
     - [GimpGihBrushSet().__repr__](#gimpgihbrushset()__repr__)
+    - [GimpGihBrushSet().__str__](#gimpgihbrushset()__str__)
     - [GimpGihBrushSet().decode](#gimpgihbrushset()decode)
     - [GimpGihBrushSet().encode](#gimpgihbrushset()encode)
     - [GimpGihBrushSet().load](#gimpgihbrushset()load)
@@ -14,7 +15,7 @@
 
 ## GimpGihBrushSet
 
-[Show source in GimpGihBrushSet.py:15](../../../gimpformats/GimpGihBrushSet.py#L15)
+[Show source in GimpGihBrushSet.py:16](../../../gimpformats/GimpGihBrushSet.py#L16)
 
 Gimp Image Pipe Format.
 
@@ -33,19 +34,31 @@ class GimpGihBrushSet:
 
 ### GimpGihBrushSet().__repr__
 
-[Show source in GimpGihBrushSet.py:95](../../../gimpformats/GimpGihBrushSet.py#L95)
+[Show source in GimpGihBrushSet.py:100](../../../gimpformats/GimpGihBrushSet.py#L100)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpGihBrushSet().__str__
+
+[Show source in GimpGihBrushSet.py:96](../../../gimpformats/GimpGihBrushSet.py#L96)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpGihBrushSet().decode
 
-[Show source in GimpGihBrushSet.py:47](../../../gimpformats/GimpGihBrushSet.py#L47)
+[Show source in GimpGihBrushSet.py:48](../../../gimpformats/GimpGihBrushSet.py#L48)
 
 Decode a byte buffer.
 
@@ -68,7 +81,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpGihBrushSet().encode
 
-[Show source in GimpGihBrushSet.py:77](../../../gimpformats/GimpGihBrushSet.py#L77)
+[Show source in GimpGihBrushSet.py:78](../../../gimpformats/GimpGihBrushSet.py#L78)
 
 Encode this object to bytes.
 
@@ -80,7 +93,7 @@ def encode(self) -> bytes: ...
 
 ### GimpGihBrushSet().load
 
-[Show source in GimpGihBrushSet.py:39](../../../gimpformats/GimpGihBrushSet.py#L39)
+[Show source in GimpGihBrushSet.py:40](../../../gimpformats/GimpGihBrushSet.py#L40)
 
 Load a gimp file.
 
@@ -96,7 +109,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpGihBrushSet().save
 
-[Show source in GimpGihBrushSet.py:91](../../../gimpformats/GimpGihBrushSet.py#L91)
+[Show source in GimpGihBrushSet.py:92](../../../gimpformats/GimpGihBrushSet.py#L92)
 
 Save this gimp image to a file.
 

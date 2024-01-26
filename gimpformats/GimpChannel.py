@@ -7,6 +7,7 @@ from PIL import Image
 from .binaryiotools import IO
 from .GimpImageHierarchy import GimpImageHierarchy
 from .GimpIOBase import GimpIOBase
+from .utils import repr_indent_lines
 
 
 class GimpChannel(GimpIOBase):
@@ -104,10 +105,14 @@ class GimpChannel(GimpIOBase):
 		msg = "self._data or self._imageHierarchyPtr is None"
 		raise RuntimeError(msg)
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Name: {self.name}")
 		ret.append(f"Size: {self.width} x {self.height}")
 		ret.append(GimpIOBase.__repr__(self, indent))
-		return indent + ((f"\n{indent}").join(ret))
+		return repr_indent_lines(indent, ret)

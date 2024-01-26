@@ -7,6 +7,7 @@
 - [Gimpggrgradient](#gimpggrgradient)
   - [GimpGgrGradient](#gimpggrgradient)
     - [GimpGgrGradient().__repr__](#gimpggrgradient()__repr__)
+    - [GimpGgrGradient().__str__](#gimpggrgradient()__str__)
     - [GimpGgrGradient().decode](#gimpggrgradient()decode)
     - [GimpGgrGradient().encode](#gimpggrgradient()encode)
     - [GimpGgrGradient().getColor](#gimpggrgradient()getcolor)
@@ -14,13 +15,14 @@
     - [GimpGgrGradient().save](#gimpggrgradient()save)
   - [GradientSegment](#gradientsegment)
     - [GradientSegment().__repr__](#gradientsegment()__repr__)
+    - [GradientSegment().__str__](#gradientsegment()__str__)
     - [GradientSegment().decode](#gradientsegment()decode)
     - [GradientSegment().encode](#gradientsegment()encode)
     - [GradientSegment().getColor](#gradientsegment()getcolor)
 
 ## GimpGgrGradient
 
-[Show source in GimpGgrGradient.py:118](../../../gimpformats/GimpGgrGradient.py#L118)
+[Show source in GimpGgrGradient.py:123](../../../gimpformats/GimpGgrGradient.py#L123)
 
 Gimp color gradient.
 
@@ -36,19 +38,31 @@ class GimpGgrGradient:
 
 ### GimpGgrGradient().__repr__
 
-[Show source in GimpGgrGradient.py:189](../../../gimpformats/GimpGgrGradient.py#L189)
+[Show source in GimpGgrGradient.py:198](../../../gimpformats/GimpGgrGradient.py#L198)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GimpGgrGradient().__str__
+
+[Show source in GimpGgrGradient.py:194](../../../gimpformats/GimpGgrGradient.py#L194)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GimpGgrGradient().decode
 
-[Show source in GimpGgrGradient.py:146](../../../gimpformats/GimpGgrGradient.py#L146)
+[Show source in GimpGgrGradient.py:151](../../../gimpformats/GimpGgrGradient.py#L151)
 
 Decode a byte buffer.
 
@@ -70,7 +84,7 @@ def decode(self, dataIn: bytes) -> None: ...
 
 ### GimpGgrGradient().encode
 
-[Show source in GimpGgrGradient.py:169](../../../gimpformats/GimpGgrGradient.py#L169)
+[Show source in GimpGgrGradient.py:174](../../../gimpformats/GimpGgrGradient.py#L174)
 
 Encode this to bytes.
 
@@ -82,7 +96,7 @@ def encode(self) -> bytes: ...
 
 ### GimpGgrGradient().getColor
 
-[Show source in GimpGgrGradient.py:182](../../../gimpformats/GimpGgrGradient.py#L182)
+[Show source in GimpGgrGradient.py:187](../../../gimpformats/GimpGgrGradient.py#L187)
 
 Given a decimal percent (1.0 = 100%) retrieve...
 
@@ -96,7 +110,7 @@ def getColor(self, percent: float) -> NoReturn: ...
 
 ### GimpGgrGradient().load
 
-[Show source in GimpGgrGradient.py:138](../../../gimpformats/GimpGgrGradient.py#L138)
+[Show source in GimpGgrGradient.py:143](../../../gimpformats/GimpGgrGradient.py#L143)
 
 Load a gimp file.
 
@@ -112,7 +126,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpGgrGradient().save
 
-[Show source in GimpGgrGradient.py:178](../../../gimpformats/GimpGgrGradient.py#L178)
+[Show source in GimpGgrGradient.py:183](../../../gimpformats/GimpGgrGradient.py#L183)
 
 Save this gimp image to a file.
 
@@ -126,7 +140,7 @@ def save(self, tofileName: str | BytesIO | None = None) -> None: ...
 
 ## GradientSegment
 
-[Show source in GimpGgrGradient.py:11](../../../gimpformats/GimpGgrGradient.py#L11)
+[Show source in GimpGgrGradient.py:12](../../../gimpformats/GimpGgrGradient.py#L12)
 
 Single segment within a gradient.
 
@@ -139,19 +153,31 @@ class GradientSegment:
 
 ### GradientSegment().__repr__
 
-[Show source in GimpGgrGradient.py:99](../../../gimpformats/GimpGgrGradient.py#L99)
+[Show source in GimpGgrGradient.py:104](../../../gimpformats/GimpGgrGradient.py#L104)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: str = "") -> str: ...
+def __repr__(self, indent: int = 0) -> str: ...
+```
+
+### GradientSegment().__str__
+
+[Show source in GimpGgrGradient.py:100](../../../gimpformats/GimpGgrGradient.py#L100)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def __str__(self) -> str: ...
 ```
 
 ### GradientSegment().decode
 
-[Show source in GimpGgrGradient.py:50](../../../gimpformats/GimpGgrGradient.py#L50)
+[Show source in GimpGgrGradient.py:51](../../../gimpformats/GimpGgrGradient.py#L51)
 
 Decode a byte buffer.
 
@@ -173,7 +199,7 @@ def decode(self, dataIn: str) -> None: ...
 
 ### GradientSegment().encode
 
-[Show source in GimpGgrGradient.py:79](../../../gimpformats/GimpGgrGradient.py#L79)
+[Show source in GimpGgrGradient.py:80](../../../gimpformats/GimpGgrGradient.py#L80)
 
 Encode this to a string.
 
@@ -185,7 +211,7 @@ def encode(self) -> str: ...
 
 ### GradientSegment().getColor
 
-[Show source in GimpGgrGradient.py:43](../../../gimpformats/GimpGgrGradient.py#L43)
+[Show source in GimpGgrGradient.py:44](../../../gimpformats/GimpGgrGradient.py#L44)
 
 Given a decimal percent (1.0 = 100%) retrieve the appropriate color
 for this point in the gradient.

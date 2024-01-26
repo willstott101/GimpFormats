@@ -3,143 +3,188 @@
 from __future__ import annotations
 
 import struct
-from typing import Any, ClassVar
+from typing import Any
+
+from aenum import Enum
 
 from .binaryiotools import IO
 from .GimpParasites import GimpParasite
 from .GimpVectors import GimpVector
+from .utils import repr_indent_lines
+
+
+def _prop_cmp(val: int, prop: int | list[int]) -> ImageProperties:
+	if isinstance(prop, list):
+		return any(_prop_cmp(val, p) for p in prop)
+	return list(ImageProperties)[val] == prop
+
+
+def camel_to_pascal_with_spaces(val: str) -> str:
+	pascal_with_spaces = ""
+	for char in val:
+		if char.isupper():
+			pascal_with_spaces += " " + char
+		else:
+			pascal_with_spaces += char
+	return pascal_with_spaces.strip().capitalize()
+
+
+class ColorMode(Enum):
+	RGB = "RGB"
+	Grayscale = "Grayscale"
+	Indexed = "Indexed"
+
+
+class Units(Enum):
+	Inches = "Inches"
+	Millimetres = "Millimetres"
+	Points = "Points"
+	Picas = "Picas"
+
+
+class CompositeMode(Enum):
+	Union = "Union"
+	Clip_to_backdrop = "Clip to backdrop"
+	Clip_to_layer = "Clip to layer"
+	Intersection = "Intersection"
+
+
+class CompositeSpace(Enum):
+	RGB_linear = "RGB (linear)"
+	RGB_perceptual = "RGB (perceptual)"
+	LAB = "LAB"
+
+
+class TagColor(Enum):
+	None_Color = "None"
+	Blue = "Blue"
+	Green = "Green"
+	Yellow = "Yellow"
+	Orange = "Orange"
+	Brown = "Brown"
+	Red = "Red"
+	Violet = "Violet"
+	Gray = "Gray"
+
+
+class CompressionMode(Enum):
+	None_Compression = "None"
+	RLE = "RLE"
+	Zlib = "Zlib"
+	Fractal = "Fractal"
+
+
+class BlendMode(Enum):
+	NORMAL_LEGACY = "Normal (legacy)"
+	DISSOLVE_LEGACY = "Dissolve (legacy)"
+	BEHIND_LEGACY = "Behind (legacy)"
+	MULTIPLY_LEGACY = "Multiply (legacy)"
+	SCREEN_LEGACY = "Screen (legacy)"
+	OLD_BROKEN_OVERLAY = "Old broken Overlay"
+	DIFFERENCE_LEGACY = "Difference (legacy)"
+	ADDITION_LEGACY = "Addition (legacy)"
+	SUBTRACT_LEGACY = "Subtract (legacy)"
+	DARKEN_ONLY_LEGACY = "Darken only (legacy)"
+	LIGHTEN_ONLY_LEGACY = "Lighten only (legacy)"
+	HUE_HSV_LEGACY = "Hue (HSV) (legacy)"
+	SATURATION_HSV_LEGACY = "Saturation (HSV) (legacy)"
+	COLOR_HSL_LEGACY = "Color (HSL) (legacy)"
+	VALUE_HSV_LEGACY = "Value (HSV) (legacy)"
+	DIVIDE_LEGACY = "Divide (legacy)"
+	DODGE_LEGACY = "Dodge (legacy)"
+	BURN_LEGACY = "Burn (legacy)"
+	HARD_LIGHT_LEGACY = "Hard Light (legacy)"
+	SOFT_LIGHT_LEGACY = "Soft light (legacy)"
+	GRAIN_EXTRACT_LEGACY = "Grain extract (legacy)"
+	GRAIN_MERGE_LEGACY = "Grain merge (legacy)"
+	COLOR_ERASE_LEGACY = "Color erase (legacy)"
+	OVERLAY = "Overlay"
+	HUE_LCH = "Hue (LCH)"
+	CHROMA_LCH = "Chroma (LCH)"
+	COLOR_LCH = "Color (LCH)"
+	LIGHTNESS_LCH = "Lightness (LCH)"
+	NORMAL = "Normal"
+	BEHIND = "Behind"
+	MULTIPLY = "Multiply"
+	SCREEN = "Screen"
+	DIFFERENCE = "Difference"
+	ADDITION = "Addition"
+	SUBSTRACT = "Substract"
+	DARKEN_ONLY = "Darken only"
+	LIGHTEN_ONLY = "Lighten only"
+	HUE_HSV = "Hue (HSV)"
+	SATURATION_HSV = "Saturation (HSV)"
+	COLOR_HSL = "Color (HSL)"
+	VALUE_HSV = "Value (HSV)"
+	DIVIDE = "Divide"
+	DODGE = "Dodge"
+	BURN = "Burn"
+	HARD_LIGHT = "Hard light"
+	SOFT_LIGHT = "Soft light"
+	GRAIN_EXTRACT = "Grain extract"
+	GRAIN_MERGE = "Grain merge"
+	VIVID_LIGHT = "Vivid light"
+	PIN_LIGHT = "Pin light"
+	LINEAR_LIGHT = "Linear light"
+	HARD_MIX = "Hard mix"
+	EXCLUSION = "Exclusion"
+	LINEAR_BURN = "Linear burn"
+	LUMA_DARKEN_ONLY = "Luma/Luminance darken only"
+	LUMA_LIGHTEN_ONLY = "Luma/Luminance lighten only"
+	LUMINANCE = "Luminance"
+	COLOR_ERASE = "Color erase"
+	ERASE = "Erase"
+	MERGE = "Merge"
+	SPLIT = "Split"
+	PASS_THROUGH = "Pass through"
+
+
+class ImageProperties(Enum):
+	PROP_END = 0
+	PROP_COLORMAP = 1
+	PROP_ACTIVE_LAYER = 2
+	PROP_ACTIVE_CHANNEL = 3
+	PROP_SELECTION = 4
+	PROP_FLOATING_SELECTION = 5
+	PROP_OPACITY = 6
+	PROP_MODE = 7
+	PROP_VISIBLE = 8
+	PROP_LINKED = 9
+	PROP_LOCK_ALPHA = 10
+	PROP_APPLY_MASK = 11
+	PROP_EDIT_MASK = 12
+	PROP_SHOW_MASK = 13
+	PROP_SHOW_MASKED = 14
+	PROP_OFFSETS = 15
+	PROP_COLOR = 16
+	PROP_COMPRESSION = 17
+	PROP_GUIDES = 18
+	PROP_RESOLUTION = 19
+	PROP_TATTOO = 20
+	PROP_PARASITES = 21
+	PROP_UNIT = 22
+	PROP_PATHS = 23
+	PROP_USER_UNIT = 24
+	PROP_VECTORS = 25
+	PROP_TEXT_LAYER_FLAGS = 26
+	PROP_OLD_SAMPLE_POINTS = 27
+	PROP_LOCK_CONTENT = 28
+	PROP_GROUP_ITEM = 29
+	PROP_ITEM_PATH = 30
+	PROP_GROUP_ITEM_FLAGS = 31
+	PROP_LOCK_POSITION = 32
+	PROP_FLOAT_OPACITY = 33
+	PROP_COLOR_TAG = 34
+	PROP_COMPOSITE_MODE = 35
+	PROP_COMPOSITE_SPACE = 36
+	PROP_BLEND_SPACE = 37
+	PROP_FLOAT_COLOR = 38
+	PROP_SAMPLE_POINTS = 39
+	PROP_NUM_PROPS = 40
 
 
 class GimpIOBase:
-	"""A specialized binary file base for Gimp files."""
-
-	COLOR_MODES: ClassVar[list] = ["RGB", "Grayscale", "Indexed"]
-	UNITS: ClassVar[list] = ["Inches", "Millimeters", "Points", "Picas"]
-	UNITS_TO_MM: ClassVar[list] = [25.4, 1, 127 / 360.0, 127 / 30.0]
-	COMPOSITE_MODES: ClassVar[list] = ["Union", "Clip to backdrop", "Clip to layer", "Intersection"]
-	COMPOSITE_SPACES: ClassVar[list] = ["RGB (linear)", "RGB (perceptual)", "LAB"]
-	TAG_COLORS: ClassVar[list] = [
-		"None",
-		"Blue",
-		"Green",
-		"Yellow",
-		"Orange",
-		"Brown",
-		"Red",
-		"Violet",
-		"Gray",
-	]
-	COMPRESSION_MODES: ClassVar[list] = ["None", "RLE", "Zlib", "Fractal"]
-
-	BLEND_MODES: ClassVar[list] = [
-		"Normal (legacy)",
-		"Dissolve (legacy)",
-		"Behind (legacy)",
-		"Multiply (legacy)",
-		"Screen (legacy)",
-		"Old broken Overlay",
-		"Difference (legacy)",
-		"Addition (legacy)",
-		"Subtract (legacy)",
-		"Darken only (legacy)",
-		"Lighten only (legacy)",
-		"Hue (HSV) (legacy)",
-		"Saturation (HSV) (legacy)",
-		"Color (HSL) (legacy)",
-		"Value (HSV) (legacy)",
-		"Divide (legacy)",
-		"Dodge (legacy)",
-		"Burn (legacy)",
-		"Hard Light (legacy)",
-		"Soft light (legacy)",
-		"Grain extract (legacy)",
-		"Grain merge (legacy)",
-		"Color erase (legacy)",
-		"Overlay",
-		"Hue (LCH)",
-		"Chroma (LCH)",
-		"Color (LCH)",
-		"Lightness (LCH)",
-		"Normal",
-		"Behind",
-		"Multiply",
-		"Screen",
-		"Difference",
-		"Addition",
-		"Substract",
-		"Darken only",
-		"Lighten only",
-		"Hue (HSV)",
-		"Saturation (HSV)",
-		"Color (HSL)",
-		"Value (HSV)",
-		"Divide",
-		"Dodge",
-		"Burn",
-		"Hard light",
-		"Soft light",
-		"Grain extract",
-		"Grain merge",
-		"Vivid light",
-		"Pin light",
-		"Linear light",
-		"Hard mix",
-		"Exclusion",
-		"Linear burn",
-		"Luma/Luminance darken only",
-		"Luma/Luminance lighten only",
-		"Luminance",
-		"Color erase",
-		"Erase",
-		"Merge",
-		"Split",
-		"Pass through",
-	]
-
-	PROP_END: ClassVar[int] = 0
-	PROP_COLORMAP: ClassVar[int] = 1
-	PROP_ACTIVE_LAYER: ClassVar[int] = 2
-	PROP_ACTIVE_CHANNEL: ClassVar[int] = 3
-	PROP_SELECTION: ClassVar[int] = 4
-	PROP_FLOATING_SELECTION: ClassVar[int] = 5
-	PROP_OPACITY: ClassVar[int] = 6
-	PROP_MODE: ClassVar[int] = 7
-	PROP_VISIBLE: ClassVar[int] = 8
-	PROP_LINKED: ClassVar[int] = 9
-	PROP_LOCK_ALPHA: ClassVar[int] = 10
-	PROP_APPLY_MASK: ClassVar[int] = 11
-	PROP_EDIT_MASK: ClassVar[int] = 12
-	PROP_SHOW_MASK: ClassVar[int] = 13
-	PROP_SHOW_MASKED: ClassVar[int] = 14
-	PROP_OFFSETS: ClassVar[int] = 15
-	PROP_COLOR: ClassVar[int] = 16
-	PROP_COMPRESSION: ClassVar[int] = 17
-	PROP_GUIDES: ClassVar[int] = 18
-	PROP_RESOLUTION: ClassVar[int] = 19
-	PROP_TATTOO: ClassVar[int] = 20
-	PROP_PARASITES: ClassVar[int] = 21
-	PROP_UNIT: ClassVar[int] = 22
-	PROP_PATHS: ClassVar[int] = 23
-	PROP_USER_UNIT: ClassVar[int] = 24
-	PROP_VECTORS: ClassVar[int] = 25
-	PROP_TEXT_LAYER_FLAGS: ClassVar[int] = 26
-	PROP_OLD_SAMPLE_POINTS: ClassVar[int] = 27
-	PROP_LOCK_CONTENT: ClassVar[int] = 28
-	PROP_GROUP_ITEM: ClassVar[int] = 29
-	PROP_ITEM_PATH: ClassVar[int] = 30
-	PROP_GROUP_ITEM_FLAGS: ClassVar[int] = 31
-	PROP_LOCK_POSITION: ClassVar[int] = 32
-	PROP_FLOAT_OPACITY: ClassVar[int] = 33
-	PROP_COLOR_TAG: ClassVar[int] = 34
-	PROP_COMPOSITE_MODE: ClassVar[int] = 35
-	PROP_COMPOSITE_SPACE: ClassVar[int] = 36
-	PROP_BLEND_SPACE: ClassVar[int] = 37
-	PROP_FLOAT_COLOR: ClassVar[int] = 38
-	PROP_SAMPLE_POINTS: ClassVar[int] = 39
-	PROP_NUM_PROPS: ClassVar[int] = 40
-
-	def __init__(self, parent: GimpIOBase) -> None:
-		"""Binary file base for Gimp files."""
+	def __init__(self, parent: GimpIOBase = None) -> None:
 		self.parent = parent
 		self.parasites: list[GimpParasite] = []
 		self.guidelines: list[tuple[bool, int]] = []
@@ -151,7 +196,7 @@ class GimpIOBase:
 		self.selected: bool = False
 		self.isSelection: bool = False
 		self.selectionAttachedTo: str | None = None
-		self.blendMode: int = 0  # one of self.BLEND_MODES
+		self.blendMode: BlendMode = BlendMode.ADDITION
 		self.visible: bool = False
 		self.isLinked: bool = False
 		self.lockAlpha: bool = False
@@ -161,49 +206,25 @@ class GimpIOBase:
 		self.showMasked: bool = False
 		self.xOffset: int = 0
 		self.yOffset: int = 0
-		self.compression: int = 0  # one of self.COMPRESSION_MODES
+		self.compression: CompressionMode = CompressionMode.None_Compression
 		self.horizontalResolution = None
 		self.verticalResolution = None
 		self.uniqueId = None
-		self.units: int = 0  # one of self.UNITS
+		self.units: Units = Units.Inches
 		self.textLayerFlags = None
 		self.locked = None
 		self.isGroup = None
 		self.groupItemFlags: int = 0
 		self.positionLocked: bool = False
 		self.opacity: float = 1.0
-		self.colorTag: int = 0  # one of self.TAG_COLORS
-		self.compositeMode: int = 0  # one of self.COMPOSITE_MODES
-		self.compositeSpace: int = 0  # one of self.COMPOSITE_SPACES
+		self.colorTag: TagColor = TagColor.Blue
+		self.compositeMode: CompositeMode = CompositeMode.Union
+		self.compositeSpace: CompositeSpace = CompositeSpace.RGB_linear
 		self.blendSpace = None
 		self.color = None
 		self.vectorsVersion: int = 0
 		self.activeVectorIndex: int = 0
 		self.paths = []
-
-	def getBlendMode(self) -> str:
-		"""Return the blend mode as a string."""
-		return self.BLEND_MODES[self.blendMode]
-
-	def getCompression(self) -> str:
-		"""Return the compression as a string."""
-		return self.COMPRESSION_MODES[self.compression]
-
-	def getUnits(self) -> str:
-		"""Return the units as a string."""
-		return self.UNITS[self.units]
-
-	def getTagColours(self) -> str:
-		"""Return the tag colours as a string."""
-		return self.TAG_COLORS[self.colorTag]
-
-	def getCompositeModes(self) -> str:
-		"""Return the composite mode as a string."""
-		return self.COMPOSITE_MODES[abs(self.compositeMode)]
-
-	def getCompositeSpaces(self) -> str:
-		"""Return the composite spaces as a string."""
-		return self.COMPOSITE_SPACES[abs(self.compositeSpace)]
 
 	@property
 	def pointerSize(self) -> int:
@@ -233,7 +254,6 @@ class GimpIOBase:
 
 	@property
 	def doc(self) -> GimpIOBase:
-		"""Get the main document object."""
 		item = self
 		while item.parent != item:
 			item = item.parent
@@ -367,65 +387,65 @@ class GimpIOBase:
 			samplePoints.append((x, y))
 		self.samplePoints = samplePoints
 
-	def _propertyDecode(self, propertyType: int, data: bytes) -> int:
+	def _propertyDecode(self, prop: int, data: bytes) -> int:
 		"""Decode a single property.
 
 		Many properties are in the form
-		propertyType: one of PROP_
+		prop: one of PROP_
 		lengthOfData: 4
 		data: varies but is often ioBuf.32 or ioBuf.boolean
 		"""
 		ioBuf = IO(data, boolSize=32)
-		# print('DECODING PROPERTY',propertyType,len(data))
-		if propertyType == self.PROP_COLORMAP:
+		if _prop_cmp(prop, ImageProperties.PROP_COLORMAP):
 			self._colormapDecode(ioBuf)
-		elif propertyType in [self.PROP_ACTIVE_LAYER, self.PROP_ACTIVE_CHANNEL]:
+		elif _prop_cmp(
+			prop, [ImageProperties.PROP_ACTIVE_LAYER, ImageProperties.PROP_ACTIVE_CHANNEL]
+		):
 			self.selected = True
-
-		elif propertyType == self.PROP_SELECTION:
+		elif _prop_cmp(prop, ImageProperties.PROP_SELECTION):
 			self.isSelection = True
-		elif propertyType == self.PROP_FLOATING_SELECTION:
+		elif _prop_cmp(prop, ImageProperties.PROP_FLOATING_SELECTION):
 			self.selectionAttachedTo = ioBuf.u32
-		elif propertyType == self.PROP_OPACITY:
+		elif _prop_cmp(prop, ImageProperties.PROP_OPACITY):
 			self.opacity = ioBuf.u32
-		elif propertyType == self.PROP_MODE:
-			self.blendMode = ioBuf.u32
-		elif propertyType == self.PROP_VISIBLE:
+		elif _prop_cmp(prop, ImageProperties.PROP_MODE):
+			self.blendMode = list(BlendMode)[ioBuf.u32]
+		elif _prop_cmp(prop, ImageProperties.PROP_VISIBLE):
 			self.visible = ioBuf.boolean
-		elif propertyType == self.PROP_LINKED:
+		elif _prop_cmp(prop, ImageProperties.PROP_LINKED):
 			self.isLinked = ioBuf.boolean
-		elif propertyType == self.PROP_LOCK_ALPHA:
+		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_ALPHA):
 			self.lockAlpha = ioBuf.boolean
-		elif propertyType == self.PROP_APPLY_MASK:
+		elif _prop_cmp(prop, ImageProperties.PROP_APPLY_MASK):
 			self.applyMask = ioBuf.boolean
-		elif propertyType == self.PROP_EDIT_MASK:
+		elif _prop_cmp(prop, ImageProperties.PROP_EDIT_MASK):
 			self.editingMask = ioBuf.boolean
-		elif propertyType == self.PROP_SHOW_MASK:
+		elif _prop_cmp(prop, ImageProperties.PROP_SHOW_MASK):
 			self.showMask = ioBuf.boolean
-		elif propertyType == self.PROP_SHOW_MASKED:
+		elif _prop_cmp(prop, ImageProperties.PROP_SHOW_MASKED):
 			self.showMasked = ioBuf.boolean
-		elif propertyType == self.PROP_OFFSETS:
+		elif _prop_cmp(prop, ImageProperties.PROP_OFFSETS):
 			self.xOffset = ioBuf.i32
 			self.yOffset = ioBuf.i32
-		elif propertyType == self.PROP_COLOR:
+		elif _prop_cmp(prop, ImageProperties.PROP_COLOR):
 			red = ioBuf.byte
 			green = ioBuf.byte
 			blue = ioBuf.byte
 			self.color = [red, green, blue]
-		elif propertyType == self.PROP_COMPRESSION:
-			self.compression = ioBuf.byte
-		elif propertyType == self.PROP_GUIDES:
+		elif _prop_cmp(prop, ImageProperties.PROP_COMPRESSION):
+			self.compression = list(CompressionMode)[int(ioBuf.byte)]
+		elif _prop_cmp(prop, ImageProperties.PROP_GUIDES):
 			self._guidelinesDecode(data)
-		elif propertyType == self.PROP_RESOLUTION:
+		elif _prop_cmp(prop, ImageProperties.PROP_RESOLUTION):
 			self.horizontalResolution = ioBuf.float32
 			self.verticalResolution = ioBuf.float32
-		elif propertyType == self.PROP_TATTOO:
+		elif _prop_cmp(prop, ImageProperties.PROP_TATTOO):
 			self.uniqueId = data.hex()
-		elif propertyType == self.PROP_PARASITES:
+		elif _prop_cmp(prop, ImageProperties.PROP_PARASITES):
 			self._parasitesDecode(data)
-		elif propertyType == self.PROP_UNIT:
+		elif _prop_cmp(prop, ImageProperties.PROP_UNIT):
 			self.units = ioBuf.u32
-		elif propertyType == self.PROP_PATHS:
+		elif _prop_cmp(prop, ImageProperties.PROP_PATHS):
 			_numPaths = ioBuf.u32
 			"""
 			for _ in range(numPaths):
@@ -433,236 +453,238 @@ class GimpIOBase:
 				self.paths.append(path)
 				index += nRead
 			"""
-		elif propertyType == self.PROP_USER_UNIT:
+		elif _prop_cmp(prop, ImageProperties.PROP_USER_UNIT):
 			self._userUnitsDecode(data)
-		elif propertyType == self.PROP_VECTORS:
+		elif _prop_cmp(prop, ImageProperties.PROP_VECTORS):
 			pass
 			# self._vectorsDecode_(data)
-		elif propertyType == self.PROP_TEXT_LAYER_FLAGS:
+		elif _prop_cmp(prop, ImageProperties.PROP_TEXT_LAYER_FLAGS):
 			if isinstance(data, bytes):
 				self.textLayerFlags = int.from_bytes(data, byteorder="big")
 			else:
 				self.textLayerFlags = int(data)
-		elif propertyType == self.PROP_OLD_SAMPLE_POINTS:
+		elif _prop_cmp(prop, ImageProperties.PROP_OLD_SAMPLE_POINTS):
 			msg = "ERR: old sample points structure not supported"
 			raise RuntimeError(msg)
-		elif propertyType == self.PROP_LOCK_CONTENT:
+		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_CONTENT):
 			self.locked = ioBuf.boolean
-		elif propertyType == self.PROP_GROUP_ITEM:
+		elif _prop_cmp(prop, ImageProperties.PROP_GROUP_ITEM):
 			self.isGroup = True
-		elif propertyType == self.PROP_ITEM_PATH:
+		elif _prop_cmp(prop, ImageProperties.PROP_ITEM_PATH):
 			self._itemPathDecode(data)
-		elif propertyType == self.PROP_GROUP_ITEM_FLAGS:
+		elif _prop_cmp(prop, ImageProperties.PROP_GROUP_ITEM_FLAGS):
 			self.groupItemFlags = ioBuf.u32
-		elif propertyType == self.PROP_LOCK_POSITION:
+		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_POSITION):
 			self.positionLocked = ioBuf.boolean
-		elif propertyType == self.PROP_FLOAT_OPACITY:
+		elif _prop_cmp(prop, ImageProperties.PROP_FLOAT_OPACITY):
 			self.opacity = ioBuf.float32
-		elif propertyType == self.PROP_COLOR_TAG:
+		elif _prop_cmp(prop, ImageProperties.PROP_COLOR_TAG):
 			self.colorTag = ioBuf.u32
-		elif propertyType == self.PROP_COMPOSITE_MODE:
+		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_MODE):
 			self.compositeMode = ioBuf.i32
-		elif propertyType == self.PROP_COMPOSITE_SPACE:
+		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_SPACE):
 			self.compositeSpace = ioBuf.i32
-		elif propertyType == self.PROP_BLEND_SPACE:
+		elif _prop_cmp(prop, ImageProperties.PROP_BLEND_SPACE):
 			self.blendSpace = ioBuf.u32
-		elif propertyType == self.PROP_FLOAT_COLOR:
+		elif _prop_cmp(prop, ImageProperties.PROP_FLOAT_COLOR):
 			red = ioBuf.float32
 			green = ioBuf.float32
 			blue = ioBuf.float32
 			self.color = [red, green, blue]
-		elif propertyType == self.PROP_SAMPLE_POINTS:
+		elif _prop_cmp(prop, ImageProperties.PROP_SAMPLE_POINTS):
 			self._samplePointsDecode(data)
 		else:
-			msg = f"Unknown property id {propertyType}"
+			msg = f"Unknown property id {prop}"
 			raise RuntimeError(msg)
 		return ioBuf.index
 
-	def _propertyEncode(self, propertyType: int) -> bytearray:
+	def _propertyEncode(self, prop: int) -> bytearray:
 		"""Encode a single property.
 
 		Many properties are in the form
-		propertyType: one of PROP_
+		prop: one of PROP_
 		lengthOfData: 4
 		data: varies but is often ioBuf.32 or ioBuf.boolean
 
 		If the property is the same as the default, or not specified, returns empty array
 		"""
 		ioBuf = IO(boolSize=32)
-		if propertyType == self.PROP_COLORMAP:
+		if _prop_cmp(prop, ImageProperties.PROP_COLORMAP):
 			if self.colorMap is not None and self.colorMap:
-				ioBuf.u32 = self.PROP_COLORMAP
+				ioBuf.u32 = ImageProperties.PROP_COLORMAP
 				# ioBuf.addBytes(self._colormapEncode_())
-		elif propertyType == [self.PROP_ACTIVE_LAYER in self.PROP_ACTIVE_CHANNEL]:
+		elif _prop_cmp(
+			prop, [ImageProperties.PROP_ACTIVE_LAYER, ImageProperties.PROP_ACTIVE_CHANNEL]
+		):
 			if self.selected is not None and self.selected:
-				ioBuf.u32 = self.PROP_ACTIVE_LAYER
+				ioBuf.u32 = ImageProperties.PROP_ACTIVE_LAYER
 
-		elif propertyType == self.PROP_SELECTION:
+		elif _prop_cmp(prop, ImageProperties.PROP_SELECTION):
 			if self.isSelection is not None and self.isSelection:
-				ioBuf.u32 = self.PROP_SELECTION
-		elif propertyType == self.PROP_FLOATING_SELECTION:
+				ioBuf.u32 = ImageProperties.PROP_SELECTION
+		elif _prop_cmp(prop, ImageProperties.PROP_FLOATING_SELECTION):
 			if self.selectionAttachedTo is not None:
-				ioBuf.u32 = self.PROP_FLOATING_SELECTION
+				ioBuf.u32 = ImageProperties.PROP_FLOATING_SELECTION
 				ioBuf.u32 = self.selectionAttachedTo
-		elif propertyType == self.PROP_OPACITY:
+		elif _prop_cmp(prop, ImageProperties.PROP_OPACITY):
 			if self.opacity is not None and not isinstance(self.opacity, float):
-				ioBuf.u32 = self.PROP_OPACITY
+				ioBuf.u32 = ImageProperties.PROP_OPACITY
 				ioBuf.u32 = self.opacity
-		elif propertyType == self.PROP_MODE:
+		elif _prop_cmp(prop, ImageProperties.PROP_MODE):
 			if self.blendMode is not None:
-				ioBuf.u32 = self.PROP_MODE
+				ioBuf.u32 = ImageProperties.PROP_MODE
 				ioBuf.u32 = self.blendMode
-		elif propertyType == self.PROP_VISIBLE:
+		elif _prop_cmp(prop, ImageProperties.PROP_VISIBLE):
 			if self.visible is not None:
-				ioBuf.u32 = self.PROP_VISIBLE
+				ioBuf.u32 = ImageProperties.PROP_VISIBLE
 				ioBuf.boolean = self.visible
-		elif propertyType == self.PROP_LINKED:
+		elif _prop_cmp(prop, ImageProperties.PROP_LINKED):
 			if self.isLinked is not None and self.isLinked:
-				ioBuf.u32 = self.PROP_LINKED
+				ioBuf.u32 = ImageProperties.PROP_LINKED
 				ioBuf.boolean = self.isLinked
-		elif propertyType == self.PROP_LOCK_ALPHA:
+		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_ALPHA):
 			if self.lockAlpha is not None and self.lockAlpha:
-				ioBuf.u32 = self.PROP_LOCK_ALPHA
+				ioBuf.u32 = ImageProperties.PROP_LOCK_ALPHA
 				ioBuf.boolean = self.lockAlpha
-		elif propertyType == self.PROP_APPLY_MASK:
+		elif _prop_cmp(prop, ImageProperties.PROP_APPLY_MASK):
 			if self.applyMask is not None:
-				ioBuf.u32 = self.PROP_APPLY_MASK
+				ioBuf.u32 = ImageProperties.PROP_APPLY_MASK
 				ioBuf.boolean = self.applyMask
-		elif propertyType == self.PROP_EDIT_MASK:
+		elif _prop_cmp(prop, ImageProperties.PROP_EDIT_MASK):
 			if self.editingMask is not None and self.editingMask:
-				ioBuf.u32 = self.PROP_EDIT_MASK
+				ioBuf.u32 = ImageProperties.PROP_EDIT_MASK
 				ioBuf.boolean = self.editingMask
-		elif propertyType == self.PROP_SHOW_MASK:
+		elif _prop_cmp(prop, ImageProperties.PROP_SHOW_MASK):
 			if self.showMask is not None and self.showMask:
-				ioBuf.u32 = self.PROP_SHOW_MASK
+				ioBuf.u32 = ImageProperties.PROP_SHOW_MASK
 				ioBuf.boolean = self.showMask
-		elif propertyType == self.PROP_SHOW_MASKED:
+		elif _prop_cmp(prop, ImageProperties.PROP_SHOW_MASKED):
 			if self.showMasked is not None:
-				ioBuf.u32 = self.PROP_SHOW_MASKED
+				ioBuf.u32 = ImageProperties.PROP_SHOW_MASKED
 				ioBuf.boolean = self.showMasked
-		elif propertyType == self.PROP_OFFSETS:
+		elif _prop_cmp(prop, ImageProperties.PROP_OFFSETS):
 			if self.xOffset is not None and self.yOffset is not None:
-				ioBuf.u32 = self.PROP_OFFSETS
+				ioBuf.u32 = ImageProperties.PROP_OFFSETS
 				ioBuf.i32 = self.xOffset
 				ioBuf.i32 = self.yOffset
-		elif propertyType == self.PROP_COLOR:
+		elif _prop_cmp(prop, ImageProperties.PROP_COLOR):
 			if (
 				self.color is not None
 				and not isinstance(self.color[0], float)
 				and not isinstance(self.color[1], float)
 				and not isinstance(self.color[2], float)
 			):
-				ioBuf.u32 = self.PROP_COLOR
+				ioBuf.u32 = ImageProperties.PROP_COLOR
 				ioBuf.byte = self.color[0]
 				ioBuf.byte = self.color[1]
 				ioBuf.byte = self.color[2]
-		elif propertyType == self.PROP_COMPRESSION:
+		elif _prop_cmp(prop, ImageProperties.PROP_COMPRESSION):
 			if self.compression is not None:
-				ioBuf.u32 = self.PROP_COMPRESSION
+				ioBuf.u32 = ImageProperties.PROP_COMPRESSION
 				ioBuf.u32 = self.compression
-		elif propertyType == self.PROP_GUIDES:
+		elif _prop_cmp(prop, ImageProperties.PROP_GUIDES):
 			if self.guidelines is not None and self.guidelines:
 				pass
-				# ioBuf.u32 = self.PROP_GUIDES
+				# ioBuf.u32 = ImageProperties.PROP_GUIDES
 				# ioBuf.addBytes(self._guidelinesEncode_())
-		elif propertyType == self.PROP_RESOLUTION:
+		elif _prop_cmp(prop, ImageProperties.PROP_RESOLUTION):
 			if self.horizontalResolution is not None and self.verticalResolution is not None:
-				ioBuf.u32 = self.PROP_RESOLUTION
+				ioBuf.u32 = ImageProperties.PROP_RESOLUTION
 				ioBuf.u32 = int(self.horizontalResolution)
 				ioBuf.i32 = int(self.verticalResolution)
-		elif propertyType == self.PROP_TATTOO:
+		elif _prop_cmp(prop, ImageProperties.PROP_TATTOO):
 			if self.uniqueId is not None:
 				ioBuf.u32 = int(self.uniqueId, 16)
-		elif propertyType == self.PROP_PARASITES:
+		elif _prop_cmp(prop, ImageProperties.PROP_PARASITES):
 			if self.parasites is not None and self.parasites:
-				ioBuf.u32 = self.PROP_PARASITES
+				ioBuf.u32 = ImageProperties.PROP_PARASITES
 				ioBuf.addBytes(self._parasitesEncode())
-		elif propertyType == self.PROP_UNIT:
+		elif _prop_cmp(prop, ImageProperties.PROP_UNIT):
 			if self.units is not None:
-				ioBuf.u32 = self.PROP_UNIT
+				ioBuf.u32 = ImageProperties.PROP_UNIT
 				ioBuf.u32 = self.units
-		elif propertyType == self.PROP_PATHS:
+		elif _prop_cmp(prop, ImageProperties.PROP_PATHS):
 			if self.paths is not None and self.paths:
-				# ioBuf.u32 = self.PROP_PATHS
+				# ioBuf.u32 = ImageProperties.PROP_PATHS
 				# ioBuf.u32 = len(self.paths)
 				"""
 				for path in self.paths:
 					ioBuf.append(self._pathEncode_(path))
 				"""
-		elif propertyType == self.PROP_USER_UNIT:
+		elif _prop_cmp(prop, ImageProperties.PROP_USER_UNIT):
 			if self.userUnits is not None:
 				pass
-				# ioBuf.u32 = self.PROP_USER_UNIT
+				# ioBuf.u32 = ImageProperties.PROP_USER_UNIT
 				# ioBuf.addBytes(self._userUnitsEncode_())
-		elif propertyType == self.PROP_VECTORS:
+		elif _prop_cmp(prop, ImageProperties.PROP_VECTORS):
 			if self.vectors is not None and self.vectors:
 				pass
-				# ioBuf.u32 = self.PROP_VECTORS
+				# ioBuf.u32 = ImageProperties.PROP_VECTORS
 				# ioBuf.addBytes(self._vectorsEncode_())
-		elif propertyType == self.PROP_TEXT_LAYER_FLAGS:
+		elif _prop_cmp(prop, ImageProperties.PROP_TEXT_LAYER_FLAGS):
 			if self.textLayerFlags is not None:
-				ioBuf.u32 = self.PROP_TEXT_LAYER_FLAGS
+				ioBuf.u32 = ImageProperties.PROP_TEXT_LAYER_FLAGS
 				ioBuf.u32 = self.textLayerFlags
-		elif propertyType == self.PROP_OLD_SAMPLE_POINTS:
+		elif _prop_cmp(prop, ImageProperties.PROP_OLD_SAMPLE_POINTS):
 			pass
-		elif propertyType == self.PROP_LOCK_CONTENT:
+		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_CONTENT):
 			if self.locked is not None and self.locked:
-				ioBuf.u32 = self.PROP_LOCK_CONTENT
+				ioBuf.u32 = ImageProperties.PROP_LOCK_CONTENT
 				ioBuf.boolean = self.locked
-		elif propertyType == self.PROP_GROUP_ITEM:
+		elif _prop_cmp(prop, ImageProperties.PROP_GROUP_ITEM):
 			if self.isGroup is not None and self.isGroup:
-				ioBuf.u32 = self.PROP_GROUP_ITEM
-		elif propertyType == self.PROP_ITEM_PATH:
+				ioBuf.u32 = ImageProperties.PROP_GROUP_ITEM
+		elif _prop_cmp(prop, ImageProperties.PROP_ITEM_PATH):
 			if self.itemPath is not None:
 				pass
-				# ioBuf.u32 = self.PROP_ITEM_PATH
+				# ioBuf.u32 = ImageProperties.PROP_ITEM_PATH
 				# ioBuf.addBytes(self._itemPathEncode_())
-		elif propertyType == self.PROP_GROUP_ITEM_FLAGS:
+		elif _prop_cmp(prop, ImageProperties.PROP_GROUP_ITEM_FLAGS):
 			if self.groupItemFlags is not None:
-				ioBuf.u32 = self.PROP_GROUP_ITEM_FLAGS
+				ioBuf.u32 = ImageProperties.PROP_GROUP_ITEM_FLAGS
 				ioBuf.u32 = self.groupItemFlags
-		elif propertyType == self.PROP_LOCK_POSITION:
+		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_POSITION):
 			if self.positionLocked is not None and self.positionLocked:
-				ioBuf.u32 = self.PROP_LOCK_POSITION
+				ioBuf.u32 = ImageProperties.PROP_LOCK_POSITION
 				ioBuf.boolean = self.positionLocked
-		elif propertyType == self.PROP_FLOAT_OPACITY:
+		elif _prop_cmp(prop, ImageProperties.PROP_FLOAT_OPACITY):
 			if self.opacity is not None and isinstance(self.opacity, float):
-				ioBuf.u32 = self.PROP_FLOAT_OPACITY
+				ioBuf.u32 = ImageProperties.PROP_FLOAT_OPACITY
 				ioBuf.float32 = self.opacity
-		elif propertyType == self.PROP_COLOR_TAG:
+		elif _prop_cmp(prop, ImageProperties.PROP_COLOR_TAG):
 			if self.colorTag is not None:
-				ioBuf.u32 = self.PROP_COLOR_TAG
+				ioBuf.u32 = ImageProperties.PROP_COLOR_TAG
 				ioBuf.u32 = self.colorTag
-		elif propertyType == self.PROP_COMPOSITE_MODE:
+		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_MODE):
 			if self.compositeMode is not None:
-				ioBuf.u32 = self.PROP_COMPOSITE_MODE
+				ioBuf.u32 = ImageProperties.PROP_COMPOSITE_MODE
 				ioBuf.i32 = self.compositeMode
-		elif propertyType == self.PROP_COMPOSITE_SPACE:
+		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_SPACE):
 			if self.compositeSpace is not None:
-				ioBuf.u32 = self.PROP_COMPOSITE_SPACE
+				ioBuf.u32 = ImageProperties.PROP_COMPOSITE_SPACE
 				ioBuf.i32 = self.compositeSpace
-		elif propertyType == self.PROP_BLEND_SPACE:
+		elif _prop_cmp(prop, ImageProperties.PROP_BLEND_SPACE):
 			if self.blendSpace is not None:
-				ioBuf.u32 = self.PROP_BLEND_SPACE
+				ioBuf.u32 = ImageProperties.PROP_BLEND_SPACE
 				ioBuf.u32 = self.blendSpace
-		elif propertyType == self.PROP_FLOAT_COLOR:
+		elif _prop_cmp(prop, ImageProperties.PROP_FLOAT_COLOR):
 			if (
 				self.color is not None
 				and isinstance(self.color[0], float)
 				and isinstance(self.color[1], float)
 				and isinstance(self.color[2], float)
 			):
-				ioBuf.u32 = self.PROP_FLOAT_COLOR
+				ioBuf.u32 = ImageProperties.PROP_FLOAT_COLOR
 				ioBuf.float32 = self.color[0]
 				ioBuf.float32 = self.color[1]
 				ioBuf.float32 = self.color[2]
-		elif propertyType == self.PROP_SAMPLE_POINTS:
+		elif _prop_cmp(prop, ImageProperties.PROP_SAMPLE_POINTS):
 			if self.samplePoints is not None and self.samplePoints:
 				pass
-				# ioBuf.u32 = self.PROP_SAMPLE_POINTS
+				# ioBuf.u32 = ImageProperties.PROP_SAMPLE_POINTS
 				# self.addBytes(self._samplePointsEncode_())
 		else:
-			msg = f"Unknown property id {propertyType}"
+			msg = f"Unknown property id {prop}"
 			raise RuntimeError(msg)
 		return ioBuf.data
 
@@ -670,32 +692,36 @@ class GimpIOBase:
 		"""Decode a list of properties."""
 		while True:
 			try:
-				propertyType = ioBuf.u32
+				prop = ioBuf.u32
 				dataLength = ioBuf.u32
 			except struct.error:  # end of data, so that's that.
 				break
-			if propertyType == 0:
+			if prop == 0:
 				break
-			self._propertyDecode(propertyType, ioBuf.getBytes(dataLength))
+			self._propertyDecode(prop, ioBuf.getBytes(dataLength))
 		return ioBuf.index
 
 	def _propertiesEncode(self) -> bytearray:
 		"""Encode a list of properties."""
 		ioBuf = IO()
-		for propertyType in range(1, self.PROP_NUM_PROPS):
-			moData = self._propertyEncode(propertyType)
+		for prop in range(1, ImageProperties.PROP_NUM_PROPS):
+			moData = self._propertyEncode(prop)
 			if moData:
 				ioBuf.addBytes(moData)
 		return ioBuf.data
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
-		ret: list[str] = []
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
+		"""Get a textual representation of this object."""
 		attrs = [
-			"itemPath",
+			"userUnits",
 			"selected",
 			"isSelection",
 			"selectionAttachedTo",
+			"blendMode",
 			"visible",
 			"isLinked",
 			"lockAlpha",
@@ -703,72 +729,66 @@ class GimpIOBase:
 			"editingMask",
 			"showMask",
 			"showMasked",
+			"xOffset",
+			"yOffset",
+			"compression",
+			"horizontalResolution",
+			"verticalResolution",
 			"uniqueId",
+			"units",
 			"textLayerFlags",
 			"locked",
 			"isGroup",
 			"groupItemFlags",
 			"positionLocked",
 			"opacity",
+			"colorTag",
+			"compositeMode",
+			"compositeSpace",
 			"blendSpace",
+			"color",
+			"vectorsVersion",
+			"activeVectorIndex",
+			"paths",
 		]
-		for attr in attrs:
-			_ = "" if getattr(self, attr) is None else ret.append(f"{attr}: {getattr(self, attr)}")
 
-		if self.blendMode is not None:
-			ret.append("Blend Mode: " + self.getBlendMode())
+		ret = [
+			f"{camel_to_pascal_with_spaces(attr)}: {getattr(self, attr)}"
+			for attr in attrs
+			if getattr(self, attr) is not None
+		]
 
 		if self.xOffset is not None:
-			ret.append(f"Offset: {self.xOffset} x " + str(self.yOffset))
-		if self.compression is not None:
-			ret.append("Compression: " + self.getCompression())
+			ret.append(f"Offset: {self.xOffset} x {self.yOffset}")
 		if self.horizontalResolution is not None:
 			res = str(self.horizontalResolution) + f"ppi x {self.verticalResolution}ppi"
 			ret.append(f"Resolution: {res}")
-		if self.units is not None:
-			ret.append("Units: " + self.getUnits())
-		if self.colorTag is not None:
-			ret.append("Tag Color: " + self.getTagColours())
-		if self.compositeMode is not None:
-			auto = "Auto " if self.compositeMode < 0 else ""  # negative values are "Auto"
-			ret.append("Composite Mode: " + auto + self.getCompositeModes())
-		if self.compositeSpace is not None:
-			auto = "Auto " if self.compositeSpace < 0 else ""  # negative values are "Auto"
-			ret.append("Composite Space: " + auto + self.getCompositeSpaces())
 		if self.color is not None:
-			ret.append(
-				"Color: ("
-				+ str(self.color[0])
-				+ ","
-				+ str(self.color[1])
-				+ ","
-				+ str(self.color[2])
-				+ ")"
-			)
+			ret.append(f"Color: ({self.color[0]}, {self.color[1]}, {self.color[2]})")
 		if self.userUnits is not None:
-			ret.append("User Units: ")
-			ret.append(self.userUnits.__repr__(indent + "\t"))
+			ret.append("User Units:")
+			ret.append(self.userUnits.__repr__(indent=indent + 1))
 		if self.parasites:
-			ret.append("Parasites: ")
+			ret.append("Parasites:")
 			for item in self.parasites:
-				ret.append(item.__repr__(indent + "\t"))
+				ret.append(item.__repr__(indent=indent + 1))
 		if self.guidelines:
-			ret.append("Guidelines: ")
+			ret.append("Guidelines:")
 			for item in self.guidelines:
 				ret.append(item.__repr__())
 		if self.samplePoints:
-			ret.append("Sample Points: ")
+			ret.append("Sample Points:")
 			for item in self.samplePoints:
-				ret.append(f"({item[0]}," + str(item[1]) + ")")
+				ret.append(f"({item[0]},{item[1]})")
 		if self.vectors:
-			ret.append("Vectors: ")
+			ret.append("Vectors:")
 			for item in self.vectors:
-				ret.append(item.__repr__(indent + "\t"))
+				ret.append(item.__repr__(indent=indent + 1))
 		if self.colorMap:
-			ret.append("Color Map: ")
+			ret.append("Color Map:")
 			for i, color in enumerate(self.colorMap):
-				ret.append(str(i) + f": ({color[0]}," + str(color[1]) + f",{color[2]})")
-		return indent + ((f"\n{indent}").join(ret))
+				ret.append(str(i) + f": ({color[0]},{color[1]},{color[2]})")
+		return repr_indent_lines(indent, ret)
 
 
 class GimpUserUnits:
@@ -805,7 +825,7 @@ class GimpUserUnits:
 		self.pname = ioBuf.sz754
 		return ioBuf.index
 
-	def encode(self):
+	def encode(self) -> bytearray:
 		"""Convert this object to raw bytes."""
 		ioBuf = IO()
 		ioBuf.float32 = self.factor
@@ -817,7 +837,11 @@ class GimpUserUnits:
 		ioBuf.sz754 = self.pname
 		return ioBuf.data
 
-	def __repr__(self, indent: str = "") -> str:
+	def __str__(self) -> str:
+		"""Get a textual representation of this object."""
+		return self.__repr__()
+
+	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Factor: {self.factor}")
@@ -827,4 +851,4 @@ class GimpUserUnits:
 		ret.append(f"Abbreviation: {self.abbrev}")
 		ret.append(f"Singular Name: {self.sname}")
 		ret.append(f"Plural Name: {self.pname}")
-		return indent + ((f"\n{indent}").join(ret))
+		return repr_indent_lines(indent, ret)
