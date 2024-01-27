@@ -99,7 +99,7 @@ def encode(self) -> bytes: ...
 
 [Show source in GimpVbrBrush.py:47](../../../gimpformats/GimpVbrBrush.py#L47)
 
-This parametric brush converted to a useable PIL image.
+Parametric brush converted to a useable PIL image.
 
 #### Signature
 

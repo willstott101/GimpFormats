@@ -12,6 +12,7 @@ Currently not supporting:
 from __future__ import annotations
 
 import copy
+from enum import Enum
 from io import BytesIO
 from typing import NoReturn
 
@@ -19,19 +20,14 @@ import PIL.ImageGrab
 from blendmodes.blend import BlendType, blendLayers
 from PIL import Image
 
-from enum import Enum
-
-from PIL import Image
-
-
-
 from . import utils
 from .binaryiotools import IO
 from .GimpChannel import GimpChannel
 from .GimpImageHierarchy import GimpImageHierarchy
-from .GimpIOBase import GimpIOBase
+from .GimpIOBase import GimpIOBase, camel_to_pascal_with_spaces
 from .GimpLayer import GimpLayer
 from .GimpPrecision import Precision
+from .utils import repr_indent_lines
 
 
 class GimpDocument(GimpIOBase):
@@ -404,13 +400,20 @@ class GimpDocument(GimpIOBase):
 
 	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		if self.fileName is not None:
-			ret.append(f"fileName: {self.fileName}")
-		ret.append(f"Version: {self.version}")
-		ret.append(f"Size: {self.width} x {self.height}")
-		ret.append(f"Base Color Mode: {self.baseColorMode}")
-		ret.append(f"Precision: {self.precision}")
+		attrs = [
+			"fileName",
+			"version",
+			"width",
+			"height",
+			"baseColorMode",
+			"precision",
+		]
+
+		ret = [
+			f"{camel_to_pascal_with_spaces(attr)}: {getattr(self, attr)}"
+			for attr in attrs
+			if getattr(self, attr) is not None
+		]
 		ret.append(GimpIOBase.__repr__(self))
 		if self._layerPtr:
 			ret.append("Layers:")
@@ -420,7 +423,8 @@ class GimpDocument(GimpIOBase):
 			ret.append("Channels:")
 			for channel in self._channels:
 				ret.append(channel.__repr__(indent=indent + 1))
-		return "\n".join(ret)
+
+		return repr_indent_lines(indent, ret)
 
 
 def blendModeLookup(

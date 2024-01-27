@@ -1,32 +1,33 @@
 Version: 11
-Size: 640 x 640
+Width: 640
+Height: 640
 Base Color Mode: 0
 Precision: 16-bit gamma integer
 Selected: False
-Is selection: False
-Blend mode: BlendMode.ADDITION
+Is Selection: False
+Blend Mode: BlendMode.ADDITION
 Visible: False
-Is linked: False
-Lock alpha: False
-Apply mask: False
-Editing mask: False
-Show mask: False
-Show masked: False
-X offset: 0
-Y offset: 0
+Is Linked: False
+Lock Alpha: False
+Apply Mask: False
+Editing Mask: False
+Show Mask: False
+Show Masked: False
+X Offset: 0
+Y Offset: 0
 Compression: CompressionMode.RLE
-Horizontal resolution: 300.0
-Vertical resolution: 300.0
-Unique id: 00000021
+Horizontal Resolution: 300.0
+Vertical Resolution: 300.0
+Unique Id: 00000021
 Units: 1
-Group item flags: 0
-Position locked: False
+Group Item Flags: 0
+Position Locked: False
 Opacity: 1.0
-Color tag: TagColor.Blue
-Composite mode: CompositeMode.Union
-Composite space: CompositeSpace.RGB_linear
-Vectors version: 0
-Active vector index: 0
+Color Tag: TagColor.Blue
+Composite Mode: CompositeMode.Union
+Composite Space: CompositeSpace.RGB_linear
+Vectors Version: 0
+Active Vector Index: 0
 Paths: []
 Offset: 0 x 0
 Resolution: 300.0ppi x 300.0ppi
@@ -42,271 +43,271 @@ Layers:
 	Size: 410 x 410
 	colorMode: RGB color with alpha
 		Selected: False
-	Is selection: False
-	Blend mode: BlendMode.NORMAL
+	Is Selection: False
+	Blend Mode: BlendMode.NORMAL
 	Visible: True
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: False
-	X offset: 115
-	Y offset: 115
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: False
+	X Offset: 115
+	Y Offset: 115
 	Compression: CompressionMode.None_Compression
-	Unique id: 00000006
+	Unique Id: 00000006
 	Units: Units.Inches
 	Locked: False
-	Group item flags: 0
-	Position locked: False
+	Group Item Flags: 0
+	Position Locked: False
 	Opacity: 1.0
-	Color tag: 0
-	Composite mode: -1
-	Composite space: -1
-	Blend space: 0
-	Vectors version: 0
-	Active vector index: 0
+	Color Tag: 0
+	Composite Mode: -1
+	Composite Space: -1
+	Blend Space: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 115 x 115
 	Name: bg
 	Size: 512 x 512
 	colorMode: RGB color with alpha
 		Selected: False
-	Is selection: False
-	Blend mode: BlendMode.NORMAL
+	Is Selection: False
+	Blend Mode: BlendMode.NORMAL
 	Visible: True
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: False
-	X offset: 64
-	Y offset: 64
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: False
+	X Offset: 64
+	Y Offset: 64
 	Compression: CompressionMode.None_Compression
-	Unique id: 00000005
+	Unique Id: 00000005
 	Units: Units.Inches
 	Locked: False
-	Group item flags: 0
-	Position locked: False
+	Group Item Flags: 0
+	Position Locked: False
 	Opacity: 1.0
-	Color tag: 0
-	Composite mode: -1
-	Composite space: -1
-	Blend space: 0
-	Vectors version: 0
-	Active vector index: 0
+	Color Tag: 0
+	Composite Mode: -1
+	Composite Space: -1
+	Blend Space: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 64 x 64
 	Name: bg #2
 	Size: 640 x 640
 	colorMode: RGB color with alpha
 		Selected: False
-	Is selection: False
-	Blend mode: BlendMode.NORMAL
+	Is Selection: False
+	Blend Mode: BlendMode.NORMAL
 	Visible: False
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: False
-	X offset: 0
-	Y offset: 0
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: False
+	X Offset: 0
+	Y Offset: 0
 	Compression: CompressionMode.None_Compression
-	Unique id: 00000007
+	Unique Id: 00000007
 	Units: Units.Inches
 	Locked: False
-	Group item flags: 0
-	Position locked: False
+	Group Item Flags: 0
+	Position Locked: False
 	Opacity: 1.0
-	Color tag: 0
-	Composite mode: -1
-	Composite space: -1
-	Blend space: 0
-	Vectors version: 0
-	Active vector index: 0
+	Color Tag: 0
+	Composite Mode: -1
+	Composite Space: -1
+	Blend Space: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 0 x 0
 	Name: Transformation
 	Size: 250 x 250
 	colorMode: RGB color with alpha
 		Selected: False
-	Is selection: False
-	Blend mode: BlendMode.NORMAL
+	Is Selection: False
+	Blend Mode: BlendMode.NORMAL
 	Visible: False
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: False
-	X offset: 295
-	Y offset: 292
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: False
+	X Offset: 295
+	Y Offset: 292
 	Compression: CompressionMode.None_Compression
-	Unique id: 0000001e
+	Unique Id: 0000001e
 	Units: Units.Inches
 	Locked: False
-	Group item flags: 0
-	Position locked: False
+	Group Item Flags: 0
+	Position Locked: False
 	Opacity: 1.0
-	Color tag: 0
-	Composite mode: -1
-	Composite space: -1
-	Blend space: 0
-	Vectors version: 0
-	Active vector index: 0
+	Color Tag: 0
+	Composite Mode: -1
+	Composite Space: -1
+	Blend Space: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 295 x 292
 	Name: Layer Group
 	Size: 640 x 640
 	colorMode: RGB color with alpha
 		Selected: True
-	Is selection: False
-	Blend mode: BlendMode.NORMAL
+	Is Selection: False
+	Blend Mode: BlendMode.NORMAL
 	Visible: True
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: False
-	X offset: 100
-	Y offset: 0
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: False
+	X Offset: 100
+	Y Offset: 0
 	Compression: CompressionMode.None_Compression
-	Unique id: 00000021
+	Unique Id: 00000021
 	Units: Units.Inches
 	Locked: False
-	Is group: True
-	Group item flags: 1
-	Position locked: False
+	Is Group: True
+	Group Item Flags: 1
+	Position Locked: False
 	Opacity: 1.0
-	Color tag: 0
-	Composite mode: -1
-	Composite space: -1
-	Blend space: 0
-	Vectors version: 0
-	Active vector index: 0
+	Color Tag: 0
+	Composite Mode: -1
+	Composite Space: -1
+	Blend Space: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 100 x 0
 	Name: Layer
 	Size: 640 x 640
 	colorMode: RGB color with alpha
 		Selected: False
-	Is selection: False
-	Blend mode: BlendMode.NORMAL
+	Is Selection: False
+	Blend Mode: BlendMode.NORMAL
 	Visible: True
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: False
-	X offset: 100
-	Y offset: 0
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: False
+	X Offset: 100
+	Y Offset: 0
 	Compression: CompressionMode.None_Compression
-	Unique id: 0000001f
+	Unique Id: 0000001f
 	Units: Units.Inches
 	Locked: False
-	Group item flags: 0
-	Position locked: False
+	Group Item Flags: 0
+	Position Locked: False
 	Opacity: 1.0
-	Color tag: 0
-	Composite mode: -1
-	Composite space: -1
-	Blend space: 0
-	Vectors version: 0
-	Active vector index: 0
+	Color Tag: 0
+	Composite Mode: -1
+	Composite Space: -1
+	Blend Space: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 100 x 0
 	Name: Layer2
 	Size: 640 x 640
 	colorMode: RGB color with alpha
 		Selected: False
-	Is selection: False
-	Blend mode: BlendMode.NORMAL
+	Is Selection: False
+	Blend Mode: BlendMode.NORMAL
 	Visible: True
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: False
-	X offset: 100
-	Y offset: 0
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: False
+	X Offset: 100
+	Y Offset: 0
 	Compression: CompressionMode.None_Compression
-	Unique id: 00000020
+	Unique Id: 00000020
 	Units: Units.Inches
 	Locked: False
-	Group item flags: 0
-	Position locked: False
+	Group Item Flags: 0
+	Position Locked: False
 	Opacity: 1.0
-	Color tag: 0
-	Composite mode: -1
-	Composite space: -1
-	Blend space: 0
-	Vectors version: 0
-	Active vector index: 0
+	Color Tag: 0
+	Composite Mode: -1
+	Composite Space: -1
+	Blend Space: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 100 x 0
 	Name: Background
 	Size: 696 x 640
 	colorMode: RGB color with alpha
 		Selected: False
-	Is selection: False
-	Blend mode: BlendMode.NORMAL
+	Is Selection: False
+	Blend Mode: BlendMode.NORMAL
 	Visible: True
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: False
-	X offset: 0
-	Y offset: 0
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: False
+	X Offset: 0
+	Y Offset: 0
 	Compression: CompressionMode.None_Compression
-	Unique id: 00000002
+	Unique Id: 00000002
 	Units: Units.Inches
 	Locked: False
-	Group item flags: 0
-	Position locked: False
+	Group Item Flags: 0
+	Position Locked: False
 	Opacity: 1.0
-	Color tag: 0
-	Composite mode: -1
-	Composite space: -1
-	Blend space: 0
-	Vectors version: 0
-	Active vector index: 0
+	Color Tag: 0
+	Composite Mode: -1
+	Composite Space: -1
+	Blend Space: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 0 x 0
 Channels:
 	Name: Selection Mask
 	Size: 640 x 640
 		Selected: False
-	Is selection: True
-	Blend mode: BlendMode.ADDITION
+	Is Selection: True
+	Blend Mode: BlendMode.ADDITION
 	Visible: True
-	Is linked: False
-	Lock alpha: False
-	Apply mask: False
-	Editing mask: False
-	Show mask: False
-	Show masked: True
-	X offset: 0
-	Y offset: 0
+	Is Linked: False
+	Lock Alpha: False
+	Apply Mask: False
+	Editing Mask: False
+	Show Mask: False
+	Show Masked: True
+	X Offset: 0
+	Y Offset: 0
 	Compression: CompressionMode.None_Compression
-	Unique id: 00000001
+	Unique Id: 00000001
 	Units: Units.Inches
 	Locked: False
-	Group item flags: 0
-	Position locked: False
+	Group Item Flags: 0
+	Position Locked: False
 	Opacity: 0.5
-	Color tag: 0
-	Composite mode: CompositeMode.Union
-	Composite space: CompositeSpace.RGB_linear
+	Color Tag: 0
+	Composite Mode: CompositeMode.Union
+	Composite Space: CompositeSpace.RGB_linear
 	Color: [0.0, 0.0, 0.0]
-	Vectors version: 0
-	Active vector index: 0
+	Vectors Version: 0
+	Active Vector Index: 0
 	Paths: []
 	Offset: 0 x 0
 	Color: (0.0, 0.0, 0.0)

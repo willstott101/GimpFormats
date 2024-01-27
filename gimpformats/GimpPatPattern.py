@@ -46,7 +46,7 @@ class GimpPatPattern:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0):
+	def decode(self, data: bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
@@ -79,7 +79,7 @@ class GimpPatPattern:
 		self._image = None
 		return ioBuf.index
 
-	def encode(self):
+	def encode(self) -> bytearray:
 		"""Encode to a byte buffer."""
 		ioBuf = IO()
 		ioBuf.u32 = 24 + len(self.name)
@@ -113,11 +113,11 @@ class GimpPatPattern:
 		return self._image
 
 	@image.setter
-	def image(self, image) -> None:
+	def image(self, image: PIL.Image.Image) -> None:
 		self._image = image
 		self._rawImage = None
 
-	def save(self, tofileName=None, toExtension=None) -> None:
+	def save(self, tofileName: str | BytesIO | None = None, toExtension: str | None = None) -> None:
 		"""Save this gimp image to a file."""
 		asImage = False
 		if toExtension is None and tofileName is not None:

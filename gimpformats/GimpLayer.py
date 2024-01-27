@@ -82,7 +82,7 @@ class GimpLayer(GimpIOBase):
 		# Return the offset
 		return ioBuf.index
 
-	def encode(self):
+	def encode(self) -> bytearray:
 		"""Encode to byte array.
 
 		Steps:
@@ -117,7 +117,7 @@ class GimpLayer(GimpIOBase):
 		return ioBuf.data
 
 	@property
-	def mask(self):
+	def mask(self) -> GimpChannel | None:
 		"""Get the layer mask."""
 		if self._mask is None and self._maskPtr is not None and self._maskPtr != 0:
 			self._mask = GimpChannel(self)

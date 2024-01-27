@@ -10,11 +10,10 @@
     - [GimpParasite().__str__](#gimpparasite()__str__)
     - [GimpParasite().decode](#gimpparasite()decode)
     - [GimpParasite().encode](#gimpparasite()encode)
-  - [repr_indent_lines](#repr_indent_lines)
 
 ## GimpParasite
 
-[Show source in GimpParasites.py:46](../../../gimpformats/GimpParasites.py#L46)
+[Show source in GimpParasites.py:47](../../../gimpformats/GimpParasites.py#L47)
 
 Parasites are arbitrary (meta)data strings that can be attached to a document tree item.
 
@@ -32,7 +31,7 @@ class GimpParasite:
 
 ### GimpParasite().__repr__
 
-[Show source in GimpParasites.py:90](../../../gimpformats/GimpParasites.py#L90)
+[Show source in GimpParasites.py:91](../../../gimpformats/GimpParasites.py#L91)
 
 Get a textual representation of this object.
 
@@ -44,7 +43,7 @@ def __repr__(self, indent: int = 0) -> str: ...
 
 ### GimpParasite().__str__
 
-[Show source in GimpParasites.py:86](../../../gimpformats/GimpParasites.py#L86)
+[Show source in GimpParasites.py:87](../../../gimpformats/GimpParasites.py#L87)
 
 Get a textual representation of this object.
 
@@ -56,7 +55,7 @@ def __str__(self) -> str: ...
 
 ### GimpParasite().decode
 
-[Show source in GimpParasites.py:60](../../../gimpformats/GimpParasites.py#L60)
+[Show source in GimpParasites.py:61](../../../gimpformats/GimpParasites.py#L61)
 
 Decode a byte buffer.
 
@@ -73,7 +72,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpParasite().encode
 
-[Show source in GimpParasites.py:73](../../../gimpformats/GimpParasites.py#L73)
+[Show source in GimpParasites.py:74](../../../gimpformats/GimpParasites.py#L74)
 
 Encode a byte buffer.
 
@@ -85,17 +84,5 @@ Encode a byte buffer.
 #### Signature
 
 ```python
-def encode(self): ...
-```
-
-
-
-## repr_indent_lines
-
-[Show source in GimpParasites.py:99](../../../gimpformats/GimpParasites.py#L99)
-
-#### Signature
-
-```python
-def repr_indent_lines(indent: int, lines: list[str]): ...
+def encode(self) -> bytearray: ...
 ```

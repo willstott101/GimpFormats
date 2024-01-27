@@ -16,7 +16,7 @@ def fileOpen(file: BytesIO | str | Path) -> tuple[str, bytes]:
 	return pth.name, pth.read_bytes()
 
 
-def save(data: bytes, file: BytesIO | str| Path ) -> None:
+def save(data: bytes, file: BytesIO | str | Path) -> None:
 	"""Save this gimp image to a file."""
 	if isinstance(file, BytesIO):
 		with file as file:
@@ -24,7 +24,6 @@ def save(data: bytes, file: BytesIO | str| Path ) -> None:
 		return
 	pth = Path(file)
 	pth.write_bytes(data)
-
 
 
 def repr_indent_lines(indent: int, lines: list[str]):

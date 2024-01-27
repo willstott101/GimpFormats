@@ -15,59 +15,54 @@ from .utils import repr_indent_lines
 
 class GimpImageHierarchy(GimpIOBase):
 	"""
-	Gets packed pixels from a gimp image.
+	Represents packed pixels from a GIMP image hierarchy.
 
-	NOTE: This was originally designed to be a hierarchy, like
-		an image pyramid, through in practice they only use the
-		top level of the pyramid (64x64) and ignore the rest.
+	NOTE: Originally designed as a hierarchy, but currently only the top level (64x64) is used.
 	"""
 
 	def __init__(self, parent, image: Image.Image | None = None) -> None:
-		GimpIOBase.__init__(self, parent)
+		super().__init__(parent)
 		self.width: int = 0
 		self.height: int = 0
-		self.bpp: int = 0  # Number of bytes per pixel given
+		self.bpp: int = 0  # Number of bytes per pixel
 		self._levelPtrs = []
 		self._levels = None
 		self._data = None
-		if image is not None:  # NOTE: can override earlier parameters
+		if image is not None:
 			self.image = image
 
-	def decode(self, data: bytes, index: int = 0):
+	def decode(self, data: bytes, index: int = 0) -> int:
 		"""
-		decode a byte buffer.
-
-		:param data: data buffer to decode
-		:param index: index within the buffer to start at
+		Decode packed pixels from a byte buffer.
 		"""
 		if not data:
-			msg = "No data!"
+			msg = "No data provided for decoding."
 			raise RuntimeError(msg)
+
 		ioBuf = IO(data, index)
-		# print 'Decoding channel at',index
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
 		self.bpp = ioBuf.u32
-		if self.bpp < 1 or self.bpp > 4:
-			msg = (
-				"""'Unexpected bytes-per-pixel for image data ("""
-				+ str(self.bpp)
-				+ """).
-				Probably means file corruption."""
-			)
+
+		if not (1 <= self.bpp <= 4):
+			msg = f"Unexpected bytes-per-pixel value: {self.bpp}. Possible file corruption."
 			raise RuntimeError(msg)
+
 		while True:
 			ptr = self._pointerDecode(ioBuf)
 			if ptr == 0:
 				break
 			self._levelPtrs.append(ptr)
-		if self._levelPtrs:  # remove "dummy" level pointers
+
+		if self._levelPtrs:
 			self._levelPtrs = [self._levelPtrs[0]]
 		self._data = data
 		return ioBuf.index
 
-	def encode(self):
-		"""Encode this object to a byte buffer."""
+	def encode(self) -> bytearray:
+		"""
+		Encode packed pixels data into a byte buffer.
+		"""
 		dataioBuf = IO()
 		ioBuf = IO()
 		ioBuf.u32 = self.width
@@ -75,9 +70,7 @@ class GimpImageHierarchy(GimpIOBase):
 		ioBuf.u32 = self.bpp
 		dataIndex = ioBuf.index + self.pointerSize * (len(self.levels) + 1)
 		for level in self.levels:
-			ioBuf.addBytes(
-				self._pointerEncode(dataIndex + dataioBuf.index)
-			)  # TODO: This may be incorrect
+			ioBuf.addBytes(self._pointerEncode(dataIndex + dataioBuf.index))
 			dataioBuf.addBytes(level.encode())
 		ioBuf.addBytes(self._pointerEncode(0))
 		ioBuf.addBytes(dataioBuf.data)
@@ -100,21 +93,17 @@ class GimpImageHierarchy(GimpIOBase):
 	@property
 	def image(self) -> Image.Image | None:
 		"""Get a final, compiled image."""
-		if not self.levels:
-			return None
-		return self.levels[0].image
+		return self.levels[0].image if self.levels else None
 
 	@image.setter
 	def image(self, image: Image.Image) -> None:
 		"""Set the image."""
-		self.width = image.width
-		self.height = image.height
+		self.width, self.height = image.size
 		if image.mode not in ["L", "LA", "RGB", "RGBA"]:
-			msg = "Unsupported PIL image type"
+			msg = "Unsupported PIL image type."
 			raise NotImplementedError(msg)
 		self.bpp = len(image.mode)
 		self._levelPtrs = None
-		# self._levels = [GimpImageLevel(self, image)]
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""

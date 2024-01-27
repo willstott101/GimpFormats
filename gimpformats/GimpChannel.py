@@ -11,12 +11,12 @@ from .utils import repr_indent_lines
 
 
 class GimpChannel(GimpIOBase):
-	"""Represents a single channel or mask in a gimp image."""
+	"""Represents a single channel or mask in a GIMP image."""
 
 	def __init__(
 		self, parent: GimpIOBase, name: str = "", image: Image.Image | None = None
 	) -> None:
-		"""GimpChannel.
+		"""Initialize a GIMP Channel instance.
 
 		Args:
 		----
@@ -47,7 +47,6 @@ class GimpChannel(GimpIOBase):
 			int: pointer
 		"""
 		ioBuf = IO(data, index)
-		# print 'Decoding channel at',index
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
 		self.name = ioBuf.sz754
@@ -63,40 +62,26 @@ class GimpChannel(GimpIOBase):
 		ioBuf.u32 = self.height
 		ioBuf.sz754 = self.name
 		ioBuf.addBytes(self._propertiesEncode())
-		imgH = self._imageHierarchyPtr
-		if imgH is None:
-			imgH = 0
+		imgH = self._imageHierarchyPtr or 0
 		ioBuf.addBytes(self._pointerEncode(imgH))
 		return ioBuf.data
 
 	@property
 	def image(self) -> Image.Image | None:
-		"""Get a final, compiled image."""
+		"""Get the compiled image."""
 		return self.imageHierarchy.image
 
 	@image.setter
 	def image(self, image: Image.Image) -> None:
-		"""Get a final, compiled image."""
-		self.width = image.width
-		self.height = image.height
+		"""Set the compiled image."""
+		self.width, self.height = image.size
 		if not self.name and isinstance(image, str):
-			# try to use a fileName as the name
 			self.name = image.rsplit("\\", 1)[-1].rsplit("/", 1)[-1]
 		self._imageHierarchy = GimpImageHierarchy(self, image)
 
-	def forceFullyLoaded(self) -> None:
-		"""Make sure everything is fully loaded from the file."""
-		_ = self.image  # make sure the image is loaded so we can delete the hierarchy nonsense
-		self._imageHierarchyPtr = None
-		self._data = None
-
 	@property
-	def imageHierarchy(self) -> GimpImageHierarchy:
-		"""Get the image hierarchy.
-
-		This is mainly used for decoding the image, so
-		not much use to you.
-		"""
+	def imageHierarchy(self) -> GimpImageHierarchy | None:
+		"""Get the image hierarchy."""
 		if self._data and self._imageHierarchyPtr:
 			if self._imageHierarchy is None:
 				self._imageHierarchy = GimpImageHierarchy(self)
@@ -111,8 +96,6 @@ class GimpChannel(GimpIOBase):
 
 	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		ret.append(f"Name: {self.name}")
-		ret.append(f"Size: {self.width} x {self.height}")
-		ret.append(GimpIOBase.__repr__(self, indent))
+		ret = [f"Name: {self.name}", f"Size: {self.width} x {self.height}"]
+		ret.append(super().__repr__(indent))
 		return repr_indent_lines(indent, ret)

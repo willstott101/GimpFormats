@@ -29,7 +29,7 @@ def fileOpen(file: BytesIO | str | Path) -> tuple[str, bytes]: ...
 
 ## repr_indent_lines
 
-[Show source in utils.py:30](../../../gimpformats/utils.py#L30)
+[Show source in utils.py:29](../../../gimpformats/utils.py#L29)
 
 #### Signature
 

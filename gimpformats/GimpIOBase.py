@@ -20,13 +20,8 @@ def _prop_cmp(val: int, prop: int | list[int]) -> ImageProperties:
 
 
 def camel_to_pascal_with_spaces(val: str) -> str:
-	pascal_with_spaces = ""
-	for char in val:
-		if char.isupper():
-			pascal_with_spaces += " " + char
-		else:
-			pascal_with_spaces += char
-	return pascal_with_spaces.strip().capitalize()
+	text = "".join([f" {char}" if char.isupper() else char for char in val])
+	return text[0].upper() + text[1:]
 
 
 class ColorMode(Enum):
@@ -277,6 +272,7 @@ class GimpIOBase:
 	def _parasitesDecode(self, data: bytes) -> int:
 		"""Decode list of parasites."""
 		index: int = 0
+		self.parasites = []  # reset
 		while index < len(data):
 			parasite = GimpParasite()
 			index = parasite.decode(data, index)

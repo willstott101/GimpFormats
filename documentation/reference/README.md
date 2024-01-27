@@ -24,3 +24,7 @@ A full list of `Gimpformats` project modules.
     - [Gimpvectors](gimpformats/GimpVectors.md#gimpvectors)
     - [Gimpxcfdocument](gimpformats/gimpXcfDocument.md#gimpxcfdocument)
     - [Utils](gimpformats/utils.md#utils)
+- [Test Informal](test_informal/index.md#test-informal)
+    - [Masktest](test_informal/masktest.md#masktest)
+    - [Simpletest](test_informal/simpletest.md#simpletest)
+    - [Test64x64](test_informal/test64x64.md#test64x64)

@@ -93,7 +93,7 @@ class GimpImageLevel(GimpIOBase):
 		ioBuf.addBytes(dataioBuf.data)
 		return ioBuf.data
 
-	def _decodeRLE(self, data, pixels, bpp, index=0):
+	def _decodeRLE(self, data: bytearray, pixels: int, bpp, index=0) -> bytearray:
 		_ = self
 		"""Decode RLE encoded image data."""
 		ret = [[] for chan in range(bpp)]

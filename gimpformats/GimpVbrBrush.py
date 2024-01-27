@@ -46,7 +46,7 @@ class GimpVbrBrush:
 
 	@property
 	def image(self) -> NoReturn:
-		"""This parametric brush converted to a useable PIL image."""
+		"""Parametric brush converted to a useable PIL image."""
 		raise NotImplementedError  # TODO:
 
 	def decode(self, dataIn: bytes) -> None:

@@ -34,6 +34,7 @@ from __future__ import annotations
 import struct
 from typing import Any
 
+# ruff: noqa: ANN401
 
 class IO:
 	"""Class to handle i/o to a byte buffer or file-like object."""

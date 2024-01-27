@@ -81,7 +81,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0): ...
+def decode(self, data: bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpPatPattern().encode
@@ -93,7 +93,7 @@ Encode to a byte buffer.
 #### Signature
 
 ```python
-def encode(self): ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpPatPattern().image
@@ -117,7 +117,7 @@ def image(self): ...
 
 ```python
 @image.setter
-def image(self, image) -> None: ...
+def image(self, image: PIL.Image.Image) -> None: ...
 ```
 
 ### GimpPatPattern().load
@@ -145,7 +145,9 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, tofileName=None, toExtension=None) -> None: ...
+def save(
+    self, tofileName: str | BytesIO | None = None, toExtension: str | None = None
+) -> None: ...
 ```
 
 ### GimpPatPattern().size

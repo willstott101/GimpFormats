@@ -8,6 +8,7 @@ Format of known parasites:
 from __future__ import annotations
 
 from .binaryiotools import IO
+from .utils import repr_indent_lines
 
 # TODO: how to best use these for our puproses??
 KNOWN_DOCUMENT_PARASITES = [
@@ -70,7 +71,7 @@ class GimpParasite:
 		self.data = ioBuf.getBytes(dataLength)
 		return ioBuf.index
 
-	def encode(self):
+	def encode(self) -> bytearray:
 		"""Encode a byte buffer.
 
 		:param data: data buffer to encode
@@ -94,8 +95,3 @@ class GimpParasite:
 		ret.append(f"Flags: {self.flags}")
 		ret.append(f"Data Len: {len(self.data)}")
 		return repr_indent_lines(indent, ret)
-
-
-def repr_indent_lines(indent: int, lines: list[str]):
-	indentstr = indent * "\t"
-	return (indentstr) + ((f"\n{indentstr}").join(lines))

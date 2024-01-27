@@ -102,7 +102,7 @@ Return the data
 #### Signature
 
 ```python
-def encode(self): ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpLayer().forceFullyLoaded
@@ -188,5 +188,5 @@ Get the layer mask.
 
 ```python
 @property
-def mask(self): ...
+def mask(self) -> GimpChannel | None: ...
 ```
