@@ -25,6 +25,7 @@ class GimpPatPattern:
 		Args:
 		----
 			fileName (BytesIO, optional): filename or pointer. Defaults to None.
+
 		"""
 		self.fileName = None
 		self.version = 1
@@ -61,6 +62,7 @@ class GimpPatPattern:
 		Returns:
 		-------
 			int: pointer
+
 		"""
 		ioBuf = IO(data, index)
 		headerSize = ioBuf.u32

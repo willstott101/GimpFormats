@@ -32,6 +32,7 @@ class GimpLayer(GimpIOBase):
 			parent ([type]): some parent node/ layer
 			name (str, optional): name of the layer. Defaults to None.
 			image (Image, optional): image stored in the layer. Defaults to None.
+
 		"""
 		GimpIOBase.__init__(self, parent)
 		self.width = 0
@@ -64,6 +65,7 @@ class GimpLayer(GimpIOBase):
 		Returns:
 		-------
 			int: offset
+
 		"""
 		# Create a new IO buffer (array of binary values)
 		ioBuf = IO(data, index)

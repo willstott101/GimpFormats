@@ -58,6 +58,7 @@ class GradientSegment:
 		Raises:
 		------
 			RuntimeError: [description]
+
 		"""
 		data = dataIn.split(" ")
 		if len(data) < 11 or len(data) > 15:
@@ -133,6 +134,7 @@ class GimpGgrGradient:
 		Args:
 		----
 			fileName (str, optional): filename. Defaults to None.
+
 		"""
 		self.fileName = None
 		self.segments = []
@@ -158,6 +160,7 @@ class GimpGgrGradient:
 		Raises:
 		------
 			RuntimeError: File format error.  Magic value mismatch.
+
 		"""
 		data = dataIn.decode("utf-8").split("\n")
 		data = [line.strip() for line in data]

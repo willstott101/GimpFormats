@@ -810,6 +810,7 @@ class GimpUserUnits:
 		Returns:
 		-------
 			int: offset
+
 		"""
 		ioBuf = IO(data, index)
 		self.factor = ioBuf.float32

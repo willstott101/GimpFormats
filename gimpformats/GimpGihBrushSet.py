@@ -29,6 +29,7 @@ class GimpGihBrushSet:
 		Args:
 		----
 			fileName (str, optional): filename. Defaults to None.
+
 		"""
 		self.fileName = None
 		self.name = ""
@@ -56,6 +57,7 @@ class GimpGihBrushSet:
 		Returns:
 		-------
 			int: offset
+
 		"""
 		ioBuf = IO(data, index)
 		self.name = ioBuf.textLine

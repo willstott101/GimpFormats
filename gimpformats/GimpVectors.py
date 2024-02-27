@@ -30,6 +30,7 @@ class GimpVector:
 		Returns:
 		-------
 			int: offset
+
 		"""
 		ioBuf = IO(data, index, boolSize=32)
 		self.name = ioBuf.sz754
@@ -108,6 +109,7 @@ class GimpStroke:
 		Returns:
 		-------
 			int: offset
+
 		"""
 		ioBuf = IO(data, index, boolSize=32)
 		self.strokeType = ioBuf.u32
@@ -175,6 +177,7 @@ class GimpPoint:
 		Returns:
 		-------
 			int: offset
+
 		"""
 		ioBuf = IO(data, index, boolSize=32)
 		self.pressure = 1.0

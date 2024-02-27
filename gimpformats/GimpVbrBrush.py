@@ -23,6 +23,7 @@ class GimpVbrBrush:
 		Args:
 		----
 			fileName (BytesIO, str, optional): filename. Defaults to None.
+
 		"""
 		self.version = 1.0
 		self.name = ""

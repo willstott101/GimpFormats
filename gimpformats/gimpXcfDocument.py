@@ -116,6 +116,7 @@ class GimpDocument(GimpIOBase):
 		Returns:
 		-------
 			int: offset
+
 		"""
 		# Create a new IO buffer (array of binary values)
 		ioBuf = IO(data, index)
@@ -262,6 +263,7 @@ class GimpDocument(GimpIOBase):
 		Returns:
 		-------
 			GimpLayer: newly created GimpLayer object
+
 		"""
 		layer = GimpLayer(self, name, image)
 		layer.imageHierarchy = GimpImageHierarchy(self, image=image)
@@ -282,6 +284,7 @@ class GimpDocument(GimpIOBase):
 		Returns:
 		-------
 			GimpLayer: newly created GimpLayer object
+
 		"""
 		image = PIL.ImageGrab.grabclipboard()
 		if isinstance(image, Image.Image):

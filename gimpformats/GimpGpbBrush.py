@@ -23,6 +23,7 @@ class GimpGpbBrush:
 		Args:
 		----
 			fileName (BytesIO): filename/ filepointer
+
 		"""
 		self.brush = GimpGbrBrush()
 		self.pattern = GimpPatPattern()
@@ -50,6 +51,7 @@ class GimpGpbBrush:
 		Returns:
 		-------
 			int: pointer
+
 		"""
 		return self.brush.decode(data, index)
 		# index = self.pattern.decode(data, index)

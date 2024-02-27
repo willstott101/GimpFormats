@@ -23,6 +23,7 @@ class ParenFileValue:
 			name (str, optional): name of the file. Defaults to None.
 			value (str, optional): some value, str(float) or str. Defaults to "".
 			children ([type], optional): children. Defaults to None.
+
 		"""
 
 		self.name = name

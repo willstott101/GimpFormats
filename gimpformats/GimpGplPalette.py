@@ -17,6 +17,7 @@ class GimpGplPalette:
 		Args:
 		----
 			fileName (BytesIO, str, optional): filename. Defaults to None.
+
 		"""
 		self.name = ""
 		self.columns = 16
@@ -43,6 +44,7 @@ class GimpGplPalette:
 		Raises:
 		------
 			RuntimeError: File format error.  Magic value mismatch.
+
 		"""
 		self.colors = []
 		self.colorNames = []

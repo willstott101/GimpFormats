@@ -23,6 +23,7 @@ class GimpChannel(GimpIOBase):
 			parent ([type]): some parent node/ object
 			name (str, optional): name of the channel. Defaults to "".
 			image (Image.Image, optional): image to set. Defaults to None.
+
 		"""
 		GimpIOBase.__init__(self, parent)
 		self.width = 0
@@ -45,6 +46,7 @@ class GimpChannel(GimpIOBase):
 		Returns:
 		-------
 			int: pointer
+
 		"""
 		ioBuf = IO(data, index)
 		self.width = ioBuf.u32

@@ -28,6 +28,7 @@ class GimpGbrBrush:
 		Args:
 		----
 			fileName (str, optional): filename for the brush. Defaults to None.
+
 		"""
 		self.fileName = None
 		self.version = 2
@@ -65,6 +66,7 @@ class GimpGbrBrush:
 		Returns:
 		-------
 			int: offset]
+
 		"""
 		ioBuf = IO(data, index)
 		headerSize = ioBuf.u32

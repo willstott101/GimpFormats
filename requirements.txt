@@ -1,4 +1,4 @@
 Pillow<11,>=10.2.0
-blendmodes<2026,>=2024.0.1
+blendmodes<2026,>=2024.1
 brackettree<2,>=0.2.5
-numpy<2,>=1.26.3
+numpy<2,>=1.26.4
