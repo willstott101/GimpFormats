@@ -33,7 +33,7 @@ class GimpGbrBrush:
 
 ### GimpGbrBrush().__repr__
 
-[Show source in GimpGbrBrush.py:138](../../../gimpformats/GimpGbrBrush.py#L138)
+[Show source in GimpGbrBrush.py:140](../../../gimpformats/GimpGbrBrush.py#L140)
 
 Get a textual representation of this object.
 
@@ -45,7 +45,7 @@ def __repr__(self, indent: int = 0) -> str: ...
 
 ### GimpGbrBrush().__str__
 
-[Show source in GimpGbrBrush.py:134](../../../gimpformats/GimpGbrBrush.py#L134)
+[Show source in GimpGbrBrush.py:136](../../../gimpformats/GimpGbrBrush.py#L136)
 
 Get a textual representation of this object.
 
@@ -57,7 +57,7 @@ def __str__(self) -> str: ...
 
 ### GimpGbrBrush().decode
 
-[Show source in GimpGbrBrush.py:52](../../../gimpformats/GimpGbrBrush.py#L52)
+[Show source in GimpGbrBrush.py:53](../../../gimpformats/GimpGbrBrush.py#L53)
 
 Decode a byte buffer.
 
@@ -86,7 +86,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpGbrBrush().encode
 
-[Show source in GimpGbrBrush.py:94](../../../gimpformats/GimpGbrBrush.py#L94)
+[Show source in GimpGbrBrush.py:96](../../../gimpformats/GimpGbrBrush.py#L96)
 
 Encode this object to byte array.
 
@@ -98,7 +98,7 @@ def encode(self) -> bytearray: ...
 
 ### GimpGbrBrush().image
 
-[Show source in GimpGbrBrush.py:113](../../../gimpformats/GimpGbrBrush.py#L113)
+[Show source in GimpGbrBrush.py:115](../../../gimpformats/GimpGbrBrush.py#L115)
 
 Get a final, compiled image.
 
@@ -111,7 +111,7 @@ def image(self) -> PIL.Image.Image | None: ...
 
 ### GimpGbrBrush().load
 
-[Show source in GimpGbrBrush.py:44](../../../gimpformats/GimpGbrBrush.py#L44)
+[Show source in GimpGbrBrush.py:45](../../../gimpformats/GimpGbrBrush.py#L45)
 
 Load a gimp file.
 
@@ -127,7 +127,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpGbrBrush().save
 
-[Show source in GimpGbrBrush.py:120](../../../gimpformats/GimpGbrBrush.py#L120)
+[Show source in GimpGbrBrush.py:122](../../../gimpformats/GimpGbrBrush.py#L122)
 
 Save this gimp image to a file.
 
@@ -139,7 +139,7 @@ def save(self, tofileName: str, toExtension: str | None = None) -> None: ...
 
 ### GimpGbrBrush().size
 
-[Show source in GimpGbrBrush.py:108](../../../gimpformats/GimpGbrBrush.py#L108)
+[Show source in GimpGbrBrush.py:110](../../../gimpformats/GimpGbrBrush.py#L110)
 
 Get the size.
 

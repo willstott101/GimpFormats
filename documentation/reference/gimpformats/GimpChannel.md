@@ -31,7 +31,7 @@ class GimpChannel(GimpIOBase):
 
 ### GimpChannel().__repr__
 
-[Show source in GimpChannel.py:97](../../../gimpformats/GimpChannel.py#L97)
+[Show source in GimpChannel.py:99](../../../gimpformats/GimpChannel.py#L99)
 
 Get a textual representation of this object.
 
@@ -43,7 +43,7 @@ def __repr__(self, indent: int = 0) -> str: ...
 
 ### GimpChannel().__str__
 
-[Show source in GimpChannel.py:93](../../../gimpformats/GimpChannel.py#L93)
+[Show source in GimpChannel.py:95](../../../gimpformats/GimpChannel.py#L95)
 
 Get a textual representation of this object.
 
@@ -55,7 +55,7 @@ def __str__(self) -> str: ...
 
 ### GimpChannel().decode
 
-[Show source in GimpChannel.py:37](../../../gimpformats/GimpChannel.py#L37)
+[Show source in GimpChannel.py:38](../../../gimpformats/GimpChannel.py#L38)
 
 Decode a byte buffer.
 
@@ -78,7 +78,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpChannel().encode
 
-[Show source in GimpChannel.py:58](../../../gimpformats/GimpChannel.py#L58)
+[Show source in GimpChannel.py:60](../../../gimpformats/GimpChannel.py#L60)
 
 Encode this object to a byte buffer.
 
@@ -90,7 +90,7 @@ def encode(self) -> bytearray: ...
 
 ### GimpChannel().image
 
-[Show source in GimpChannel.py:69](../../../gimpformats/GimpChannel.py#L69)
+[Show source in GimpChannel.py:71](../../../gimpformats/GimpChannel.py#L71)
 
 Get the compiled image.
 
@@ -103,7 +103,7 @@ def image(self) -> Image.Image | None: ...
 
 ### GimpChannel().image
 
-[Show source in GimpChannel.py:74](../../../gimpformats/GimpChannel.py#L74)
+[Show source in GimpChannel.py:76](../../../gimpformats/GimpChannel.py#L76)
 
 Set the compiled image.
 
@@ -116,7 +116,7 @@ def image(self, image: Image.Image) -> None: ...
 
 ### GimpChannel().imageHierarchy
 
-[Show source in GimpChannel.py:82](../../../gimpformats/GimpChannel.py#L82)
+[Show source in GimpChannel.py:84](../../../gimpformats/GimpChannel.py#L84)
 
 Get the image hierarchy.
 

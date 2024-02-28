@@ -21,7 +21,7 @@
 
 ## GimpGtpToolPreset
 
-[Show source in GimpGtpToolPreset.py:121](../../../gimpformats/GimpGtpToolPreset.py#L121)
+[Show source in GimpGtpToolPreset.py:122](../../../gimpformats/GimpGtpToolPreset.py#L122)
 
 Pure python implementation of the gimp gtp tool preset format.
 
@@ -34,7 +34,7 @@ class GimpGtpToolPreset:
 
 ### GimpGtpToolPreset().__repr__
 
-[Show source in GimpGtpToolPreset.py:162](../../../gimpformats/GimpGtpToolPreset.py#L162)
+[Show source in GimpGtpToolPreset.py:163](../../../gimpformats/GimpGtpToolPreset.py#L163)
 
 Get a textual representation of this object.
 
@@ -46,7 +46,7 @@ def __repr__(self, indent: int = 0) -> str: ...
 
 ### GimpGtpToolPreset().__str__
 
-[Show source in GimpGtpToolPreset.py:158](../../../gimpformats/GimpGtpToolPreset.py#L158)
+[Show source in GimpGtpToolPreset.py:159](../../../gimpformats/GimpGtpToolPreset.py#L159)
 
 Get a textual representation of this object.
 
@@ -58,7 +58,7 @@ def __str__(self) -> str: ...
 
 ### GimpGtpToolPreset().decode
 
-[Show source in GimpGtpToolPreset.py:139](../../../gimpformats/GimpGtpToolPreset.py#L139)
+[Show source in GimpGtpToolPreset.py:140](../../../gimpformats/GimpGtpToolPreset.py#L140)
 
 Decode a byte buffer.
 
@@ -75,7 +75,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpGtpToolPreset().encode
 
-[Show source in GimpGtpToolPreset.py:148](../../../gimpformats/GimpGtpToolPreset.py#L148)
+[Show source in GimpGtpToolPreset.py:149](../../../gimpformats/GimpGtpToolPreset.py#L149)
 
 Encode to bytes.
 
@@ -87,7 +87,7 @@ def encode(self) -> bytes: ...
 
 ### GimpGtpToolPreset().load
 
-[Show source in GimpGtpToolPreset.py:131](../../../gimpformats/GimpGtpToolPreset.py#L131)
+[Show source in GimpGtpToolPreset.py:132](../../../gimpformats/GimpGtpToolPreset.py#L132)
 
 Load a gimp file.
 
@@ -103,7 +103,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpGtpToolPreset().save
 
-[Show source in GimpGtpToolPreset.py:152](../../../gimpformats/GimpGtpToolPreset.py#L152)
+[Show source in GimpGtpToolPreset.py:153](../../../gimpformats/GimpGtpToolPreset.py#L153)
 
 Save this gimp tool preset to a file.
 
@@ -134,7 +134,7 @@ class ParenFileValue:
 
 ### ParenFileValue().__repr__
 
-[Show source in GimpGtpToolPreset.py:56](../../../gimpformats/GimpGtpToolPreset.py#L56)
+[Show source in GimpGtpToolPreset.py:57](../../../gimpformats/GimpGtpToolPreset.py#L57)
 
 Get a textual representation of this object.
 
@@ -146,7 +146,7 @@ def __repr__(self) -> str: ...
 
 ### ParenFileValue().__str__
 
-[Show source in GimpGtpToolPreset.py:52](../../../gimpformats/GimpGtpToolPreset.py#L52)
+[Show source in GimpGtpToolPreset.py:53](../../../gimpformats/GimpGtpToolPreset.py#L53)
 
 Get a textual representation of this object.
 
@@ -160,7 +160,7 @@ def __str__(self) -> str: ...
 
 ## parenFileDecode
 
-[Show source in GimpGtpToolPreset.py:74](../../../gimpformats/GimpGtpToolPreset.py#L74)
+[Show source in GimpGtpToolPreset.py:75](../../../gimpformats/GimpGtpToolPreset.py#L75)
 
 Decode a parentheses-based file format.
 
@@ -180,7 +180,7 @@ def parenFileDecode(data: bytes) -> list[ParenFileValue]: ...
 
 ## parenFileEncode
 
-[Show source in GimpGtpToolPreset.py:107](../../../gimpformats/GimpGtpToolPreset.py#L107)
+[Show source in GimpGtpToolPreset.py:108](../../../gimpformats/GimpGtpToolPreset.py#L108)
 
 Encode a values tree to a buffer.
 
@@ -198,7 +198,7 @@ def parenFileEncode(values: list[ParenFileValue]) -> str: ...
 
 ## walkTree
 
-[Show source in GimpGtpToolPreset.py:83](../../../gimpformats/GimpGtpToolPreset.py#L83)
+[Show source in GimpGtpToolPreset.py:84](../../../gimpformats/GimpGtpToolPreset.py#L84)
 
 Walk the tree.
 

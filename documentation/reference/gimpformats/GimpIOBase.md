@@ -423,7 +423,7 @@ class GimpUserUnits:
 
 ### GimpUserUnits().__repr__
 
-[Show source in GimpIOBase.py:840](../../../gimpformats/GimpIOBase.py#L840)
+[Show source in GimpIOBase.py:841](../../../gimpformats/GimpIOBase.py#L841)
 
 Get a textual representation of this object.
 
@@ -435,7 +435,7 @@ def __repr__(self, indent: int = 0) -> str: ...
 
 ### GimpUserUnits().__str__
 
-[Show source in GimpIOBase.py:836](../../../gimpformats/GimpIOBase.py#L836)
+[Show source in GimpIOBase.py:837](../../../gimpformats/GimpIOBase.py#L837)
 
 Get a textual representation of this object.
 
@@ -470,7 +470,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpUserUnits().encode
 
-[Show source in GimpIOBase.py:824](../../../gimpformats/GimpIOBase.py#L824)
+[Show source in GimpIOBase.py:825](../../../gimpformats/GimpIOBase.py#L825)
 
 Convert this object to raw bytes.
 

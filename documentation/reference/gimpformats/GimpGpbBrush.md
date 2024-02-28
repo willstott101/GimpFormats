@@ -31,7 +31,7 @@ class GimpGpbBrush:
 
 ### GimpGpbBrush().__repr__
 
-[Show source in GimpGpbBrush.py:72](../../../gimpformats/GimpGpbBrush.py#L72)
+[Show source in GimpGpbBrush.py:74](../../../gimpformats/GimpGpbBrush.py#L74)
 
 Get a textual representation of this object.
 
@@ -43,7 +43,7 @@ def __repr__(self, indent: int = 0) -> str: ...
 
 ### GimpGpbBrush().__str__
 
-[Show source in GimpGpbBrush.py:68](../../../gimpformats/GimpGpbBrush.py#L68)
+[Show source in GimpGpbBrush.py:70](../../../gimpformats/GimpGpbBrush.py#L70)
 
 Get a textual representation of this object.
 
@@ -55,7 +55,7 @@ def __str__(self) -> str: ...
 
 ### GimpGpbBrush().decode
 
-[Show source in GimpGpbBrush.py:42](../../../gimpformats/GimpGpbBrush.py#L42)
+[Show source in GimpGpbBrush.py:43](../../../gimpformats/GimpGpbBrush.py#L43)
 
 Decode a byte buffer.
 
@@ -78,7 +78,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpGpbBrush().encode
 
-[Show source in GimpGpbBrush.py:57](../../../gimpformats/GimpGpbBrush.py#L57)
+[Show source in GimpGpbBrush.py:59](../../../gimpformats/GimpGpbBrush.py#L59)
 
 Encode this object to bytes.
 
@@ -90,7 +90,7 @@ def encode(self) -> bytes: ...
 
 ### GimpGpbBrush().load
 
-[Show source in GimpGpbBrush.py:34](../../../gimpformats/GimpGpbBrush.py#L34)
+[Show source in GimpGpbBrush.py:35](../../../gimpformats/GimpGpbBrush.py#L35)
 
 Load a gimp file.
 
@@ -106,7 +106,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpGpbBrush().save
 
-[Show source in GimpGpbBrush.py:64](../../../gimpformats/GimpGpbBrush.py#L64)
+[Show source in GimpGpbBrush.py:66](../../../gimpformats/GimpGpbBrush.py#L66)
 
 Save this gimp image to a file.
 

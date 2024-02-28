@@ -29,7 +29,7 @@ class GimpGplPalette:
 
 ### GimpGplPalette().__eq__
 
-[Show source in GimpGplPalette.py:100](../../../gimpformats/GimpGplPalette.py#L100)
+[Show source in GimpGplPalette.py:102](../../../gimpformats/GimpGplPalette.py#L102)
 
 Perform a comparison.
 
@@ -41,7 +41,7 @@ def __eq__(self, other: GimpGplPalette) -> bool: ...
 
 ### GimpGplPalette().__repr__
 
-[Show source in GimpGplPalette.py:85](../../../gimpformats/GimpGplPalette.py#L85)
+[Show source in GimpGplPalette.py:87](../../../gimpformats/GimpGplPalette.py#L87)
 
 Get a textual representation of this object.
 
@@ -53,7 +53,7 @@ def __repr__(self) -> str: ...
 
 ### GimpGplPalette().__str__
 
-[Show source in GimpGplPalette.py:81](../../../gimpformats/GimpGplPalette.py#L81)
+[Show source in GimpGplPalette.py:83](../../../gimpformats/GimpGplPalette.py#L83)
 
 Get a textual representation of this object.
 
@@ -65,7 +65,7 @@ def __str__(self) -> str: ...
 
 ### GimpGplPalette().decode
 
-[Show source in GimpGplPalette.py:36](../../../gimpformats/GimpGplPalette.py#L36)
+[Show source in GimpGplPalette.py:37](../../../gimpformats/GimpGplPalette.py#L37)
 
 Decode a byte buffer.
 
@@ -87,7 +87,7 @@ def decode(self, data: str) -> None: ...
 
 ### GimpGplPalette().encode
 
-[Show source in GimpGplPalette.py:64](../../../gimpformats/GimpGplPalette.py#L64)
+[Show source in GimpGplPalette.py:66](../../../gimpformats/GimpGplPalette.py#L66)
 
 Encode to a raw data stream.
 
@@ -99,7 +99,7 @@ def encode(self) -> bytes: ...
 
 ### GimpGplPalette().load
 
-[Show source in GimpGplPalette.py:28](../../../gimpformats/GimpGplPalette.py#L28)
+[Show source in GimpGplPalette.py:29](../../../gimpformats/GimpGplPalette.py#L29)
 
 Load a gimp file.
 
@@ -115,7 +115,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpGplPalette().save
 
-[Show source in GimpGplPalette.py:77](../../../gimpformats/GimpGplPalette.py#L77)
+[Show source in GimpGplPalette.py:79](../../../gimpformats/GimpGplPalette.py#L79)
 
 Save this gimp image to a file.
 

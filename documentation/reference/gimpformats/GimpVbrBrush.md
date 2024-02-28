@@ -33,7 +33,7 @@ class GimpVbrBrush:
 
 ### GimpVbrBrush().__eq__
 
-[Show source in GimpVbrBrush.py:140](../../../gimpformats/GimpVbrBrush.py#L140)
+[Show source in GimpVbrBrush.py:141](../../../gimpformats/GimpVbrBrush.py#L141)
 
 Perform a comparison.
 
@@ -45,7 +45,7 @@ def __eq__(self, other): ...
 
 ### GimpVbrBrush().__repr__
 
-[Show source in GimpVbrBrush.py:124](../../../gimpformats/GimpVbrBrush.py#L124)
+[Show source in GimpVbrBrush.py:125](../../../gimpformats/GimpVbrBrush.py#L125)
 
 Get a textual representation of this object.
 
@@ -57,7 +57,7 @@ def __repr__(self) -> str: ...
 
 ### GimpVbrBrush().__str__
 
-[Show source in GimpVbrBrush.py:120](../../../gimpformats/GimpVbrBrush.py#L120)
+[Show source in GimpVbrBrush.py:121](../../../gimpformats/GimpVbrBrush.py#L121)
 
 Get a textual representation of this object.
 
@@ -69,7 +69,7 @@ def __str__(self) -> str: ...
 
 ### GimpVbrBrush().decode
 
-[Show source in GimpVbrBrush.py:52](../../../gimpformats/GimpVbrBrush.py#L52)
+[Show source in GimpVbrBrush.py:53](../../../gimpformats/GimpVbrBrush.py#L53)
 
 Decode a byte buffer.
 
@@ -85,7 +85,7 @@ def decode(self, dataIn: bytes) -> None: ...
 
 ### GimpVbrBrush().encode
 
-[Show source in GimpVbrBrush.py:82](../../../gimpformats/GimpVbrBrush.py#L82)
+[Show source in GimpVbrBrush.py:83](../../../gimpformats/GimpVbrBrush.py#L83)
 
 Encode to a raw data stream.
 
@@ -97,7 +97,7 @@ def encode(self) -> bytes: ...
 
 ### GimpVbrBrush().image
 
-[Show source in GimpVbrBrush.py:47](../../../gimpformats/GimpVbrBrush.py#L47)
+[Show source in GimpVbrBrush.py:48](../../../gimpformats/GimpVbrBrush.py#L48)
 
 Parametric brush converted to a useable PIL image.
 
@@ -110,7 +110,7 @@ def image(self) -> NoReturn: ...
 
 ### GimpVbrBrush().load
 
-[Show source in GimpVbrBrush.py:39](../../../gimpformats/GimpVbrBrush.py#L39)
+[Show source in GimpVbrBrush.py:40](../../../gimpformats/GimpVbrBrush.py#L40)
 
 Load a gimp file.
 
@@ -126,7 +126,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpVbrBrush().save
 
-[Show source in GimpVbrBrush.py:105](../../../gimpformats/GimpVbrBrush.py#L105)
+[Show source in GimpVbrBrush.py:106](../../../gimpformats/GimpVbrBrush.py#L106)
 
 Save this gimp image to a file.
 
