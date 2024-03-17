@@ -9,9 +9,9 @@ from __future__ import annotations
 
 from PIL import Image
 
-from .GimpImageLevel import GimpImageLevel
-from .GimpIOBase import IO, GimpIOBase
-from .utils import repr_indent_lines
+from gimpformats.GimpImageLevel import GimpImageLevel
+from gimpformats.GimpIOBase import IO, GimpIOBase
+from gimpformats.utils import repr_indent_lines
 
 
 class GimpImageHierarchy(GimpIOBase):

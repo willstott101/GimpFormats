@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from io import BytesIO
 
-from . import utils
+from gimpformats import utils
 
 
 class GimpGplPalette:

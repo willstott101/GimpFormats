@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from io import BytesIO
 
-from . import utils
-from .binaryiotools import IO
-from .GimpGbrBrush import GimpGbrBrush
-from .GimpPatPattern import GimpPatPattern
+from gimpformats import utils
+from gimpformats.binaryiotools import IO
+from gimpformats.GimpGbrBrush import GimpGbrBrush
+from gimpformats.GimpPatPattern import GimpPatPattern
 
 
 class GimpGpbBrush:

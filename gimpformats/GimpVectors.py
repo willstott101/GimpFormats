@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from .binaryiotools import IO
-from .GimpParasites import GimpParasite
+from gimpformats.binaryiotools import IO
+from gimpformats.GimpParasites import GimpParasite
 
 
 class GimpVector:

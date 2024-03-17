@@ -5,8 +5,8 @@ from __future__ import annotations
 from io import BytesIO
 from typing import ClassVar, NoReturn
 
-from . import utils
-from .utils import repr_indent_lines
+from gimpformats import utils
+from gimpformats.utils import repr_indent_lines
 
 
 class GradientSegment:

@@ -8,8 +8,8 @@ Format of known parasites:
 
 from __future__ import annotations
 
-from .binaryiotools import IO
-from .utils import repr_indent_lines
+from gimpformats.binaryiotools import IO
+from gimpformats.utils import repr_indent_lines
 
 # TODO: how to best use these for our puproses??
 KNOWN_DOCUMENT_PARASITES = [

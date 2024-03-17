@@ -6,8 +6,8 @@ from io import BytesIO
 
 import PIL.Image
 
-from . import utils
-from .binaryiotools import IO
+from gimpformats import utils
+from gimpformats.binaryiotools import IO
 
 
 class GimpPatPattern:

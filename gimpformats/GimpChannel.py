@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from PIL import Image
 
-from .binaryiotools import IO
-from .GimpImageHierarchy import GimpImageHierarchy
-from .GimpIOBase import GimpIOBase
-from .utils import repr_indent_lines
+from gimpformats.binaryiotools import IO
+from gimpformats.GimpImageHierarchy import GimpImageHierarchy
+from gimpformats.GimpIOBase import GimpIOBase
+from gimpformats.utils import repr_indent_lines
 
 
 class GimpChannel(GimpIOBase):

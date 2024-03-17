@@ -6,7 +6,7 @@ from io import BytesIO
 
 import brackettree
 
-from . import utils
+from gimpformats import utils
 
 
 class ParenFileValue:

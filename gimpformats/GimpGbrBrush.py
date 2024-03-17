@@ -8,9 +8,9 @@ from typing import ClassVar
 
 import PIL.Image
 
-from . import utils
-from .binaryiotools import IO
-from .utils import repr_indent_lines
+from gimpformats import utils
+from gimpformats.binaryiotools import IO
+from gimpformats.utils import repr_indent_lines
 
 
 class GimpGbrBrush:

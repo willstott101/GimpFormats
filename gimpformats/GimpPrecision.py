@@ -3,7 +3,7 @@
 # from .GimpImageHierarchy import GimpImageHierarchy
 from __future__ import annotations
 
-from .binaryiotools import IO
+from gimpformats.binaryiotools import IO
 
 
 class Precision:

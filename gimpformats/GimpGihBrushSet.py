@@ -8,10 +8,10 @@ from __future__ import annotations
 
 from io import BytesIO
 
-from . import utils
-from .binaryiotools import IO
-from .GimpGbrBrush import GimpGbrBrush
-from .utils import repr_indent_lines
+from gimpformats import utils
+from gimpformats.binaryiotools import IO
+from gimpformats.GimpGbrBrush import GimpGbrBrush
+from gimpformats.utils import repr_indent_lines
 
 
 class GimpGihBrushSet:

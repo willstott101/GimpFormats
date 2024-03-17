@@ -21,14 +21,14 @@ import PIL.ImageGrab
 from blendmodes.blend import BlendType, blendLayers
 from PIL import Image
 
-from . import utils
-from .binaryiotools import IO
-from .GimpChannel import GimpChannel
-from .GimpImageHierarchy import GimpImageHierarchy
-from .GimpIOBase import GimpIOBase, camel_to_pascal_with_spaces
-from .GimpLayer import GimpLayer
-from .GimpPrecision import Precision
-from .utils import repr_indent_lines
+from gimpformats import utils
+from gimpformats.binaryiotools import IO
+from gimpformats.GimpChannel import GimpChannel
+from gimpformats.GimpImageHierarchy import GimpImageHierarchy
+from gimpformats.GimpIOBase import GimpIOBase, camel_to_pascal_with_spaces
+from gimpformats.GimpLayer import GimpLayer
+from gimpformats.GimpPrecision import Precision
+from gimpformats.utils import repr_indent_lines
 
 
 class GimpDocument(GimpIOBase):

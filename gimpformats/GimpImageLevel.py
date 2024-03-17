@@ -11,7 +11,7 @@ import zlib
 import PIL.Image
 from PIL.Image import Image
 
-from .GimpIOBase import IO, CompressionMode, GimpIOBase
+from gimpformats.GimpIOBase import IO, CompressionMode, GimpIOBase
 
 # pylint:disable=invalid-name
 

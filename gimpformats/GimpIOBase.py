@@ -7,10 +7,10 @@ from typing import Any
 
 from aenum import Enum
 
-from .binaryiotools import IO
-from .GimpParasites import GimpParasite
-from .GimpVectors import GimpVector
-from .utils import repr_indent_lines
+from gimpformats.binaryiotools import IO
+from gimpformats.GimpParasites import GimpParasite
+from gimpformats.GimpVectors import GimpVector
+from gimpformats.utils import repr_indent_lines
 
 
 def _prop_cmp(val: int, prop: int | list[int]) -> ImageProperties:
