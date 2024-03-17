@@ -1,5 +1,5 @@
-"""Represents a single layer in a gimp image.
-"""
+"""Represents a single layer in a gimp image."""
+
 from __future__ import annotations
 
 from PIL.Image import Image

@@ -1,5 +1,5 @@
-"""Stuff related to vectors/paths within a gimp document.
-"""
+"""Stuff related to vectors/paths within a gimp document."""
+
 from __future__ import annotations
 
 from .binaryiotools import IO

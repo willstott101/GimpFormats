@@ -1,5 +1,5 @@
-"""Gimp color gradient.
-"""
+"""Gimp color gradient."""
+
 from __future__ import annotations
 
 from io import BytesIO

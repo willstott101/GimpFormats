@@ -1,5 +1,5 @@
-"""Pure python implementation of the gimp gbr brush format.
-"""
+"""Pure python implementation of the gimp gbr brush format."""
+
 from __future__ import annotations
 
 from io import BytesIO
@@ -119,19 +119,28 @@ class GimpGbrBrush:
 			return None
 		return PIL.Image.frombytes(self.mode, self.size, self.rawImage, decoder_name="raw")
 
-	def save(self, tofileName: str, toExtension: str | None = None) -> None:
-		"""Save this gimp image to a file."""
-		asImage = False
-		if toExtension is None and tofileName is not None:
-			extParts = tofileName.rsplit(".", 1)
-			toExtension = extParts[-1] if len(extParts) > 0 else None
-		if toExtension is not None and toExtension != "gbr":
-			asImage = True
-		if asImage and self.image:
-			self.image.save(tofileName)
+	def save(self, filename: str, extension: str | None = None) -> None:
+		"""
+		Save this GIMP image to a file.
+
+		Args:
+		----
+			filename (str): The name of the file to save.
+			extension (str, optional): The extension of the file. If not provided,
+				it will be inferred from the filename.
+
+		"""
+		# Infer extension from filename if not provided
+		if extension is None:
+			extension = Path(filename).suffix.lstrip(".") if filename else None
+
+		# Save as image if extension is provided and not "gbr"
+		if extension and extension != "gbr" and self.image:
+			self.image.save(filename)
 			self.image.close()
 		else:
-			Path(tofileName).write_bytes(self.encode())
+			# Save data directly if not an image or no image available
+			Path(filename).write_bytes(self.encode())
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""

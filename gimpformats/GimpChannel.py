@@ -1,5 +1,5 @@
-"""Represents a single channel or mask in a gimp image.
-"""
+"""Represents a single channel or mask in a gimp image."""
+
 from __future__ import annotations
 
 from PIL import Image

@@ -4,6 +4,7 @@ NOTE: This was originally designed to be a hierarchy, like
 	an image pyramid, through in practice they only use the
 	top level of the pyramid (64x64) and ignore the rest.
 """
+
 from __future__ import annotations
 
 from PIL import Image

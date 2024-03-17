@@ -3,6 +3,7 @@
 The gih format is use to store a series of brushes, and some extra info
 for how to use them.
 """
+
 from __future__ import annotations
 
 from io import BytesIO

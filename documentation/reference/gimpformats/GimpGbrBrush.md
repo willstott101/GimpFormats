@@ -33,7 +33,7 @@ class GimpGbrBrush:
 
 ### GimpGbrBrush().__repr__
 
-[Show source in GimpGbrBrush.py:140](../../../gimpformats/GimpGbrBrush.py#L140)
+[Show source in GimpGbrBrush.py:149](../../../gimpformats/GimpGbrBrush.py#L149)
 
 Get a textual representation of this object.
 
@@ -45,7 +45,7 @@ def __repr__(self, indent: int = 0) -> str: ...
 
 ### GimpGbrBrush().__str__
 
-[Show source in GimpGbrBrush.py:136](../../../gimpformats/GimpGbrBrush.py#L136)
+[Show source in GimpGbrBrush.py:145](../../../gimpformats/GimpGbrBrush.py#L145)
 
 Get a textual representation of this object.
 
@@ -129,12 +129,19 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 [Show source in GimpGbrBrush.py:122](../../../gimpformats/GimpGbrBrush.py#L122)
 
-Save this gimp image to a file.
+Save this GIMP image to a file.
+
+#### Arguments
+
+----
+ - `filename` *str* - The name of the file to save.
+ - `extension` *str, optional* - The extension of the file. If not provided,
+  it will be inferred from the filename.
 
 #### Signature
 
 ```python
-def save(self, tofileName: str, toExtension: str | None = None) -> None: ...
+def save(self, filename: str, extension: str | None = None) -> None: ...
 ```
 
 ### GimpGbrBrush().size

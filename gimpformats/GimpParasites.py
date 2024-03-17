@@ -5,6 +5,7 @@ They are used to store things like last-used plugin settings, gamma adjuetments,
 Format of known parasites:
 	https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/parasites.txt
 """
+
 from __future__ import annotations
 
 from .binaryiotools import IO

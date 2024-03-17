@@ -20,7 +20,7 @@
 
 ## GimpImageLevel
 
-[Show source in GimpImageLevel.py:18](../../../gimpformats/GimpImageLevel.py#L18)
+[Show source in GimpImageLevel.py:19](../../../gimpformats/GimpImageLevel.py#L19)
 
 Gets packed pixels from a gimp image.
 
@@ -35,7 +35,7 @@ class GimpImageLevel(GimpIOBase):
 
 ### GimpImageLevel().__repr__
 
-[Show source in GimpImageLevel.py:283](../../../gimpformats/GimpImageLevel.py#L283)
+[Show source in GimpImageLevel.py:284](../../../gimpformats/GimpImageLevel.py#L284)
 
 Get a textual representation of this object.
 
@@ -47,7 +47,7 @@ def __repr__(self, indent: int = 0) -> str: ...
 
 ### GimpImageLevel().__str__
 
-[Show source in GimpImageLevel.py:279](../../../gimpformats/GimpImageLevel.py#L279)
+[Show source in GimpImageLevel.py:280](../../../gimpformats/GimpImageLevel.py#L280)
 
 Get a textual representation of this object.
 
@@ -59,7 +59,7 @@ def __str__(self) -> str: ...
 
 ### GimpImageLevel()._encodeRLE
 
-[Show source in GimpImageLevel.py:149](../../../gimpformats/GimpImageLevel.py#L149)
+[Show source in GimpImageLevel.py:150](../../../gimpformats/GimpImageLevel.py#L150)
 
 Encode image to RLE image data.
 
@@ -71,7 +71,7 @@ def _encodeRLE(self, data, bpp): ...
 
 ### GimpImageLevel()._imgToTiles
 
-[Show source in GimpImageLevel.py:244](../../../gimpformats/GimpImageLevel.py#L244)
+[Show source in GimpImageLevel.py:245](../../../gimpformats/GimpImageLevel.py#L245)
 
 break an image into a series of tiles, each<=64x64.
 
@@ -83,7 +83,7 @@ def _imgToTiles(self, image): ...
 
 ### GimpImageLevel().bpp
 
-[Show source in GimpImageLevel.py:224](../../../gimpformats/GimpImageLevel.py#L224)
+[Show source in GimpImageLevel.py:225](../../../gimpformats/GimpImageLevel.py#L225)
 
 Get bpp.
 
@@ -96,7 +96,7 @@ def bpp(self): ...
 
 ### GimpImageLevel().decode
 
-[Show source in GimpImageLevel.py:31](../../../gimpformats/GimpImageLevel.py#L31)
+[Show source in GimpImageLevel.py:32](../../../gimpformats/GimpImageLevel.py#L32)
 
 Decode a byte buffer.
 
@@ -113,7 +113,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpImageLevel().encode
 
-[Show source in GimpImageLevel.py:71](../../../gimpformats/GimpImageLevel.py#L71)
+[Show source in GimpImageLevel.py:72](../../../gimpformats/GimpImageLevel.py#L72)
 
 Encode this object to a byte buffer.
 
@@ -125,7 +125,7 @@ def encode(self) -> bytearray: ...
 
 ### GimpImageLevel().image
 
-[Show source in GimpImageLevel.py:255](../../../gimpformats/GimpImageLevel.py#L255)
+[Show source in GimpImageLevel.py:256](../../../gimpformats/GimpImageLevel.py#L256)
 
 Get a final, compiled image.
 
@@ -138,7 +138,7 @@ def image(self) -> Image: ...
 
 ### GimpImageLevel().image
 
-[Show source in GimpImageLevel.py:271](../../../gimpformats/GimpImageLevel.py#L271)
+[Show source in GimpImageLevel.py:272](../../../gimpformats/GimpImageLevel.py#L272)
 
 #### Signature
 
@@ -149,7 +149,7 @@ def image(self, image: Image) -> None: ...
 
 ### GimpImageLevel().mode
 
-[Show source in GimpImageLevel.py:229](../../../gimpformats/GimpImageLevel.py#L229)
+[Show source in GimpImageLevel.py:230](../../../gimpformats/GimpImageLevel.py#L230)
 
 Get mode.
 
@@ -162,7 +162,7 @@ def mode(self): ...
 
 ### GimpImageLevel().tiles
 
-[Show source in GimpImageLevel.py:235](../../../gimpformats/GimpImageLevel.py#L235)
+[Show source in GimpImageLevel.py:236](../../../gimpformats/GimpImageLevel.py#L236)
 
 Get tiles.
 

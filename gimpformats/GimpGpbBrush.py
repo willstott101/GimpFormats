@@ -1,5 +1,5 @@
-"""Pure python implementation of the OLD gimp gpb brush format.
-"""
+"""Pure python implementation of the OLD gimp gpb brush format."""
+
 from __future__ import annotations
 
 from io import BytesIO

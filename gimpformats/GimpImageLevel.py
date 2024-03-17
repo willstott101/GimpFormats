@@ -2,6 +2,7 @@
 
 This represents a single level in an imageHierarchy
 """
+
 from __future__ import annotations
 
 import math

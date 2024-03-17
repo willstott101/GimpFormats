@@ -1,5 +1,4 @@
-"""Since the precision code is so unusual, I decided to create a class to parse it.
-"""
+"""Since the precision code is so unusual, I decided to create a class to parse it."""
 
 # from .GimpImageHierarchy import GimpImageHierarchy
 from __future__ import annotations

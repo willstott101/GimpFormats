@@ -1,5 +1,5 @@
-"""A specialized binary file base for Gimp files.
-"""
+"""A specialized binary file base for Gimp files."""
+
 from __future__ import annotations
 
 import struct

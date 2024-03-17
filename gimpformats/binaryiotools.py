@@ -9,7 +9,7 @@ Create a new IO object and initialize/ set data
 Example:
 -------
 ```python
-f = open(fileName, 'rb')
+f = open(fileName, "rb")
 data = f.read()
 f.close()
 io = IO(data)
@@ -29,6 +29,7 @@ For a file starting with the bytes:
 The values for width and height would be 200, 400
 
 """
+
 from __future__ import annotations
 
 import struct

@@ -9,6 +9,7 @@ Currently not supporting:
 	Programatically alter documents (add layer, etc)
 	Rendering a final, compositied image
 """
+
 from __future__ import annotations
 
 import copy

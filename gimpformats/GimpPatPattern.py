@@ -1,5 +1,5 @@
-"""Pure python implementation of a gimp pattern file.
-"""
+"""Pure python implementation of a gimp pattern file."""
+
 from __future__ import annotations
 
 from io import BytesIO

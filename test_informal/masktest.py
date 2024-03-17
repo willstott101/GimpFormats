@@ -1,5 +1,4 @@
-"""Feature: https://github.com/FHPythonUtils/GimpFormats/issues/6.
-"""
+"""Feature: https://github.com/FHPythonUtils/GimpFormats/issues/6."""
 
 from __future__ import annotations
 
