@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gimpformats"
-version = "2023.1"
+version = "2024"
 license = "lgpl-3.0-only"
 description = "Pure python implementation of the gimp file format(s)"
 authors = ["FredHappyface"]

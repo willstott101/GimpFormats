@@ -216,6 +216,10 @@ Decode a list of properties.
 def _propertiesDecode(self, ioBuf: IO) -> int: ...
 ```
 
+#### See also
+
+- [IO](./binaryiotools.md#io)
+
 ### GimpIOBase()._propertiesEncode
 
 [Show source in GimpIOBase.py:700](../../../gimpformats/GimpIOBase.py#L700)
@@ -312,6 +316,10 @@ Get the vector that is currently active.
 @property
 def activeVector(self) -> GimpVector: ...
 ```
+
+#### See also
+
+- [GimpVector](./GimpVectors.md#gimpvector)
 
 ### GimpIOBase().doc
 

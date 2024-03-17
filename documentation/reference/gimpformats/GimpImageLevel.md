@@ -33,6 +33,10 @@ class GimpImageLevel(GimpIOBase):
     def __init__(self, parent) -> None: ...
 ```
 
+#### See also
+
+- [GimpIOBase](./GimpIOBase.md#gimpiobase)
+
 ### GimpImageLevel().__repr__
 
 [Show source in GimpImageLevel.py:284](../../../gimpformats/GimpImageLevel.py#L284)

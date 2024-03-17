@@ -76,6 +76,10 @@ class GimpDocument(GimpIOBase):
     def __init__(self, fileName=None) -> None: ...
 ```
 
+#### See also
+
+- [GimpIOBase](./GimpIOBase.md#gimpiobase)
+
 ### GimpDocument().__delitem__
 
 [Show source in gimpXcfDocument.py:343](../../../gimpformats/gimpXcfDocument.py#L343)
@@ -103,6 +107,10 @@ Get the layer at an index.
 ```python
 def __getitem__(self, index: int) -> GimpLayer: ...
 ```
+
+#### See also
+
+- [GimpLayer](./GimpLayer.md#gimplayer)
 
 ### GimpDocument().__len__
 
@@ -172,6 +180,10 @@ Append a layer object to the document.
 def addLayer(self, layer: GimpLayer) -> None: ...
 ```
 
+#### See also
+
+- [GimpLayer](./GimpLayer.md#gimplayer)
+
 ### GimpDocument().appendLayer
 
 [Show source in gimpXcfDocument.py:302](../../../gimpformats/gimpXcfDocument.py#L302)
@@ -187,6 +199,10 @@ Append a layer object to the document.
 ```python
 def appendLayer(self, layer: GimpLayer) -> None: ...
 ```
+
+#### See also
+
+- [GimpLayer](./GimpLayer.md#gimplayer)
 
 ### GimpDocument().decode
 
@@ -316,6 +332,10 @@ Insert a layer object at a specific position.
 def insertLayer(self, layer: GimpLayer, index: int = -1) -> None: ...
 ```
 
+#### See also
+
+- [GimpLayer](./GimpLayer.md#gimplayer)
+
 ### GimpDocument().layers
 
 [Show source in gimpXcfDocument.py:224](../../../gimpformats/gimpXcfDocument.py#L224)
@@ -370,6 +390,10 @@ Create a new layer based on a PIL image.
 ```python
 def newLayer(self, name: str, image: Image.Image, index: int = -1) -> GimpLayer: ...
 ```
+
+#### See also
+
+- [GimpLayer](./GimpLayer.md#gimplayer)
 
 ### GimpDocument().newLayerFromClipboard
 
@@ -482,6 +506,10 @@ def flattenAll(
     layers: list[GimpLayer], imageDimensions: tuple[int, int], ignoreHidden: bool = True
 ) -> Image.Image: ...
 ```
+
+#### See also
+
+- [GimpLayer](./GimpLayer.md#gimplayer)
 
 
 

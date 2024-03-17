@@ -29,6 +29,10 @@ class GimpImageHierarchy(GimpIOBase):
     def __init__(self, parent, image: Image.Image | None = None) -> None: ...
 ```
 
+#### See also
+
+- [GimpIOBase](./GimpIOBase.md#gimpiobase)
+
 ### GimpImageHierarchy().__repr__
 
 [Show source in GimpImageHierarchy.py:113](../../../gimpformats/GimpImageHierarchy.py#L113)
@@ -118,3 +122,7 @@ so this returns an array of one item
 @property
 def levels(self) -> list[GimpImageLevel]: ...
 ```
+
+#### See also
+
+- [GimpImageLevel](./GimpImageLevel.md#gimpimagelevel)

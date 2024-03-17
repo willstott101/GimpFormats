@@ -61,6 +61,10 @@ Decode the precision code from the file.
 def decode(self, gimpVersion: int, ioBuf: IO) -> None: ...
 ```
 
+#### See also
+
+- [IO](./binaryiotools.md#io)
+
 ### Precision().encode
 
 [Show source in GimpPrecision.py:41](../../../gimpformats/GimpPrecision.py#L41)
@@ -74,6 +78,10 @@ NOTE: will not mess with development versions 5 or 6
 ```python
 def encode(self, gimpVersion: int, ioBuf: IO) -> None: ...
 ```
+
+#### See also
+
+- [IO](./binaryiotools.md#io)
 
 ### Precision().requiredGimpVersion
 

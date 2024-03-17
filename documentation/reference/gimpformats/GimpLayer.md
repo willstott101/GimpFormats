@@ -32,6 +32,10 @@ class GimpLayer(GimpIOBase):
     ) -> None: ...
 ```
 
+#### See also
+
+- [GimpIOBase](./GimpIOBase.md#gimpiobase)
+
 ### GimpLayer().__repr__
 
 [Show source in GimpLayer.py:191](../../../gimpformats/GimpLayer.py#L191)
@@ -164,6 +168,10 @@ NOTE: can return None if it has been fully read into an image
 @property
 def imageHierarchy(self) -> GimpImageHierarchy: ...
 ```
+
+#### See also
+
+- [GimpImageHierarchy](./GimpImageHierarchy.md#gimpimagehierarchy)
 
 ### GimpLayer().imageHierarchy
 

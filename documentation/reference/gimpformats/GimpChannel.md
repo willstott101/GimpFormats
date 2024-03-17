@@ -29,6 +29,10 @@ class GimpChannel(GimpIOBase):
     ) -> None: ...
 ```
 
+#### See also
+
+- [GimpIOBase](./GimpIOBase.md#gimpiobase)
+
 ### GimpChannel().__repr__
 
 [Show source in GimpChannel.py:99](../../../gimpformats/GimpChannel.py#L99)
