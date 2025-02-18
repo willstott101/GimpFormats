@@ -1,6 +1,7 @@
+from urllib.parse import urljoin
+
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
 
 base_url = "https://sourceforge.net/projects/rods-custom-font-xcf-files/files/Fonts%20created%20by%20Deezy%20-%20Custom%20Fonts%20created%20by%20RD%20-%20CAP%20LETTERS%20ONLY/"
 download_folder = "downloads"
@@ -17,7 +18,6 @@ for link in links:
 	filename = link.split("/")[-2]
 
 	if filename:
-
 		print(f"Downloading {filename}...")
 		file_data = requests.get(file_url, stream=True)
 

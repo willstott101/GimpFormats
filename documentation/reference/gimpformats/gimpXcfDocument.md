@@ -29,12 +29,13 @@
     - [GimpDocument().save](#gimpdocument()save)
     - [GimpDocument().saveNew](#gimpdocument()savenew)
     - [GimpDocument().setLayer](#gimpdocument()setlayer)
+  - [applyMask](#applymask)
   - [blendModeLookup](#blendmodelookup)
   - [blendModeLookup](#blendmodelookup-1)
+  - [blendWithFlattened](#blendwithflattened)
   - [flattenAll](#flattenall)
   - [flattenLayerOrGroup](#flattenlayerorgroup)
   - [renderLayerOrGroup](#renderlayerorgroup)
-  - [renderMaskWOffset](#rendermaskwoffset)
 
 ## BlendType
 
@@ -461,6 +462,26 @@ def setLayer(self, index, layer) -> None: ...
 
 
 
+## applyMask
+
+[Show source in gimpXcfDocument.py:587](../../../gimpformats/gimpXcfDocument.py#L587)
+
+Applies a mask efficiently.
+
+#### Signature
+
+```python
+def applyMask(
+    image: Image.Image,
+    mask: Image.Image,
+    xOffset: int,
+    yOffset: int,
+    size: tuple[int, int],
+) -> Image.Image: ...
+```
+
+
+
 ## blendModeLookup
 
 [Show source in gimpXcfDocument.py:434](../../../gimpformats/gimpXcfDocument.py#L434)
@@ -485,7 +506,9 @@ def blendModeLookup(
 
 ## blendModeLookup
 
-[Show source in gimpXcfDocument.py:617](../../../gimpformats/gimpXcfDocument.py#L617)
+[Show source in gimpXcfDocument.py:607](../../../gimpformats/gimpXcfDocument.py#L607)
+
+Looks up the blend mode from the lookup table.
 
 #### Signature
 
@@ -495,9 +518,31 @@ def blendModeLookup(blend_mode, blendLookup): ...
 
 
 
+## blendWithFlattened
+
+[Show source in gimpXcfDocument.py:596](../../../gimpformats/gimpXcfDocument.py#L596)
+
+Optimized function to blend layers with existing flattened image.
+
+#### Signature
+
+```python
+def blendWithFlattened(
+    flattened: Image.Image | None, foreground: Image.Image, layer: GimpLayer
+) -> Image.Image: ...
+```
+
+#### See also
+
+- [GimpLayer](./GimpLayer.md#gimplayer)
+
+
+
 ## flattenAll
 
-[Show source in gimpXcfDocument.py:589](../../../gimpformats/gimpXcfDocument.py#L589)
+[Show source in gimpXcfDocument.py:567](../../../gimpformats/gimpXcfDocument.py#L567)
+
+Optimized flattenAll to avoid excessive recursion.
 
 #### Signature
 
@@ -517,6 +562,8 @@ def flattenAll(
 
 [Show source in gimpXcfDocument.py:520](../../../gimpformats/gimpXcfDocument.py#L520)
 
+Optimized function to flatten a layer or group with reduced redundant operations.
+
 #### Signature
 
 ```python
@@ -532,26 +579,14 @@ def flattenLayerOrGroup(
 
 ## renderLayerOrGroup
 
-[Show source in gimpXcfDocument.py:600](../../../gimpformats/gimpXcfDocument.py#L600)
+[Show source in gimpXcfDocument.py:577](../../../gimpformats/gimpXcfDocument.py#L577)
+
+Optimized function to render a layer or group with reduced conversions.
 
 #### Signature
 
 ```python
 def renderLayerOrGroup(
-    image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
-) -> Image.Image: ...
-```
-
-
-
-## renderMaskWOffset
-
-[Show source in gimpXcfDocument.py:608](../../../gimpformats/gimpXcfDocument.py#L608)
-
-#### Signature
-
-```python
-def renderMaskWOffset(
     image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
 ) -> Image.Image: ...
 ```

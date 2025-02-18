@@ -35,7 +35,7 @@ class GimpChannel(GimpIOBase):
 			self.image = image
 		self._data = None
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytes | bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:

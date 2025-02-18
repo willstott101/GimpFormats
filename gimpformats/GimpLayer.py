@@ -25,7 +25,7 @@ class GimpLayer(GimpIOBase):
 	PIL_MODE_TO_LAYER_MODE = {"L": 2, "LA": 3, "RGB": 0, "RGBA": 1}
 
 	def __init__(self, parent, name: str | None = None, image: Image | None = None) -> None:
-		"""Represents a single layer in a gimp image.
+		"""Represent a single layer in a gimp image.
 
 		Args:
 		----
@@ -47,11 +47,11 @@ class GimpLayer(GimpIOBase):
 		if image is not None:
 			self.image = image  # done last as it resets some of the above defaults
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytes | bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Steps:
-		Create a new IO buffer (array of binary values)
+		Create a new IO buffer
 		Grab attributes as outlined in the spec
 		List of properties
 		Get the image hierarchy and mask pointers
@@ -67,7 +67,7 @@ class GimpLayer(GimpIOBase):
 			int: offset
 
 		"""
-		# Create a new IO buffer (array of binary values)
+		# Create a new IO buffer
 		ioBuf = IO(data, index)
 		# Grab attributes as outlined in the spec
 		self.width = ioBuf.u32
@@ -88,14 +88,14 @@ class GimpLayer(GimpIOBase):
 		"""Encode to byte array.
 
 		Steps:
-		Create a new IO buffer (array of binary values)
+		Create a new IO buffer
 		Set attributes as outlined in the spec
 		List of properties
 		Set the image hierarchy and mask pointers
 		Return the data
 
 		"""
-		# Create a new IO buffer (array of binary values)
+		# Create a new IO buffer
 		dataAreaIO = IO()
 		ioBuf = IO()
 		# Set attributes as outlined in the spec

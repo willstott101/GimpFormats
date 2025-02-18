@@ -18,7 +18,6 @@ classifiers = [
 	"Topic :: Utilities",
 ]
 dependencies = [
-	"beautifulsoup4>=4.13.3",
 	"blendmodes>=2024.1.1",
 	"brackettree>=0.2.5",
 	"numpy>=1.26.4",
@@ -41,6 +40,12 @@ dev = [
 	"safety>=3.3.0",
 ]
 
+[tool.hatch.build.targets.sdist]
+# Tests include some massive files so exclude these from built packages
+exclude = [
+  "/tests",
+]
+
 [tool.ruff]
 line-length = 100
 indent-width = 4
@@ -49,7 +54,6 @@ target-version = "py38"
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-	"ANN101",  # type annotation for self in method
 	"COM812",  # enforce trailing comma
 	"D2",  # pydocstyle formatting
 	"ISC001",
@@ -61,7 +65,7 @@ ignore = [
 fixable = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
-"**/{tests,docs,tools}/*" = ["D", "S101", "E402"]
+"**/{tests,docs,tools}/*" = ["D", "S101", "E402", "ERA001"]
 
 [tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all" # Disallow all relative imports.
