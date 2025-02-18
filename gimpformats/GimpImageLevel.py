@@ -244,7 +244,7 @@ class GimpImageLevel(GimpIOBase):
 
 	def _imgToTiles(self, image):
 		"""
-		break an image into a series of tiles, each<=64x64.
+		Break an image into a series of tiles, each<=64x64.
 		"""
 		ret = []
 		for y in range(0, self.height, 64):

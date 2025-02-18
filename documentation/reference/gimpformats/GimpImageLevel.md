@@ -77,7 +77,7 @@ def _encodeRLE(self, data, bpp): ...
 
 [Show source in GimpImageLevel.py:245](../../../gimpformats/GimpImageLevel.py#L245)
 
-break an image into a series of tiles, each<=64x64.
+Break an image into a series of tiles, each<=64x64.
 
 #### Signature
 

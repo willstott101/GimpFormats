@@ -292,7 +292,7 @@ class GimpIOBase:
 		while index < len(data):
 			position = struct.unpack(">I", data[index : index + 4])[0]
 			index += 4
-			isVertical = struct.unpack(">c", data[index])[0] == 2
+			isVertical = struct.unpack(">c", data[index : index + 1])[0] == 2
 			index += 1
 			self.guidelines.append((isVertical, position))
 

@@ -1,9 +1,11 @@
-[tool.poetry]
+[project]
 name = "gimpformats"
-version = "2024"
-license = "lgpl-3.0-only"
+version = "2025"
 description = "Pure python implementation of the gimp file format(s)"
-authors = ["FredHappyface"]
+authors = [{ name = "FredHappyface" }]
+requires-python = ">=3.9"
+readme = "README.md"
+license = "lgpl-3.0-only"
 classifiers = [
 	"Development Status :: 3 - Alpha",
 	"Intended Audience :: Developers",
@@ -13,31 +15,31 @@ classifiers = [
 	"Programming Language :: Python :: Implementation :: CPython",
 	"Topic :: Multimedia :: Graphics",
 	"Topic :: Software Development :: Libraries :: Python Modules",
-	"Topic :: Utilities"
+	"Topic :: Utilities",
 ]
-homepage = "https://github.com/FHPythonUtils/GimpFormats"
-repository = "https://github.com/FHPythonUtils/GimpFormats"
-documentation = "https://github.com/FHPythonUtils/GimpFormats/blob/master/README.md"
-readme = "README.md"
+dependencies = [
+	"beautifulsoup4>=4.13.3",
+	"blendmodes>=2024.1.1",
+	"brackettree>=0.2.5",
+	"numpy>=1.26.4",
+	"pillow>=10.4.0",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-blendmodes = "<2026,>=2024.1.1"
-brackettree = "<2,>=0.2.5"
-numpy = "<2,>=1.26.4"
-Pillow = "<11,>=10.2.0"
+[project.urls]
+Homepage = "https://github.com/FHPythonUtils/GimpFormats"
+Repository = "https://github.com/FHPythonUtils/GimpFormats"
+Documentation = "https://github.com/FHPythonUtils/GimpFormats/blob/master/README.md"
 
-[tool.poetry.group.dev.dependencies]
-imgcompare = "^2.0.1"
-pytest = "^8.1.1"
-handsdown = "^2.1.0"
-coverage = "^7.4.4"
-ruff = "^0.3.3"
-pyright = "^1.1.354"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+	"coverage>=7.6.12",
+	"handsdown>=2.1.0",
+	"imgcompare>=2.0.1",
+	"pyright>=1.1.394",
+	"pytest>=8.3.4",
+	"ruff>=0.9.6",
+	"safety>=3.3.0",
+]
 
 [tool.ruff]
 line-length = 100
@@ -91,3 +93,7 @@ deps =
 	pytest
 commands = pytest tests
 """
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
