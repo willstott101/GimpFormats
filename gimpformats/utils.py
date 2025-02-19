@@ -10,7 +10,7 @@ def fileOpen(file: BytesIO | str | Path) -> tuple[str, bytes]:
 	:param fileName: can be a file name or a file-like object
 	"""
 	if isinstance(file, BytesIO):
-		with file as file:
+		with file:
 			return file.name, file.read()
 	pth = Path(file)
 	return pth.name, pth.read_bytes()
@@ -19,13 +19,13 @@ def fileOpen(file: BytesIO | str | Path) -> tuple[str, bytes]:
 def save(data: bytes, file: BytesIO | str | Path) -> None:
 	"""Save this gimp image to a file."""
 	if isinstance(file, BytesIO):
-		with file as file:
+		with file:
 			file.write(data)
 		return
 	pth = Path(file)
 	pth.write_bytes(data)
 
 
-def repr_indent_lines(indent: int, lines: list[str]):
+def repr_indent_lines(indent: int, lines: list[str]) -> str:
 	indentstr = indent * "\t"
 	return (indentstr) + ((f"\n{indentstr}").join(lines))

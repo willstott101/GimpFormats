@@ -67,7 +67,7 @@ def __str__(self) -> str: ...
 Decode a byte buffer.
 
 Steps:
-Create a new IO buffer (array of binary values)
+Create a new IO buffer
 Grab attributes as outlined in the spec
 List of properties
 Get the image hierarchy and mask pointers
@@ -87,7 +87,7 @@ Return the offset
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int: ...
+def decode(self, data: bytes | bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpLayer().encode
@@ -97,7 +97,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 Encode to byte array.
 
 Steps:
-Create a new IO buffer (array of binary values)
+Create a new IO buffer
 Set attributes as outlined in the spec
 List of properties
 Set the image hierarchy and mask pointers

@@ -12,6 +12,7 @@ from gimpformats.gimpXcfDocument import GimpDocument
 
 FILES = THISDIR.parent / "test_files"
 
+# ruff:noqa:ERA001
 
 project = GimpDocument((FILES / "64x64.xcf").as_posix())
 # project.cat()

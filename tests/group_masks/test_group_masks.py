@@ -40,6 +40,7 @@ def test_multipleOffsetMaskedGroups() -> None:
 	"""Test multiple offset layer groups with masks."""
 	dut.load(f"{THISDIR}/multiple-offset-masked-groups.xcf")
 	result = dut.image
+	result.save("test.png")
 	assert imgcompare.is_equal(
 		result,
 		f"{THISDIR}/multiple-offset-masked-groups.tga",

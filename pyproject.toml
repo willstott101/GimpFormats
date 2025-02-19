@@ -42,9 +42,7 @@ dev = [
 
 [tool.hatch.build.targets.sdist]
 # Tests include some massive files so exclude these from built packages
-exclude = [
-  "/tests",
-]
+exclude = ["/tests"]
 
 [tool.ruff]
 line-length = 100
@@ -54,18 +52,30 @@ target-version = "py38"
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-	"COM812",  # enforce trailing comma
-	"D2",  # pydocstyle formatting
+	"COM812", # enforce trailing comma
+	"D2",     # pydocstyle formatting
 	"ISC001",
-	"N",  # pep8 naming
+	"N",      # pep8 naming
 	"PLR09",  # pylint refactor too many
-	"TCH",  # type check blocks
-	"W191"  # ignore this to allow tabs
+	"TCH",    # type check blocks
+	"W191",   # ignore this to allow tabs
+	# Temp
+	"PTH",
+	"PLR2004",
+	"TD00",
+
 ]
 fixable = ["ALL"]
 
 [tool.ruff.lint.per-file-ignores]
-"**/{tests,docs,tools}/*" = ["D", "S101", "E402", "ERA001"]
+"**/{tests,docs,tools}/*" = [
+	"D",
+	"S101",
+	"E402",
+	"ERA001",
+	# Temp
+	"SIM115", # Use a context manager for opening files
+]
 
 [tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all" # Disallow all relative imports.

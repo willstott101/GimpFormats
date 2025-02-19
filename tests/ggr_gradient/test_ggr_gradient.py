@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import sys
+from io import BufferedReader
 from pathlib import Path
 
 THISDIR = str(Path(__file__).resolve().parent)
@@ -13,7 +14,7 @@ from gimpformats.GimpGgrGradient import GimpGgrGradient
 dut = GimpGgrGradient()
 
 
-def colorArray(numPoints):
+def colorArray(numPoints: int) -> list:
 	"""colour array."""
 	colors = []
 	i = 0.0
@@ -24,14 +25,14 @@ def colorArray(numPoints):
 	return colors
 
 
-def saveColors(f, colorArray) -> None:
+def saveColors(f: BufferedReader, colorArray: list) -> None:
 	"""save colours."""
 	f.write(b"r, g, b, a\n")
 	for c in colorArray:
-		line = []
+		_line: list[str] = []
 		for _chan in c:
-			line.append(str(c))
-			line = ", ".join(line) + "\n"
+			_line.append(str(c))
+			line = ", ".join(_line) + "\n"
 			f.write(line.encode("utf-8"))
 
 

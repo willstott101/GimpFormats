@@ -18,7 +18,8 @@ from io import BytesIO
 from typing import NoReturn
 
 import PIL.ImageGrab
-from blendmodes.blend import BlendType, blendLayers
+from blendmodes.blend import BlendType as BlendMode
+from blendmodes.blend import blendLayers
 from PIL import Image
 
 from gimpformats import utils
@@ -50,7 +51,7 @@ class GimpDocument(GimpIOBase):
 		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 	"""
 
-	def __init__(self, fileName: BytesIO | str | None=None) -> None:
+	def __init__(self, fileName: BytesIO | str | None = None) -> None:
 		"""Pure python implementation of the gimp file format.
 
 		Has a series of attributes including the following:
@@ -347,10 +348,6 @@ class GimpDocument(GimpIOBase):
 		"""
 		self.deleteLayer(index)
 
-	def __inc__(self, amt: GimpLayer) -> GimpDocument:
-		self.appendLayer(amt)
-		return self
-
 	@property
 	def image(self) -> Image.Image:
 		"""Generates a final, compiled image by processing layers and groups."""
@@ -392,7 +389,7 @@ class GimpDocument(GimpIOBase):
 		# self.forceFullyLoaded()
 		# utils.save(self.encode(), filename or self.fileName)
 
-	def saveNew(self, filename=None) -> NoReturn:
+	def saveNew(self, filename: str | None = None) -> NoReturn:
 		"""Save a new gimp image to a file."""
 
 		# Save not yet implemented so for now throw
@@ -434,16 +431,9 @@ class GimpDocument(GimpIOBase):
 		return repr_indent_lines(indent, ret)
 
 
-def blendModeLookup(
-	blendmode: int, blendLookup: dict[int, BlendType], default: BlendType = BlendType.NORMAL
-):
-	"""Get the blendmode from a lookup table."""
-	if blendmode not in blendLookup:
-		return default
-	return blendLookup[blendmode]
-
-
 class BlendType(Enum):
+	"""Gimp xcf blend types."""
+
 	NORMAL = 0
 	MULTIPLY = 3
 	SCREEN = 4
@@ -470,53 +460,53 @@ class BlendType(Enum):
 
 
 blendLookup = {
-	0: BlendType.NORMAL,
-	3: BlendType.MULTIPLY,
-	4: BlendType.SCREEN,
-	5: BlendType.OVERLAY,
-	6: BlendType.DIFFERENCE,
-	7: BlendType.ADDITIVE,
-	8: BlendType.NEGATION,
-	9: BlendType.DARKEN,
-	10: BlendType.LIGHTEN,
-	11: BlendType.HUE,
-	12: BlendType.SATURATION,
-	13: BlendType.COLOUR,
-	14: BlendType.LUMINOSITY,
-	15: BlendType.DIVIDE,
-	16: BlendType.COLOURDODGE,
-	17: BlendType.COLOURBURN,
-	18: BlendType.HARDLIGHT,
-	19: BlendType.SOFTLIGHT,
-	20: BlendType.GRAINEXTRACT,
-	21: BlendType.GRAINMERGE,
-	23: BlendType.OVERLAY,
-	24: BlendType.HUE,
-	25: BlendType.SATURATION,
-	26: BlendType.COLOUR,
-	27: BlendType.LUMINOSITY,
-	28: BlendType.NORMAL,
-	30: BlendType.MULTIPLY,
-	31: BlendType.SCREEN,
-	32: BlendType.DIFFERENCE,
-	33: BlendType.ADDITIVE,
-	34: BlendType.NEGATION,
-	35: BlendType.DARKEN,
-	36: BlendType.LIGHTEN,
-	37: BlendType.HUE,
-	38: BlendType.SATURATION,
-	39: BlendType.COLOUR,
-	40: BlendType.LUMINOSITY,
-	41: BlendType.DIVIDE,
-	42: BlendType.COLOURDODGE,
-	43: BlendType.COLOURBURN,
-	44: BlendType.HARDLIGHT,
-	45: BlendType.SOFTLIGHT,
-	46: BlendType.GRAINEXTRACT,
-	47: BlendType.GRAINMERGE,
-	48: BlendType.VIVIDLIGHT,
-	49: BlendType.PINLIGHT,
-	52: BlendType.EXCLUSION,
+	0: BlendMode.NORMAL,
+	3: BlendMode.MULTIPLY,
+	4: BlendMode.SCREEN,
+	5: BlendMode.OVERLAY,
+	6: BlendMode.DIFFERENCE,
+	7: BlendMode.ADDITIVE,
+	8: BlendMode.NEGATION,
+	9: BlendMode.DARKEN,
+	10: BlendMode.LIGHTEN,
+	11: BlendMode.HUE,
+	12: BlendMode.SATURATION,
+	13: BlendMode.COLOUR,
+	14: BlendMode.LUMINOSITY,
+	15: BlendMode.DIVIDE,
+	16: BlendMode.COLOURDODGE,
+	17: BlendMode.COLOURBURN,
+	18: BlendMode.HARDLIGHT,
+	19: BlendMode.SOFTLIGHT,
+	20: BlendMode.GRAINEXTRACT,
+	21: BlendMode.GRAINMERGE,
+	23: BlendMode.OVERLAY,
+	24: BlendMode.HUE,
+	25: BlendMode.SATURATION,
+	26: BlendMode.COLOUR,
+	27: BlendMode.LUMINOSITY,
+	28: BlendMode.NORMAL,
+	30: BlendMode.MULTIPLY,
+	31: BlendMode.SCREEN,
+	32: BlendMode.DIFFERENCE,
+	33: BlendMode.ADDITIVE,
+	34: BlendMode.NEGATION,
+	35: BlendMode.DARKEN,
+	36: BlendMode.LIGHTEN,
+	37: BlendMode.HUE,
+	38: BlendMode.SATURATION,
+	39: BlendMode.COLOUR,
+	40: BlendMode.LUMINOSITY,
+	41: BlendMode.DIVIDE,
+	42: BlendMode.COLOURDODGE,
+	43: BlendMode.COLOURBURN,
+	44: BlendMode.HARDLIGHT,
+	45: BlendMode.SOFTLIGHT,
+	46: BlendMode.GRAINEXTRACT,
+	47: BlendMode.GRAINMERGE,
+	48: BlendMode.VIVIDLIGHT,
+	49: BlendMode.PINLIGHT,
+	52: BlendMode.EXCLUSION,
 }
 
 
@@ -524,30 +514,40 @@ def flattenLayerOrGroup(
 	layerOrGroup: GimpLayer | list[GimpLayer],
 	imageDimensions: tuple[int, int],
 	flattenedSoFar: Image.Image | None = None,
+	*,
 	ignoreHidden: bool = True,
 ) -> Image.Image:
-	"""Optimized function to flatten a layer or group with reduced redundant operations."""
+	"""Recursively flattens a layer or group, handling nested groups properly."""
 
 	if isinstance(layerOrGroup, list):
 		first_layer = layerOrGroup[0]
+
+		# Skip hidden groups if ignoreHidden is enabled
 		if ignoreHidden and not first_layer.visible:
-			foregroundComposite = Image.new("RGBA", imageDimensions)
-		else:
-			foregroundComposite = renderLayerOrGroup(
-				flattenAll(layerOrGroup, imageDimensions, ignoreHidden), imageDimensions
+			return flattenedSoFar if flattenedSoFar else Image.new("RGBA", imageDimensions)
+
+		# Recursively flatten all layers and groups inside this group
+		nestedFlattened = Image.new("RGBA", imageDimensions)
+
+		for layer in layerOrGroup[1]:  # Iterate over group contents
+			nestedFlattened = flattenLayerOrGroup(
+				layer, imageDimensions, nestedFlattened, ignoreHidden=ignoreHidden
 			)
-			if first_layer.mask is not None:
-				foregroundComposite = applyMask(
-					foregroundComposite,
-					first_layer.mask.image,
-					first_layer.xOffset,
-					first_layer.yOffset,
-					imageDimensions,
-				)
+
+		# Render and apply mask if applicable
+		foregroundComposite = renderLayerOrGroup(nestedFlattened, imageDimensions)
+		if first_layer.mask is not None:
+			foregroundComposite = applyMask(
+				foregroundComposite,
+				first_layer.mask.image,
+				first_layer.xOffset,
+				first_layer.yOffset,
+				imageDimensions,
+			)
 
 		return blendWithFlattened(flattenedSoFar, foregroundComposite, first_layer)
 
-	# Single layer case
+	# Handle individual layer case
 	if ignoreHidden and not layerOrGroup.visible:
 		return flattenedSoFar if flattenedSoFar else Image.new("RGBA", imageDimensions)
 
@@ -568,12 +568,14 @@ def flattenLayerOrGroup(
 
 
 def flattenAll(
-	layers: list[GimpLayer], imageDimensions: tuple[int, int], ignoreHidden: bool = True
-) -> Image.Image:
+	layers: list[GimpLayer], imageDimensions: tuple[int, int], *, ignoreHidden: bool = True
+) -> Image.Image | None:
 	"""Optimized flattenAll to avoid excessive recursion."""
 	flattened = None
 	for layer in reversed(layers):
-		flattened = flattenLayerOrGroup(layer, imageDimensions, flattened, ignoreHidden)
+		flattened = flattenLayerOrGroup(
+			layer, imageDimensions, flattened, ignoreHidden=ignoreHidden
+		)
 	return flattened
 
 
@@ -588,12 +590,18 @@ def renderLayerOrGroup(
 
 
 def applyMask(
-	image: Image.Image, mask: Image.Image, xOffset: int, yOffset: int, size: tuple[int, int]
+	image: Image.Image, mask: Image.Image | None, xOffset: int, yOffset: int, size: tuple[int, int]
 ) -> Image.Image:
-	"""Applies a mask efficiently."""
-	masked_image = Image.new("RGBA", size)
-	masked_image.paste(image, (xOffset, yOffset), mask)
-	return masked_image
+	"""Apply a mask efficiently."""
+
+	if mask:
+		offset_mask = Image.new("RGBA", size)
+		offset_mask.paste(mask, (xOffset, yOffset))
+		mask = offset_mask.convert("L")  # Convert mask to grayscale
+
+	offset_image = Image.new("RGBA", size)
+	offset_image.paste(image, (xOffset, yOffset), mask)
+	return offset_image
 
 
 def blendWithFlattened(
@@ -607,6 +615,6 @@ def blendWithFlattened(
 	)
 
 
-def blendModeLookup(blend_mode, blendLookup):
-	"""Looks up the blend mode from the lookup table."""
-	return blendLookup.get(blend_mode, BlendType.NORMAL)
+def blendModeLookup(blend_mode: BlendMode, blendLookup: dict[BlendMode, BlendMode]) -> BlendMode:
+	"""Look up the blend mode from the lookup table."""
+	return blendLookup.get(blend_mode, BlendMode.NORMAL)
