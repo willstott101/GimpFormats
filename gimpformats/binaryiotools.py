@@ -82,7 +82,7 @@ class IO:
 	def data(self, data: bytearray) -> None:
 		"""Set data."""
 		if not hasattr(data, "__getitem__"):
-			raise Exception("ERR: incorrect type for data buffer" + str(type(data)))
+			raise RuntimeError("ERR: incorrect type for data buffer" + str(type(data)))
 		self._data = data
 
 	@property
@@ -114,14 +114,14 @@ class IO:
 			struct.pack_into(fmt, self.data, self.index, data)
 			self.index += size
 		except (DeprecationWarning, struct.error) as upstream:
-			raise Exception(type(data), fmt, size, data) from upstream
+			raise RuntimeError(type(data), fmt, size, data) from upstream
 
 	def _read(self, size: int, fmt: str) -> Any:
 		"""General formatted read."""
 		try:
 			data = struct.unpack(fmt, self.data[self.index : self.index + size])[0]
 		except (DeprecationWarning, struct.error) as upstream:
-			raise Exception(
+			raise RuntimeError(
 				str(fmt)
 				+ " "
 				+ str(size)
@@ -147,7 +147,7 @@ class IO:
 			return self.bool32
 		if self.boolSize == 64:
 			return self.bool64
-		raise Exception("Unknown bool size " + str(self.boolSize))
+		raise RuntimeError("Unknown bool size " + str(self.boolSize))
 
 	@boolean.setter
 	def boolean(self, ioBool: bool) -> None:
@@ -161,7 +161,7 @@ class IO:
 		elif self.boolSize == 64:
 			self.bool64 = ioBool
 		else:
-			raise Exception("Unknown bool size " + str(self.boolSize))
+			raise RuntimeError("Unknown bool size " + str(self.boolSize))
 
 	@property
 	def bool8(self) -> bool:
@@ -690,7 +690,7 @@ class IO:
 				self.data[self.index] = ioByte
 				self.index += 1
 
-	def _sz754(self, encoding: str):
+	def _sz754(self, encoding: str) -> str:
 		"""Read the next string conforming to IEEE 754 and advance the index.
 
 		Note, string format is:
@@ -710,7 +710,7 @@ class IO:
 			return data.decode("UTF-8", errors="replace")
 		if encoding == "W":
 			return data.decode("UTF-16", errors="replace")
-		raise Exception
+		raise RuntimeError
 
 	def _sz754set(self, sz754: Any, _encoding: str) -> None:
 		"""_sz754set."""
@@ -724,7 +724,7 @@ class IO:
 		return self._sz754(self.stringEncoding)
 
 	@sz754.setter
-	def sz754(self, sz754: Any):
+	def sz754(self, sz754: Any) -> None:
 		"""Set sz754."""
 		return self._sz754set(sz754, self.stringEncoding)
 
@@ -734,7 +734,7 @@ class IO:
 		return self._sz754("A")
 
 	@sz754A.setter
-	def sz754A(self, sz754: Any):
+	def sz754A(self, sz754: Any) -> None:
 		"""Set sz754A."""
 		return self._sz754set(sz754, "A")
 
@@ -744,7 +744,7 @@ class IO:
 		return self._sz754("W")
 
 	@sz754W.setter
-	def sz754W(self, sz754: Any):
+	def sz754W(self, sz754: Any) -> None:
 		"""Set sz754W."""
 		return self._sz754set(sz754, "W")
 
@@ -754,7 +754,7 @@ class IO:
 		return self._sz754("U")
 
 	@sz754U.setter
-	def sz754U(self, sz754: Any):
+	def sz754U(self, sz754: Any) -> None:
 		"""Set sz754U."""
 		return self._sz754set(sz754, "U")
 
@@ -773,7 +773,7 @@ class IO:
 			encoding = "UCS-2"
 		else:
 			msg = "bogus encoding"
-			raise Exception(msg)
+			raise RuntimeError(msg)
 		untilB = until.encode("ascii")[0]  # always ascii
 		while True:
 			char = self.data[self.index]

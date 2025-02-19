@@ -150,11 +150,9 @@ class GimpGtpToolPreset:
 		"""Encode to bytes."""
 		return parenFileEncode(self.values).encode("utf-8")
 
-	def save(self, tofileName: str | BytesIO | None = None) -> None:
-		"""Save this gimp tool preset to a file."""
-		file = tofileName if hasattr(tofileName, "write") else open(tofileName, "wb")
-		file.write(self.encode())
-		file.close()
+	def save(self, tofileName: str | BytesIO) -> None:
+		"""Save this gimp image to a file."""
+		utils.save(self.encode(), tofileName)
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
@@ -162,7 +160,5 @@ class GimpGtpToolPreset:
 
 	def __repr__(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		for value in self.values:
-			ret.append(value.__repr__(indent=indent + 1))
-		return repr_indent_lines(indent, ret)
+		ret = [value.__repr__() for value in self.values]
+		return utils.repr_indent_lines(indent, ret)

@@ -3,9 +3,8 @@
 from __future__ import annotations
 
 import struct
+from enum import Enum
 from typing import Any
-
-from aenum import Enum
 
 from gimpformats.binaryiotools import IO
 from gimpformats.GimpParasites import GimpParasite
@@ -13,7 +12,7 @@ from gimpformats.GimpVectors import GimpVector
 from gimpformats.utils import repr_indent_lines
 
 
-def _prop_cmp(val: int, prop: int | list[int]) -> ImageProperties:
+def _prop_cmp(val: int, prop: ImageProperties | list[ImageProperties]) -> bool:
 	if isinstance(prop, list):
 		return any(_prop_cmp(val, p) for p in prop)
 	return list(ImageProperties)[val] == prop
@@ -190,7 +189,7 @@ class GimpIOBase:
 		self.samplePoints: list[tuple[int, int]] = []
 		self.selected: bool = False
 		self.isSelection: bool = False
-		self.selectionAttachedTo: str | None = None
+		self.selectionAttachedTo: int | None = None
 		self.blendMode: BlendMode = BlendMode.ADDITION
 		self.visible: bool = False
 		self.isLinked: bool = False
@@ -269,7 +268,7 @@ class GimpIOBase:
 		"""Gimp nomenclature for the item's unique id."""
 		self.uniqueId = tattoo
 
-	def _parasitesDecode(self, data: bytes) -> int:
+	def _parasitesDecode(self, data: bytes | bytearray) -> int:
 		"""Decode list of parasites."""
 		index: int = 0
 		self.parasites = []  # reset
@@ -286,7 +285,7 @@ class GimpIOBase:
 			ioBuf.addBytes(parasite.encode())
 		return ioBuf.data
 
-	def _guidelinesDecode(self, data: bytes) -> None:
+	def _guidelinesDecode(self, data: bytes | bytearray) -> None:
 		"""Decode guidelines."""
 		index: int = 0
 		while index < len(data):
@@ -296,7 +295,7 @@ class GimpIOBase:
 			index += 1
 			self.guidelines.append((isVertical, position))
 
-	def _itemPathDecode(self, data: bytes) -> None:
+	def _itemPathDecode(self, data: bytes | bytearray) -> None:
 		"""Decode item path."""
 		index: int = 0
 		path = []
@@ -306,7 +305,7 @@ class GimpIOBase:
 			path.append(pathElem)
 		self.itemPath = path
 
-	def _vectorsDecode(self, data: bytes) -> None:
+	def _vectorsDecode(self, data: bytes | bytearray) -> None:
 		"""Decode vectors."""
 		index: int = 0
 		self.vectorsVersion = struct.unpack(">I", data[index : index + 4])[0]
@@ -338,7 +337,7 @@ class GimpIOBase:
 		else:
 			self.groupItemFlags &= ~0x00000001
 
-	def _colormapDecode(self, data: bytes | IO, index: int = 0) -> None:
+	def _colormapDecode(self, data: bytes | bytearray | IO, index: int = 0) -> None:
 		"""_colormapDecode_.
 
 		:param data: can be bytes or an IO object
@@ -365,13 +364,13 @@ class GimpIOBase:
 		if ioObj is not None:
 			ioObj.index = index
 
-	def _userUnitsDecode(self, data: bytes) -> None:
+	def _userUnitsDecode(self, data: bytes | bytearray) -> None:
 		"""Decode a set of user-defined measurement units."""
 		userUnits = GimpUserUnits()
 		userUnits.decode(data)
 		self.userUnits = userUnits
 
-	def _samplePointsDecode(self, data: bytes) -> None:
+	def _samplePointsDecode(self, data: bytes | bytearray) -> None:
 		"""Decode a series of points."""
 		index: int = 0
 		samplePoints = []
@@ -383,7 +382,7 @@ class GimpIOBase:
 			samplePoints.append((x, y))
 		self.samplePoints = samplePoints
 
-	def _propertyDecode(self, prop: int, data: bytes) -> int:
+	def _propertyDecode(self, prop: int, data: bytes | bytearray) -> int:
 		"""Decode a single property.
 
 		Many properties are in the form
@@ -513,54 +512,54 @@ class GimpIOBase:
 			prop, [ImageProperties.PROP_ACTIVE_LAYER, ImageProperties.PROP_ACTIVE_CHANNEL]
 		):
 			if self.selected is not None and self.selected:
-				ioBuf.u32 = ImageProperties.PROP_ACTIVE_LAYER
+				ioBuf.u32 = ImageProperties.PROP_ACTIVE_LAYER.value
 
 		elif _prop_cmp(prop, ImageProperties.PROP_SELECTION):
 			if self.isSelection is not None and self.isSelection:
-				ioBuf.u32 = ImageProperties.PROP_SELECTION
+				ioBuf.u32 = ImageProperties.PROP_SELECTION.value
 		elif _prop_cmp(prop, ImageProperties.PROP_FLOATING_SELECTION):
 			if self.selectionAttachedTo is not None:
-				ioBuf.u32 = ImageProperties.PROP_FLOATING_SELECTION
+				ioBuf.u32 = ImageProperties.PROP_FLOATING_SELECTION.value
 				ioBuf.u32 = self.selectionAttachedTo
 		elif _prop_cmp(prop, ImageProperties.PROP_OPACITY):
 			if self.opacity is not None and not isinstance(self.opacity, float):
-				ioBuf.u32 = ImageProperties.PROP_OPACITY
+				ioBuf.u32 = ImageProperties.PROP_OPACITY.value
 				ioBuf.u32 = self.opacity
 		elif _prop_cmp(prop, ImageProperties.PROP_MODE):
 			if self.blendMode is not None:
-				ioBuf.u32 = ImageProperties.PROP_MODE
+				ioBuf.u32 = ImageProperties.PROP_MODE.value
 				ioBuf.u32 = self.blendMode
 		elif _prop_cmp(prop, ImageProperties.PROP_VISIBLE):
 			if self.visible is not None:
-				ioBuf.u32 = ImageProperties.PROP_VISIBLE
+				ioBuf.u32 = ImageProperties.PROP_VISIBLE.value
 				ioBuf.boolean = self.visible
 		elif _prop_cmp(prop, ImageProperties.PROP_LINKED):
 			if self.isLinked is not None and self.isLinked:
-				ioBuf.u32 = ImageProperties.PROP_LINKED
+				ioBuf.u32 = ImageProperties.PROP_LINKED.value
 				ioBuf.boolean = self.isLinked
 		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_ALPHA):
 			if self.lockAlpha is not None and self.lockAlpha:
-				ioBuf.u32 = ImageProperties.PROP_LOCK_ALPHA
+				ioBuf.u32 = ImageProperties.PROP_LOCK_ALPHA.value
 				ioBuf.boolean = self.lockAlpha
 		elif _prop_cmp(prop, ImageProperties.PROP_APPLY_MASK):
 			if self.applyMask is not None:
-				ioBuf.u32 = ImageProperties.PROP_APPLY_MASK
+				ioBuf.u32 = ImageProperties.PROP_APPLY_MASK.value
 				ioBuf.boolean = self.applyMask
 		elif _prop_cmp(prop, ImageProperties.PROP_EDIT_MASK):
 			if self.editingMask is not None and self.editingMask:
-				ioBuf.u32 = ImageProperties.PROP_EDIT_MASK
+				ioBuf.u32 = ImageProperties.PROP_EDIT_MASK.value
 				ioBuf.boolean = self.editingMask
 		elif _prop_cmp(prop, ImageProperties.PROP_SHOW_MASK):
 			if self.showMask is not None and self.showMask:
-				ioBuf.u32 = ImageProperties.PROP_SHOW_MASK
+				ioBuf.u32 = ImageProperties.PROP_SHOW_MASK.value
 				ioBuf.boolean = self.showMask
 		elif _prop_cmp(prop, ImageProperties.PROP_SHOW_MASKED):
 			if self.showMasked is not None:
-				ioBuf.u32 = ImageProperties.PROP_SHOW_MASKED
+				ioBuf.u32 = ImageProperties.PROP_SHOW_MASKED.value
 				ioBuf.boolean = self.showMasked
 		elif _prop_cmp(prop, ImageProperties.PROP_OFFSETS):
 			if self.xOffset is not None and self.yOffset is not None:
-				ioBuf.u32 = ImageProperties.PROP_OFFSETS
+				ioBuf.u32 = ImageProperties.PROP_OFFSETS.value
 				ioBuf.i32 = self.xOffset
 				ioBuf.i32 = self.yOffset
 		elif _prop_cmp(prop, ImageProperties.PROP_COLOR):
@@ -570,13 +569,13 @@ class GimpIOBase:
 				and not isinstance(self.color[1], float)
 				and not isinstance(self.color[2], float)
 			):
-				ioBuf.u32 = ImageProperties.PROP_COLOR
+				ioBuf.u32 = ImageProperties.PROP_COLOR.value
 				ioBuf.byte = self.color[0]
 				ioBuf.byte = self.color[1]
 				ioBuf.byte = self.color[2]
 		elif _prop_cmp(prop, ImageProperties.PROP_COMPRESSION):
 			if self.compression is not None:
-				ioBuf.u32 = ImageProperties.PROP_COMPRESSION
+				ioBuf.u32 = ImageProperties.PROP_COMPRESSION.value
 				ioBuf.u32 = self.compression
 		elif _prop_cmp(prop, ImageProperties.PROP_GUIDES):
 			if self.guidelines is not None and self.guidelines:
@@ -585,7 +584,7 @@ class GimpIOBase:
 				# ioBuf.addBytes(self._guidelinesEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_RESOLUTION):
 			if self.horizontalResolution is not None and self.verticalResolution is not None:
-				ioBuf.u32 = ImageProperties.PROP_RESOLUTION
+				ioBuf.u32 = ImageProperties.PROP_RESOLUTION.value
 				ioBuf.u32 = int(self.horizontalResolution)
 				ioBuf.i32 = int(self.verticalResolution)
 		elif _prop_cmp(prop, ImageProperties.PROP_TATTOO):
@@ -593,11 +592,11 @@ class GimpIOBase:
 				ioBuf.u32 = int(self.uniqueId, 16)
 		elif _prop_cmp(prop, ImageProperties.PROP_PARASITES):
 			if self.parasites is not None and self.parasites:
-				ioBuf.u32 = ImageProperties.PROP_PARASITES
+				ioBuf.u32 = ImageProperties.PROP_PARASITES.value
 				ioBuf.addBytes(self._parasitesEncode())
 		elif _prop_cmp(prop, ImageProperties.PROP_UNIT):
 			if self.units is not None:
-				ioBuf.u32 = ImageProperties.PROP_UNIT
+				ioBuf.u32 = ImageProperties.PROP_UNIT.value
 				ioBuf.u32 = self.units
 		elif _prop_cmp(prop, ImageProperties.PROP_PATHS):
 			if self.paths is not None and self.paths:
@@ -619,17 +618,17 @@ class GimpIOBase:
 				# ioBuf.addBytes(self._vectorsEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_TEXT_LAYER_FLAGS):
 			if self.textLayerFlags is not None:
-				ioBuf.u32 = ImageProperties.PROP_TEXT_LAYER_FLAGS
+				ioBuf.u32 = ImageProperties.PROP_TEXT_LAYER_FLAGS.value
 				ioBuf.u32 = self.textLayerFlags
 		elif _prop_cmp(prop, ImageProperties.PROP_OLD_SAMPLE_POINTS):
 			pass
 		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_CONTENT):
 			if self.locked is not None and self.locked:
-				ioBuf.u32 = ImageProperties.PROP_LOCK_CONTENT
+				ioBuf.u32 = ImageProperties.PROP_LOCK_CONTENT.value
 				ioBuf.boolean = self.locked
 		elif _prop_cmp(prop, ImageProperties.PROP_GROUP_ITEM):
 			if self.isGroup is not None and self.isGroup:
-				ioBuf.u32 = ImageProperties.PROP_GROUP_ITEM
+				ioBuf.u32 = ImageProperties.PROP_GROUP_ITEM.value
 		elif _prop_cmp(prop, ImageProperties.PROP_ITEM_PATH):
 			if self.itemPath is not None:
 				pass
@@ -637,31 +636,31 @@ class GimpIOBase:
 				# ioBuf.addBytes(self._itemPathEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_GROUP_ITEM_FLAGS):
 			if self.groupItemFlags is not None:
-				ioBuf.u32 = ImageProperties.PROP_GROUP_ITEM_FLAGS
+				ioBuf.u32 = ImageProperties.PROP_GROUP_ITEM_FLAGS.value
 				ioBuf.u32 = self.groupItemFlags
 		elif _prop_cmp(prop, ImageProperties.PROP_LOCK_POSITION):
 			if self.positionLocked is not None and self.positionLocked:
-				ioBuf.u32 = ImageProperties.PROP_LOCK_POSITION
+				ioBuf.u32 = ImageProperties.PROP_LOCK_POSITION.value
 				ioBuf.boolean = self.positionLocked
 		elif _prop_cmp(prop, ImageProperties.PROP_FLOAT_OPACITY):
 			if self.opacity is not None and isinstance(self.opacity, float):
-				ioBuf.u32 = ImageProperties.PROP_FLOAT_OPACITY
+				ioBuf.u32 = ImageProperties.PROP_FLOAT_OPACITY.value
 				ioBuf.float32 = self.opacity
 		elif _prop_cmp(prop, ImageProperties.PROP_COLOR_TAG):
 			if self.colorTag is not None:
-				ioBuf.u32 = ImageProperties.PROP_COLOR_TAG
+				ioBuf.u32 = ImageProperties.PROP_COLOR_TAG.value
 				ioBuf.u32 = self.colorTag
 		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_MODE):
 			if self.compositeMode is not None:
-				ioBuf.u32 = ImageProperties.PROP_COMPOSITE_MODE
+				ioBuf.u32 = ImageProperties.PROP_COMPOSITE_MODE.value
 				ioBuf.i32 = self.compositeMode
 		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_SPACE):
 			if self.compositeSpace is not None:
-				ioBuf.u32 = ImageProperties.PROP_COMPOSITE_SPACE
+				ioBuf.u32 = ImageProperties.PROP_COMPOSITE_SPACE.value
 				ioBuf.i32 = self.compositeSpace
 		elif _prop_cmp(prop, ImageProperties.PROP_BLEND_SPACE):
 			if self.blendSpace is not None:
-				ioBuf.u32 = ImageProperties.PROP_BLEND_SPACE
+				ioBuf.u32 = ImageProperties.PROP_BLEND_SPACE.value
 				ioBuf.u32 = self.blendSpace
 		elif _prop_cmp(prop, ImageProperties.PROP_FLOAT_COLOR):
 			if (
@@ -670,7 +669,7 @@ class GimpIOBase:
 				and isinstance(self.color[1], float)
 				and isinstance(self.color[2], float)
 			):
-				ioBuf.u32 = ImageProperties.PROP_FLOAT_COLOR
+				ioBuf.u32 = ImageProperties.PROP_FLOAT_COLOR.value
 				ioBuf.float32 = self.color[0]
 				ioBuf.float32 = self.color[1]
 				ioBuf.float32 = self.color[2]
@@ -700,7 +699,7 @@ class GimpIOBase:
 	def _propertiesEncode(self) -> bytearray:
 		"""Encode a list of properties."""
 		ioBuf = IO()
-		for prop in range(1, ImageProperties.PROP_NUM_PROPS):
+		for prop in range(1, ImageProperties.PROP_NUM_PROPS.value):
 			moData = self._propertyEncode(prop)
 			if moData:
 				ioBuf.addBytes(moData)
@@ -799,7 +798,7 @@ class GimpUserUnits:
 		self.sname = ""
 		self.pname = ""
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytes | bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:

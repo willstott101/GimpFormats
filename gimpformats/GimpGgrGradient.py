@@ -84,10 +84,8 @@ class GradientSegment:
 		ret.append(f"{self.leftPosition:06f}")
 		ret.append(f"{self.middlePosition:06f}")
 		ret.append(f"{self.rightPosition:06f}")
-		for chan in self.leftColor:
-			ret.append(f"{chan:06f}")
-		for chan in self.rightColor:
-			ret.append(f"{chan:06f}")
+		ret.extend([f"{chan:06f}" for chan in self.leftColor])
+		ret.extend([f"{chan:06f}" for chan in self.rightColor])
 		if self.blendFunc is not None:
 			ret.append(f"{self.blendFunc}")
 			if self.colorType is not None:
@@ -179,11 +177,10 @@ class GimpGgrGradient:
 		ret = ["GIMP Gradient"]
 		ret.append(f"Name: {self.name}")
 		ret.append(str(len(self.segments)))
-		for segment in self.segments:
-			ret.append(segment.encode())
+		ret.extend([segment.encode() for segment in self.segments])
 		return ("\n".join(ret) + "\n").encode("utf-8")
 
-	def save(self, tofileName: str | BytesIO | None = None) -> None:
+	def save(self, tofileName: str | BytesIO) -> None:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), tofileName)
 
@@ -204,6 +201,6 @@ class GimpGgrGradient:
 		if self.fileName is not None:
 			ret.append(f"fileName: {self.fileName}")
 		ret.append(f"Name: {self.name}")
-		for seg in self.segments:
-			ret.append(seg.__repr__(indent=indent + 1))
+		ret.extend([ret.append(seg.__repr__(indent=indent + 1)) for seg in self.segments])
+
 		return repr_indent_lines(indent, ret)

@@ -8,6 +8,7 @@ from gimpformats import utils
 from gimpformats.binaryiotools import IO
 from gimpformats.GimpGbrBrush import GimpGbrBrush
 from gimpformats.GimpPatPattern import GimpPatPattern
+from gimpformats.utils import repr_indent_lines
 
 
 class GimpGpbBrush:
@@ -56,14 +57,14 @@ class GimpGpbBrush:
 		return self.brush.decode(data, index)
 		# index = self.pattern.decode(data, index)
 
-	def encode(self) -> bytes:
+	def encode(self) -> bytes | bytearray:
 		"""Encode this object to bytes."""
 		ioBuf = IO()
 		ioBuf.addBytes(self.brush.encode())
 		ioBuf.addBytes(self.pattern.encode())
 		return ioBuf.data
 
-	def save(self, tofileName: str | BytesIO | None = None) -> None:
+	def save(self, tofileName: str | BytesIO) -> None:
 		"""Save this gimp image to a file."""
 		utils.save(self.encode(), tofileName)
 
