@@ -98,9 +98,9 @@ class GimpGihBrushSet:
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
-		return self.__repr__()
+		return self.full_repr()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
@@ -110,5 +110,5 @@ class GimpGihBrushSet:
 			ret.append(k + f": {val}")
 		for i, brush in enumerate(self.brushes):
 			ret.append(f"Brush {i}")
-			ret.append(brush.__repr__(indent=indent + 1))
+			ret.append(brush.full_repr(indent=indent + 1))
 		return repr_indent_lines(indent, ret)

@@ -86,6 +86,14 @@ class GimpGplPalette:
 
 	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
+		return (
+			f"<GimpGplPalette name={self.name!r}, fileName={self.fileName!r}, "
+			f"columns={self.columns}, "
+			f"numColors={len(self.colors)}>"
+		)
+
+	def full_repr(self) -> str:
+		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
 			ret.append(f"fileName: {self.fileName}")
@@ -99,17 +107,19 @@ class GimpGplPalette:
 				line = line + " " + colorName
 		return "\n".join(ret)
 
-	def __eq__(self, other: GimpGplPalette) -> bool:
+	def __eq__(self, other: object) -> bool:
 		"""Perform a comparison."""
-		if other.name != self.name:
-			return False
-		if other.columns != self.columns:
-			return False
-		if len(self.colors) != len(other.colors):
-			return False
-		for i, colour in enumerate(self.colors):
-			if colour != other.colors[i]:
+		if isinstance(other, GimpGplPalette):
+			if other.name != self.name:
 				return False
-			if self.colorNames[i] != other.colorNames[i]:
+			if other.columns != self.columns:
 				return False
-		return True
+			if len(self.colors) != len(other.colors):
+				return False
+			for i, colour in enumerate(self.colors):
+				if colour != other.colors[i]:
+					return False
+				if self.colorNames[i] != other.colorNames[i]:
+					return False
+			return True
+		return False

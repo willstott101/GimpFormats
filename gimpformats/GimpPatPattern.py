@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from io import BytesIO
+from pathlib import Path
 
-import PIL.Image
+from PIL import Image
 
 from gimpformats import utils
 from gimpformats.binaryiotools import IO
@@ -99,40 +100,36 @@ class GimpPatPattern:
 		return ioBuf.data
 
 	@property
-	def size(self):
+	def size(self) -> tuple[int, int]:
 		"""The size of the pattern."""
 		return (self.width, self.height)
 
 	@property
-	def image(self):
+	def image(self) -> Image.Image | None:
 		"""Get a final, compiled image."""
 		if self._image is None:
 			if self._rawImage is None:
 				return None
-			self._image = PIL.Image.frombytes(
-				self.mode, self.size, self._rawImage, decoder_name="raw"
-			)
+			self._image = Image.frombytes(self.mode, self.size, self._rawImage, decoder_name="raw")
 		return self._image
 
 	@image.setter
-	def image(self, image: PIL.Image.Image) -> None:
+	def image(self, image: Image.Image) -> None:
 		self._image = image
 		self._rawImage = None
 
-	def save(self, tofileName: str | BytesIO | None = None, toExtension: str | None = None) -> None:
+	def save(self, tofileName: Path | str | BytesIO, toExtension: str | None = None) -> None:
 		"""Save this gimp image to a file."""
 		asImage = False
-		if toExtension is None and tofileName is not None:
+		if toExtension is None:
 			toExtension = tofileName.rsplit(".", 1)
 			toExtension = toExtension[-1] if len(toExtension) > 1 else None
 		if toExtension is not None and toExtension != "pat":
 			asImage = True
-		if asImage:
+		if asImage and self.image is not None:
 			self.image.save(tofileName)
 		else:
-			file = tofileName if hasattr(tofileName, "write") else open(tofileName, "wb")
-			file.write(self.encode())
-			file.close()
+			utils.save(self.encode(), tofileName)
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
@@ -140,12 +137,9 @@ class GimpPatPattern:
 
 	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		if self.fileName is not None:
-			ret.append(f"fileName: {self.fileName}")
-		ret.append(f"Name: {self.name}")
-		ret.append(f"Version: {self.version}")
-		ret.append(f"Size: {self.width} x {self.height}")
-		ret.append(f"BPP: {self.bpp}")
-		ret.append(f"Mode: {self.mode}")
-		return "\n".join(ret)
+		return (
+			f"<GimpPatPattern name={self.name!r}, version={self.version}, "
+			f"size={self.width}x{self.height}, "
+			f"bpp={self.bpp}, mode={self.mode}"
+			f"{', fileName=' + repr(self.fileName) if self.fileName is not None else ''}>"
+		)

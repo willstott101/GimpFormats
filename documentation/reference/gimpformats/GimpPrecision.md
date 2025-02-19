@@ -14,7 +14,7 @@
 
 ## Precision
 
-[Show source in GimpPrecision.py:9](../../../gimpformats/GimpPrecision.py#L9)
+[Show source in GimpPrecision.py:8](../../../gimpformats/GimpPrecision.py#L8)
 
 Since the precision code is so unusual, I decided to create a class to parse it.
 
@@ -27,7 +27,7 @@ class Precision:
 
 ### Precision().__repr__
 
-[Show source in GimpPrecision.py:89](../../../gimpformats/GimpPrecision.py#L89)
+[Show source in GimpPrecision.py:88](../../../gimpformats/GimpPrecision.py#L88)
 
 Get a textual representation of this object.
 
@@ -39,7 +39,7 @@ def __repr__(self) -> str: ...
 
 ### Precision().__str__
 
-[Show source in GimpPrecision.py:85](../../../gimpformats/GimpPrecision.py#L85)
+[Show source in GimpPrecision.py:84](../../../gimpformats/GimpPrecision.py#L84)
 
 Get a textual representation of this object.
 
@@ -51,7 +51,7 @@ def __str__(self) -> str: ...
 
 ### Precision().decode
 
-[Show source in GimpPrecision.py:18](../../../gimpformats/GimpPrecision.py#L18)
+[Show source in GimpPrecision.py:17](../../../gimpformats/GimpPrecision.py#L17)
 
 Decode the precision code from the file.
 
@@ -67,7 +67,7 @@ def decode(self, gimpVersion: int, ioBuf: IO) -> None: ...
 
 ### Precision().encode
 
-[Show source in GimpPrecision.py:41](../../../gimpformats/GimpPrecision.py#L41)
+[Show source in GimpPrecision.py:40](../../../gimpformats/GimpPrecision.py#L40)
 
 Encode this to the file.
 
@@ -85,7 +85,7 @@ def encode(self, gimpVersion: int, ioBuf: IO) -> None: ...
 
 ### Precision().requiredGimpVersion
 
-[Show source in GimpPrecision.py:77](../../../gimpformats/GimpPrecision.py#L77)
+[Show source in GimpPrecision.py:76](../../../gimpformats/GimpPrecision.py#L76)
 
 Return the lowest gimp version that supports this precision.
 

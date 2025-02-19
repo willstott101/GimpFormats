@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from io import BytesIO
+from pathlib import Path
 from typing import NoReturn
 
 from gimpformats import utils
@@ -103,20 +104,22 @@ class GimpVbrBrush:
 			data.append(str(self.angle))
 		return ("\n".join(data) + "\n").encode("utf-8")
 
-	def save(self, tofileName=None, toExtension=None) -> None:
+	def save(self, tofileName: BytesIO | str | Path, toExtension=None) -> None:
 		"""Save this gimp image to a file."""
+
+		# Do we save as image or raw bytes
 		asImage = False
-		if toExtension is None and tofileName is not None:
+		if toExtension is None:
 			toExtension = tofileName.rsplit(".", 1)
 			toExtension = toExtension[-1] if len(toExtension) > 1 else None
 		if toExtension is not None and toExtension != "vbr":
 			asImage = True
+
+		# Write out
 		if asImage:
 			self.image.save(tofileName)
 		else:
-			file = tofileName if hasattr(tofileName, "write") else open(tofileName, "wb")
-			file.write(self.encode())
-			file.close()
+			utils.save(self.encode(), tofileName)
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
@@ -124,32 +127,27 @@ class GimpVbrBrush:
 
 	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		if self.fileName is not None:
-			ret.append(f"fileName: {self.fileName}")
-		ret.append(f"Name: {self.name}")
-		ret.append(f"Version: {self.version}")
-		ret.append(f"Spacing: {self.spacing}")
-		ret.append(f"Radius: {self.radius}")
-		ret.append(f"Hardness: {self.hardness}")
-		ret.append(f"Aspect ratio: {self.aspectRatio}")
-		ret.append(f"Angle: {self.angle}")
-		ret.append(f"Brush Shape: {self.brushShape}")
-		ret.append(f"Spikes: {self.spikes}")
-		return "\n".join(ret)
-
-	def __eq__(self, other):
-		"""Perform a comparison."""
-		return all(
-			(
-				other.name == self.name,
-				other.version == self.version,
-				other.spacing == self.spacing,
-				other.radius == self.radius,
-				other.hardness == self.hardness,
-				other.aspectRatio == self.aspectRatio,
-				other.angle == self.angle,
-				other.brushShape == self.brushShape,
-				other.spikes == self.spikes,
-			)
+		return (
+			f"<GimpVbrBrush name={self.name!r}, version={self.version}, spacing={self.spacing}, "
+			f"radius={self.radius}, hardness={self.hardness}, aspectRatio={self.aspectRatio}, "
+			f"angle={self.angle}, brushShape={self.brushShape}, spikes={self.spikes}"
+			f"{', fileName=' + repr(self.fileName) if self.fileName is not None else ''}>"
 		)
+
+	def __eq__(self, other: object) -> bool:
+		"""Perform a comparison."""
+		if isinstance(other, GimpVbrBrush):
+			return all(
+				(
+					other.name == self.name,
+					other.version == self.version,
+					other.spacing == self.spacing,
+					other.radius == self.radius,
+					other.hardness == self.hardness,
+					other.aspectRatio == self.aspectRatio,
+					other.angle == self.angle,
+					other.brushShape == self.brushShape,
+					other.spikes == self.spikes,
+				)
+			)
+		return False

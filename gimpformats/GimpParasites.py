@@ -9,7 +9,6 @@ Format of known parasites:
 from __future__ import annotations
 
 from gimpformats.binaryiotools import IO
-from gimpformats.utils import repr_indent_lines
 
 # TODO: how to best use these for our puproses??
 KNOWN_DOCUMENT_PARASITES = [
@@ -81,7 +80,7 @@ class GimpParasite:
 		ioBuf = IO()
 		ioBuf.sz754 = self.name
 		ioBuf.u32 = self.flags
-		ioBuf.u32 = len(self.data)
+		ioBuf.u32 = len(self.data or b"")
 		ioBuf.addBytes(self.data)
 		return ioBuf.data
 
@@ -89,10 +88,9 @@ class GimpParasite:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		ret.append(f"Name: {self.name}")
-		ret.append(f"Flags: {self.flags}")
-		ret.append(f"Data Len: {len(self.data)}")
-		return repr_indent_lines(indent, ret)
+		return (
+			f"<GimpParasite name={self.name!r}, flags={self.flags}, "
+			f"data_len={len(self.data or '')}>"
+		)

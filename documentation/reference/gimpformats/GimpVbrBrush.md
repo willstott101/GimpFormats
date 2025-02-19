@@ -17,7 +17,7 @@
 
 ## GimpVbrBrush
 
-[Show source in GimpVbrBrush.py:11](../../../gimpformats/GimpVbrBrush.py#L11)
+[Show source in GimpVbrBrush.py:12](../../../gimpformats/GimpVbrBrush.py#L12)
 
 Pure python implementation of the gimp vbr brush format.
 
@@ -33,19 +33,19 @@ class GimpVbrBrush:
 
 ### GimpVbrBrush().__eq__
 
-[Show source in GimpVbrBrush.py:141](../../../gimpformats/GimpVbrBrush.py#L141)
+[Show source in GimpVbrBrush.py:137](../../../gimpformats/GimpVbrBrush.py#L137)
 
 Perform a comparison.
 
 #### Signature
 
 ```python
-def __eq__(self, other): ...
+def __eq__(self, other: object) -> bool: ...
 ```
 
 ### GimpVbrBrush().__repr__
 
-[Show source in GimpVbrBrush.py:125](../../../gimpformats/GimpVbrBrush.py#L125)
+[Show source in GimpVbrBrush.py:128](../../../gimpformats/GimpVbrBrush.py#L128)
 
 Get a textual representation of this object.
 
@@ -57,7 +57,7 @@ def __repr__(self) -> str: ...
 
 ### GimpVbrBrush().__str__
 
-[Show source in GimpVbrBrush.py:121](../../../gimpformats/GimpVbrBrush.py#L121)
+[Show source in GimpVbrBrush.py:124](../../../gimpformats/GimpVbrBrush.py#L124)
 
 Get a textual representation of this object.
 
@@ -69,7 +69,7 @@ def __str__(self) -> str: ...
 
 ### GimpVbrBrush().decode
 
-[Show source in GimpVbrBrush.py:53](../../../gimpformats/GimpVbrBrush.py#L53)
+[Show source in GimpVbrBrush.py:54](../../../gimpformats/GimpVbrBrush.py#L54)
 
 Decode a byte buffer.
 
@@ -85,7 +85,7 @@ def decode(self, dataIn: bytes) -> None: ...
 
 ### GimpVbrBrush().encode
 
-[Show source in GimpVbrBrush.py:83](../../../gimpformats/GimpVbrBrush.py#L83)
+[Show source in GimpVbrBrush.py:84](../../../gimpformats/GimpVbrBrush.py#L84)
 
 Encode to a raw data stream.
 
@@ -97,7 +97,7 @@ def encode(self) -> bytes: ...
 
 ### GimpVbrBrush().image
 
-[Show source in GimpVbrBrush.py:48](../../../gimpformats/GimpVbrBrush.py#L48)
+[Show source in GimpVbrBrush.py:49](../../../gimpformats/GimpVbrBrush.py#L49)
 
 Parametric brush converted to a useable PIL image.
 
@@ -110,7 +110,7 @@ def image(self) -> NoReturn: ...
 
 ### GimpVbrBrush().load
 
-[Show source in GimpVbrBrush.py:40](../../../gimpformats/GimpVbrBrush.py#L40)
+[Show source in GimpVbrBrush.py:41](../../../gimpformats/GimpVbrBrush.py#L41)
 
 Load a gimp file.
 
@@ -126,12 +126,12 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpVbrBrush().save
 
-[Show source in GimpVbrBrush.py:106](../../../gimpformats/GimpVbrBrush.py#L106)
+[Show source in GimpVbrBrush.py:107](../../../gimpformats/GimpVbrBrush.py#L107)
 
 Save this gimp image to a file.
 
 #### Signature
 
 ```python
-def save(self, tofileName=None, toExtension=None) -> None: ...
+def save(self, tofileName: BytesIO | str | Path, toExtension=None) -> None: ...
 ```

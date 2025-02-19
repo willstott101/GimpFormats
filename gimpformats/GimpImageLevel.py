@@ -281,8 +281,6 @@ class GimpImageLevel(GimpIOBase):
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		ret.append(f"Size: {self.width} x {self.height}")
-		return repr_indent_lines(indent, ret)
+		return f"<GimpImageLevel size={self.width}x{self.height}>"

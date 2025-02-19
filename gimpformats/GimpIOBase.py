@@ -709,7 +709,18 @@ class GimpIOBase:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
+		"""Get a textual representation of this object."""
+		return (
+			f"<GimpIOBase "
+			f"uniqueId={self.uniqueId!r}, itemPath={self.itemPath!r}, "
+			f"visible={self.visible}, opacity={self.opacity:.2f}, blendMode={self.blendMode}, "
+			f"xOffset={self.xOffset}, yOffset={self.yOffset}, positionLocked={self.positionLocked}, "
+			f"isGroup={self.isGroup}, groupItemFlags={self.groupItemFlags}, "
+			f"locked={self.locked}, lockAlpha={self.lockAlpha}, editingMask={self.editingMask}>"
+		)
+
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		attrs = [
 			"userUnits",
@@ -762,11 +773,11 @@ class GimpIOBase:
 			ret.append(f"Color: ({self.color[0]}, {self.color[1]}, {self.color[2]})")
 		if self.userUnits is not None:
 			ret.append("User Units:")
-			ret.append(self.userUnits.__repr__(indent=indent + 1))
+			ret.append(self.userUnits.full_repr(indent=indent + 1))
 		if self.parasites:
 			ret.append("Parasites:")
 			for item in self.parasites:
-				ret.append(item.__repr__(indent=indent + 1))
+				ret.append(item.__repr__())
 		if self.guidelines:
 			ret.append("Guidelines:")
 			for item in self.guidelines:
@@ -778,7 +789,7 @@ class GimpIOBase:
 		if self.vectors:
 			ret.append("Vectors:")
 			for item in self.vectors:
-				ret.append(item.__repr__(indent=indent + 1))
+				ret.append(item.full_repr(indent=indent + 1))
 		if self.colorMap:
 			ret.append("Color Map:")
 			for i, color in enumerate(self.colorMap):
@@ -835,9 +846,9 @@ class GimpUserUnits:
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
-		return self.__repr__()
+		return self.full_repr()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Factor: {self.factor}")

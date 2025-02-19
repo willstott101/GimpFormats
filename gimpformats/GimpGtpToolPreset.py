@@ -56,6 +56,14 @@ class ParenFileValue:
 
 	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
+		repr_str = f"<ParenFileValue name={self.name!r}, value={self.value!r}"
+		if self.children is not None:
+			repr_str += f", numChildren={len(self.children)}"
+		repr_str += ">"
+		return repr_str
+
+	def full_repr(self) -> str:
+		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"({self.name}")
 		ret.append(f" {self.value}")
@@ -112,7 +120,7 @@ def parenFileEncode(values: list[ParenFileValue]) -> str:
 	ret.append("")
 	for val in values:
 		if val.name is not None:
-			ret.append(str(val))
+			ret.append(val.full_repr())
 	ret.append("")
 	ret.append("\n# end of GIMP tool preset file\n")
 	ret.append("")
@@ -158,7 +166,11 @@ class GimpGtpToolPreset:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
-		ret = [value.__repr__() for value in self.values]
+		return f"<GimpGtpToolPreset numValues={len(self.values)}>"
+
+	def full_repr(self, indent: int = 0) -> str:
+		"""Get a textual representation of this object."""
+		ret = [value.full_repr() for value in self.values]
 		return utils.repr_indent_lines(indent, ret)

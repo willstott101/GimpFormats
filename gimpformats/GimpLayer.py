@@ -188,15 +188,26 @@ class GimpLayer(GimpIOBase):
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
+		"""Get a textual representation of this object."""
+		return (
+			f"<GimpLayer name={self.name}"
+			f"uniqueId={self.uniqueId!r}, itemPath={self.itemPath!r}, "
+			f"visible={self.visible}, opacity={self.opacity:.2f}, blendMode={self.blendMode}, "
+			f"xOffset={self.xOffset}, yOffset={self.yOffset}, positionLocked={self.positionLocked}, "
+			f"isGroup={self.isGroup}, groupItemFlags={self.groupItemFlags}, "
+			f"locked={self.locked}, lockAlpha={self.lockAlpha}, editingMask={self.editingMask}>"
+		)
+
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Name: {self.name}")
 		ret.append(f"Size: {self.width} x {self.height}")
 		ret.append("colorMode: " + self.COLOR_MODES[self.colorMode])
-		ret.append(GimpIOBase.__repr__(self, indent))
+		ret.append(GimpIOBase.full_repr(self, indent))
 		mask = self.mask
 		if mask is not None:
 			ret.append("Mask:")
-			ret.append(mask.__repr__(indent=indent + 1))
+			ret.append(mask.full_repr(indent=indent + 1))
 		return repr_indent_lines(indent, ret)

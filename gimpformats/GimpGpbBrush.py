@@ -72,11 +72,18 @@ class GimpGpbBrush:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
+		"""Get a textual representation of this object."""
+		return (
+			f"<GimpGpbBrush fileName={self.fileName!r}, brush={self.brush!r}, "
+			f"pattern={self.pattern!r}>"
+		)
+
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
 			ret.append(f"fileName: {self.fileName}")
-		ret.append(self.brush.__repr__(indent=indent + 1))
+		ret.append(self.brush.full_repr(indent=indent + 1))
 		ret.append(self.pattern.__repr__())
 		return repr_indent_lines(indent, ret)

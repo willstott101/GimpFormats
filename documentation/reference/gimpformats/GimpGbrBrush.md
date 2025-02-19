@@ -6,10 +6,10 @@
 
 - [Gimpgbrbrush](#gimpgbrbrush)
   - [GimpGbrBrush](#gimpgbrbrush)
-    - [GimpGbrBrush().__repr__](#gimpgbrbrush()__repr__)
     - [GimpGbrBrush().__str__](#gimpgbrbrush()__str__)
     - [GimpGbrBrush().decode](#gimpgbrbrush()decode)
     - [GimpGbrBrush().encode](#gimpgbrbrush()encode)
+    - [GimpGbrBrush().full_repr](#gimpgbrbrush()full_repr)
     - [GimpGbrBrush().image](#gimpgbrbrush()image)
     - [GimpGbrBrush().load](#gimpgbrbrush()load)
     - [GimpGbrBrush().save](#gimpgbrbrush()save)
@@ -29,18 +29,6 @@ See:
 ```python
 class GimpGbrBrush:
     def __init__(self, fileName: str | None = None) -> None: ...
-```
-
-### GimpGbrBrush().__repr__
-
-[Show source in GimpGbrBrush.py:149](../../../gimpformats/GimpGbrBrush.py#L149)
-
-Get a textual representation of this object.
-
-#### Signature
-
-```python
-def __repr__(self, indent: int = 0) -> str: ...
 ```
 
 ### GimpGbrBrush().__str__
@@ -94,6 +82,18 @@ Encode this object to byte array.
 
 ```python
 def encode(self) -> bytearray: ...
+```
+
+### GimpGbrBrush().full_repr
+
+[Show source in GimpGbrBrush.py:149](../../../gimpformats/GimpGbrBrush.py#L149)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def full_repr(self, indent: int = 0) -> str: ...
 ```
 
 ### GimpGbrBrush().image

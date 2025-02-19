@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from typing import Any
+
+from gimpformats import utils
 from gimpformats.binaryiotools import IO
 from gimpformats.GimpParasites import GimpParasite
 
@@ -9,7 +12,7 @@ from gimpformats.GimpParasites import GimpParasite
 class GimpVector:
 	"""A gimp brush stroke vector."""
 
-	def __init__(self, parent) -> None:
+	def __init__(self, parent: Any) -> None:
 		# GimpIOBase.__init__(self, parent)
 		_ = parent
 		self.name = ""
@@ -49,7 +52,7 @@ class GimpVector:
 			self.strokes.append(gimpstroke)
 		return ioBuf.index
 
-	def encode(self):
+	def encode(self) -> bytearray:
 		"""Encode to binary data."""
 		ioBuf = IO(boolSize=32)
 		ioBuf.sz754 = self.name
@@ -68,7 +71,15 @@ class GimpVector:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
+		"""Get a textual representation of this object."""
+		return (
+			f"<GimpVector name={self.name!r}, uniqueId={self.uniqueId}, "
+			f"visible={self.visible}, linked={self.linked}, "
+			f"numParasites={len(self.parasites)}, numStrokes={len(self.strokes)}>"
+		)
+
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Name: {self.name}")
@@ -78,12 +89,12 @@ class GimpVector:
 		if self.parasites:
 			ret.append("Parasites: ")
 			for item in self.parasites:
-				ret.append(item.__repr__(indent=indent + 1))
+				ret.append(item.full_repr(indent=indent + 1))
 		if self.strokes:
 			ret.append("Strokes: ")
 			for item in self.strokes:
-				ret.append(item.__repr__(indent=indent + 1))
-		return repr_indent_lines(indent, ret)
+				ret.append(item.full_repr(indent=indent + 1))
+		return utils.repr_indent_lines(indent, ret)
 
 
 class GimpStroke:
@@ -137,15 +148,21 @@ class GimpStroke:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
+		return (
+			f"<GimpVectors strokeType={self.STROKE_TYPES[self.strokeType]!r}, "
+			f"closed={self.closedShape}, numPoints={len(self.points)}>"
+		)
+
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Stroke Type: {self.STROKE_TYPES[self.strokeType]}")
 		ret.append(f"Closed: {self.closedShape}")
 		ret.append("Points: ")
 		for point in self.points:
-			ret.append(point.__repr__(indent=indent + 1))
-		return repr_indent_lines(indent, ret)
+			ret.append(point.full_repr(indent=indent + 1))
+		return utils.repr_indent_lines(indent, ret)
 
 
 class GimpPoint:
@@ -153,7 +170,7 @@ class GimpPoint:
 
 	POINT_TYPES = ["Anchor", "Bezier control point"]
 
-	def __init__(self, parent) -> None:
+	def __init__(self, parent: Any) -> None:
 		_ = parent
 		self.x = 0
 		self.y = 0
@@ -163,7 +180,7 @@ class GimpPoint:
 		self.wheel = 0.5
 		self.pointType = 0
 
-	def decode(self, data: bytes, index: int = 0, numFloatsPerPoint: int = 0):
+	def decode(self, data: bytes, index: int = 0, numFloatsPerPoint: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
@@ -199,7 +216,7 @@ class GimpPoint:
 						self.wheel = ioBuf.float32
 		return ioBuf.index
 
-	def encode(self):
+	def encode(self) -> bytearray:
 		"""Encode to binary data."""
 		ioBuf = IO(boolSize=32)
 		ioBuf.u32 = self.pointType
@@ -219,11 +236,10 @@ class GimpPoint:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self):
 		"""Get a textual representation of this object."""
-		ret = []
-		ret.append(f"Location: ({self.x}" + f",{self.y})")
-		ret.append(f"Pressure: {self.pressure}")
-		ret.append(f"Location: ({self.xTilt}" + f",{self.yTilt})")
-		ret.append(f"Wheel: {self.wheel}")
-		return repr_indent_lines(indent, ret)
+
+		return (
+			f"<GimpPoint x={self.x}, y={self.y}, pressure={self.pressure}, "
+			f"xTilt={self.xTilt}, yTilt={self.yTilt}, wheel={self.wheel}>"
+		)

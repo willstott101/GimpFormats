@@ -6,10 +6,10 @@
 
 - [Gimpgihbrushset](#gimpgihbrushset)
   - [GimpGihBrushSet](#gimpgihbrushset)
-    - [GimpGihBrushSet().__repr__](#gimpgihbrushset()__repr__)
     - [GimpGihBrushSet().__str__](#gimpgihbrushset()__str__)
     - [GimpGihBrushSet().decode](#gimpgihbrushset()decode)
     - [GimpGihBrushSet().encode](#gimpgihbrushset()encode)
+    - [GimpGihBrushSet().full_repr](#gimpgihbrushset()full_repr)
     - [GimpGihBrushSet().load](#gimpgihbrushset()load)
     - [GimpGihBrushSet().save](#gimpgihbrushset()save)
 
@@ -30,18 +30,6 @@ See:
 ```python
 class GimpGihBrushSet:
     def __init__(self, fileName: str | None = None) -> None: ...
-```
-
-### GimpGihBrushSet().__repr__
-
-[Show source in GimpGihBrushSet.py:103](../../../gimpformats/GimpGihBrushSet.py#L103)
-
-Get a textual representation of this object.
-
-#### Signature
-
-```python
-def __repr__(self, indent: int = 0) -> str: ...
 ```
 
 ### GimpGihBrushSet().__str__
@@ -89,6 +77,18 @@ Encode this object to bytes.
 
 ```python
 def encode(self) -> bytes: ...
+```
+
+### GimpGihBrushSet().full_repr
+
+[Show source in GimpGihBrushSet.py:103](../../../gimpformats/GimpGihBrushSet.py#L103)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def full_repr(self, indent: int = 0) -> str: ...
 ```
 
 ### GimpGihBrushSet().load

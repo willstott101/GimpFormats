@@ -94,10 +94,10 @@ class GimpChannel(GimpIOBase):
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
-		return self.__repr__()
+		return self.full_repr()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = [f"Name: {self.name}", f"Size: {self.width} x {self.height}"]
-		ret.append(super().__repr__(indent))
+		ret.append(super().full_repr(indent))
 		return repr_indent_lines(indent, ret)

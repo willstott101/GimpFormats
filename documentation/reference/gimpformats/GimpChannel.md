@@ -6,10 +6,10 @@
 
 - [Gimpchannel](#gimpchannel)
   - [GimpChannel](#gimpchannel)
-    - [GimpChannel().__repr__](#gimpchannel()__repr__)
     - [GimpChannel().__str__](#gimpchannel()__str__)
     - [GimpChannel().decode](#gimpchannel()decode)
     - [GimpChannel().encode](#gimpchannel()encode)
+    - [GimpChannel().full_repr](#gimpchannel()full_repr)
     - [GimpChannel().image](#gimpchannel()image)
     - [GimpChannel().image](#gimpchannel()image-1)
     - [GimpChannel().imageHierarchy](#gimpchannel()imagehierarchy)
@@ -32,18 +32,6 @@ class GimpChannel(GimpIOBase):
 #### See also
 
 - [GimpIOBase](./GimpIOBase.md#gimpiobase)
-
-### GimpChannel().__repr__
-
-[Show source in GimpChannel.py:99](../../../gimpformats/GimpChannel.py#L99)
-
-Get a textual representation of this object.
-
-#### Signature
-
-```python
-def __repr__(self, indent: int = 0) -> str: ...
-```
 
 ### GimpChannel().__str__
 
@@ -90,6 +78,18 @@ Encode this object to a byte buffer.
 
 ```python
 def encode(self) -> bytearray: ...
+```
+
+### GimpChannel().full_repr
+
+[Show source in GimpChannel.py:99](../../../gimpformats/GimpChannel.py#L99)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def full_repr(self, indent: int = 0) -> str: ...
 ```
 
 ### GimpChannel().image

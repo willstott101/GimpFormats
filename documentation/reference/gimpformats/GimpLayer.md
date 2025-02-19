@@ -11,6 +11,7 @@
     - [GimpLayer().decode](#gimplayer()decode)
     - [GimpLayer().encode](#gimplayer()encode)
     - [GimpLayer().forceFullyLoaded](#gimplayer()forcefullyloaded)
+    - [GimpLayer().full_repr](#gimplayer()full_repr)
     - [GimpLayer().image](#gimplayer()image)
     - [GimpLayer().image](#gimplayer()image-1)
     - [GimpLayer().imageHierarchy](#gimplayer()imagehierarchy)
@@ -45,7 +46,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: int = 0) -> str: ...
+def __repr__(self) -> str: ...
 ```
 
 ### GimpLayer().__str__
@@ -119,6 +120,18 @@ Make sure everything is fully loaded from the file.
 
 ```python
 def forceFullyLoaded(self) -> None: ...
+```
+
+### GimpLayer().full_repr
+
+[Show source in GimpLayer.py:202](../../../gimpformats/GimpLayer.py#L202)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def full_repr(self, indent: int = 0) -> str: ...
 ```
 
 ### GimpLayer().image

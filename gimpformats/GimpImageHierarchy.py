@@ -11,7 +11,6 @@ from PIL import Image
 
 from gimpformats.GimpImageLevel import GimpImageLevel
 from gimpformats.GimpIOBase import IO, GimpIOBase
-from gimpformats.utils import repr_indent_lines
 
 
 class GimpImageHierarchy(GimpIOBase):
@@ -110,9 +109,6 @@ class GimpImageHierarchy(GimpIOBase):
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		ret.append(f"Size: {self.width} x {self.height}")
-		ret.append(f"Bytes Per Pixel: {self.bpp}")
-		return repr_indent_lines(indent, ret)
+		return f"<GimpImageHierarchy size={self.width}x{self.height}, bpp={self.bpp}>"

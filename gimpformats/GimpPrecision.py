@@ -1,6 +1,5 @@
 """Since the precision code is so unusual, I decided to create a class to parse it."""
 
-# from .GimpImageHierarchy import GimpImageHierarchy
 from __future__ import annotations
 
 from gimpformats.binaryiotools import IO
@@ -44,7 +43,7 @@ class Precision:
 		NOTE: will not mess with development versions 5 or 6
 		"""
 		if gimpVersion < 4:
-			if self.bits != 8 or not (self.gamma) or self.numberFormat != int:
+			if self.bits != 8 or not (self.gamma) or isinstance(self.numberFormat, int):
 				raise RuntimeError(
 					f"Illegal precision ({self}" + f") for gimp version {gimpVersion}"
 				)
@@ -54,7 +53,7 @@ class Precision:
 					raise RuntimeError(
 						f"Illegal precision ({self}" + f") for gimp version {gimpVersion}"
 					)
-				if self.numberFormat == int:
+				if isinstance(self.numberFormat, int):
 					code = (8, 16, 32).index(self.bits)
 				else:
 					code = (16, 32).index(self.bits) + 2
@@ -65,7 +64,7 @@ class Precision:
 				msg = f"Cannot save to gimp developer version {gimpVersion}"
 				raise NotImplementedError(msg)
 			else:  # version 7 or above
-				if self.numberFormat == int:
+				if isinstance(self.numberFormat, int):
 					code = (8, 16, 32).index(self.bits)
 				else:
 					code = (16, 32, 64).index(self.bits) + 2
@@ -76,7 +75,7 @@ class Precision:
 
 	def requiredGimpVersion(self) -> int:
 		"""Return the lowest gimp version that supports this precision."""
-		if self.bits == 8 and self.gamma and self.numberFormat == int:
+		if self.bits == 8 and self.gamma and isinstance(self.numberFormat, int):
 			return 0
 		if self.bits == 64:
 			return 7
@@ -88,8 +87,8 @@ class Precision:
 
 	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
-		ret = []
-		ret.append(str(self.bits) + "-bit")
-		ret.append("gamma" if self.gamma else "linear")
-		ret.append("integer" if self.numberFormat is int else float)
-		return " ".join(ret)
+		return (
+			f"<GimpPrecision bits={self.bits}-bit, "
+			f"gamma={'gamma' if self.gamma else 'linear'}, "
+			f"format={'integer' if self.numberFormat is int else 'float'}>"
+		)

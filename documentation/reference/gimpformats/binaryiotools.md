@@ -225,7 +225,7 @@ or simply uint32=0 for empty string
 #### Signature
 
 ```python
-def _sz754(self, encoding: str): ...
+def _sz754(self, encoding: str) -> str: ...
 ```
 
 ### IO()._sz754set
@@ -1233,7 +1233,7 @@ Set sz754.
 
 ```python
 @sz754.setter
-def sz754(self, sz754: Any): ...
+def sz754(self, sz754: Any) -> None: ...
 ```
 
 ### IO().sz754A
@@ -1259,7 +1259,7 @@ Set sz754A.
 
 ```python
 @sz754A.setter
-def sz754A(self, sz754: Any): ...
+def sz754A(self, sz754: Any) -> None: ...
 ```
 
 ### IO().sz754U
@@ -1285,7 +1285,7 @@ Set sz754U.
 
 ```python
 @sz754U.setter
-def sz754U(self, sz754: Any): ...
+def sz754U(self, sz754: Any) -> None: ...
 ```
 
 ### IO().sz754W
@@ -1311,7 +1311,7 @@ Set sz754W.
 
 ```python
 @sz754W.setter
-def sz754W(self, sz754: Any): ...
+def sz754W(self, sz754: Any) -> None: ...
 ```
 
 ### IO().textLine

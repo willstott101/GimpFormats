@@ -28,7 +28,7 @@ def test_image_repr(gimp_doc: GimpDocument, image_name: str) -> None:
 	txt_path = THISDIR / f"dest/{image_name}.txt"
 
 	gimp_doc.load(str(xcf_path))
-	actual_text = str(gimp_doc).split("\n", 1)[1]
+	actual_text = gimp_doc.full_repr().split("\n", 1)[1]
 	# txt_path.write_text(actual_text, encoding="utf-8")
 
 	expected_text = txt_path.read_text("utf-8").strip()

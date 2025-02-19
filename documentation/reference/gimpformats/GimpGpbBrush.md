@@ -10,12 +10,13 @@
     - [GimpGpbBrush().__str__](#gimpgpbbrush()__str__)
     - [GimpGpbBrush().decode](#gimpgpbbrush()decode)
     - [GimpGpbBrush().encode](#gimpgpbbrush()encode)
+    - [GimpGpbBrush().full_repr](#gimpgpbbrush()full_repr)
     - [GimpGpbBrush().load](#gimpgpbbrush()load)
     - [GimpGpbBrush().save](#gimpgpbbrush()save)
 
 ## GimpGpbBrush
 
-[Show source in GimpGpbBrush.py:13](../../../gimpformats/GimpGpbBrush.py#L13)
+[Show source in GimpGpbBrush.py:14](../../../gimpformats/GimpGpbBrush.py#L14)
 
 Pure python implementation of the OLD gimp gpb brush format.
 
@@ -31,19 +32,19 @@ class GimpGpbBrush:
 
 ### GimpGpbBrush().__repr__
 
-[Show source in GimpGpbBrush.py:74](../../../gimpformats/GimpGpbBrush.py#L74)
+[Show source in GimpGpbBrush.py:75](../../../gimpformats/GimpGpbBrush.py#L75)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: int = 0) -> str: ...
+def __repr__(self) -> str: ...
 ```
 
 ### GimpGpbBrush().__str__
 
-[Show source in GimpGpbBrush.py:70](../../../gimpformats/GimpGpbBrush.py#L70)
+[Show source in GimpGpbBrush.py:71](../../../gimpformats/GimpGpbBrush.py#L71)
 
 Get a textual representation of this object.
 
@@ -55,7 +56,7 @@ def __str__(self) -> str: ...
 
 ### GimpGpbBrush().decode
 
-[Show source in GimpGpbBrush.py:43](../../../gimpformats/GimpGpbBrush.py#L43)
+[Show source in GimpGpbBrush.py:44](../../../gimpformats/GimpGpbBrush.py#L44)
 
 Decode a byte buffer.
 
@@ -78,19 +79,31 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpGpbBrush().encode
 
-[Show source in GimpGpbBrush.py:59](../../../gimpformats/GimpGpbBrush.py#L59)
+[Show source in GimpGpbBrush.py:60](../../../gimpformats/GimpGpbBrush.py#L60)
 
 Encode this object to bytes.
 
 #### Signature
 
 ```python
-def encode(self) -> bytes: ...
+def encode(self) -> bytes | bytearray: ...
+```
+
+### GimpGpbBrush().full_repr
+
+[Show source in GimpGpbBrush.py:82](../../../gimpformats/GimpGpbBrush.py#L82)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def full_repr(self, indent: int = 0) -> str: ...
 ```
 
 ### GimpGpbBrush().load
 
-[Show source in GimpGpbBrush.py:35](../../../gimpformats/GimpGpbBrush.py#L35)
+[Show source in GimpGpbBrush.py:36](../../../gimpformats/GimpGpbBrush.py#L36)
 
 Load a gimp file.
 
@@ -106,12 +119,12 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpGpbBrush().save
 
-[Show source in GimpGpbBrush.py:66](../../../gimpformats/GimpGpbBrush.py#L66)
+[Show source in GimpGpbBrush.py:67](../../../gimpformats/GimpGpbBrush.py#L67)
 
 Save this gimp image to a file.
 
 #### Signature
 
 ```python
-def save(self, tofileName: str | BytesIO | None = None) -> None: ...
+def save(self, tofileName: str | BytesIO) -> None: ...
 ```

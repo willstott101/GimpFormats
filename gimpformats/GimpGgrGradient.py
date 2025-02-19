@@ -98,9 +98,9 @@ class GradientSegment:
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
-		return self.__repr__()
+		return self.full_repr()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		ret.append(f"Left Position: {self.leftPosition}")
@@ -193,14 +193,14 @@ class GimpGgrGradient:
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
-		return self.__repr__()
+		return self.full_repr()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		ret = []
 		if self.fileName is not None:
 			ret.append(f"fileName: {self.fileName}")
 		ret.append(f"Name: {self.name}")
-		ret.extend([ret.append(seg.__repr__(indent=indent + 1)) for seg in self.segments])
+		ret.extend([ret.append(seg.full_repr(indent=indent + 1)) for seg in self.segments])
 
 		return repr_indent_lines(indent, ret)

@@ -13,7 +13,7 @@
 
 ## GimpParasite
 
-[Show source in GimpParasites.py:48](../../../gimpformats/GimpParasites.py#L48)
+[Show source in GimpParasites.py:47](../../../gimpformats/GimpParasites.py#L47)
 
 Parasites are arbitrary (meta)data strings that can be attached to a document tree item.
 
@@ -31,19 +31,19 @@ class GimpParasite:
 
 ### GimpParasite().__repr__
 
-[Show source in GimpParasites.py:92](../../../gimpformats/GimpParasites.py#L92)
+[Show source in GimpParasites.py:91](../../../gimpformats/GimpParasites.py#L91)
 
 Get a textual representation of this object.
 
 #### Signature
 
 ```python
-def __repr__(self, indent: int = 0) -> str: ...
+def __repr__(self) -> str: ...
 ```
 
 ### GimpParasite().__str__
 
-[Show source in GimpParasites.py:88](../../../gimpformats/GimpParasites.py#L88)
+[Show source in GimpParasites.py:87](../../../gimpformats/GimpParasites.py#L87)
 
 Get a textual representation of this object.
 
@@ -55,7 +55,7 @@ def __str__(self) -> str: ...
 
 ### GimpParasite().decode
 
-[Show source in GimpParasites.py:62](../../../gimpformats/GimpParasites.py#L62)
+[Show source in GimpParasites.py:61](../../../gimpformats/GimpParasites.py#L61)
 
 Decode a byte buffer.
 
@@ -72,7 +72,7 @@ def decode(self, data: bytes, index: int = 0) -> int: ...
 
 ### GimpParasite().encode
 
-[Show source in GimpParasites.py:75](../../../gimpformats/GimpParasites.py#L75)
+[Show source in GimpParasites.py:74](../../../gimpformats/GimpParasites.py#L74)
 
 Encode a byte buffer.
 

@@ -19,6 +19,7 @@
     - [GimpDocument().deleteLayer](#gimpdocument()deletelayer)
     - [GimpDocument().encode](#gimpdocument()encode)
     - [GimpDocument().forceFullyLoaded](#gimpdocument()forcefullyloaded)
+    - [GimpDocument().full_repr](#gimpdocument()full_repr)
     - [GimpDocument().getLayer](#gimpdocument()getlayer)
     - [GimpDocument().image](#gimpdocument()image)
     - [GimpDocument().insertLayer](#gimpdocument()insertlayer)
@@ -38,7 +39,7 @@
 
 ## BlendType
 
-[Show source in gimpXcfDocument.py:434](../../../gimpformats/gimpXcfDocument.py#L434)
+[Show source in gimpXcfDocument.py:442](../../../gimpformats/gimpXcfDocument.py#L442)
 
 Gimp xcf blend types.
 
@@ -137,7 +138,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self, indent: int = 0) -> str: ...
+def __repr__(self) -> str: ...
 ```
 
 ### GimpDocument().__setitem__
@@ -294,6 +295,18 @@ Make sure everything is fully loaded from the file.
 
 ```python
 def forceFullyLoaded(self) -> None: ...
+```
+
+### GimpDocument().full_repr
+
+[Show source in gimpXcfDocument.py:413](../../../gimpformats/gimpXcfDocument.py#L413)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def full_repr(self, indent: int = 0) -> str: ...
 ```
 
 ### GimpDocument().getLayer
@@ -481,7 +494,7 @@ def setLayer(self, index: int, layer: GimpLayer) -> None: ...
 
 ## applyMask
 
-[Show source in gimpXcfDocument.py:592](../../../gimpformats/gimpXcfDocument.py#L592)
+[Show source in gimpXcfDocument.py:600](../../../gimpformats/gimpXcfDocument.py#L600)
 
 Apply a mask efficiently.
 
@@ -501,7 +514,7 @@ def applyMask(
 
 ## blendModeLookup
 
-[Show source in gimpXcfDocument.py:618](../../../gimpformats/gimpXcfDocument.py#L618)
+[Show source in gimpXcfDocument.py:626](../../../gimpformats/gimpXcfDocument.py#L626)
 
 Look up the blend mode from the lookup table.
 
@@ -517,7 +530,7 @@ def blendModeLookup(
 
 ## blendWithFlattened
 
-[Show source in gimpXcfDocument.py:607](../../../gimpformats/gimpXcfDocument.py#L607)
+[Show source in gimpXcfDocument.py:615](../../../gimpformats/gimpXcfDocument.py#L615)
 
 Optimized function to blend layers with existing flattened image.
 
@@ -537,7 +550,7 @@ def blendWithFlattened(
 
 ## flattenAll
 
-[Show source in gimpXcfDocument.py:570](../../../gimpformats/gimpXcfDocument.py#L570)
+[Show source in gimpXcfDocument.py:578](../../../gimpformats/gimpXcfDocument.py#L578)
 
 Optimized flattenAll to avoid excessive recursion.
 
@@ -557,7 +570,7 @@ def flattenAll(
 
 ## flattenLayerOrGroup
 
-[Show source in gimpXcfDocument.py:513](../../../gimpformats/gimpXcfDocument.py#L513)
+[Show source in gimpXcfDocument.py:521](../../../gimpformats/gimpXcfDocument.py#L521)
 
 Recursively flattens a layer or group, handling nested groups properly.
 
@@ -576,7 +589,7 @@ def flattenLayerOrGroup(
 
 ## renderLayerOrGroup
 
-[Show source in gimpXcfDocument.py:582](../../../gimpformats/gimpXcfDocument.py#L582)
+[Show source in gimpXcfDocument.py:590](../../../gimpformats/gimpXcfDocument.py#L590)
 
 Optimized function to render a layer or group with reduced conversions.
 

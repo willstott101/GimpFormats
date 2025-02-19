@@ -230,7 +230,7 @@ class GimpDocument(GimpIOBase):
 		"""
 		if len(self._layers) == 0:
 			self._layers = []
-			for ptr in self._layerPtr:
+			for ptr in self._layerPtr or []:
 				layer = GimpLayer(self)
 				layer.decode(self._data, ptr)
 				self._layers.append(layer)
@@ -402,7 +402,15 @@ class GimpDocument(GimpIOBase):
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self, indent: int = 0) -> str:
+	def __repr__(self) -> str:
+		"""Get a textual representation of this object."""
+		return (
+			f"<GimpDocument fileName={self.fileName!r}, version={self.version!r}, "
+			f"width={self.width}, height={self.height}, no_layers={len(self.layers)}"
+			f"baseColorMode={self.baseColorMode!r}, precision={self.precision!r}>"
+		)
+
+	def full_repr(self, indent: int = 0) -> str:
 		"""Get a textual representation of this object."""
 		attrs = [
 			"fileName",
@@ -418,15 +426,15 @@ class GimpDocument(GimpIOBase):
 			for attr in attrs
 			if getattr(self, attr) is not None
 		]
-		ret.append(GimpIOBase.__repr__(self))
+		ret.append(GimpIOBase.full_repr(self))
 		if self._layerPtr:
 			ret.append("Layers:")
 			for layer in self.layers:
-				ret.append(layer.__repr__(indent=indent + 1))
+				ret.append(layer.full_repr(indent=indent + 1))
 		if self._channelPtr:
 			ret.append("Channels:")
 			for channel in self._channels:
-				ret.append(channel.__repr__(indent=indent + 1))
+				ret.append(channel.full_repr(indent=indent + 1))
 
 		return repr_indent_lines(indent, ret)
 

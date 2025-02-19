@@ -11,6 +11,7 @@
     - [GimpGplPalette().__str__](#gimpgplpalette()__str__)
     - [GimpGplPalette().decode](#gimpgplpalette()decode)
     - [GimpGplPalette().encode](#gimpgplpalette()encode)
+    - [GimpGplPalette().full_repr](#gimpgplpalette()full_repr)
     - [GimpGplPalette().load](#gimpgplpalette()load)
     - [GimpGplPalette().save](#gimpgplpalette()save)
 
@@ -29,14 +30,14 @@ class GimpGplPalette:
 
 ### GimpGplPalette().__eq__
 
-[Show source in GimpGplPalette.py:102](../../../gimpformats/GimpGplPalette.py#L102)
+[Show source in GimpGplPalette.py:110](../../../gimpformats/GimpGplPalette.py#L110)
 
 Perform a comparison.
 
 #### Signature
 
 ```python
-def __eq__(self, other: GimpGplPalette) -> bool: ...
+def __eq__(self, other: object) -> bool: ...
 ```
 
 ### GimpGplPalette().__repr__
@@ -95,6 +96,18 @@ Encode to a raw data stream.
 
 ```python
 def encode(self) -> bytes: ...
+```
+
+### GimpGplPalette().full_repr
+
+[Show source in GimpGplPalette.py:95](../../../gimpformats/GimpGplPalette.py#L95)
+
+Get a textual representation of this object.
+
+#### Signature
+
+```python
+def full_repr(self) -> str: ...
 ```
 
 ### GimpGplPalette().load
