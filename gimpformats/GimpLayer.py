@@ -191,7 +191,7 @@ class GimpLayer(GimpIOBase):
 	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
 		return (
-			f"<GimpLayer name={self.name}"
+			f"<GimpLayer name={self.name} "
 			f"uniqueId={self.uniqueId!r}, itemPath={self.itemPath!r}, "
 			f"visible={self.visible}, opacity={self.opacity:.2f}, blendMode={self.blendMode}, "
 			f"xOffset={self.xOffset}, yOffset={self.yOffset}, positionLocked={self.positionLocked}, "

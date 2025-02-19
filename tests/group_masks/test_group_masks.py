@@ -11,13 +11,13 @@ from imgcompare import imgcompare
 
 from gimpformats.gimpXcfDocument import GimpDocument
 
-dut = GimpDocument()
+project = GimpDocument()
 
 
 def test_singleMaskedGroup() -> None:
 	"""Test a single group with layer mask."""
-	dut.load(f"{THISDIR}/single-masked-group.xcf")
-	result = dut.image
+	project.load(f"{THISDIR}/single-masked-group.xcf")
+	result = project.image
 	assert imgcompare.is_equal(
 		result,
 		f"{THISDIR}/single-masked-group.tga",
@@ -27,8 +27,8 @@ def test_singleMaskedGroup() -> None:
 
 def test_multipleMaskedGroups() -> None:
 	"""Test multiple layer groups with masks."""
-	dut.load(f"{THISDIR}/multiple-masked-groups.xcf")
-	result = dut.image
+	project.load(f"{THISDIR}/multiple-masked-groups.xcf")
+	result = project.image
 	assert imgcompare.is_equal(
 		result,
 		f"{THISDIR}/multiple-masked-groups.tga",
@@ -38,9 +38,9 @@ def test_multipleMaskedGroups() -> None:
 
 def test_multipleOffsetMaskedGroups() -> None:
 	"""Test multiple offset layer groups with masks."""
-	dut.load(f"{THISDIR}/multiple-offset-masked-groups.xcf")
-	result = dut.image
-	result.save("test.png")
+	project.load(f"{THISDIR}/multiple-offset-masked-groups.xcf")
+	result = project.image
+	# result.save("test.png")
 	assert imgcompare.is_equal(
 		result,
 		f"{THISDIR}/multiple-offset-masked-groups.tga",

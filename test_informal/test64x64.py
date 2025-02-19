@@ -7,18 +7,30 @@ from pathlib import Path
 THISDIR = Path(__file__).resolve().parent
 sys.path.insert(0, os.path.dirname(THISDIR))
 
-from gimpformats.GimpLayer import GimpLayer
 from gimpformats.gimpXcfDocument import GimpDocument
 
 FILES = THISDIR.parent / "test_files"
 
 # ruff:noqa:ERA001
 
-project = GimpDocument((FILES / "64x64.xcf").as_posix())
+project = GimpDocument((FILES / "base24.xcf").as_posix())
+
+root_group = project.walkTree()
+
+for idx, children in enumerate(root_group.children):
+	print(idx, children)
+
+try:
+	print(project.getLayer(500))
+except RuntimeError:
+	print("Ooops")
+
+project.image.show()
+
 # project.cat()
 # This doc contains a single img rep
 # project.layers[0].image.show()
 
-newProject = GimpDocument()
-newProject.addLayer(GimpLayer(newProject, "BG", project.layers[0].image))
-newProject.saveNew((FILES / "64x64_copy.xcf").as_posix())
+# newProject = GimpDocument()
+# newProject.addLayer(GimpLayer(newProject, "BG", project.layers[0].image))
+# newProject.saveNew((FILES / "64x64_copy.xcf").as_posix())

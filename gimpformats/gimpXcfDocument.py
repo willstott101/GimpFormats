@@ -12,24 +12,47 @@ Currently not supporting:
 
 from __future__ import annotations
 
-import copy
-from enum import Enum
 from io import BytesIO
-from typing import NoReturn
+from typing import Any, NoReturn
 
+import numpy as np
 import PIL.ImageGrab
 from blendmodes.blend import BlendType as BlendMode
-from blendmodes.blend import blendLayers
+from blendmodes.blend import blendLayersArray
 from PIL import Image
 
 from gimpformats import utils
 from gimpformats.binaryiotools import IO
 from gimpformats.GimpChannel import GimpChannel
 from gimpformats.GimpImageHierarchy import GimpImageHierarchy
-from gimpformats.GimpIOBase import GimpIOBase, camel_to_pascal_with_spaces
+from gimpformats.GimpIOBase import GimpBlendMode, GimpIOBase, camel_to_pascal_with_spaces
 from gimpformats.GimpLayer import GimpLayer
 from gimpformats.GimpPrecision import Precision
 from gimpformats.utils import repr_indent_lines
+
+
+class GimpGroup:
+	def __init__(self, name: Any):
+		self.name: str = str(name)
+		self.layer_options: GimpLayer | None = None
+		self.children: list[GimpLayer | GimpGroup] = []
+
+	def add_layer(self, layer: GimpLayer | GimpGroup):
+		self.children.append(layer)
+
+	def get_group(self, idx: int) -> GimpGroup:
+		try:
+			group = self
+			group = self.children[idx]
+			if not isinstance(group, GimpGroup):
+				return self
+			return group
+		except IndexError:
+			return self
+
+	def __repr__(self) -> str:
+		"""Get a textual representation of this object."""
+		return f"<GimpGroup name={self.name} isGroup=True, numberChildren={len(self.children)}>"
 
 
 class GimpDocument(GimpIOBase):
@@ -197,10 +220,10 @@ class GimpDocument(GimpIOBase):
 		self.precision.encode(self.version, ioBuf)
 		# List of properties
 		ioBuf.addbytearray(self._propertiesEncode())
-		dataAreaIdx = ioBuf.index + self.pointerSize * (len(self.layers) + len(self._channels))
+		dataAreaIdx = ioBuf.index + self.pointerSize * (len(self.raw_layers) + len(self._channels))
 		dataAreaIO = IO()
 		# Set the layers and add the pointers to them
-		for layer in self.layers:
+		for layer in self.raw_layers:
 			ioBuf.index = dataAreaIdx + dataAreaIO.index
 			dataAreaIO.addbytearray(layer.encode())
 		# Set the channels and add the pointers to them
@@ -213,7 +236,7 @@ class GimpDocument(GimpIOBase):
 
 	def forceFullyLoaded(self) -> None:
 		"""Make sure everything is fully loaded from the file."""
-		for layer in self.layers:
+		for layer in self.raw_layers:
 			layer.forceFullyLoaded()
 		for channel in self._channels:
 			channel.forceFullyLoaded()
@@ -223,7 +246,7 @@ class GimpDocument(GimpIOBase):
 		self._data = None
 
 	@property
-	def layers(self) -> list[GimpLayer]:
+	def raw_layers(self) -> list[GimpLayer]:
 		"""Decode the image's layers if necessary.
 
 		TODO: need to do the same thing with self.Channels
@@ -238,20 +261,26 @@ class GimpDocument(GimpIOBase):
 			self._layers.parent = self
 			# override some internal methods so we can do more with them
 			self._layers._actualDelitem_ = self._layers.__delitem__
-			self._layers.__delitem__ = self.deleteLayer
+			self._layers.__delitem__ = self.deleteRawLayer
 			self._layers._actualSetitem_ = self._layers.__setitem__
-			self._layers.__setitem__ = self.setLayer
+			self._layers.__setitem__ = self.setRawLayer
 		return self._layers
 
-	def getLayer(self, index: int) -> GimpLayer:
+	def getLayer(self, index: int) -> GimpLayer | GimpGroup:
 		"""Return a given layer."""
-		return self.layers[index]
 
-	def setLayer(self, index: int, layer: GimpLayer) -> None:
+		root_group = self.walkTree()
+		if 0 < index < len(root_group.children):
+			return root_group.children[index]
+
+		msg = f"{index} is out of bounds for GimpDocument [{len(root_group.children)}]"
+		raise RuntimeError(msg)
+
+	def setRawLayer(self, index: int, layer: GimpLayer) -> None:
 		"""Assign to a given layer."""
 		self.forceFullyLoaded()
 		self._layerPtr = None  # no longer try to use the pointers to get data
-		self.layers._actualSetitem_(index, layer)
+		self.raw_layers._actualSetitem_(index, layer)
 
 	def newLayer(self, name: str, image: Image.Image, index: int = -1) -> GimpLayer:
 		"""Create a new layer based on a PIL image.
@@ -269,7 +298,7 @@ class GimpDocument(GimpIOBase):
 		"""
 		layer = GimpLayer(self, name, image)
 		layer.imageHierarchy = GimpImageHierarchy(self, image=image)
-		self.insertLayer(layer, index)
+		self.insertRawLayer(layer, index)
 		return layer
 
 	def newLayerFromClipboard(self, name: str = "pasted", index: int = -1) -> GimpLayer | None:
@@ -293,21 +322,21 @@ class GimpDocument(GimpIOBase):
 			return self.newLayer(name, image, index)
 		return None
 
-	def addLayer(self, layer: GimpLayer) -> None:
+	def addRawLayer(self, layer: GimpLayer) -> None:
 		"""Append a layer object to the document.
 
 		:param layer: the new layer to append
 		"""
-		self.insertLayer(layer, -1)
+		self.insertRawLayer(layer, -1)
 
-	def appendLayer(self, layer: GimpLayer) -> None:
+	def appendRawLayer(self, layer: GimpLayer) -> None:
 		"""Append a layer object to the document.
 
 		:param layer: the new layer to append
 		"""
-		self.insertLayer(layer, -1)
+		self.insertRawLayer(layer, -1)
 
-	def insertLayer(self, layer: GimpLayer, index: int = -1) -> None:
+	def insertRawLayer(self, layer: GimpLayer, index: int = -1) -> None:
 		"""Insert a layer object at a specific position.
 
 		:param layer: the new layer to insert
@@ -315,69 +344,41 @@ class GimpDocument(GimpIOBase):
 		"""
 		self._layers.insert(index, layer)
 
-	def deleteLayer(self, index: int) -> None:
+	def deleteRawLayer(self, index: int) -> None:
 		"""Delete a layer."""
-		self.__delitem__(index)
+		self._layers.remove(index)
 
-	# make this class act like this class is an array of layers
-	def __len__(self) -> int:
-		"""Make this class act like this class is an array of layers...
+	def walkTree(self) -> GimpGroup:
+		root_group = GimpGroup(
+			name="#",
+		)
 
-		Get the len.
-		"""
-		return len(self.layers)
+		for layer in self.raw_layers:
+			parent = root_group
 
-	def __getitem__(self, index: int) -> GimpLayer:
-		"""Make this class act like this class is an array of layers...
+			# Determine the correct parent list using itemPath hierarchy
+			if layer.itemPath is not None:
+				for level_index in layer.itemPath[:-1]:
+					parent = parent.get_group(level_index)
 
-		Get the layer at an index.
-		"""
-		return self.layers[index]
+			# Append layer to its parent group
+			if layer.isGroup:
+				group = GimpGroup(name=layer.name)
+				parent.add_layer(group)
+				group.layer_options = layer
+			else:
+				parent.add_layer(layer)  # Regular layers are stored as-is
 
-	def __setitem__(self, index: int, layer: GimpLayer) -> None:
-		"""Make this class act like this class is an array of layers...
-
-		Set a layer at an index.
-		"""
-		self.setLayer(index, layer)
-
-	def __delitem__(self, index: int) -> None:
-		"""Make this class act like this class is an array of layers...
-
-		Delete a layer at an index.
-		"""
-		self.deleteLayer(index)
+		return root_group
 
 	@property
 	def image(self) -> Image.Image:
 		"""Generates a final, compiled image by processing layers and groups."""
 
-		# Create a deep copy of the layers to avoid modifying the original list
-		layers = self.layers[:]
-
-		# Initialize a dummy group container: [Group, [Layer1, Layer2, ...]]
-		root_group = [None, []]
-
-		# Process each layer or group
-		for layer in layers:
-			parent = root_group  # Default to the root group
-
-			# Determine the correct parent list using itemPath hierarchy
-			if layer.itemPath is not None:
-				for level_index in layer.itemPath[:-1]:
-					parent = parent[1][level_index]
-
-			# Create a deep copy of the layer/group to ensure immutability
-			layer_copy: GimpLayer = copy.deepcopy(layer)
-
-			# Append layer to its parent group
-			if layer.isGroup:
-				parent[1].append([layer_copy, []])  # Groups are stored as [Group, [Layers...]]
-			else:
-				parent[1].append(layer_copy)  # Regular layers are stored as-is
+		root_group = self.walkTree()
 
 		# Flatten the processed hierarchy into a final image
-		return flattenAll(root_group[1], (self.width, self.height))
+		return self.render(root_group)
 
 	def save(self, filename: str | BytesIO | None = None) -> NoReturn:
 		"""Save this gimp image to a file."""
@@ -406,7 +407,7 @@ class GimpDocument(GimpIOBase):
 		"""Get a textual representation of this object."""
 		return (
 			f"<GimpDocument fileName={self.fileName!r}, version={self.version!r}, "
-			f"width={self.width}, height={self.height}, no_layers={len(self.layers)}"
+			f"width={self.width}, height={self.height}, no_layers={len(self.raw_layers)}"
 			f"baseColorMode={self.baseColorMode!r}, precision={self.precision!r}>"
 		)
 
@@ -429,7 +430,7 @@ class GimpDocument(GimpIOBase):
 		ret.append(GimpIOBase.full_repr(self))
 		if self._layerPtr:
 			ret.append("Layers:")
-			for layer in self.layers:
+			for layer in self.raw_layers:
 				ret.append(layer.full_repr(indent=indent + 1))
 		if self._channelPtr:
 			ret.append("Channels:")
@@ -438,191 +439,173 @@ class GimpDocument(GimpIOBase):
 
 		return repr_indent_lines(indent, ret)
 
+	def render(self, root_group: GimpGroup) -> Image.Image:
+		"""Perform the full project render over the current project.
 
-class BlendType(Enum):
-	"""Gimp xcf blend types."""
+		:return PIL.Image: The fully composited image
+		"""
+		arr = self._render(root_group)
+		return Image.fromarray(np.uint8(np.around(arr, 0)))
 
-	NORMAL = 0
-	MULTIPLY = 3
-	SCREEN = 4
-	OVERLAY = 5
-	DIFFERENCE = 6
-	ADDITIVE = 7
-	NEGATION = 8
-	DARKEN = 9
-	LIGHTEN = 10
-	HUE = 11
-	SATURATION = 12
-	COLOUR = 13
-	LUMINOSITY = 14
-	DIVIDE = 15
-	COLOURDODGE = 16
-	COLOURBURN = 17
-	HARDLIGHT = 18
-	SOFTLIGHT = 19
-	GRAINEXTRACT = 20
-	GRAINMERGE = 21
-	VIVIDLIGHT = 48
-	PINLIGHT = 49
-	EXCLUSION = 52
+	def _render(self, current_group: GimpGroup) -> np.ndarray:
+		"""Perform the full project render over the current project.
+
+		:return PIL.Image: The fully composited image
+		"""
+
+		merge_onto = pil2np(Image.new("RGBA", (self.width, self.height)))
+
+		all_children: list[GimpLayer | GimpGroup] = current_group.children[::-1]
+
+		for i, child in enumerate(all_children):
+			if isinstance(child, GimpGroup):
+				to_merge = pil2np(Image.new("RGBA", (self.width, self.height)))
+				lo = child.layer_options
+				if lo and lo.visible:
+					to_merge = self._render(child)
+					if lo.mask:
+						to_merge = applyMask(im=to_merge, mask_im=lo.mask.image, offsets=(0, 0))
+					merge_onto = blendLayersArray(
+						background=merge_onto,
+						foreground=to_merge,
+						blendType=blendModeLookup(lo.blendMode),
+						opacity=lo.opacity,
+						offsets=(0, 0),
+					)
+
+			else:
+				to_merge = pil2np(Image.new("RGBA", (self.width, self.height)))
+				if child.visible:
+					to_merge = pil2np(child.image)
+					if child.mask:
+						to_merge = applyMask(
+							im=to_merge,
+							mask_im=child.mask.image,
+							offsets=(child.mask.xOffset, child.mask.yOffset),
+						)
+					merge_onto = blendLayersArray(
+						background=merge_onto,
+						foreground=to_merge,
+						blendType=blendModeLookup(child.blendMode),
+						opacity=child.opacity,
+						offsets=(child.xOffset, child.yOffset),
+					)
+
+		return merge_onto
 
 
 blendLookup = {
-	0: BlendMode.NORMAL,
-	3: BlendMode.MULTIPLY,
-	4: BlendMode.SCREEN,
-	5: BlendMode.OVERLAY,
-	6: BlendMode.DIFFERENCE,
-	7: BlendMode.ADDITIVE,
-	8: BlendMode.NEGATION,
-	9: BlendMode.DARKEN,
-	10: BlendMode.LIGHTEN,
-	11: BlendMode.HUE,
-	12: BlendMode.SATURATION,
-	13: BlendMode.COLOUR,
-	14: BlendMode.LUMINOSITY,
-	15: BlendMode.DIVIDE,
-	16: BlendMode.COLOURDODGE,
-	17: BlendMode.COLOURBURN,
-	18: BlendMode.HARDLIGHT,
-	19: BlendMode.SOFTLIGHT,
-	20: BlendMode.GRAINEXTRACT,
-	21: BlendMode.GRAINMERGE,
-	23: BlendMode.OVERLAY,
-	24: BlendMode.HUE,
-	25: BlendMode.SATURATION,
-	26: BlendMode.COLOUR,
-	27: BlendMode.LUMINOSITY,
-	28: BlendMode.NORMAL,
-	30: BlendMode.MULTIPLY,
-	31: BlendMode.SCREEN,
-	32: BlendMode.DIFFERENCE,
-	33: BlendMode.ADDITIVE,
-	34: BlendMode.NEGATION,
-	35: BlendMode.DARKEN,
-	36: BlendMode.LIGHTEN,
-	37: BlendMode.HUE,
-	38: BlendMode.SATURATION,
-	39: BlendMode.COLOUR,
-	40: BlendMode.LUMINOSITY,
-	41: BlendMode.DIVIDE,
-	42: BlendMode.COLOURDODGE,
-	43: BlendMode.COLOURBURN,
-	44: BlendMode.HARDLIGHT,
-	45: BlendMode.SOFTLIGHT,
-	46: BlendMode.GRAINEXTRACT,
-	47: BlendMode.GRAINMERGE,
-	48: BlendMode.VIVIDLIGHT,
-	49: BlendMode.PINLIGHT,
-	52: BlendMode.EXCLUSION,
+	GimpBlendMode.NORMAL_LEGACY: BlendMode.NORMAL,
+	GimpBlendMode.MULTIPLY_LEGACY: BlendMode.MULTIPLY,
+	GimpBlendMode.SCREEN_LEGACY: BlendMode.SCREEN,
+	GimpBlendMode.OLD_BROKEN_OVERLAY: BlendMode.OVERLAY,
+	GimpBlendMode.DIFFERENCE_LEGACY: BlendMode.DIFFERENCE,
+	GimpBlendMode.ADDITION_LEGACY: BlendMode.ADDITIVE,
+	GimpBlendMode.SUBTRACT_LEGACY: BlendMode.NEGATION,
+	GimpBlendMode.DARKEN_ONLY_LEGACY: BlendMode.DARKEN,
+	GimpBlendMode.LIGHTEN_ONLY_LEGACY: BlendMode.LIGHTEN,
+	GimpBlendMode.HUE_HSV_LEGACY: BlendMode.HUE,
+	GimpBlendMode.SATURATION_HSV_LEGACY: BlendMode.SATURATION,
+	GimpBlendMode.COLOR_HSL_LEGACY: BlendMode.COLOUR,
+	GimpBlendMode.VALUE_HSV_LEGACY: BlendMode.LUMINOSITY,
+	GimpBlendMode.DIVIDE_LEGACY: BlendMode.DIVIDE,
+	GimpBlendMode.DODGE_LEGACY: BlendMode.COLOURDODGE,
+	GimpBlendMode.BURN_LEGACY: BlendMode.COLOURBURN,
+	GimpBlendMode.HARD_LIGHT_LEGACY: BlendMode.HARDLIGHT,
+	GimpBlendMode.SOFT_LIGHT_LEGACY: BlendMode.SOFTLIGHT,
+	GimpBlendMode.GRAIN_EXTRACT_LEGACY: BlendMode.GRAINEXTRACT,
+	GimpBlendMode.GRAIN_MERGE_LEGACY: BlendMode.GRAINMERGE,
+	GimpBlendMode.OVERLAY: BlendMode.OVERLAY,
+	GimpBlendMode.HUE_LCH: BlendMode.HUE,
+	GimpBlendMode.CHROMA_LCH: BlendMode.SATURATION,
+	GimpBlendMode.COLOR_LCH: BlendMode.COLOUR,
+	GimpBlendMode.LIGHTNESS_LCH: BlendMode.LUMINOSITY,
+	GimpBlendMode.NORMAL: BlendMode.NORMAL,
+	GimpBlendMode.MULTIPLY: BlendMode.MULTIPLY,
+	GimpBlendMode.SCREEN: BlendMode.SCREEN,
+	GimpBlendMode.DIFFERENCE: BlendMode.DIFFERENCE,
+	GimpBlendMode.ADDITION: BlendMode.ADDITIVE,
+	GimpBlendMode.SUBSTRACT: BlendMode.NEGATION,
+	GimpBlendMode.DARKEN_ONLY: BlendMode.DARKEN,
+	GimpBlendMode.LIGHTEN_ONLY: BlendMode.LIGHTEN,
+	GimpBlendMode.HUE_HSV: BlendMode.HUE,
+	GimpBlendMode.SATURATION_HSV: BlendMode.SATURATION,
+	GimpBlendMode.COLOR_HSL: BlendMode.COLOUR,
+	GimpBlendMode.VALUE_HSV: BlendMode.LUMINOSITY,
+	GimpBlendMode.DIVIDE: BlendMode.DIVIDE,
+	GimpBlendMode.DODGE: BlendMode.COLOURDODGE,
+	GimpBlendMode.BURN: BlendMode.COLOURBURN,
+	GimpBlendMode.HARD_LIGHT: BlendMode.HARDLIGHT,
+	GimpBlendMode.SOFT_LIGHT: BlendMode.SOFTLIGHT,
+	GimpBlendMode.GRAIN_EXTRACT: BlendMode.GRAINEXTRACT,
+	GimpBlendMode.GRAIN_MERGE: BlendMode.GRAINMERGE,
+	GimpBlendMode.VIVID_LIGHT: BlendMode.VIVIDLIGHT,
+	GimpBlendMode.PIN_LIGHT: BlendMode.PINLIGHT,
+	GimpBlendMode.EXCLUSION: BlendMode.EXCLUSION,
 }
 
 
-def flattenLayerOrGroup(
-	layerOrGroup: GimpLayer | list[GimpLayer],
-	imageDimensions: tuple[int, int],
-	flattenedSoFar: Image.Image | None = None,
-	*,
-	ignoreHidden: bool = True,
-) -> Image.Image:
-	"""Recursively flattens a layer or group, handling nested groups properly."""
-
-	if isinstance(layerOrGroup, list):
-		first_layer = layerOrGroup[0]
-
-		# Skip hidden groups if ignoreHidden is enabled
-		if ignoreHidden and not first_layer.visible:
-			return flattenedSoFar if flattenedSoFar else Image.new("RGBA", imageDimensions)
-
-		# Recursively flatten all layers and groups inside this group
-		nestedFlattened = Image.new("RGBA", imageDimensions)
-
-		for layer in layerOrGroup[1]:  # Iterate over group contents
-			nestedFlattened = flattenLayerOrGroup(
-				layer, imageDimensions, nestedFlattened, ignoreHidden=ignoreHidden
-			)
-
-		# Render and apply mask if applicable
-		foregroundComposite = renderLayerOrGroup(nestedFlattened, imageDimensions)
-		if first_layer.mask is not None:
-			foregroundComposite = applyMask(
-				foregroundComposite,
-				first_layer.mask.image,
-				first_layer.xOffset,
-				first_layer.yOffset,
-				imageDimensions,
-			)
-
-		return blendWithFlattened(flattenedSoFar, foregroundComposite, first_layer)
-
-	# Handle individual layer case
-	if ignoreHidden and not layerOrGroup.visible:
-		return flattenedSoFar if flattenedSoFar else Image.new("RGBA", imageDimensions)
-
-	foregroundComposite = renderLayerOrGroup(
-		layerOrGroup.image, imageDimensions, (layerOrGroup.xOffset, layerOrGroup.yOffset)
-	)
-
-	if layerOrGroup.mask is not None:
-		foregroundComposite = applyMask(
-			foregroundComposite,
-			layerOrGroup.mask.image,
-			layerOrGroup.xOffset,
-			layerOrGroup.yOffset,
-			imageDimensions,
-		)
-
-	return blendWithFlattened(flattenedSoFar, foregroundComposite, layerOrGroup)
+def pil2np(image: Image.Image):
+	return np.array(image.convert("RGBA")).astype(float)
 
 
-def flattenAll(
-	layers: list[GimpLayer], imageDimensions: tuple[int, int], *, ignoreHidden: bool = True
-) -> Image.Image | None:
-	"""Optimized flattenAll to avoid excessive recursion."""
-	flattened = None
-	for layer in reversed(layers):
-		flattened = flattenLayerOrGroup(
-			layer, imageDimensions, flattened, ignoreHidden=ignoreHidden
-		)
-	return flattened
+def make_thumbnail(image: Image.Image) -> None:
+	# warning: in place modification
+	if image.width > 256 or image.height > 256:
+		image.thumbnail((256, 256))
 
 
-def renderLayerOrGroup(
-	image: Image.Image, size: tuple[int, int], offsets: tuple[int, int] = (0, 0)
-) -> Image.Image:
-	"""Optimized function to render a layer or group with reduced conversions."""
-	image = image.convert("RGBA")
-	imageOffset = Image.new("RGBA", size)
-	imageOffset.paste(image, offsets, image)
-	return imageOffset
+def blendModeLookup(blend_type: GimpBlendMode) -> BlendMode:
+	"""Look up the blend mode from the lookup table."""
+	return blendLookup.get(blend_type, BlendMode.NORMAL)
 
 
 def applyMask(
-	image: Image.Image, mask: Image.Image | None, xOffset: int, yOffset: int, size: tuple[int, int]
-) -> Image.Image:
-	"""Apply a mask efficiently."""
+	im: np.ndarray,  # RGBA image as NumPy array
+	mask_im: Image.Image,  # Grayscale Pillow image
+	offsets: tuple[int, int] = (0, 0),
+) -> np.ndarray:
+	"""Apply a grayscale Pillow mask to an RGBA NumPy image.
 
-	if mask:
-		offset_mask = Image.new("RGBA", size)
-		offset_mask.paste(mask, (xOffset, yOffset))
-		mask = offset_mask.convert("L")  # Convert mask to grayscale
+	- Black areas in the mask (0) make corresponding image areas transparent.
+	- White areas (255) keep the image unchanged.
+	- Gray areas (0-255) result in partial transparency.
+	"""
 
-	offset_image = Image.new("RGBA", size)
-	offset_image.paste(image, (xOffset, yOffset), mask)
-	return offset_image
+	# Ensure the mask is in grayscale (L mode)
+	mask_im = mask_im.convert("L")
 
+	# Convert Pillow mask to NumPy array and normalize to [0,1] range
+	mask = np.array(mask_im, dtype=np.float64) / 255.0  # Shape: (H, W)
 
-def blendWithFlattened(
-	flattened: Image.Image | None, foreground: Image.Image, layer: GimpLayer
-) -> Image.Image:
-	"""Optimized function to blend layers with existing flattened image."""
-	if flattened is None:
-		return foreground
-	return blendLayers(
-		flattened, foreground, blendModeLookup(layer.blendMode, blendLookup), layer.opacity
-	)
+	# Apply offsets (shifting the mask)
+	if offsets[0] > 0:  # Shift right
+		mask = np.hstack((np.zeros((mask.shape[0], offsets[0]), dtype=np.float64), mask))
+	elif offsets[0] < 0:  # Shift left
+		mask = mask[:, -offsets[0] :] if -offsets[0] < mask.shape[1] else np.zeros_like(mask)
 
+	if offsets[1] > 0:  # Shift down
+		mask = np.vstack((np.zeros((offsets[1], mask.shape[1]), dtype=np.float64), mask))
+	elif offsets[1] < 0:  # Shift up
+		mask = mask[-offsets[1] :, :] if -offsets[1] < mask.shape[0] else np.zeros_like(mask)
 
-def blendModeLookup(blend_mode: BlendMode, blendLookup: dict[BlendMode, BlendMode]) -> BlendMode:
-	"""Look up the blend mode from the lookup table."""
-	return blendLookup.get(blend_mode, BlendMode.NORMAL)
+	# Resize mask to match image dimensions
+	mask = mask[: im.shape[0], : im.shape[1]]  # Crop if too large
+	if mask.shape[0] < im.shape[0] or mask.shape[1] < im.shape[1]:
+		padded_mask = np.zeros((im.shape[0], im.shape[1]), dtype=np.float64)
+		padded_mask[: mask.shape[0], : mask.shape[1]] = mask
+		mask = padded_mask
+
+	# Expand mask to match image dimensions (H, W) → (H, W, 1)
+	mask = np.expand_dims(mask, axis=-1)  # Shape: (H, W, 1)
+
+	# Normalize the image to [0,1]
+	im = im / 255.0
+
+	# Apply mask to RGB and Alpha channels
+	out_rgb = im[..., :3] * mask  # Fade RGB using mask
+	out_alpha = im[..., 3] * mask[..., 0]  # Adjust alpha using mask
+
+	# Reassemble and convert back to 0-255 range
+	result = np.dstack((out_rgb, out_alpha)) * 255.0
+	return np.nan_to_num(result, copy=False).astype(np.uint8)

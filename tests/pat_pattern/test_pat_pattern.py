@@ -16,9 +16,12 @@ project = GimpPatPattern()
 
 @pytest.mark.parametrize(
 	"pattern_name, desired_image",
-	[("3dgreen", "desiredOutput_3dgreen.png"), ("leopard", "desiredOutput_leopard.png")],
+	[
+		("3dgreen", "desiredOutput_3dgreen.png"),
+		("leopard", "desiredOutput_leopard.png"),
+	],
 )
-def test_pattern(pattern_name, desired_image):
+def test_pattern(pattern_name: str, desired_image: str):
 	"""Test pattern functionality."""
 	project.load(THISDIR / f"{pattern_name}.pat")
 

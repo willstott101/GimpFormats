@@ -68,7 +68,7 @@ class CompressionMode(Enum):
 	Fractal = "Fractal"
 
 
-class BlendMode(Enum):
+class GimpBlendMode(Enum):
 	NORMAL_LEGACY = "Normal (legacy)"
 	DISSOLVE_LEGACY = "Dissolve (legacy)"
 	BEHIND_LEGACY = "Behind (legacy)"
@@ -182,7 +182,7 @@ class GimpIOBase:
 		self.parent = parent
 		self.parasites: list[GimpParasite] = []
 		self.guidelines: list[tuple[bool, int]] = []
-		self.itemPath: list[str] | None = None
+		self.itemPath: list[int] | None = None
 		self.vectors: list[GimpVector] = []
 		self.colorMap: list[tuple[int, int, int]] = []
 		self.userUnits: GimpUserUnits | None = None
@@ -190,7 +190,7 @@ class GimpIOBase:
 		self.selected: bool = False
 		self.isSelection: bool = False
 		self.selectionAttachedTo: int | None = None
-		self.blendMode: BlendMode = BlendMode.ADDITION
+		self.blendMode: GimpBlendMode = GimpBlendMode.ADDITION
 		self.visible: bool = False
 		self.isLinked: bool = False
 		self.lockAlpha: bool = False
@@ -404,7 +404,7 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_OPACITY):
 			self.opacity = ioBuf.u32
 		elif _prop_cmp(prop, ImageProperties.PROP_MODE):
-			self.blendMode = list(BlendMode)[ioBuf.u32]
+			self.blendMode = list(GimpBlendMode)[ioBuf.u32]
 		elif _prop_cmp(prop, ImageProperties.PROP_VISIBLE):
 			self.visible = ioBuf.boolean
 		elif _prop_cmp(prop, ImageProperties.PROP_LINKED):

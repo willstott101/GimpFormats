@@ -5,11 +5,11 @@
 > Auto-generated documentation for [gimpformats.GimpIOBase](../../../gimpformats/GimpIOBase.py) module.
 
 - [Gimpiobase](#gimpiobase)
-  - [BlendMode](#blendmode)
   - [ColorMode](#colormode)
   - [CompositeMode](#compositemode)
   - [CompositeSpace](#compositespace)
   - [CompressionMode](#compressionmode)
+  - [GimpBlendMode](#gimpblendmode)
   - [GimpIOBase](#gimpiobase)
     - [GimpIOBase().__repr__](#gimpiobase()__repr__)
     - [GimpIOBase().__str__](#gimpiobase()__str__)
@@ -43,18 +43,6 @@
   - [TagColor](#tagcolor)
   - [Units](#units)
   - [camel_to_pascal_with_spaces](#camel_to_pascal_with_spaces)
-
-## BlendMode
-
-[Show source in GimpIOBase.py:71](../../../gimpformats/GimpIOBase.py#L71)
-
-#### Signature
-
-```python
-class BlendMode(Enum): ...
-```
-
-
 
 ## ColorMode
 
@@ -100,6 +88,18 @@ class CompositeSpace(Enum): ...
 
 ```python
 class CompressionMode(Enum): ...
+```
+
+
+
+## GimpBlendMode
+
+[Show source in GimpIOBase.py:71](../../../gimpformats/GimpIOBase.py#L71)
+
+#### Signature
+
+```python
+class GimpBlendMode(Enum): ...
 ```
 
 

@@ -5,7 +5,7 @@ Base Color Mode: 0
 Precision: <GimpPrecision bits=16-bit, gamma=gamma, format=integer>
 Selected: False
 Is Selection: False
-Blend Mode: BlendMode.ADDITION
+Blend Mode: GimpBlendMode.ADDITION
 Visible: False
 Is Linked: False
 Lock Alpha: False
@@ -40,7 +40,7 @@ Layers:
 	colorMode: RGB color with alpha
 		Selected: True
 	Is Selection: False
-	Blend Mode: BlendMode.NORMAL
+	Blend Mode: GimpBlendMode.NORMAL
 	Visible: True
 	Is Linked: False
 	Lock Alpha: False
