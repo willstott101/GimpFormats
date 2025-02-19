@@ -68,7 +68,7 @@ Decode a byte buffer.
 #### Arguments
 
 ----
- - `data` *bytes* - data buffer to decode
+ - `data` *bytearray* - data buffer to decode
  - `index` *int, optional* - index within the buffer to start at. Defaults to 0.
  - `numFloatsPerPoint` *int, optional* - required so we know
  how many different brush dynamic measurements are
@@ -82,7 +82,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0, numFloatsPerPoint: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0, numFloatsPerPoint: int = 0) -> int: ...
 ```
 
 ### GimpPoint().encode
@@ -133,7 +133,7 @@ Decode a byte buffer.
 #### Arguments
 
 ----
- - `data` *bytes* - data buffer to decode
+ - `data` *bytearray* - data buffer to decode
  - `index` *int, optional* - index within the buffer to start at. Defaults to 0.
 
 #### Returns
@@ -144,7 +144,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpStroke().encode
@@ -219,7 +219,7 @@ Decode a byte buffer.
 #### Arguments
 
 ----
- - `data` *bytes* - data buffer to decode
+ - `data` *bytearray* - data buffer to decode
  - `index` *int, optional* - index within the buffer to start at. Defaults to 0.
 
 #### Returns
@@ -230,7 +230,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpVector().encode

@@ -57,7 +57,7 @@ Decode a byte buffer.
 #### Arguments
 
 ----
- - `dataIn` *bytes* - data buffer to decode
+ - `dataIn` *bytearray* - data buffer to decode
 
 #### Raises
 
@@ -67,19 +67,19 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, dataIn: bytes) -> None: ...
+def decode(self, dataIn: bytearray) -> None: ...
 ```
 
 ### GimpGgrGradient().encode
 
 [Show source in GimpGgrGradient.py:175](../../../gimpformats/GimpGgrGradient.py#L175)
 
-Encode this to bytes.
+Encode this to bytearray.
 
 #### Signature
 
 ```python
-def encode(self) -> bytes: ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpGgrGradient().full_repr

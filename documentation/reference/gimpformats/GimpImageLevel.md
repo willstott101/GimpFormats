@@ -112,7 +112,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpImageLevel().encode

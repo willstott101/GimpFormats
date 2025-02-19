@@ -77,7 +77,7 @@ Return the offset
 #### Arguments
 
 ----
- - `data` *bytes* - data buffer to decode
+ - `data` *bytearray* - data buffer to decode
  - `index` *int, optional* - index within the buffer to start at]. Defaults to 0.
 
 #### Returns
@@ -88,7 +88,7 @@ Return the offset
 #### Signature
 
 ```python
-def decode(self, data: bytes | bytearray, index: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpLayer().encode

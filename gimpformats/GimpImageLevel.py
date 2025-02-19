@@ -29,7 +29,7 @@ class GimpImageLevel(GimpIOBase):
 		self._tiles = None  # tile PIL images
 		self._image = None
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
@@ -52,19 +52,19 @@ class GimpImageLevel(GimpIOBase):
 			for x in range(0, self.width, 64):
 				ptr = self._pointerDecode(ioBuf)
 				size = (min(self.width - x, 64), min(self.height - y, 64))
-				totalBytes = size[0] * size[1] * self.bpp
+				totalbytearray = size[0] * size[1] * self.bpp
 				if self.doc.compression == CompressionMode.None_Compression:  # none
-					data = ioBuf.data[ptr : ptr + totalBytes]
+					data = ioBuf.data[ptr : ptr + totalbytearray]
 				elif self.doc.compression == CompressionMode.RLE:  # RLE
 					data = self._decodeRLE(ioBuf.data, size[0] * size[1], self.bpp, ptr)
 				elif self.doc.compression == CompressionMode.Zlib:  # zip
 					data = zlib.decompress(
-						ioBuf.data[ptr : ptr + totalBytes + 24]
-					)  # guess how many bytes are needed
+						ioBuf.data[ptr : ptr + totalbytearray + 24]
+					)  # guess how many bytearray are needed
 				else:
 					msg = f"ERR: unsupported compression mode {self.doc.compression}"
 					raise RuntimeError(msg)
-				subImage = PIL.Image.frombytes(self.mode, size, bytes(data), decoder_name="raw")
+				subImage = PIL.Image.frombytes(self.mode, size, bytearray(data), decoder_name="raw")
 				self._tiles.append(subImage)
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
 		return ioBuf.index
@@ -77,8 +77,8 @@ class GimpImageLevel(GimpIOBase):
 		ioBuf.u32 = self.height
 		dataIndex = ioBuf.index + self.pointerSize * (len(self.tiles) + 1)
 		for tile in self.tiles:
-			ioBuf.addBytes(self._pointerEncode(dataIndex + dataioBuf.index))
-			data = tile.tobytes()
+			ioBuf.addbytearray(self._pointerEncode(dataIndex + dataioBuf.index))
+			data = tile.tobytearray()
 			if self.doc.compression == 0:  # none
 				pass
 			elif self.doc.compression == 1:  # RLE
@@ -89,9 +89,9 @@ class GimpImageLevel(GimpIOBase):
 			else:
 				msg = f"ERR: unsupported compression mode {self.doc.compression}"
 				raise RuntimeError(msg)
-			dataioBuf.addBytes(data)
-		ioBuf.addBytes(self._pointerEncode(0))
-		ioBuf.addBytes(dataioBuf.data)
+			dataioBuf.addbytearray(data)
+		ioBuf.addbytearray(self._pointerEncode(0))
+		ioBuf.addbytearray(dataioBuf.data)
 		return ioBuf.data
 
 	def _decodeRLE(self, data: bytearray, pixels: int, bpp, index=0) -> bytearray:
@@ -103,13 +103,13 @@ class GimpImageLevel(GimpIOBase):
 			while n < pixels:
 				opcode = data[index]
 				index += 1
-				if 0 <= opcode <= 126:  # a short run of identical bytes
+				if 0 <= opcode <= 126:  # a short run of identical bytearray
 					val = data[index]
 					index += 1
 					for _ in range(opcode + 1):
 						ret[chan].append(val)
 						n += 1
-				elif opcode == 127:  # A long run of identical bytes
+				elif opcode == 127:  # A long run of identical bytearray
 					m = data[index]
 					index += 1
 					b = data[index]
@@ -120,7 +120,7 @@ class GimpImageLevel(GimpIOBase):
 					for _ in range(amt):
 						ret[chan].append(val)
 						n += 1
-				elif opcode == 128:  # A long run of different bytes
+				elif opcode == 128:  # A long run of different bytearray
 					m = data[index]
 					index += 1
 					b = data[index]
@@ -131,7 +131,7 @@ class GimpImageLevel(GimpIOBase):
 						index += 1
 						ret[chan].append(val)
 						n += 1
-				elif 129 <= opcode <= 255:  # a short run of different bytes
+				elif 129 <= opcode <= 255:  # a short run of different bytearray
 					amt = 256 - opcode
 					for _ in range(amt):
 						val = data[index]
@@ -152,7 +152,7 @@ class GimpImageLevel(GimpIOBase):
 		_ = self
 
 		def countSame(data, startIdx):
-			"""Count how many times bytes are identical."""
+			"""Count how many times bytearray are identical."""
 			idx = startIdx
 			l = len(data)
 			if idx >= l:
@@ -164,7 +164,7 @@ class GimpImageLevel(GimpIOBase):
 			return idx - startIdx
 
 		def countDifferent(data, startIdx):
-			"""Count how many times bytes are different."""
+			"""Count how many times bytearray are different."""
 			idx = startIdx
 			l = len(data)
 			if idx >= l:
@@ -182,23 +182,23 @@ class GimpImageLevel(GimpIOBase):
 			idx = 0
 			while idx < len(data):
 				nRepeats = countSame(data, 0)
-				if nRepeats == 1:  # different bytes
+				if nRepeats == 1:  # different bytearray
 					nDifferences = countDifferent(data, 1)
-					if nDifferences <= 127:  # short run of different bytes
+					if nDifferences <= 127:  # short run of different bytearray
 						ret.append(129 + nRepeats - 1)
 						ret.append(data[idx])
 						idx += nDifferences
-					else:  # long run of different bytes
+					else:  # long run of different bytearray
 						ret.append(128)
 						ret.append(math.floor(nDifferences / 256.0))
 						ret.append(nDifferences % 256)
 						ret.append(data[idx])
 						idx += nDifferences
-				elif nRepeats <= 127:  # short run of same bytes
+				elif nRepeats <= 127:  # short run of same bytearray
 					ret.append(nRepeats - 1)
 					ret.append(data[idx])
 					idx += nRepeats
-				else:  # long run of same bytes
+				else:  # long run of same bytearray
 					ret.append(127)
 					ret.append(math.floor(nRepeats / 256.0))
 					ret.append(nRepeats % 256)

@@ -92,7 +92,7 @@ class GimpDocument(GimpIOBase):
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Steps:
@@ -108,7 +108,7 @@ class GimpDocument(GimpIOBase):
 
 		Args:
 		----
-			data (bytes): data buffer to decode
+			data (bytearray): data buffer to decode
 			index (int, optional): index within the buffer to start at]. Defaults to 0.
 
 		Raises:
@@ -123,7 +123,7 @@ class GimpDocument(GimpIOBase):
 		# Create a new IO buffer
 		ioBuf = IO(data, index)
 		# Check that the file is a valid gimp xcf
-		if ioBuf.getBytes(9) != b"gimp xcf ":
+		if ioBuf.getbytearray(9) != b"gimp xcf ":
 			msg = "Not a valid GIMP file"
 			raise RuntimeError(msg)
 		# Grab the file version
@@ -167,7 +167,7 @@ class GimpDocument(GimpIOBase):
 		return ioBuf.index
 
 	def encode(self) -> bytearray:
-		"""Encode to bytes.
+		"""Encode to bytearray.
 
 		Steps:
 		Create a new IO buffer
@@ -184,9 +184,9 @@ class GimpDocument(GimpIOBase):
 		# Create a new IO buffer
 		ioBuf = IO()
 		# The file is a valid gimp xcf
-		ioBuf.addBytes("gimp xcf ")
+		ioBuf.addbytearray("gimp xcf ")
 		# Set the file version
-		ioBuf.addBytes(f"v{self.version:03d}\0")
+		ioBuf.addbytearray(f"v{self.version:03d}\0")
 		# Set other attributes as outlined in the spec
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
@@ -196,18 +196,18 @@ class GimpDocument(GimpIOBase):
 			self.precision = Precision()
 		self.precision.encode(self.version, ioBuf)
 		# List of properties
-		ioBuf.addBytes(self._propertiesEncode())
+		ioBuf.addbytearray(self._propertiesEncode())
 		dataAreaIdx = ioBuf.index + self.pointerSize * (len(self.layers) + len(self._channels))
 		dataAreaIO = IO()
 		# Set the layers and add the pointers to them
 		for layer in self.layers:
 			ioBuf.index = dataAreaIdx + dataAreaIO.index
-			dataAreaIO.addBytes(layer.encode())
+			dataAreaIO.addbytearray(layer.encode())
 		# Set the channels and add the pointers to them
 		for channel in self._channels:
 			ioBuf.index = dataAreaIdx + dataAreaIO.index
-			dataAreaIO.addBytes(channel.encode())
-		ioBuf.addBytes(dataAreaIO)
+			dataAreaIO.addbytearray(channel.encode())
+		ioBuf.addbytearray(dataAreaIO)
 		# Return the data
 		return ioBuf.data
 

@@ -22,12 +22,12 @@ class GimpVector:
 		self.parasites = []
 		self.strokes = []
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data buffer to decode
+			data (bytearray): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Returns:
@@ -62,9 +62,9 @@ class GimpVector:
 		ioBuf.u32 = len(self.parasites)
 		ioBuf.u32 = len(self.strokes)
 		for parasite in self.parasites:
-			ioBuf.addBytes(parasite.encode())
+			ioBuf.addbytearray(parasite.encode())
 		for gimpstroke in self.strokes:
-			ioBuf.addBytes(gimpstroke.encode())
+			ioBuf.addbytearray(gimpstroke.encode())
 		return ioBuf.data
 
 	def __str__(self) -> str:
@@ -109,12 +109,12 @@ class GimpStroke:
 		self.closedShape = True
 		self.points = []
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data buffer to decode
+			data (bytearray): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Returns:
@@ -141,7 +141,7 @@ class GimpStroke:
 		# ioBuf.u32 = numFloatsPerPoint
 		# ioBuf.u32 = numPoints
 		for gimpPoint in self.points:
-			ioBuf.addBytes(gimpPoint.encode())
+			ioBuf.addbytearray(gimpPoint.encode())
 		return ioBuf.data
 
 	def __str__(self) -> str:
@@ -180,12 +180,12 @@ class GimpPoint:
 		self.wheel = 0.5
 		self.pointType = 0
 
-	def decode(self, data: bytes, index: int = 0, numFloatsPerPoint: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0, numFloatsPerPoint: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data buffer to decode
+			data (bytearray): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 			numFloatsPerPoint (int, optional): required so we know
 			how many different brush dynamic measurements are

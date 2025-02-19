@@ -47,12 +47,12 @@ class GimpGihBrushSet:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data buffer to decode
+			data (bytearray): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Returns:
@@ -78,8 +78,8 @@ class GimpGihBrushSet:
 			self.brushes.append(brush)
 		return ioBuf.index
 
-	def encode(self) -> bytes:
-		"""Encode this object to bytes."""
+	def encode(self) -> bytearray:
+		"""Encode this object to bytearray."""
 		ioBuf = IO()
 		ioBuf.textLine = self.name
 		# add the second line of data
@@ -89,7 +89,7 @@ class GimpGihBrushSet:
 		ioBuf.textLine = " ".join(secondLine)
 		# add the brushes
 		for brush in self.brushes:
-			ioBuf.addBytes(brush.encode())
+			ioBuf.addbytearray(brush.encode())
 		return ioBuf.data
 
 	def save(self, tofileName: str) -> None:

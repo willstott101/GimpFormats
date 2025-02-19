@@ -48,12 +48,12 @@ class GimpPatPattern:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data to decode
+			data (bytearray): data to decode
 			index (int, optional): index to start from. Defaults to 0.
 
 		Raises:
@@ -72,13 +72,13 @@ class GimpPatPattern:
 		self.height = ioBuf.u32
 		self.bpp = ioBuf.u32
 		self.mode = self.COLOR_MODES[self.bpp]
-		magic = ioBuf.getBytes(4)
+		magic = ioBuf.getbytearray(4)
 		if magic.decode("ascii") != "GPAT":
 			msg = "File format error.  Magic value mismatch."
 			raise RuntimeError(msg)
 		nameLen = headerSize - ioBuf.index
-		self.name = ioBuf.getBytes(nameLen).decode("UTF-8")
-		self._rawImage = ioBuf.getBytes(self.width * self.height * self.bpp)
+		self.name = ioBuf.getbytearray(nameLen).decode("UTF-8")
+		self._rawImage = ioBuf.getbytearray(self.width * self.height * self.bpp)
 		self._image = None
 		return ioBuf.index
 
@@ -90,13 +90,13 @@ class GimpPatPattern:
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
 		ioBuf.u32 = len(self.image.mode)
-		ioBuf.addBytes("GPAT")
-		ioBuf.addBytes(self.name.encode("utf-8"))
+		ioBuf.addbytearray("GPAT")
+		ioBuf.addbytearray(self.name.encode("utf-8"))
 		if self._rawImage is None:
-			rawImage = self.image.tobytes(encoder_name="raw")
+			rawImage = self.image.tobytearray(encoder_name="raw")
 		else:
 			rawImage = self._rawImage
-		ioBuf.addBytes(rawImage)
+		ioBuf.addbytearray(rawImage)
 		return ioBuf.data
 
 	@property
@@ -122,7 +122,7 @@ class GimpPatPattern:
 		"""Save this gimp image to a file."""
 		asImage = False
 		if toExtension is None:
-			toExtension = tofileName.rsplit(".", 1)
+			toExtension = str(tofileName).rsplit(".", 1)
 			toExtension = toExtension[-1] if len(toExtension) > 1 else None
 		if toExtension is not None and toExtension != "pat":
 			asImage = True

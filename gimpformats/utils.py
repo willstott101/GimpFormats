@@ -16,7 +16,7 @@ def fileOpen(file: BytesIO | str | Path) -> tuple[str, bytes]:
 	return pth.name, pth.read_bytes()
 
 
-def save(data: bytes | bytearray, file: BytesIO | str | Path) -> None:
+def save(data: bytearray, file: BytesIO | str | Path) -> None:
 	"""Save this gimp image to a file."""
 	if isinstance(file, BytesIO):
 		with file:

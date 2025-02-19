@@ -147,14 +147,14 @@ _colormapDecode_.
 
 #### Arguments
 
-- `data` - can be bytes or an IO object
+- `data` - can be bytearray or an IO object
 
 decode colormap/palette
 
 #### Signature
 
 ```python
-def _colormapDecode(self, data: bytes | bytearray | IO, index: int = 0) -> None: ...
+def _colormapDecode(self, data: bytearray | IO, index: int = 0) -> None: ...
 ```
 
 ### GimpIOBase()._guidelinesDecode
@@ -166,7 +166,7 @@ Decode guidelines.
 #### Signature
 
 ```python
-def _guidelinesDecode(self, data: bytes | bytearray) -> None: ...
+def _guidelinesDecode(self, data: bytearray) -> None: ...
 ```
 
 ### GimpIOBase()._itemPathDecode
@@ -178,7 +178,7 @@ Decode item path.
 #### Signature
 
 ```python
-def _itemPathDecode(self, data: bytes | bytearray) -> None: ...
+def _itemPathDecode(self, data: bytearray) -> None: ...
 ```
 
 ### GimpIOBase()._parasitesDecode
@@ -190,7 +190,7 @@ Decode list of parasites.
 #### Signature
 
 ```python
-def _parasitesDecode(self, data: bytes | bytearray) -> int: ...
+def _parasitesDecode(self, data: bytearray) -> int: ...
 ```
 
 ### GimpIOBase()._parasitesEncode
@@ -247,7 +247,7 @@ data: varies but is often ioBuf.32 or ioBuf.boolean
 #### Signature
 
 ```python
-def _propertyDecode(self, prop: int, data: bytes | bytearray) -> int: ...
+def _propertyDecode(self, prop: int, data: bytearray) -> int: ...
 ```
 
 ### GimpIOBase()._propertyEncode
@@ -278,7 +278,7 @@ Decode a series of points.
 #### Signature
 
 ```python
-def _samplePointsDecode(self, data: bytes | bytearray) -> None: ...
+def _samplePointsDecode(self, data: bytearray) -> None: ...
 ```
 
 ### GimpIOBase()._userUnitsDecode
@@ -290,7 +290,7 @@ Decode a set of user-defined measurement units.
 #### Signature
 
 ```python
-def _userUnitsDecode(self, data: bytes | bytearray) -> None: ...
+def _userUnitsDecode(self, data: bytearray) -> None: ...
 ```
 
 ### GimpIOBase()._vectorsDecode
@@ -302,7 +302,7 @@ Decode vectors.
 #### Signature
 
 ```python
-def _vectorsDecode(self, data: bytes | bytearray) -> None: ...
+def _vectorsDecode(self, data: bytearray) -> None: ...
 ```
 
 ### GimpIOBase().activeVector
@@ -463,7 +463,7 @@ Decode a byte buffer.
 #### Arguments
 
 ----
- - `data` *bytes* - data buffer to decode
+ - `data` *bytearray* - data buffer to decode
  - `index` *int, optional* - index within the buffer to start at]. Defaults to 0.
 
 #### Returns
@@ -474,14 +474,14 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes | bytearray, index: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpUserUnits().encode
 
 [Show source in GimpIOBase.py:835](../../../gimpformats/GimpIOBase.py#L835)
 
-Convert this object to raw bytes.
+Convert this object to raw bytearray.
 
 #### Signature
 

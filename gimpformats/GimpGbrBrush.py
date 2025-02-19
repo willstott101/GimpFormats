@@ -50,12 +50,12 @@ class GimpGbrBrush:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data buffer to decode
+			data (bytearray): data buffer to decode
 			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Raises:
@@ -78,7 +78,7 @@ class GimpGbrBrush:
 		self.height = ioBuf.u32
 		self.bpp = ioBuf.u32  # only allows grayscale or RGB
 		self.mode = self.COLOR_MODES[self.bpp]
-		magic = ioBuf.getBytes(4)
+		magic = ioBuf.getbytearray(4)
 		if magic.decode("ascii") != "GIMP":
 			raise RuntimeError(
 				'"'
@@ -89,8 +89,8 @@ class GimpGbrBrush:
 			)
 		self.spacing = ioBuf.u32
 		nameLen = headerSize - ioBuf.index
-		self.name = ioBuf.getBytes(nameLen).decode("UTF-8")
-		self.rawImage = ioBuf.getBytes(self.width * self.height * self.bpp)
+		self.name = ioBuf.getbytearray(nameLen).decode("UTF-8")
+		self.rawImage = ioBuf.getbytearray(self.width * self.height * self.bpp)
 		return ioBuf.index
 
 	def encode(self) -> bytearray:
@@ -101,10 +101,10 @@ class GimpGbrBrush:
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
 		ioBuf.u32 = self.bpp
-		ioBuf.addBytes("GIMP")
+		ioBuf.addbytearray("GIMP")
 		ioBuf.u32 = self.spacing
-		ioBuf.addBytes(self.name)
-		ioBuf.addBytes(self.rawImage)
+		ioBuf.addbytearray(self.name)
+		ioBuf.addbytearray(self.rawImage)
 		return ioBuf.data
 
 	@property

@@ -148,12 +148,12 @@ class GimpGgrGradient:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, dataIn: bytes) -> None:
+	def decode(self, dataIn: bytearray) -> None:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			dataIn (bytes): data buffer to decode
+			dataIn (bytearray): data buffer to decode
 
 		Raises:
 		------
@@ -172,8 +172,8 @@ class GimpGgrGradient:
 			gSeg.decode(data[i + 3])
 			self.segments.append(gSeg)
 
-	def encode(self) -> bytes:
-		"""Encode this to bytes."""
+	def encode(self) -> bytearray:
+		"""Encode this to bytearray."""
 		ret = ["GIMP Gradient"]
 		ret.append(f"Name: {self.name}")
 		ret.append(str(len(self.segments)))

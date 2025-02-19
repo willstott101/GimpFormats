@@ -268,7 +268,7 @@ class GimpIOBase:
 		"""Gimp nomenclature for the item's unique id."""
 		self.uniqueId = tattoo
 
-	def _parasitesDecode(self, data: bytes | bytearray) -> int:
+	def _parasitesDecode(self, data: bytearray) -> int:
 		"""Decode list of parasites."""
 		index: int = 0
 		self.parasites = []  # reset
@@ -282,10 +282,10 @@ class GimpIOBase:
 		"""Encode list of parasites."""
 		ioBuf = IO()
 		for parasite in self.parasites:
-			ioBuf.addBytes(parasite.encode())
+			ioBuf.addbytearray(parasite.encode())
 		return ioBuf.data
 
-	def _guidelinesDecode(self, data: bytes | bytearray) -> None:
+	def _guidelinesDecode(self, data: bytearray) -> None:
 		"""Decode guidelines."""
 		index: int = 0
 		while index < len(data):
@@ -295,7 +295,7 @@ class GimpIOBase:
 			index += 1
 			self.guidelines.append((isVertical, position))
 
-	def _itemPathDecode(self, data: bytes | bytearray) -> None:
+	def _itemPathDecode(self, data: bytearray) -> None:
 		"""Decode item path."""
 		index: int = 0
 		path = []
@@ -305,7 +305,7 @@ class GimpIOBase:
 			path.append(pathElem)
 		self.itemPath = path
 
-	def _vectorsDecode(self, data: bytes | bytearray) -> None:
+	def _vectorsDecode(self, data: bytearray) -> None:
 		"""Decode vectors."""
 		index: int = 0
 		self.vectorsVersion = struct.unpack(">I", data[index : index + 4])[0]
@@ -337,10 +337,10 @@ class GimpIOBase:
 		else:
 			self.groupItemFlags &= ~0x00000001
 
-	def _colormapDecode(self, data: bytes | bytearray | IO, index: int = 0) -> None:
+	def _colormapDecode(self, data: bytearray | IO, index: int = 0) -> None:
 		"""_colormapDecode_.
 
-		:param data: can be bytes or an IO object
+		:param data: can be bytearray or an IO object
 
 		decode colormap/palette
 		"""
@@ -364,13 +364,13 @@ class GimpIOBase:
 		if ioObj is not None:
 			ioObj.index = index
 
-	def _userUnitsDecode(self, data: bytes | bytearray) -> None:
+	def _userUnitsDecode(self, data: bytearray) -> None:
 		"""Decode a set of user-defined measurement units."""
 		userUnits = GimpUserUnits()
 		userUnits.decode(data)
 		self.userUnits = userUnits
 
-	def _samplePointsDecode(self, data: bytes | bytearray) -> None:
+	def _samplePointsDecode(self, data: bytearray) -> None:
 		"""Decode a series of points."""
 		index: int = 0
 		samplePoints = []
@@ -382,7 +382,7 @@ class GimpIOBase:
 			samplePoints.append((x, y))
 		self.samplePoints = samplePoints
 
-	def _propertyDecode(self, prop: int, data: bytes | bytearray) -> int:
+	def _propertyDecode(self, prop: int, data: bytearray) -> int:
 		"""Decode a single property.
 
 		Many properties are in the form
@@ -454,7 +454,7 @@ class GimpIOBase:
 			pass
 			# self._vectorsDecode_(data)
 		elif _prop_cmp(prop, ImageProperties.PROP_TEXT_LAYER_FLAGS):
-			if isinstance(data, bytes):
+			if isinstance(data, bytearray):
 				self.textLayerFlags = int.from_bytes(data, byteorder="big")
 			else:
 				self.textLayerFlags = int(data)
@@ -507,7 +507,7 @@ class GimpIOBase:
 		if _prop_cmp(prop, ImageProperties.PROP_COLORMAP):
 			if self.colorMap is not None and self.colorMap:
 				ioBuf.u32 = ImageProperties.PROP_COLORMAP
-				# ioBuf.addBytes(self._colormapEncode_())
+				# ioBuf.addbytearray(self._colormapEncode_())
 		elif _prop_cmp(
 			prop, [ImageProperties.PROP_ACTIVE_LAYER, ImageProperties.PROP_ACTIVE_CHANNEL]
 		):
@@ -581,7 +581,7 @@ class GimpIOBase:
 			if self.guidelines is not None and self.guidelines:
 				pass
 				# ioBuf.u32 = ImageProperties.PROP_GUIDES
-				# ioBuf.addBytes(self._guidelinesEncode_())
+				# ioBuf.addbytearray(self._guidelinesEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_RESOLUTION):
 			if self.horizontalResolution is not None and self.verticalResolution is not None:
 				ioBuf.u32 = ImageProperties.PROP_RESOLUTION.value
@@ -593,7 +593,7 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_PARASITES):
 			if self.parasites is not None and self.parasites:
 				ioBuf.u32 = ImageProperties.PROP_PARASITES.value
-				ioBuf.addBytes(self._parasitesEncode())
+				ioBuf.addbytearray(self._parasitesEncode())
 		elif _prop_cmp(prop, ImageProperties.PROP_UNIT):
 			if self.units is not None:
 				ioBuf.u32 = ImageProperties.PROP_UNIT.value
@@ -610,12 +610,12 @@ class GimpIOBase:
 			if self.userUnits is not None:
 				pass
 				# ioBuf.u32 = ImageProperties.PROP_USER_UNIT
-				# ioBuf.addBytes(self._userUnitsEncode_())
+				# ioBuf.addbytearray(self._userUnitsEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_VECTORS):
 			if self.vectors is not None and self.vectors:
 				pass
 				# ioBuf.u32 = ImageProperties.PROP_VECTORS
-				# ioBuf.addBytes(self._vectorsEncode_())
+				# ioBuf.addbytearray(self._vectorsEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_TEXT_LAYER_FLAGS):
 			if self.textLayerFlags is not None:
 				ioBuf.u32 = ImageProperties.PROP_TEXT_LAYER_FLAGS.value
@@ -633,7 +633,7 @@ class GimpIOBase:
 			if self.itemPath is not None:
 				pass
 				# ioBuf.u32 = ImageProperties.PROP_ITEM_PATH
-				# ioBuf.addBytes(self._itemPathEncode_())
+				# ioBuf.addbytearray(self._itemPathEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_GROUP_ITEM_FLAGS):
 			if self.groupItemFlags is not None:
 				ioBuf.u32 = ImageProperties.PROP_GROUP_ITEM_FLAGS.value
@@ -677,7 +677,7 @@ class GimpIOBase:
 			if self.samplePoints is not None and self.samplePoints:
 				pass
 				# ioBuf.u32 = ImageProperties.PROP_SAMPLE_POINTS
-				# self.addBytes(self._samplePointsEncode_())
+				# self.addbytearray(self._samplePointsEncode_())
 		else:
 			msg = f"Unknown property id {prop}"
 			raise RuntimeError(msg)
@@ -693,7 +693,7 @@ class GimpIOBase:
 				break
 			if prop == 0:
 				break
-			self._propertyDecode(prop, ioBuf.getBytes(dataLength))
+			self._propertyDecode(prop, ioBuf.getbytearray(dataLength))
 		return ioBuf.index
 
 	def _propertiesEncode(self) -> bytearray:
@@ -702,7 +702,7 @@ class GimpIOBase:
 		for prop in range(1, ImageProperties.PROP_NUM_PROPS.value):
 			moData = self._propertyEncode(prop)
 			if moData:
-				ioBuf.addBytes(moData)
+				ioBuf.addbytearray(moData)
 		return ioBuf.data
 
 	def __str__(self) -> str:
@@ -809,12 +809,12 @@ class GimpUserUnits:
 		self.sname = ""
 		self.pname = ""
 
-	def decode(self, data: bytes | bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data buffer to decode
+			data (bytearray): data buffer to decode
 			index (int, optional): index within the buffer to start at]. Defaults to 0.
 
 		Returns:
@@ -833,7 +833,7 @@ class GimpUserUnits:
 		return ioBuf.index
 
 	def encode(self) -> bytearray:
-		"""Convert this object to raw bytes."""
+		"""Convert this object to raw bytearray."""
 		ioBuf = IO()
 		ioBuf.float32 = self.factor
 		ioBuf.u32 = self.numDigits

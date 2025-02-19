@@ -72,19 +72,19 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpGtpToolPreset().encode
 
 [Show source in GimpGtpToolPreset.py:157](../../../gimpformats/GimpGtpToolPreset.py#L157)
 
-Encode to bytes.
+Encode to bytearray.
 
 #### Signature
 
 ```python
-def encode(self) -> bytes: ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpGtpToolPreset().full_repr
@@ -195,7 +195,7 @@ Decode a parentheses-based file format.
 #### Signature
 
 ```python
-def parenFileDecode(data: bytes) -> list[ParenFileValue]: ...
+def parenFileDecode(data: bytearray) -> list[ParenFileValue]: ...
 ```
 
 #### See also

@@ -54,7 +54,7 @@ Decode a byte buffer.
 #### Arguments
 
 ----
- - `data` *bytes* - data to decode
+ - `data` *bytearray* - data to decode
  - `index` *int, optional* - index to start from. Defaults to 0.
 
 #### Returns
@@ -65,7 +65,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes | bytearray, index: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpChannel().encode

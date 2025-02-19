@@ -19,7 +19,7 @@ height = io.u32
 The example above reads a file in binary and sets the variables width and height
 as the first two unsigned integer 32s
 
-For a file starting with the bytes:
+For a file starting with the bytearray:
 
 ```none
 00 00 00 C8 00 01 90
@@ -42,7 +42,7 @@ class IO:
 
 	def __init__(
 		self,
-		data: bytearray | bytes | None = None,
+		data: bytearray | None = None,
 		idx: int = 0,
 		littleEndian: bool = False,
 		boolSize: int = 8,
@@ -653,40 +653,40 @@ class IO:
 		"""Set a 64 bit float."""
 		self._write(8, "<d", float64le)
 
-	def getBytes(self, nbytes: int):
-		"""Grab some raw bytes and advance the index."""
-		data = self.data[self.index : self.index + nbytes]
-		self.index += nbytes
+	def getbytearray(self, nbytearray: int):
+		"""Grab some raw bytearray and advance the index."""
+		data = self.data[self.index : self.index + nbytearray]
+		self.index += nbytearray
 		return data
 
-	def addBytes(self, ioBytes: Any) -> None:
-		"""Add some raw bytes and advance the index.
+	def addbytearray(self, iobytearray: Any) -> None:
+		"""Add some raw bytearray and advance the index.
 
-		alias for setBytes()
+		alias for setbytearray()
 
-		:param bytes: can be a string, bytearray, or another IO object
+		:param bytearray: can be a string, bytearray, or another IO object
 		"""
-		self.setBytes(ioBytes)
+		self.setbytearray(iobytearray)
 
-	def setBytes(self, ioBytes: Any) -> None:
-		"""Add some raw bytes and advance the index.
+	def setbytearray(self, iobytearray: Any) -> None:
+		"""Add some raw bytearray and advance the index.
 
-		alias for addBytes()
+		alias for addbytearray()
 
-		:param ioBytes: can be a string, bytearray, or another IO object
+		:param iobytearray: can be a string, bytearray, or another IO object
 		"""
-		if isinstance(ioBytes, IO):
-			ioBytes = ioBytes.data
-		if isinstance(ioBytes, str):
-			ioBytes = bytearray(ioBytes, encoding="utf-8")
+		if isinstance(iobytearray, IO):
+			iobytearray = iobytearray.data
+		if isinstance(iobytearray, str):
+			iobytearray = bytearray(iobytearray, encoding="utf-8")
 		if self.index >= len(self.data):
 			# if we're at the end, simply extend the buffer
-			self.data.extend(ioBytes)
-			self.index += len(ioBytes)
+			self.data.extend(iobytearray)
+			self.index += len(iobytearray)
 		else:
-			if self.index + len(ioBytes) >= len(self.data):
-				self.data.extend(bytearray((self.index + len(ioBytes)) - len(self.data)))
-			for ioByte in ioBytes:
+			if self.index + len(iobytearray) >= len(self.data):
+				self.data.extend(bytearray((self.index + len(iobytearray)) - len(self.data)))
+			for ioByte in iobytearray:
 				self.data[self.index] = ioByte
 				self.index += 1
 
@@ -694,7 +694,7 @@ class IO:
 		"""Read the next string conforming to IEEE 754 and advance the index.
 
 		Note, string format is:
-			uint32   n+1  Number of bytes that follow, including the zero byte
+			uint32   n+1  Number of bytearray that follow, including the zero byte
 			byte[n]  ...  String data in Unicode, encoded using UTF-8
 			byte     0    Zero marks the end of the string.
 		or simply uint32=0 for empty string
@@ -715,7 +715,7 @@ class IO:
 	def _sz754set(self, sz754: Any, _encoding: str) -> None:
 		"""_sz754set."""
 		self.u32 = len(sz754)
-		self.setBytes(sz754)
+		self.setbytearray(sz754)
 		self.u8 = 0
 
 	@property
@@ -785,7 +785,7 @@ class IO:
 			if char == untilB:
 				break
 			data.append(char)
-		return bytes(data).decode(encoding, errors="replace")
+		return bytearray(data).decode(encoding, errors="replace")
 
 	@property
 	def textLine(self) -> str:
@@ -798,9 +798,9 @@ class IO:
 	@textLine.setter
 	def textLine(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char."""
-		self.setBytes(text)
+		self.setbytearray(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
-			self.setBytes("\n")
+			self.setbytearray("\n")
 
 	@property
 	def textLineA(self) -> str:
@@ -813,9 +813,9 @@ class IO:
 	@textLineA.setter
 	def textLineA(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in ascii."""
-		self.setBytes(text)
+		self.setbytearray(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
-			self.setBytes("\n")
+			self.setbytearray("\n")
 
 	@property
 	def textLineW(self) -> str:
@@ -828,9 +828,9 @@ class IO:
 	@textLineW.setter
 	def textLineW(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in ucs-2."""
-		self.setBytes(text)
+		self.setbytearray(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
-			self.setBytes("\0\n")
+			self.setbytearray("\0\n")
 
 	@property
 	def textLineU(self) -> str:
@@ -843,9 +843,9 @@ class IO:
 	@textLineU.setter
 	def textLineU(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in utf-8."""
-		self.setBytes(text)
+		self.setbytearray(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
-			self.setBytes("\n")
+			self.setbytearray("\n")
 
 	@property
 	def cString(self) -> str:
@@ -855,8 +855,8 @@ class IO:
 	@cString.setter
 	def cString(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte."""
-		self.setBytes(text)
-		self.setBytes("\0")
+		self.setbytearray(text)
+		self.setbytearray("\0")
 
 	@property
 	def cStringA(self) -> str:
@@ -866,8 +866,8 @@ class IO:
 	@cStringA.setter
 	def cStringA(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in ascii."""
-		self.setBytes(text)
-		self.setBytes("\0")
+		self.setbytearray(text)
+		self.setbytearray("\0")
 
 	@property
 	def cStringW(self) -> str:
@@ -877,8 +877,8 @@ class IO:
 	@cStringW.setter
 	def cStringW(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in ucs-2."""
-		self.setBytes(text)
-		self.setBytes("\0\0")
+		self.setbytearray(text)
+		self.setbytearray("\0\0")
 
 	@property
 	def cStringU(self) -> str:
@@ -888,5 +888,5 @@ class IO:
 	@cStringU.setter
 	def cStringU(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in utf-8."""
-		self.setBytes(text)
-		self.setBytes("\0")
+		self.setbytearray(text)
+		self.setbytearray("\0")

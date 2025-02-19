@@ -48,5 +48,5 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(data: bytes | bytearray, file: BytesIO | str | Path) -> None: ...
+def save(data: bytearray, file: BytesIO | str | Path) -> None: ...
 ```

@@ -80,7 +80,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, dataIn: bytes) -> None: ...
+def decode(self, dataIn: bytearray) -> None: ...
 ```
 
 ### GimpVbrBrush().encode
@@ -92,7 +92,7 @@ Encode to a raw data stream.
 #### Signature
 
 ```python
-def encode(self) -> bytes: ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpVbrBrush().image

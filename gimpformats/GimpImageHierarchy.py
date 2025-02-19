@@ -24,14 +24,14 @@ class GimpImageHierarchy(GimpIOBase):
 		super().__init__(parent)
 		self.width: int = 0
 		self.height: int = 0
-		self.bpp: int = 0  # Number of bytes per pixel
+		self.bpp: int = 0  # Number of bytearray per pixel
 		self._levelPtrs = []
 		self._levels = None
 		self._data = None
 		if image is not None:
 			self.image = image
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""
 		Decode packed pixels from a byte buffer.
 		"""
@@ -45,7 +45,7 @@ class GimpImageHierarchy(GimpIOBase):
 		self.bpp = ioBuf.u32
 
 		if not (1 <= self.bpp <= 4):
-			msg = f"Unexpected bytes-per-pixel value: {self.bpp}. Possible file corruption."
+			msg = f"Unexpected bytearray-per-pixel value: {self.bpp}. Possible file corruption."
 			raise RuntimeError(msg)
 
 		while True:
@@ -70,10 +70,10 @@ class GimpImageHierarchy(GimpIOBase):
 		ioBuf.u32 = self.bpp
 		dataIndex = ioBuf.index + self.pointerSize * (len(self.levels) + 1)
 		for level in self.levels:
-			ioBuf.addBytes(self._pointerEncode(dataIndex + dataioBuf.index))
-			dataioBuf.addBytes(level.encode())
-		ioBuf.addBytes(self._pointerEncode(0))
-		ioBuf.addBytes(dataioBuf.data)
+			ioBuf.addbytearray(self._pointerEncode(dataIndex + dataioBuf.index))
+			dataioBuf.addbytearray(level.encode())
+		ioBuf.addbytearray(self._pointerEncode(0))
+		ioBuf.addbytearray(dataioBuf.data)
 		return ioBuf.data
 
 	@property

@@ -13,7 +13,7 @@
     - [IO()._sz754](#io()_sz754)
     - [IO()._sz754set](#io()_sz754set)
     - [IO()._write](#io()_write)
-    - [IO().addBytes](#io()addbytes)
+    - [IO().addbytearray](#io()addbytearray)
     - [IO().beginContext](#io()begincontext)
     - [IO().bool16](#io()bool16)
     - [IO().bool16](#io()bool16-1)
@@ -56,7 +56,7 @@
     - [IO().float64le](#io()float64le-1)
     - [IO().floating](#io()floating)
     - [IO().floating](#io()floating-1)
-    - [IO().getBytes](#io()getbytes)
+    - [IO().getbytearray](#io()getbytearray)
     - [IO().i16](#io()i16)
     - [IO().i16](#io()i16-1)
     - [IO().i16be](#io()i16be)
@@ -85,7 +85,7 @@
     - [IO().index](#io()index-1)
     - [IO().qword](#io()qword)
     - [IO().qword](#io()qword-1)
-    - [IO().setBytes](#io()setbytes)
+    - [IO().setbytearray](#io()setbytearray)
     - [IO().sz754](#io()sz754)
     - [IO().sz754](#io()sz754-1)
     - [IO().sz754A](#io()sz754a)
@@ -149,7 +149,7 @@ Class to handle i/o to a byte buffer or file-like object.
 class IO:
     def __init__(
         self,
-        data: bytearray | bytes | None = None,
+        data: bytearray | None = None,
         idx: int = 0,
         littleEndian: bool = False,
         boolSize: int = 8,
@@ -217,7 +217,7 @@ def _readUntil(self, until: str, encoding: str = "A") -> str: ...
 Read the next string conforming to IEEE 754 and advance the index.
 
 Note, string format is:
- uint32   n+1  Number of bytes that follow, including the zero byte
+ uint32   n+1  Number of bytearray that follow, including the zero byte
  byte[n]  ...  String data in Unicode, encoded using UTF-8
  byte     0    Zero marks the end of the string.
 or simply uint32=0 for empty string
@@ -252,22 +252,22 @@ General formatted write.
 def _write(self, size: int, fmt: str, data: Any) -> None: ...
 ```
 
-### IO().addBytes
+### IO().addbytearray
 
 [Show source in binaryiotools.py:662](../../../gimpformats/binaryiotools.py#L662)
 
-Add some raw bytes and advance the index.
+Add some raw bytearray and advance the index.
 
-alias for setBytes()
+alias for setbytearray()
 
 #### Arguments
 
-- `bytes` - can be a string, bytearray, or another IO object
+- `bytearray` - can be a string, bytearray, or another IO object
 
 #### Signature
 
 ```python
-def addBytes(self, ioBytes: Any) -> None: ...
+def addbytearray(self, iobytearray: Any) -> None: ...
 ```
 
 ### IO().beginContext
@@ -816,16 +816,16 @@ Set a float.
 def floating(self, floating: float) -> None: ...
 ```
 
-### IO().getBytes
+### IO().getbytearray
 
 [Show source in binaryiotools.py:656](../../../gimpformats/binaryiotools.py#L656)
 
-Grab some raw bytes and advance the index.
+Grab some raw bytearray and advance the index.
 
 #### Signature
 
 ```python
-def getBytes(self, nbytes: int): ...
+def getbytearray(self, nbytearray: int): ...
 ```
 
 ### IO().i16
@@ -1192,22 +1192,22 @@ Set a qword.
 def qword(self, qword: Any) -> None: ...
 ```
 
-### IO().setBytes
+### IO().setbytearray
 
 [Show source in binaryiotools.py:671](../../../gimpformats/binaryiotools.py#L671)
 
-Add some raw bytes and advance the index.
+Add some raw bytearray and advance the index.
 
-alias for addBytes()
+alias for addbytearray()
 
 #### Arguments
 
-- `ioBytes` - can be a string, bytearray, or another IO object
+- `iobytearray` - can be a string, bytearray, or another IO object
 
 #### Signature
 
 ```python
-def setBytes(self, ioBytes: Any) -> None: ...
+def setbytearray(self, iobytearray: Any) -> None: ...
 ```
 
 ### IO().sz754

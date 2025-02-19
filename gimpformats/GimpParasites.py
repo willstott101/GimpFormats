@@ -58,7 +58,7 @@ class GimpParasite:
 		self.flags = 0
 		self.data = None
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
@@ -68,7 +68,7 @@ class GimpParasite:
 		self.name = ioBuf.sz754
 		self.flags = ioBuf.u32
 		dataLength = ioBuf.u32
-		self.data = ioBuf.getBytes(dataLength)
+		self.data = ioBuf.getbytearray(dataLength)
 		return ioBuf.index
 
 	def encode(self) -> bytearray:
@@ -81,7 +81,7 @@ class GimpParasite:
 		ioBuf.sz754 = self.name
 		ioBuf.u32 = self.flags
 		ioBuf.u32 = len(self.data or b"")
-		ioBuf.addBytes(self.data)
+		ioBuf.addbytearray(self.data)
 		return ioBuf.data
 
 	def __str__(self) -> str:

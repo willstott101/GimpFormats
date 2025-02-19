@@ -35,12 +35,12 @@ class GimpChannel(GimpIOBase):
 			self.image = image
 		self._data = None
 
-	def decode(self, data: bytes | bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data to decode
+			data (bytearray): data to decode
 			index (int, optional): index to start from. Defaults to 0.
 
 		Returns:
@@ -63,9 +63,9 @@ class GimpChannel(GimpIOBase):
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
 		ioBuf.sz754 = self.name
-		ioBuf.addBytes(self._propertiesEncode())
+		ioBuf.addbytearray(self._propertiesEncode())
 		imgH = self._imageHierarchyPtr or 0
-		ioBuf.addBytes(self._pointerEncode(imgH))
+		ioBuf.addbytearray(self._pointerEncode(imgH))
 		return ioBuf.data
 
 	@property

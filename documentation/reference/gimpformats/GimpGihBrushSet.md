@@ -53,7 +53,7 @@ Decode a byte buffer.
 #### Arguments
 
 ----
- - `data` *bytes* - data buffer to decode
+ - `data` *bytearray* - data buffer to decode
  - `index` *int, optional* - index within the buffer to start at. Defaults to 0.
 
 #### Returns
@@ -64,19 +64,19 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytes, index: int = 0) -> int: ...
+def decode(self, data: bytearray, index: int = 0) -> int: ...
 ```
 
 ### GimpGihBrushSet().encode
 
 [Show source in GimpGihBrushSet.py:81](../../../gimpformats/GimpGihBrushSet.py#L81)
 
-Encode this object to bytes.
+Encode this object to bytearray.
 
 #### Signature
 
 ```python
-def encode(self) -> bytes: ...
+def encode(self) -> bytearray: ...
 ```
 
 ### GimpGihBrushSet().full_repr

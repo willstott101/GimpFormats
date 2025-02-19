@@ -80,7 +80,7 @@ class ParenFileValue:
 		return "".join(ret)
 
 
-def parenFileDecode(data: bytes) -> list[ParenFileValue]:
+def parenFileDecode(data: bytearray) -> list[ParenFileValue]:
 	"""Decode a parentheses-based file format.
 
 	(possibly "scheme" language?)
@@ -145,7 +145,7 @@ class GimpGtpToolPreset:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
@@ -154,8 +154,8 @@ class GimpGtpToolPreset:
 		self.values = parenFileDecode(data)
 		return index
 
-	def encode(self) -> bytes:
-		"""Encode to bytes."""
+	def encode(self) -> bytearray:
+		"""Encode to bytearray."""
 		return parenFileEncode(self.values).encode("utf-8")
 
 	def save(self, tofileName: str | BytesIO) -> None:

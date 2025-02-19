@@ -1,50 +1,43 @@
-"""python3 -m pytest in project root"""
-
-from __future__ import annotations
-
-import os
 import sys
 from pathlib import Path
 
+import pytest
 from imgcompare import imgcompare
-
-THISDIR = str(Path(__file__).resolve().parent)
-sys.path.insert(0, str(Path(THISDIR).parent))
 
 from gimpformats.GimpPatPattern import GimpPatPattern
 
-dut = GimpPatPattern()
+# Setting up paths
+THISDIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(THISDIR.parent))
+
+# Prepare the object to test
+project = GimpPatPattern()
 
 
-def test_3dgreen() -> None:
-	dut.load(f"{THISDIR}/3dgreen.pat")
-	# test image saving (implicit)
-	dut.save(f"{THISDIR}/actualOutput_3dgreen.png")
-	# test for image match
-	assert imgcompare.is_equal(dut.image, f"{THISDIR}/desiredOutput_3dgreen.png", tolerance=0.2)
-	os.remove(f"{THISDIR}/actualOutput_3dgreen.png")
-	# test round-trip compatibility
-	dut.save(f"{THISDIR}/actualOutput_3dgreen.pat")
-	original = open(f"{THISDIR}/3dgreen.pat", "rb")
-	actual = open(f"{THISDIR}/actualOutput_3dgreen.pat", "rb")
-	assert actual.read() == original.read().replace(b"\r\n", b"\n")
-	original.close()
-	actual.close()
-	os.remove(f"{THISDIR}/actualOutput_3dgreen.pat")
+@pytest.mark.parametrize(
+	"pattern_name, desired_image",
+	[("3dgreen", "desiredOutput_3dgreen.png"), ("leopard", "desiredOutput_leopard.png")],
+)
+def test_pattern(pattern_name, desired_image):
+	"""Test pattern functionality."""
+	project.load(THISDIR / f"{pattern_name}.pat")
 
+	# Test image saving
+	output_png = f"actualOutput_{pattern_name}.png"
+	project.save(THISDIR / output_png)
 
-def test_leopard() -> None:
-	dut.load(f"{THISDIR}/leopard.pat")
-	# test image saving (explicit)
-	dut.image.save(f"{THISDIR}/actualOutput_leopard.png")
-	# test for image match
-	assert imgcompare.is_equal(dut.image, f"{THISDIR}/desiredOutput_leopard.png", tolerance=0.2)
-	os.remove(f"{THISDIR}/actualOutput_leopard.png")
-	# test round-trip compatibility
-	dut.save(f"{THISDIR}/actualOutput_leopard.pat")
-	original = open(f"{THISDIR}/leopard.pat", "rb")
-	actual = open(f"{THISDIR}/actualOutput_leopard.pat", "rb")
-	assert actual.read() == original.read()
-	original.close()
-	actual.close()
-	os.remove(f"{THISDIR}/actualOutput_leopard.pat")
+	# Test image match
+	assert imgcompare.is_equal(project.image, (THISDIR / desired_image).as_posix(), tolerance=0.2)
+
+	# Test round-trip compatibility
+	output_pat = f"actualOutput_{pattern_name}.pat"
+	project.save(THISDIR / output_pat)
+	with open(THISDIR / f"{pattern_name}.pat", "rb") as original, open(
+		THISDIR / f"actualOutput_{pattern_name}.pat", "rb"
+	) as actual:
+		assert actual.read() == original.read()
+
+	for file in [output_png, output_pat]:
+		file_path = THISDIR / file
+		if file_path.exists():
+			file_path.unlink()

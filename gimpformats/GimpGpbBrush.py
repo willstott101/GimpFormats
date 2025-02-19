@@ -41,12 +41,12 @@ class GimpGpbBrush:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytes, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
 		----
-			data (bytes): data to decode
+			data (bytearray): data to decode
 			index (int, optional): index to start from. Defaults to 0.
 
 		Returns:
@@ -57,11 +57,11 @@ class GimpGpbBrush:
 		return self.brush.decode(data, index)
 		# index = self.pattern.decode(data, index)
 
-	def encode(self) -> bytes | bytearray:
-		"""Encode this object to bytes."""
+	def encode(self) -> bytearray:
+		"""Encode this object to bytearray."""
 		ioBuf = IO()
-		ioBuf.addBytes(self.brush.encode())
-		ioBuf.addBytes(self.pattern.encode())
+		ioBuf.addbytearray(self.brush.encode())
+		ioBuf.addbytearray(self.pattern.encode())
 		return ioBuf.data
 
 	def save(self, tofileName: str | BytesIO) -> None:

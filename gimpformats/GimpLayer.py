@@ -47,7 +47,7 @@ class GimpLayer(GimpIOBase):
 		if image is not None:
 			self.image = image  # done last as it resets some of the above defaults
 
-	def decode(self, data: bytes | bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Steps:
@@ -59,7 +59,7 @@ class GimpLayer(GimpIOBase):
 
 		Args:
 		----
-			data (bytes): data buffer to decode
+			data (bytearray): data buffer to decode
 			index (int, optional): index within the buffer to start at]. Defaults to 0.
 
 		Returns:
@@ -104,17 +104,17 @@ class GimpLayer(GimpIOBase):
 		ioBuf.u32 = self.colorMode
 		ioBuf.sz754 = self.name
 		# Layer properties
-		ioBuf.addBytes(self._propertiesEncode())
+		ioBuf.addbytearray(self._propertiesEncode())
 		# Pointer to the image heirachy structure
 		dataAreaIndex = ioBuf.index + self.pointerSize * 2
-		ioBuf.addBytes(self._pointerEncode(dataAreaIndex))
-		dataAreaIO.addBytes(self.imageHierarchy.encode())
-		# ioBuf.addBytes(self._pointerEncode_(dataAreaIndex))
+		ioBuf.addbytearray(self._pointerEncode(dataAreaIndex))
+		dataAreaIO.addbytearray(self.imageHierarchy.encode())
+		# ioBuf.addbytearray(self._pointerEncode_(dataAreaIndex))
 		# Pointer to the layer mask
 		if self.mask is not None:
-			dataAreaIO.addBytes(self.mask.encode())
-		ioBuf.addBytes(self._pointerEncode(dataAreaIndex + dataAreaIO.index))
-		ioBuf.addBytes(dataAreaIO)
+			dataAreaIO.addbytearray(self.mask.encode())
+		ioBuf.addbytearray(self._pointerEncode(dataAreaIndex + dataAreaIO.index))
+		ioBuf.addbytearray(dataAreaIO)
 		# Return the data
 		return ioBuf.data
 
