@@ -32,12 +32,12 @@ from gimpformats.utils import repr_indent_lines
 
 
 class GimpGroup:
-	def __init__(self, name: Any):
+	def __init__(self, name: Any) -> None:
 		self.name: str = str(name)
 		self.layer_options: GimpLayer | None = None
 		self.children: list[GimpLayer | GimpGroup] = []
 
-	def add_layer(self, layer: GimpLayer | GimpGroup):
+	def add_layer(self, layer: GimpLayer | GimpGroup) -> None:
 		self.children.append(layer)
 
 	def get_group(self, idx: int) -> GimpGroup:
@@ -457,7 +457,7 @@ class GimpDocument(GimpIOBase):
 
 		all_children: list[GimpLayer | GimpGroup] = current_group.children[::-1]
 
-		for i, child in enumerate(all_children):
+		for _i, child in enumerate(all_children):
 			if isinstance(child, GimpGroup):
 				to_merge = pil2np(Image.new("RGBA", (self.width, self.height)))
 				lo = child.layer_options
@@ -545,7 +545,7 @@ blendLookup = {
 }
 
 
-def pil2np(image: Image.Image):
+def pil2np(image: Image.Image) -> np.ndarray:
 	return np.array(image.convert("RGBA")).astype(float)
 
 

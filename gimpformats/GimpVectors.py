@@ -236,7 +236,7 @@ class GimpPoint:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		"""Get a textual representation of this object."""
 
 		return (
