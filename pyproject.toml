@@ -18,10 +18,10 @@ classifiers = [
 	"Topic :: Utilities",
 ]
 dependencies = [
-	"blendmodes>=2024.1.1",
+	"blendmodes>=2025",
 	"brackettree>=0.2.5",
 	"loguru>=0.7.3",
-	"numpy>=1.26.4",
+	"numpy>=2.0.2",
 	"pillow>=10.4.0",
 ]
 
@@ -37,7 +37,7 @@ dev = [
 	"imgcompare>=2.0.1",
 	"pyright>=1.1.394",
 	"pytest>=8.3.4",
-	"ruff>=0.9.6",
+	"ruff>=0.9.7",
 	"safety>=3.3.0",
 ]
 
