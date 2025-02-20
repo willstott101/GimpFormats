@@ -9,8 +9,6 @@
     - [GimpDocument().__repr__](#gimpdocument()__repr__)
     - [GimpDocument().__str__](#gimpdocument()__str__)
     - [GimpDocument()._render](#gimpdocument()_render)
-    - [GimpDocument().addRawLayer](#gimpdocument()addrawlayer)
-    - [GimpDocument().appendRawLayer](#gimpdocument()appendrawlayer)
     - [GimpDocument().decode](#gimpdocument()decode)
     - [GimpDocument().deleteRawLayer](#gimpdocument()deleterawlayer)
     - [GimpDocument().encode](#gimpdocument()encode)
@@ -21,7 +19,6 @@
     - [GimpDocument().insertRawLayer](#gimpdocument()insertrawlayer)
     - [GimpDocument().load](#gimpdocument()load)
     - [GimpDocument().newLayer](#gimpdocument()newlayer)
-    - [GimpDocument().newLayerFromClipboard](#gimpdocument()newlayerfromclipboard)
     - [GimpDocument().raw_layers](#gimpdocument()raw_layers)
     - [GimpDocument().render](#gimpdocument()render)
     - [GimpDocument().save](#gimpdocument()save)
@@ -39,7 +36,7 @@
 
 ## GimpDocument
 
-[Show source in gimpXcfDocument.py:58](../../../gimpformats/gimpXcfDocument.py#L58)
+[Show source in gimpXcfDocument.py:57](../../../gimpformats/gimpXcfDocument.py#L57)
 
 Pure python implementation of the gimp file format.
 
@@ -71,7 +68,7 @@ class GimpDocument(GimpIOBase):
 
 ### GimpDocument().__repr__
 
-[Show source in gimpXcfDocument.py:406](../../../gimpformats/gimpXcfDocument.py#L406)
+[Show source in gimpXcfDocument.py:370](../../../gimpformats/gimpXcfDocument.py#L370)
 
 Get a textual representation of this object.
 
@@ -83,7 +80,7 @@ def __repr__(self) -> str: ...
 
 ### GimpDocument().__str__
 
-[Show source in gimpXcfDocument.py:402](../../../gimpformats/gimpXcfDocument.py#L402)
+[Show source in gimpXcfDocument.py:366](../../../gimpformats/gimpXcfDocument.py#L366)
 
 Get a textual representation of this object.
 
@@ -95,7 +92,7 @@ def __str__(self) -> str: ...
 
 ### GimpDocument()._render
 
-[Show source in gimpXcfDocument.py:450](../../../gimpformats/gimpXcfDocument.py#L450)
+[Show source in gimpXcfDocument.py:414](../../../gimpformats/gimpXcfDocument.py#L414)
 
 Perform the full project render over the current project.
 
@@ -114,49 +111,9 @@ def _render(self, current_group: GimpGroup) -> np.ndarray: ...
 
 - [GimpGroup](#gimpgroup)
 
-### GimpDocument().addRawLayer
-
-[Show source in gimpXcfDocument.py:325](../../../gimpformats/gimpXcfDocument.py#L325)
-
-Append a layer object to the document.
-
-#### Arguments
-
-- `layer` - the new layer to append
-
-#### Signature
-
-```python
-def addRawLayer(self, layer: GimpLayer) -> None: ...
-```
-
-#### See also
-
-- [GimpLayer](./GimpLayer.md#gimplayer)
-
-### GimpDocument().appendRawLayer
-
-[Show source in gimpXcfDocument.py:332](../../../gimpformats/gimpXcfDocument.py#L332)
-
-Append a layer object to the document.
-
-#### Arguments
-
-- `layer` - the new layer to append
-
-#### Signature
-
-```python
-def appendRawLayer(self, layer: GimpLayer) -> None: ...
-```
-
-#### See also
-
-- [GimpLayer](./GimpLayer.md#gimplayer)
-
 ### GimpDocument().decode
 
-[Show source in gimpXcfDocument.py:118](../../../gimpformats/gimpXcfDocument.py#L118)
+[Show source in gimpXcfDocument.py:117](../../../gimpformats/gimpXcfDocument.py#L117)
 
 Decode a byte buffer.
 
@@ -195,7 +152,7 @@ def decode(self, data: bytearray | bytes, index: int = 0) -> int: ...
 
 ### GimpDocument().deleteRawLayer
 
-[Show source in gimpXcfDocument.py:347](../../../gimpformats/gimpXcfDocument.py#L347)
+[Show source in gimpXcfDocument.py:311](../../../gimpformats/gimpXcfDocument.py#L311)
 
 Delete a layer.
 
@@ -207,7 +164,7 @@ def deleteRawLayer(self, index: int) -> None: ...
 
 ### GimpDocument().encode
 
-[Show source in gimpXcfDocument.py:192](../../../gimpformats/gimpXcfDocument.py#L192)
+[Show source in gimpXcfDocument.py:191](../../../gimpformats/gimpXcfDocument.py#L191)
 
 Encode to bytearray.
 
@@ -230,7 +187,7 @@ def encode(self) -> bytearray: ...
 
 ### GimpDocument().forceFullyLoaded
 
-[Show source in gimpXcfDocument.py:237](../../../gimpformats/gimpXcfDocument.py#L237)
+[Show source in gimpXcfDocument.py:236](../../../gimpformats/gimpXcfDocument.py#L236)
 
 Make sure everything is fully loaded from the file.
 
@@ -242,7 +199,7 @@ def forceFullyLoaded(self) -> None: ...
 
 ### GimpDocument().full_repr
 
-[Show source in gimpXcfDocument.py:414](../../../gimpformats/gimpXcfDocument.py#L414)
+[Show source in gimpXcfDocument.py:378](../../../gimpformats/gimpXcfDocument.py#L378)
 
 Get a textual representation of this object.
 
@@ -254,7 +211,7 @@ def full_repr(self, indent: int = 0) -> str: ...
 
 ### GimpDocument().getLayer
 
-[Show source in gimpXcfDocument.py:269](../../../gimpformats/gimpXcfDocument.py#L269)
+[Show source in gimpXcfDocument.py:268](../../../gimpformats/gimpXcfDocument.py#L268)
 
 Return a given layer.
 
@@ -266,7 +223,7 @@ def getLayer(self, index: int) -> GimpLayer | GimpGroup: ...
 
 ### GimpDocument().image
 
-[Show source in gimpXcfDocument.py:374](../../../gimpformats/gimpXcfDocument.py#L374)
+[Show source in gimpXcfDocument.py:338](../../../gimpformats/gimpXcfDocument.py#L338)
 
 Generates a final, compiled image by processing layers and groups.
 
@@ -279,7 +236,7 @@ def image(self) -> Image.Image: ...
 
 ### GimpDocument().insertRawLayer
 
-[Show source in gimpXcfDocument.py:339](../../../gimpformats/gimpXcfDocument.py#L339)
+[Show source in gimpXcfDocument.py:303](../../../gimpformats/gimpXcfDocument.py#L303)
 
 Insert a layer object at a specific position.
 
@@ -300,7 +257,7 @@ def insertRawLayer(self, layer: GimpLayer, index: int = -1) -> None: ...
 
 ### GimpDocument().load
 
-[Show source in gimpXcfDocument.py:110](../../../gimpformats/gimpXcfDocument.py#L110)
+[Show source in gimpXcfDocument.py:109](../../../gimpformats/gimpXcfDocument.py#L109)
 
 Load a gimp xcf and decode the file. See decode for more on this process.
 
@@ -316,7 +273,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpDocument().newLayer
 
-[Show source in gimpXcfDocument.py:285](../../../gimpformats/gimpXcfDocument.py#L285)
+[Show source in gimpXcfDocument.py:284](../../../gimpformats/gimpXcfDocument.py#L284)
 
 Create a new layer based on a PIL image.
 
@@ -342,37 +299,9 @@ def newLayer(self, name: str, image: Image.Image, index: int = -1) -> GimpLayer:
 
 - [GimpLayer](./GimpLayer.md#gimplayer)
 
-### GimpDocument().newLayerFromClipboard
-
-[Show source in gimpXcfDocument.py:304](../../../gimpformats/gimpXcfDocument.py#L304)
-
-Create a new image from the system clipboard.
-
-NOTE: requires pillow PIL implementation
-NOTE: only works on OSX and Windows
-
-#### Arguments
-
-----
- - `name` *str* - a name for the new layer
- - `index` *int, optional* - where to insert the new layer (default=top). Defaults to -1.
-
-#### Returns
-
--------
- - `GimpLayer` - newly created GimpLayer object
-
-#### Signature
-
-```python
-def newLayerFromClipboard(
-    self, name: str = "pasted", index: int = -1
-) -> GimpLayer | None: ...
-```
-
 ### GimpDocument().raw_layers
 
-[Show source in gimpXcfDocument.py:248](../../../gimpformats/gimpXcfDocument.py#L248)
+[Show source in gimpXcfDocument.py:247](../../../gimpformats/gimpXcfDocument.py#L247)
 
 Decode the image's layers if necessary.
 
@@ -391,7 +320,7 @@ def raw_layers(self) -> list[GimpLayer]: ...
 
 ### GimpDocument().render
 
-[Show source in gimpXcfDocument.py:442](../../../gimpformats/gimpXcfDocument.py#L442)
+[Show source in gimpXcfDocument.py:406](../../../gimpformats/gimpXcfDocument.py#L406)
 
 Perform the full project render over the current project.
 
@@ -412,7 +341,7 @@ def render(self, root_group: GimpGroup) -> Image.Image: ...
 
 ### GimpDocument().save
 
-[Show source in gimpXcfDocument.py:383](../../../gimpformats/gimpXcfDocument.py#L383)
+[Show source in gimpXcfDocument.py:347](../../../gimpformats/gimpXcfDocument.py#L347)
 
 Save this gimp image to a file.
 
@@ -424,7 +353,7 @@ def save(self, filename: str | BytesIO | None = None) -> NoReturn: ...
 
 ### GimpDocument().saveNew
 
-[Show source in gimpXcfDocument.py:393](../../../gimpformats/gimpXcfDocument.py#L393)
+[Show source in gimpXcfDocument.py:357](../../../gimpformats/gimpXcfDocument.py#L357)
 
 Save a new gimp image to a file.
 
@@ -436,7 +365,7 @@ def saveNew(self, filename: str | None = None) -> NoReturn: ...
 
 ### GimpDocument().setRawLayer
 
-[Show source in gimpXcfDocument.py:279](../../../gimpformats/gimpXcfDocument.py#L279)
+[Show source in gimpXcfDocument.py:278](../../../gimpformats/gimpXcfDocument.py#L278)
 
 Assign to a given layer.
 
@@ -452,7 +381,7 @@ def setRawLayer(self, index: int, layer: GimpLayer) -> None: ...
 
 ### GimpDocument().walkTree
 
-[Show source in gimpXcfDocument.py:351](../../../gimpformats/gimpXcfDocument.py#L351)
+[Show source in gimpXcfDocument.py:315](../../../gimpformats/gimpXcfDocument.py#L315)
 
 #### Signature
 
@@ -468,7 +397,7 @@ def walkTree(self) -> GimpGroup: ...
 
 ## GimpGroup
 
-[Show source in gimpXcfDocument.py:34](../../../gimpformats/gimpXcfDocument.py#L34)
+[Show source in gimpXcfDocument.py:33](../../../gimpformats/gimpXcfDocument.py#L33)
 
 #### Signature
 
@@ -479,7 +408,7 @@ class GimpGroup:
 
 ### GimpGroup().__repr__
 
-[Show source in gimpXcfDocument.py:53](../../../gimpformats/gimpXcfDocument.py#L53)
+[Show source in gimpXcfDocument.py:52](../../../gimpformats/gimpXcfDocument.py#L52)
 
 Get a textual representation of this object.
 
@@ -491,7 +420,7 @@ def __repr__(self) -> str: ...
 
 ### GimpGroup().add_layer
 
-[Show source in gimpXcfDocument.py:40](../../../gimpformats/gimpXcfDocument.py#L40)
+[Show source in gimpXcfDocument.py:39](../../../gimpformats/gimpXcfDocument.py#L39)
 
 #### Signature
 
@@ -501,7 +430,7 @@ def add_layer(self, layer: GimpLayer | GimpGroup) -> None: ...
 
 ### GimpGroup().get_group
 
-[Show source in gimpXcfDocument.py:43](../../../gimpformats/gimpXcfDocument.py#L43)
+[Show source in gimpXcfDocument.py:42](../../../gimpformats/gimpXcfDocument.py#L42)
 
 #### Signature
 
@@ -513,7 +442,7 @@ def get_group(self, idx: int) -> GimpGroup: ...
 
 ## applyMask
 
-[Show source in gimpXcfDocument.py:566](../../../gimpformats/gimpXcfDocument.py#L566)
+[Show source in gimpXcfDocument.py:529](../../../gimpformats/gimpXcfDocument.py#L529)
 
 Apply a grayscale Pillow mask to an RGBA NumPy image.
 
@@ -533,7 +462,7 @@ def applyMask(
 
 ## blendModeLookup
 
-[Show source in gimpXcfDocument.py:561](../../../gimpformats/gimpXcfDocument.py#L561)
+[Show source in gimpXcfDocument.py:524](../../../gimpformats/gimpXcfDocument.py#L524)
 
 Look up the blend mode from the lookup table.
 
@@ -551,7 +480,7 @@ def blendModeLookup(blend_type: GimpBlendMode) -> BlendMode: ...
 
 ## make_thumbnail
 
-[Show source in gimpXcfDocument.py:555](../../../gimpformats/gimpXcfDocument.py#L555)
+[Show source in gimpXcfDocument.py:518](../../../gimpformats/gimpXcfDocument.py#L518)
 
 #### Signature
 
@@ -563,7 +492,7 @@ def make_thumbnail(image: Image.Image) -> None: ...
 
 ## pil2np
 
-[Show source in gimpXcfDocument.py:549](../../../gimpformats/gimpXcfDocument.py#L549)
+[Show source in gimpXcfDocument.py:512](../../../gimpformats/gimpXcfDocument.py#L512)
 
 #### Signature
 

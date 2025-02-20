@@ -38,7 +38,7 @@ class GimpGgrGradient:
 
 ### GimpGgrGradient().__str__
 
-[Show source in GimpGgrGradient.py:194](../../../gimpformats/GimpGgrGradient.py#L194)
+[Show source in GimpGgrGradient.py:196](../../../gimpformats/GimpGgrGradient.py#L196)
 
 Get a textual representation of this object.
 
@@ -72,7 +72,7 @@ def decode(self, dataIn: bytearray | bytes) -> None: ...
 
 ### GimpGgrGradient().encode
 
-[Show source in GimpGgrGradient.py:175](../../../gimpformats/GimpGgrGradient.py#L175)
+[Show source in GimpGgrGradient.py:177](../../../gimpformats/GimpGgrGradient.py#L177)
 
 Encode this to bytearray.
 
@@ -84,7 +84,7 @@ def encode(self) -> bytes: ...
 
 ### GimpGgrGradient().full_repr
 
-[Show source in GimpGgrGradient.py:198](../../../gimpformats/GimpGgrGradient.py#L198)
+[Show source in GimpGgrGradient.py:200](../../../gimpformats/GimpGgrGradient.py#L200)
 
 Get a textual representation of this object.
 
@@ -96,7 +96,7 @@ def full_repr(self, indent: int = 0) -> str: ...
 
 ### GimpGgrGradient().getColor
 
-[Show source in GimpGgrGradient.py:187](../../../gimpformats/GimpGgrGradient.py#L187)
+[Show source in GimpGgrGradient.py:189](../../../gimpformats/GimpGgrGradient.py#L189)
 
 Given a decimal percent (1.0 = 100%) retrieve...
 
@@ -126,7 +126,7 @@ def load(self, fileName: BytesIO | str) -> None: ...
 
 ### GimpGgrGradient().save
 
-[Show source in GimpGgrGradient.py:183](../../../gimpformats/GimpGgrGradient.py#L183)
+[Show source in GimpGgrGradient.py:185](../../../gimpformats/GimpGgrGradient.py#L185)
 
 Save this gimp image to a file.
 

@@ -7,11 +7,10 @@ python3 -m pytest in project root
 from __future__ import annotations
 
 import os
-import sys
 from pathlib import Path
 
 THISDIR = str(Path(__file__).resolve().parent)
-sys.path.insert(0, str(Path(THISDIR).parent))
+
 from gimpformats.GimpGtpToolPreset import GimpGtpToolPreset
 
 dut = GimpGtpToolPreset()

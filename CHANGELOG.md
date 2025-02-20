@@ -3,6 +3,16 @@
 All major and minor version changes will be documented in this file. Details of
 patch-level version changes can be found in [commit messages](../../commits/master).
 
+## 2025 - 2025/02/20
+
+- code clean up
+- typing and linting improvements
+- performance improvements (`_decodeRLE` takes approx half the time to decode)
+- improve tests coverage
+- add `native_convert:convert_xcf_to_flat_image` to drive gimp directly if it
+  exists to do a conversion. Note this is highly experimental at present, though
+  will likely export more accurately than gimpformats will
+
 ## 2024 - 2024/01/24
 
 - more typing

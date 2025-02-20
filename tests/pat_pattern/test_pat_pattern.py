@@ -1,4 +1,3 @@
-import sys
 from pathlib import Path
 
 import pytest
@@ -8,7 +7,7 @@ from gimpformats.GimpPatPattern import GimpPatPattern
 
 # Setting up paths
 THISDIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(THISDIR.parent))
+
 
 # Prepare the object to test
 project = GimpPatPattern()

@@ -1,4 +1,3 @@
-import sys
 from pathlib import Path
 
 import pytest
@@ -7,7 +6,6 @@ from imgcompare import imgcompare
 from gimpformats.gimpXcfDocument import GimpDocument
 
 THISDIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(THISDIR.parent))
 
 
 @pytest.fixture
@@ -17,7 +15,7 @@ def gimp_doc() -> GimpDocument:
 
 
 @pytest.mark.parametrize(
-	("image_name"), ["testOneLayerWithTransparency", "testComplexImage", "issue_14","layer_groups"]
+	("image_name"), ["testOneLayerWithTransparency", "testComplexImage", "issue_14", "layer_groups"]
 )
 def test_image_repr(gimp_doc: GimpDocument, image_name: str) -> None:
 	"""Test the text representation of an image."""
@@ -30,7 +28,6 @@ def test_image_repr(gimp_doc: GimpDocument, image_name: str) -> None:
 
 	expected_text = txt_path.read_text("utf-8").strip()
 	assert actual_text == expected_text
-
 
 
 @pytest.mark.parametrize(
@@ -46,17 +43,4 @@ def test_image_comparison(gimp_doc: GimpDocument, image_name: str) -> None:
 	gimp_doc.image.save(str(output_png))
 	# gimp_doc.image.save(str(expected_png))
 
-	assert imgcompare.is_equal(gimp_doc.image, str(expected_png), tolerance=0.2)
-
-
-@pytest.mark.parametrize("xcf_path", list((THISDIR / "rods-custom-font-xcf-files").glob("*.xcf")))
-def test_font_comparison(gimp_doc: GimpDocument, xcf_path: Path) -> None:
-	"""Test if the generated image matches the expected output."""
-	output_png = THISDIR / f"rods-custom-font-xcf-files/{xcf_path.name}_actual.png"
-	expected_png = THISDIR / f"rods-custom-font-xcf-files/{xcf_path.name}.png"
-
-	gimp_doc.load(str(xcf_path))
-	gimp_doc.image.save(str(output_png))
-	# gimp_doc.image.save(str(expected_png))
-
-	assert imgcompare.is_equal(gimp_doc.image, str(expected_png), tolerance=0.2)
+	assert imgcompare.is_equal(gimp_doc.image, str(expected_png), tolerance=0.01)

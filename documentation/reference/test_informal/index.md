@@ -9,6 +9,5 @@
 
 ## Modules
 
-- [Masktest](./masktest.md)
-- [Simpletest](./simpletest.md)
-- [Test64x64](./test64x64.md)
+- [Test Gimp Document](./test_gimp_document.md)
+- [Test Native Convert](./test_native_convert.md)

@@ -16,7 +16,6 @@ from io import BytesIO
 from typing import Any, NoReturn
 
 import numpy as np
-import PIL.ImageGrab
 from blendmodes.blend import BlendType as BlendMode
 from blendmodes.blend import blendLayersArray
 from PIL import Image
@@ -301,7 +300,6 @@ class GimpDocument(GimpIOBase):
 		self.insertRawLayer(layer, index)
 		return layer
 
-
 	def insertRawLayer(self, layer: GimpLayer, index: int = -1) -> None:
 		"""Insert a layer object at a specific position.
 
@@ -514,7 +512,7 @@ blendLookup = {
 def pil2np(image: Image.Image | None) -> np.ndarray:
 	if image is None:
 		return np.zeros((0, 0, 4), dtype=np.float64)
-	return np.array(image.convert("RGBA")).astype(float)
+	return np.array(image.convert("RGBA"))
 
 
 def make_thumbnail(image: Image.Image) -> None:
@@ -579,4 +577,4 @@ def applyMask(
 
 	# Reassemble and convert back to 0-255 range
 	result = np.dstack((out_rgb, out_alpha)) * 255.0
-	return np.nan_to_num(result, copy=False).astype(np.uint8)
+	return np.nan_to_num(result, copy=False)

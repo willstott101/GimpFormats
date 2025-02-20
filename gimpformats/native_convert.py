@@ -13,7 +13,7 @@ logger.remove()
 logger.add(sys.stdout, format="<level>{level: <8}</level> | {message}", level="INFO")
 
 
-def _convert_xcf_to_flat_image_windows(xcf_path:str, output_path:str) -> list[str] | None:
+def _convert_xcf_to_flat_image_windows(xcf_path: str, output_path: str) -> list[str] | None:
 	common_gimp_paths = [
 		r"C:\Program Files\GIMP 2\bin\gimp-console-2.10.exe",
 		r"C:\Program Files (x86)\GIMP 2\bin\gimp-console-2.10.exe",
@@ -29,7 +29,7 @@ def _convert_xcf_to_flat_image_windows(xcf_path:str, output_path:str) -> list[st
 		return None
 
 	# Prepare the command to run GIMP in batch mode
-	return  [
+	return [
 		gimp_path,
 		"-n",
 		"-i",
@@ -42,7 +42,7 @@ def _convert_xcf_to_flat_image_windows(xcf_path:str, output_path:str) -> list[st
 	]
 
 
-def convert_xcf_to_flat_image(xcf_path:str, output_path:str) -> None:
+def convert_xcf_to_flat_image(xcf_path: str, output_path: str) -> None:
 	# Ensure the input .xcf path exists
 	if not os.path.exists(xcf_path):
 		logger.error(f"Input file does not exist: {xcf_path}")

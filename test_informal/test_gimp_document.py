@@ -11,18 +11,18 @@ from gimpformats.gimpXcfDocument import GimpDocument
 
 FILES = THISDIR.parent / "test_files"
 
-def p_section(text:str):
+
+def p_section(text: str):
 	print()
-	print("="*60)
-	print("=",text)
-	print("="*60)
+	print("=" * 60)
+	print("=", text)
+	print("=" * 60)
 
 
-def p_header(text:str):
+def p_header(text: str):
 	print()
 	print(text)
-	print("-"*40)
-
+	print("-" * 40)
 
 
 # ruff:noqa:ERA001
@@ -65,7 +65,6 @@ for idx, children in enumerate(root_group.children):
 
 print("Generating image, should take a couple seconds...")
 gimp_img.image
-
 
 
 # # Test deleting raw layer

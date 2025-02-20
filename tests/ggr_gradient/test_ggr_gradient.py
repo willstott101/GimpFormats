@@ -3,14 +3,13 @@
 from __future__ import annotations
 
 import os
-import sys
 from io import BufferedReader
 from pathlib import Path
 
 import pytest
 
 THISDIR = str(Path(__file__).resolve().parent)
-sys.path.insert(0, str(Path(THISDIR).parent))
+
 from gimpformats.GimpGgrGradient import GimpGgrGradient
 
 project = GimpGgrGradient()

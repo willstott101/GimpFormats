@@ -1,4 +1,3 @@
-import sys
 from pathlib import Path
 
 import pytest
@@ -7,7 +6,6 @@ from imgcompare import imgcompare
 from gimpformats.gimpXcfDocument import GimpDocument
 
 THISDIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(THISDIR.parent))
 
 
 @pytest.fixture
@@ -16,9 +14,7 @@ def gimp_doc() -> GimpDocument:
 	return GimpDocument()
 
 
-@pytest.mark.parametrize(
-	("image_name"), ["with_paths"]
-)
+@pytest.mark.parametrize(("image_name"), ["with_paths"])
 def test_image_repr(gimp_doc: GimpDocument, image_name: str) -> None:
 	"""Test the text representation of an image."""
 	xcf_path = THISDIR / f"{image_name}.xcf"
@@ -32,10 +28,7 @@ def test_image_repr(gimp_doc: GimpDocument, image_name: str) -> None:
 	assert actual_text == expected_text
 
 
-
-@pytest.mark.parametrize(
-	("image_name"), ["with_paths"]
-)
+@pytest.mark.parametrize(("image_name"), ["with_paths"])
 def test_image_comparison(gimp_doc: GimpDocument, image_name: str) -> None:
 	"""Test if the generated image matches the expected output."""
 	xcf_path = THISDIR / f"{image_name}.xcf"

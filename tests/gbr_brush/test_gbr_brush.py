@@ -3,35 +3,33 @@
 from __future__ import annotations
 
 import os
-import sys
 from pathlib import Path
-from imgcompare import imgcompare
-from gimpformats.GimpGbrBrush import GimpGbrBrush
 
 import pytest
+from imgcompare import imgcompare
+
+from gimpformats.GimpGbrBrush import GimpGbrBrush
 
 THISDIR = str(Path(__file__).resolve().parent)
 
 
 project = GimpGbrBrush()
 
-@pytest.mark.parametrize(
-	("file_name"), ["pepper", "dunes"]
-)
-def test_gbrbrush(file_name:str) -> None:
+
+@pytest.mark.parametrize(("file_name"), ["pepper", "dunes"])
+def test_gbrbrush(file_name: str) -> None:
 	"""test {file_name}"""
 	project.load(f"{THISDIR}/{file_name}.gbr")
 	project.save(f"{THISDIR}/actualOutput_{file_name}.png")
 
-	assert imgcompare.is_equal(project.image, f"{THISDIR}/desiredOutput_{file_name}.png", tolerance=0.2)
+	assert imgcompare.is_equal(
+		project.image, f"{THISDIR}/desiredOutput_{file_name}.png", tolerance=0.2
+	)
 	os.remove(f"{THISDIR}/actualOutput_{file_name}.png")
 
 
-
-@pytest.mark.parametrize(
-	("file_name"), ["pepper", "dunes"]
-)
-def test_gbrbrush_roundtrip(file_name:str) -> None:
+@pytest.mark.parametrize(("file_name"), ["pepper", "dunes"])
+def test_gbrbrush_roundtrip(file_name: str) -> None:
 	src = f"{THISDIR}/{file_name}.gbr"
 	dest = f"{THISDIR}/actualOutput_{file_name}.gbr"
 	project.load(src)

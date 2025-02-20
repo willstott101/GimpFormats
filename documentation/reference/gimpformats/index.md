@@ -27,4 +27,5 @@
 - [Gimpvbrbrush](./GimpVbrBrush.md)
 - [Gimpvectors](./GimpVectors.md)
 - [Gimpxcfdocument](./gimpXcfDocument.md)
+- [Native Convert](./native_convert.md)
 - [Utils](./utils.md)

@@ -7,13 +7,12 @@ python3 -m pytest in project root
 from __future__ import annotations
 
 import os
-import sys
 from pathlib import Path
 
 import pytest
 
 THISDIR = str(Path(__file__).resolve().parent)
-sys.path.insert(0, str(Path(THISDIR).parent))
+
 from imgcompare import imgcompare
 
 from gimpformats.GimpGihBrushSet import GimpGihBrushSet
@@ -27,8 +26,11 @@ def test_gihbrush(file_name: str) -> None:
 	"""test felt pen."""
 	project.load(f"{THISDIR}/{file_name}.gih")
 	project.image.save(f"{THISDIR}/actualOutput_{file_name}.png")
-	assert imgcompare.is_equal(project.image, f"{THISDIR}/desiredOutput_{file_name}.png", tolerance=0.2)
+	assert imgcompare.is_equal(
+		project.image, f"{THISDIR}/desiredOutput_{file_name}.png", tolerance=0.2
+	)
 	os.remove(f"{THISDIR}/actualOutput_{file_name}.png")
+
 
 @pytest.mark.skip("RuntimeError: Unknown brush version")
 @pytest.mark.parametrize(("file_name"), ["Wilber", "feltpen"])
