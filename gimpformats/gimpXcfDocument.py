@@ -458,6 +458,7 @@ class GimpDocument(GimpIOBase):
 		all_children: list[GimpLayer | GimpGroup] = current_group.children[::-1]
 
 		for _i, child in enumerate(all_children):
+			print(child)
 			if isinstance(child, GimpGroup):
 				to_merge = pil2np(Image.new("RGBA", (self.width, self.height)))
 				lo = child.layer_options

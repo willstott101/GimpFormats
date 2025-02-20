@@ -5,6 +5,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import pytest
+
 THISDIR = str(Path(__file__).resolve().parent)
 sys.path.insert(0, str(Path(THISDIR).parent))
 from imgcompare import imgcompare
@@ -14,35 +16,23 @@ from gimpformats.gimpXcfDocument import GimpDocument
 project = GimpDocument()
 
 
-def test_singleMaskedGroup() -> None:
-	"""Test a single group with layer mask."""
-	project.load(f"{THISDIR}/single-masked-group.xcf")
-	result = project.image
-	assert imgcompare.is_equal(
-		result,
-		f"{THISDIR}/single-masked-group.tga",
-		tolerance=0.2,
-	)
-
-
-def test_multipleMaskedGroups() -> None:
-	"""Test multiple layer groups with masks."""
-	project.load(f"{THISDIR}/multiple-masked-groups.xcf")
-	result = project.image
-	assert imgcompare.is_equal(
-		result,
-		f"{THISDIR}/multiple-masked-groups.tga",
-		tolerance=0.2,
-	)
-
-
-def test_multipleOffsetMaskedGroups() -> None:
+@pytest.mark.parametrize(
+	("image_name"),
+	[
+		"multiple-offset-masked-groups",
+		"multiple-masked-groups",
+		"single-masked-group",
+		"xcf_mask_test",
+	],
+)
+def test_multipleOffsetMaskedGroups(image_name: str) -> None:
 	"""Test multiple offset layer groups with masks."""
-	project.load(f"{THISDIR}/multiple-offset-masked-groups.xcf")
+	project.load(f"{THISDIR}/{image_name}.xcf")
 	result = project.image
-	# result.save("test.png")
+	des_im = f"{THISDIR}/{image_name}.png"
+	# result.save(des_im)
 	assert imgcompare.is_equal(
 		result,
-		f"{THISDIR}/multiple-offset-masked-groups.tga",
+		des_im,
 		tolerance=0.2,
 	)
