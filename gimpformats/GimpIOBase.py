@@ -178,7 +178,7 @@ class ImageProperties(Enum):
 
 
 class GimpIOBase:
-	def __init__(self, parent: GimpIOBase = None) -> None:
+	def __init__(self, parent: Any = None) -> None:
 		self.parent = parent
 		self.parasites: list[GimpParasite] = []
 		self.guidelines: list[tuple[bool, int]] = []

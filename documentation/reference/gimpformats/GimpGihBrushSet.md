@@ -64,7 +64,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytearray, index: int = 0) -> int: ...
+def decode(self, data: bytearray | bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpGihBrushSet().encode

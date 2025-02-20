@@ -35,7 +35,7 @@ class GimpChannel(GimpIOBase):
 
 ### GimpChannel().__str__
 
-[Show source in GimpChannel.py:95](../../../gimpformats/GimpChannel.py#L95)
+[Show source in GimpChannel.py:97](../../../gimpformats/GimpChannel.py#L97)
 
 Get a textual representation of this object.
 
@@ -82,7 +82,7 @@ def encode(self) -> bytearray: ...
 
 ### GimpChannel().full_repr
 
-[Show source in GimpChannel.py:99](../../../gimpformats/GimpChannel.py#L99)
+[Show source in GimpChannel.py:101](../../../gimpformats/GimpChannel.py#L101)
 
 Get a textual representation of this object.
 
@@ -107,7 +107,7 @@ def image(self) -> Image.Image | None: ...
 
 ### GimpChannel().image
 
-[Show source in GimpChannel.py:76](../../../gimpformats/GimpChannel.py#L76)
+[Show source in GimpChannel.py:78](../../../gimpformats/GimpChannel.py#L78)
 
 Set the compiled image.
 
@@ -120,7 +120,7 @@ def image(self, image: Image.Image) -> None: ...
 
 ### GimpChannel().imageHierarchy
 
-[Show source in GimpChannel.py:84](../../../gimpformats/GimpChannel.py#L84)
+[Show source in GimpChannel.py:86](../../../gimpformats/GimpChannel.py#L86)
 
 Get the image hierarchy.
 

@@ -67,7 +67,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, dataIn: bytearray) -> None: ...
+def decode(self, dataIn: bytearray | bytes) -> None: ...
 ```
 
 ### GimpGgrGradient().encode
@@ -79,7 +79,7 @@ Encode this to bytearray.
 #### Signature
 
 ```python
-def encode(self) -> bytearray: ...
+def encode(self) -> bytes: ...
 ```
 
 ### GimpGgrGradient().full_repr

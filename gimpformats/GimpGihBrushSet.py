@@ -47,7 +47,7 @@ class GimpGihBrushSet:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray | bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:

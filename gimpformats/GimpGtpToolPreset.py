@@ -145,7 +145,7 @@ class GimpGtpToolPreset:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray | bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
@@ -154,7 +154,7 @@ class GimpGtpToolPreset:
 		self.values = parenFileDecode(data)
 		return index
 
-	def encode(self) -> bytearray:
+	def encode(self) -> bytes:
 		"""Encode to bytearray."""
 		return parenFileEncode(self.values).encode("utf-8")
 

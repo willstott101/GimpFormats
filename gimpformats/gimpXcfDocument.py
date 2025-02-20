@@ -578,13 +578,13 @@ def applyMask(
 	if mask_im is None:
 		return im
 
-	# Ensure the mask is in grayscale (L mode)
+	# Ensure the mask is in grayscale
 	mask_im = mask_im.convert("L")
 
-	# Convert Pillow mask to NumPy array and normalize to [0,1] range
-	mask = np.array(mask_im, dtype=np.float64) / 255.0  # Shape: (H, W)
+	# Convert Pillow mask to NumPy array and normalize
+	mask = np.array(mask_im, dtype=np.float64) / 255.0
 
-	# Apply offsets (shifting the mask)
+	# Apply offsets
 	if offsets[0] > 0:  # Shift right
 		mask = np.hstack((np.zeros((mask.shape[0], offsets[0]), dtype=np.float64), mask))
 	elif offsets[0] < 0:  # Shift left
@@ -602,10 +602,10 @@ def applyMask(
 		padded_mask[: mask.shape[0], : mask.shape[1]] = mask
 		mask = padded_mask
 
-	# Expand mask to match image dimensions (H, W) → (H, W, 1)
-	mask = np.expand_dims(mask, axis=-1)  # Shape: (H, W, 1)
+	# Expand mask to match image dimensions
+	mask = np.expand_dims(mask, axis=-1)
 
-	# Normalize the image to [0,1]
+	# Normalize the image
 	im = im / 255.0
 
 	# Apply mask to RGB and Alpha channels

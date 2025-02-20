@@ -71,7 +71,9 @@ class GimpChannel(GimpIOBase):
 	@property
 	def image(self) -> Image.Image | None:
 		"""Get the compiled image."""
-		return self.imageHierarchy.image
+		if self.imageHierarchy:
+			return self.imageHierarchy.image
+		return None
 
 	@image.setter
 	def image(self, image: Image.Image) -> None:

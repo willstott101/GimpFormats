@@ -72,7 +72,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytearray, index: int = 0) -> int: ...
+def decode(self, data: bytearray | bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpGtpToolPreset().encode
@@ -84,7 +84,7 @@ Encode to bytearray.
 #### Signature
 
 ```python
-def encode(self) -> bytearray: ...
+def encode(self) -> bytes: ...
 ```
 
 ### GimpGtpToolPreset().full_repr

@@ -63,7 +63,7 @@ class GimpGplPalette:
 			self.colors.append(colours[:3])
 			self.colorNames.append(colours[3] if len(colours) > 3 else None)
 
-	def encode(self) -> bytearray:
+	def encode(self) -> bytes:
 		"""Encode to a raw data stream."""
 		data = []
 		data.append("GIMP Palette")

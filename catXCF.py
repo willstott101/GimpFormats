@@ -11,7 +11,7 @@ def catXCF(file: str) -> None:
 	project = GimpDocument(file)
 	# Iterate the layers and create a list of layers for each group, then remove
 	# these from the project layers
-	layers = project.layers[::-1]
+	layers = project.raw_layers[::-1]
 	index = 0
 	groupIndex = 0
 	groupLayers = [[]]

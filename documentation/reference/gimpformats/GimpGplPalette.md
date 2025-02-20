@@ -95,7 +95,7 @@ Encode to a raw data stream.
 #### Signature
 
 ```python
-def encode(self) -> bytearray: ...
+def encode(self) -> bytes: ...
 ```
 
 ### GimpGplPalette().full_repr
