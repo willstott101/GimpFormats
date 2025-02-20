@@ -49,6 +49,7 @@ def convert_xcf_to_flat_image(xcf_path: str, output_path: str) -> None:
 		return
 
 	# Check if the OS is Windows
+	command = None
 	if sys.platform == "win32":
 		command = _convert_xcf_to_flat_image_windows(xcf_path, output_path)
 
