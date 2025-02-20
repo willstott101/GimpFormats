@@ -7,11 +7,13 @@ import sys
 from io import BufferedReader
 from pathlib import Path
 
+import pytest
+
 THISDIR = str(Path(__file__).resolve().parent)
 sys.path.insert(0, str(Path(THISDIR).parent))
 from gimpformats.GimpGgrGradient import GimpGgrGradient
 
-dut = GimpGgrGradient()
+project = GimpGgrGradient()
 
 
 def colorArray(numPoints: int) -> list:
@@ -20,7 +22,7 @@ def colorArray(numPoints: int) -> list:
 	i = 0.0
 	inc = 1.0 / numPoints
 	while i < 1.0:
-		colors.append(dut.getColor(i))
+		colors.append(project.getColor(i))
 	i += inc
 	return colors
 
@@ -36,18 +38,15 @@ def saveColors(f: BufferedReader, colorArray: list) -> None:
 			f.write(line.encode("utf-8"))
 
 
-def test_coldSteel() -> None:
-	"""test cold steel."""
-	dut.load(f"{THISDIR}/Cold_Steel_2.ggr")
-	# test round-trip compatibility
-	dut.save(f"{THISDIR}/actualOutput_Cold_Steel_2.ggr")
-	original = open(f"{THISDIR}/Cold_Steel_2.ggr", "rb")
-	actual = open(f"{THISDIR}/actualOutput_Cold_Steel_2.ggr", "rb")
+@pytest.mark.parametrize(("file_name"), ["Cold_Steel_2", "Mexican_flag"])
+def test_grgradient_roundtrip(file_name: str) -> None:
+	src = f"{THISDIR}/{file_name}.ggr"
+	dest = f"{THISDIR}/actualOutput_{file_name}.ggr"
+	project.load(src)
+	project.save(dest)
+	original = open(src, "rb")
+	actual = open(dest, "rb")
 	assert actual.read() == original.read().replace(b"\r\n", b"\n")
 	original.close()
 	actual.close()
-	os.remove(f"{THISDIR}/actualOutput_Cold_Steel_2.ggr")
-	# TODO: test calculated colors
-	# colors=colorArray(512)
-	# actual=open(__HERE__+'actualOutput_Cold_Steel_2.csv','wb')
-	# saveColors(actual,colors)
+	os.remove(dest)

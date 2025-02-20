@@ -160,6 +160,8 @@ class GimpGgrGradient:
 			RuntimeError: File format error.  Magic value mismatch.
 
 		"""
+		self.segments = []
+
 		data = dataIn.decode("utf-8").split("\n")
 		data = [line.strip() for line in data]
 		if data[0] != "GIMP Gradient":

@@ -17,7 +17,7 @@ def gimp_doc() -> GimpDocument:
 
 
 @pytest.mark.parametrize(
-	("image_name"), ["testOneLayerWithTransparency", "testComplexImage", "issue_14"]
+	("image_name"), ["testOneLayerWithTransparency", "testComplexImage", "issue_14","layer_groups"]
 )
 def test_image_repr(gimp_doc: GimpDocument, image_name: str) -> None:
 	"""Test the text representation of an image."""
@@ -32,11 +32,15 @@ def test_image_repr(gimp_doc: GimpDocument, image_name: str) -> None:
 	assert actual_text == expected_text
 
 
-@pytest.mark.parametrize("xcf_path", list((THISDIR / "rods-custom-font-xcf-files").glob("*.xcf")))
-def test_font_comparison(gimp_doc: GimpDocument, xcf_path: Path) -> None:
+
+@pytest.mark.parametrize(
+	("image_name"), ["testOneLayerWithTransparency", "testComplexImage", "issue_14", "layer_groups"]
+)
+def test_image_comparison(gimp_doc: GimpDocument, image_name: str) -> None:
 	"""Test if the generated image matches the expected output."""
-	output_png = THISDIR / f"rods-custom-font-xcf-files/{xcf_path.name}_actual.png"
-	expected_png = THISDIR / f"rods-custom-font-xcf-files/{xcf_path.name}.png"
+	xcf_path = THISDIR / f"src/{image_name}.xcf"
+	output_png = THISDIR / f"dest/{image_name}_actual.png"
+	expected_png = THISDIR / f"dest/{image_name}.png"
 
 	gimp_doc.load(str(xcf_path))
 	gimp_doc.image.save(str(output_png))
@@ -45,14 +49,11 @@ def test_font_comparison(gimp_doc: GimpDocument, xcf_path: Path) -> None:
 	assert imgcompare.is_equal(gimp_doc.image, str(expected_png), tolerance=0.2)
 
 
-@pytest.mark.parametrize(
-	("image_name"), ["testOneLayerWithTransparency", "testComplexImage", "issue_14"]
-)
-def test_image_comparison(gimp_doc: GimpDocument, image_name: str) -> None:
+@pytest.mark.parametrize("xcf_path", list((THISDIR / "rods-custom-font-xcf-files").glob("*.xcf")))
+def test_font_comparison(gimp_doc: GimpDocument, xcf_path: Path) -> None:
 	"""Test if the generated image matches the expected output."""
-	xcf_path = THISDIR / f"src/{image_name}.xcf"
-	output_png = THISDIR / f"dest/{image_name}_actual.png"
-	expected_png = THISDIR / f"dest/{image_name}.png"
+	output_png = THISDIR / f"rods-custom-font-xcf-files/{xcf_path.name}_actual.png"
+	expected_png = THISDIR / f"rods-custom-font-xcf-files/{xcf_path.name}.png"
 
 	gimp_doc.load(str(xcf_path))
 	gimp_doc.image.save(str(output_png))

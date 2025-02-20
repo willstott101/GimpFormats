@@ -18,38 +18,24 @@ from imgcompare import imgcompare
 
 from gimpformats.GimpGihBrushSet import GimpGihBrushSet
 
-dut = GimpGihBrushSet()
+project = GimpGihBrushSet()
 
 
 @pytest.mark.skip("RuntimeError")
-def test_wilber() -> None:
-	"""test wilber."""
-	dut.load(f"{THISDIR}/Wilber.gih")
-	# test image saving (implicit)
-	dut.save(f"{THISDIR}/actualOutput_Wilber.png")
-	# test for image match
-	assert imgcompare.is_equal(dut.image, f"{THISDIR}/desiredOutput_Wilber.png", tolerance=0.2)
-	os.remove(f"{THISDIR}/actualOutput_Wilber.png")
-	# test round-trip compatibility
-	dut.save(f"{THISDIR}/actualOutput_Wilber.gih")
-	original = open(f"{THISDIR}/Wilber.gih", "rb").read()
-	actual = open(f"{THISDIR}/actualOutput_Wilber.gih", "rb").read()
-	assert actual == original
-	os.remove(f"{THISDIR}/actualOutput_Wilber.gih")
-
-
-@pytest.mark.skip("RuntimeError")
-def test_feltpen() -> None:
+@pytest.mark.parametrize(("file_name"), ["Wilber", "feltpen"])
+def test_gihbrush(file_name: str) -> None:
 	"""test felt pen."""
-	dut.load(f"{THISDIR}/feltpen.gih")
-	# test image saving (explicit)
-	dut.image.save(f"{THISDIR}/actualOutput_feltpen.png")
-	# test for image match
-	assert imgcompare.is_equal(dut.image, f"{THISDIR}/desiredOutput_feltpen.png", tolerance=0.2)
-	os.remove(f"{THISDIR}/actualOutput_feltpen.png")
-	# test round-trip compatibility
-	dut.save(f"{THISDIR}/actualOutput_feltpen.gih")
-	original = open(f"{THISDIR}/feltpen.gih", "rb").read()
-	actual = open(f"{THISDIR}/actualOutput_feltpen.gih", "rb").read()
+	project.load(f"{THISDIR}/{file_name}.gih")
+	project.image.save(f"{THISDIR}/actualOutput_{file_name}.png")
+	assert imgcompare.is_equal(project.image, f"{THISDIR}/desiredOutput_{file_name}.png", tolerance=0.2)
+	os.remove(f"{THISDIR}/actualOutput_{file_name}.png")
+
+@pytest.mark.skip("RuntimeError: Unknown brush version")
+@pytest.mark.parametrize(("file_name"), ["Wilber", "feltpen"])
+def test_gihbrush_roundtrip(file_name: str) -> None:
+	project.load(f"{THISDIR}/{file_name}.gih")
+	project.save(f"{THISDIR}/actualOutput_{file_name}.gih")
+	original = open(f"{THISDIR}/{file_name}.gih", "rb").read()
+	actual = open(f"{THISDIR}/actualOutput_{file_name}.gih", "rb").read()
 	assert actual == original
-	os.remove(f"{THISDIR}/actualOutput_feltpen.gih")
+	os.remove(f"{THISDIR}/actualOutput_{file_name}.gih")
