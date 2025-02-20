@@ -109,7 +109,7 @@ A single stroke within a vector.
 
 ```python
 class GimpStroke:
-    def __init__(self, parent) -> None: ...
+    def __init__(self, parent: Any) -> None: ...
 ```
 
 ### GimpStroke().__str__

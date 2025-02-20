@@ -1,3 +1,5 @@
+"""Provides common metods used by each GimpObject."""
+
 from __future__ import annotations
 
 from io import BytesIO
@@ -27,5 +29,11 @@ def save(data: bytearray | bytes, file: BytesIO | str | Path) -> None:
 
 
 def repr_indent_lines(indent: int, lines: list[str]) -> str:
+	"""Represent lines with a given indentation (number of tabs).
+
+	:param int indent: number of tabs
+	:param list[str] lines: list of lines to represent
+	:return str: indented lines
+	"""
 	indentstr = indent * "\t"
 	return (indentstr) + ((f"\n{indentstr}").join(lines))

@@ -11,7 +11,7 @@
 
 ## fileOpen
 
-[Show source in utils.py:7](../../../gimpformats/utils.py#L7)
+[Show source in utils.py:9](../../../gimpformats/utils.py#L9)
 
 Load a file.
 
@@ -29,7 +29,19 @@ def fileOpen(file: BytesIO | str | Path) -> tuple[str, bytes]: ...
 
 ## repr_indent_lines
 
-[Show source in utils.py:29](../../../gimpformats/utils.py#L29)
+[Show source in utils.py:31](../../../gimpformats/utils.py#L31)
+
+Represent lines with a given indentation (number of tabs).
+
+#### Arguments
+
+- `indent` *int* - number of tabs
+:param list[str] lines: list of lines to represent
+
+#### Returns
+
+Type: *str*
+indented lines
 
 #### Signature
 
@@ -41,7 +53,7 @@ def repr_indent_lines(indent: int, lines: list[str]) -> str: ...
 
 ## save
 
-[Show source in utils.py:19](../../../gimpformats/utils.py#L19)
+[Show source in utils.py:21](../../../gimpformats/utils.py#L21)
 
 Save this gimp image to a file.
 

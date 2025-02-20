@@ -4,13 +4,41 @@ experimental at present, though will likely export more accurately than gimpform
 from __future__ import annotations
 
 import os
+import shlex
 import subprocess
 import sys
+from pathlib import Path
 
 from loguru import logger
 
 logger.remove()
 logger.add(sys.stdout, format="<level>{level: <8}</level> | {message}", level="INFO")
+
+image_extensions = [
+	".jpg",
+	".jpeg",
+	".png",
+	".bmp",
+	".tiff",
+	".webp",
+	".ico",
+	".raw",
+	".heif",
+	".heic",
+	".eps",
+	".ai",
+	".pdf",
+	".avif",
+	".exr",
+	".dng",
+	".pbm",
+	".ppm",
+	".pgm",
+	".wbmp",
+	".xpm",
+	".flif",
+	".ico",
+]
 
 
 def _convert_xcf_to_flat_image_windows(xcf_path: str, output_path: str) -> list[str] | None:
@@ -43,9 +71,20 @@ def _convert_xcf_to_flat_image_windows(xcf_path: str, output_path: str) -> list[
 
 
 def convert_xcf_to_flat_image(xcf_path: str, output_path: str) -> None:
+	"""Convert an xcf file given by `xcf_path` to some flat image (such
+	as a jpg, png etc) given by `output_path`.
+
+	:param str xcf_path: path to a source xcf file
+	:param str output_path: path to an output file (eg a png)
+	"""
 	# Ensure the input .xcf path exists
-	if not os.path.exists(xcf_path):
+	if not Path(xcf_path).is_file():
 		logger.error(f"Input file does not exist: {xcf_path}")
+		return
+
+	output_path = shlex.quote(output_path)
+	if Path(output_path).suffix not in image_extensions:
+		logger.error(f"Output file not supported: {image_extensions}")
 		return
 
 	# Check if the OS is Windows
@@ -59,7 +98,7 @@ def convert_xcf_to_flat_image(xcf_path: str, output_path: str) -> None:
 
 	try:
 		# Run the command and convert the file
-		subprocess.run(command, check=True)
+		subprocess.run(command, check=True)  # noqa: S603 # Choosing to ignore this for now. Need to investigate how to escape user input here!
 		logger.info(f"Conversion successful: {output_path}")
 	except subprocess.CalledProcessError as e:
 		logger.error(f"Error running GIMP: {e}")

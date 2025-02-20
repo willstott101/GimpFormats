@@ -7,13 +7,11 @@ from __future__ import annotations
 
 import math
 import zlib
+from typing import Any
 
-import PIL.Image
-from PIL.Image import Image
+from PIL import Image
 
 from gimpformats.GimpIOBase import IO, CompressionMode, GimpIOBase
-
-# pylint:disable=invalid-name
 
 
 class GimpImageLevel(GimpIOBase):
@@ -22,7 +20,7 @@ class GimpImageLevel(GimpIOBase):
 	This represents a single level in an imageHierarchy
 	"""
 
-	def __init__(self, parent) -> None:
+	def __init__(self, parent: Any) -> None:
 		GimpIOBase.__init__(self, parent)
 		self.width = 0
 		self.height = 0
@@ -66,7 +64,7 @@ class GimpImageLevel(GimpIOBase):
 				else:
 					msg = f"ERR: unsupported compression mode {self.doc.compression}"
 					raise RuntimeError(msg)
-				subImage = PIL.Image.frombytes(self.mode, size, bytearray(data), decoder_name="raw")
+				subImage = Image.frombytes(self.mode, size, bytearray(data), decoder_name="raw")
 				self._tiles.append(subImage)
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
 		return ioBuf.index
@@ -96,7 +94,7 @@ class GimpImageLevel(GimpIOBase):
 		ioBuf.addbytearray(dataioBuf.data)
 		return ioBuf.data
 
-	def _decodeRLE(self, data: bytearray, pixels: int, bpp, index=0) -> bytearray:
+	def _decodeRLE(self, data: bytearray, pixels: int, bpp: int, index: int = 0) -> bytearray:
 		_ = self
 		"""Decode RLE encoded image data."""
 		ret = [bytearray() for _ in range(bpp)]  # Use bytearray to avoid repeated list appends
@@ -141,7 +139,8 @@ class GimpImageLevel(GimpIOBase):
 					n += amt
 
 				else:
-					raise RuntimeError("Invalid RLE opcode")
+					msg = "Invalid RLE opcode"
+					raise RuntimeError(msg)
 
 		# Flatten channels efficiently
 		flat = bytearray(pixels * bpp)
@@ -151,11 +150,11 @@ class GimpImageLevel(GimpIOBase):
 
 		return flat
 
-	def _encodeRLE(self, data, bpp):
+	def _encodeRLE(self, data: bytearray, bpp: int) -> bytearray:
 		"""Encode image to RLE image data."""
 		_ = self
 
-		def countSame(data, startIdx):
+		def countSame(data: bytearray, startIdx: int) -> int:
 			"""Count how many times bytearray are identical."""
 			idx = startIdx
 			l = len(data)
@@ -167,7 +166,7 @@ class GimpImageLevel(GimpIOBase):
 				idx += 1
 			return idx - startIdx
 
-		def countDifferent(data, startIdx):
+		def countDifferent(data: bytearray, startIdx: int) -> int:
 			"""Count how many times bytearray are different."""
 			idx = startIdx
 			l = len(data)
@@ -180,7 +179,7 @@ class GimpImageLevel(GimpIOBase):
 				c = data[idx]
 			return idx - startIdx
 
-		def rleEncodeChan(data):
+		def rleEncodeChan(data: bytearray) -> list:
 			"""Rle encode a single channel of data."""
 			ret = []
 			idx = 0
@@ -227,18 +226,18 @@ class GimpImageLevel(GimpIOBase):
 		return "".join("".join(str(x)) for x in dataByChannel)
 
 	@property
-	def bpp(self):
+	def bpp(self) -> int:
 		"""Get bpp."""
 		return self.parent.bpp
 
 	@property
-	def mode(self):
+	def mode(self) -> str:
 		"""Get mode."""
 		MODES = [None, "L", "LA", "RGB", "RGBA"]
 		return MODES[self.bpp]
 
 	@property
-	def tiles(self):
+	def tiles(self) -> list[Image.Image]:
 		"""Get tiles."""
 		if self._tiles is not None:
 			return self._tiles
@@ -246,7 +245,7 @@ class GimpImageLevel(GimpIOBase):
 			return self._imgToTiles(self.image)
 		return None
 
-	def _imgToTiles(self, image):
+	def _imgToTiles(self, image: Image.Image) -> list[Image.Image]:
 		"""
 		Break an image into a series of tiles, each<=64x64.
 		"""
@@ -258,12 +257,12 @@ class GimpImageLevel(GimpIOBase):
 		return ret
 
 	@property
-	def image(self) -> Image:
+	def image(self) -> Image.Image:
 		"""
 		Get a final, compiled image.
 		"""
 		if self._image is None:
-			self._image = PIL.Image.new(self.mode, (self.width, self.height), color=None)
+			self._image = Image.new(self.mode, (self.width, self.height), color=None)
 			tileNum = 0
 			for y in range(0, self.height, 64):
 				for x in range(0, self.width, 64):
@@ -274,7 +273,7 @@ class GimpImageLevel(GimpIOBase):
 		return self._image
 
 	@image.setter
-	def image(self, image: Image) -> None:
+	def image(self, image: Image.Image) -> None:
 		self._image = image
 		self._tiles = None
 		self.width = image.width

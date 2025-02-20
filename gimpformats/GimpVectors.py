@@ -100,9 +100,9 @@ class GimpVector:
 class GimpStroke:
 	"""A single stroke within a vector."""
 
-	STROKE_TYPES = ["None", "Bezier"]
+	STROKE_TYPES = ("None", "Bezier")
 
-	def __init__(self, parent) -> None:
+	def __init__(self, parent: Any) -> None:
 		# GimpIOBase.__init__(self, parent)
 		_ = parent
 		self.strokeType = 1  # one of self.STROKE_TYPES
