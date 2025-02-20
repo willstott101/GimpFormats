@@ -2,7 +2,7 @@
 uv.lock
 *actual.png
 profile.stats
-
+exclude_*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

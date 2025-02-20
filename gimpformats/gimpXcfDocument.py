@@ -301,40 +301,6 @@ class GimpDocument(GimpIOBase):
 		self.insertRawLayer(layer, index)
 		return layer
 
-	def newLayerFromClipboard(self, name: str = "pasted", index: int = -1) -> GimpLayer | None:
-		"""Create a new image from the system clipboard.
-
-		NOTE: requires pillow PIL implementation
-		NOTE: only works on OSX and Windows
-
-		Args:
-		----
-			name (str): a name for the new layer
-			index (int, optional): where to insert the new layer (default=top). Defaults to -1.
-
-		Returns:
-		-------
-			GimpLayer: newly created GimpLayer object
-
-		"""
-		image = PIL.ImageGrab.grabclipboard()
-		if isinstance(image, Image.Image):
-			return self.newLayer(name, image, index)
-		return None
-
-	def addRawLayer(self, layer: GimpLayer) -> None:
-		"""Append a layer object to the document.
-
-		:param layer: the new layer to append
-		"""
-		self.insertRawLayer(layer, -1)
-
-	def appendRawLayer(self, layer: GimpLayer) -> None:
-		"""Append a layer object to the document.
-
-		:param layer: the new layer to append
-		"""
-		self.insertRawLayer(layer, -1)
 
 	def insertRawLayer(self, layer: GimpLayer, index: int = -1) -> None:
 		"""Insert a layer object at a specific position.
@@ -458,7 +424,6 @@ class GimpDocument(GimpIOBase):
 		all_children: list[GimpLayer | GimpGroup] = current_group.children[::-1]
 
 		for _i, child in enumerate(all_children):
-			print(child)
 			if isinstance(child, GimpGroup):
 				to_merge = pil2np(Image.new("RGBA", (self.width, self.height)))
 				lo = child.layer_options
