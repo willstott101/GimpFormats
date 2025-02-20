@@ -99,54 +99,56 @@ class GimpImageLevel(GimpIOBase):
 	def _decodeRLE(self, data: bytearray, pixels: int, bpp, index=0) -> bytearray:
 		_ = self
 		"""Decode RLE encoded image data."""
-		ret = [[] for chan in range(bpp)]
+		ret = [bytearray() for _ in range(bpp)]  # Use bytearray to avoid repeated list appends
+
 		for chan in range(bpp):
 			n = 0
 			while n < pixels:
 				opcode = data[index]
 				index += 1
-				if 0 <= opcode <= 126:  # a short run of identical bytearray
+
+				if 0 <= opcode <= 126:  # Short run of identical bytes
 					val = data[index]
 					index += 1
-					for _ in range(opcode + 1):
-						ret[chan].append(val)
-						n += 1
-				elif opcode == 127:  # A long run of identical bytearray
+					ret[chan].extend([val] * (opcode + 1))  # Extend is faster than append in a loop
+					n += opcode + 1
+
+				elif opcode == 127:  # Long run of identical bytes
 					m = data[index]
 					index += 1
 					b = data[index]
 					index += 1
 					val = data[index]
 					index += 1
-					amt = m * 256 + b
-					for _ in range(amt):
-						ret[chan].append(val)
-						n += 1
-				elif opcode == 128:  # A long run of different bytearray
+					amt = (m << 8) + b
+					ret[chan].extend([val] * amt)
+					n += amt
+
+				elif opcode == 128:  # Long run of different bytes
 					m = data[index]
 					index += 1
 					b = data[index]
 					index += 1
-					amt = m * 256 + b
-					for _ in range(amt):
-						val = data[index]
-						index += 1
-						ret[chan].append(val)
-						n += 1
-				elif 129 <= opcode <= 255:  # a short run of different bytearray
+					amt = (m << 8) + b
+					ret[chan].extend(data[index : index + amt])  # Slicing instead of looping
+					index += amt
+					n += amt
+
+				elif 129 <= opcode <= 255:  # Short run of different bytes
 					amt = 256 - opcode
-					for _ in range(amt):
-						val = data[index]
-						index += 1
-						ret[chan].append(val)
-						n += 1
+					ret[chan].extend(data[index : index + amt])  # Slicing instead of looping
+					index += amt
+					n += amt
+
 				else:
-					raise RuntimeError
-		# flatten/weave the individual channels into one strream
-		flat = bytearray()
+					raise RuntimeError("Invalid RLE opcode")
+
+		# Flatten channels efficiently
+		flat = bytearray(pixels * bpp)
 		for i in range(pixels):
 			for chan in range(bpp):
-				flat.append(ret[chan][i])
+				flat[i * bpp + chan] = ret[chan][i]
+
 		return flat
 
 	def _encodeRLE(self, data, bpp):
