@@ -47,7 +47,7 @@ class GimpLayer(GimpIOBase):
 		if image is not None:
 			self.image = image  # done last as it resets some of the above defaults
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray | None, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Steps:
@@ -67,6 +67,8 @@ class GimpLayer(GimpIOBase):
 			int: offset
 
 		"""
+		if data is None:
+			return -1
 		# Create a new IO buffer
 		ioBuf = IO(data, index)
 		# Grab attributes as outlined in the spec

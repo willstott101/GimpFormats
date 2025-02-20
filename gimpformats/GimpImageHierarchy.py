@@ -84,11 +84,11 @@ class GimpImageHierarchy(GimpIOBase):
 		so this returns an array of one item
 		"""
 		if self._levels is None:
-			for ptr in self._levelPtrs:
+			for ptr in self._levelPtrs or []:
 				level = GimpImageLevel(self)
 				level.decode(self._data, ptr)
 				self._levels = [level]
-		return self._levels
+		return self._levels or []
 
 	@property
 	def image(self) -> Image.Image | None:

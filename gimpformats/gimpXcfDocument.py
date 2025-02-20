@@ -115,7 +115,7 @@ class GimpDocument(GimpIOBase):
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray | bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Steps:
@@ -546,7 +546,9 @@ blendLookup = {
 }
 
 
-def pil2np(image: Image.Image) -> np.ndarray:
+def pil2np(image: Image.Image | None) -> np.ndarray:
+	if image is None:
+		return np.zeros((0, 0, 4), dtype=np.float64)
 	return np.array(image.convert("RGBA")).astype(float)
 
 
@@ -563,7 +565,7 @@ def blendModeLookup(blend_type: GimpBlendMode) -> BlendMode:
 
 def applyMask(
 	im: np.ndarray,  # RGBA image as NumPy array
-	mask_im: Image.Image,  # Grayscale Pillow image
+	mask_im: Image.Image | None,  # Grayscale Pillow image
 	offsets: tuple[int, int] = (0, 0),
 ) -> np.ndarray:
 	"""Apply a grayscale Pillow mask to an RGBA NumPy image.
@@ -572,6 +574,9 @@ def applyMask(
 	- White areas (255) keep the image unchanged.
 	- Gray areas (0-255) result in partial transparency.
 	"""
+
+	if mask_im is None:
+		return im
 
 	# Ensure the mask is in grayscale (L mode)
 	mask_im = mask_im.convert("L")

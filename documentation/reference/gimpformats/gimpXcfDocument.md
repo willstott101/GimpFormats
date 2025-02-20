@@ -190,7 +190,7 @@ Return the offset
 #### Signature
 
 ```python
-def decode(self, data: bytearray, index: int = 0) -> int: ...
+def decode(self, data: bytearray | bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpDocument().deleteRawLayer
@@ -474,7 +474,7 @@ def walkTree(self) -> GimpGroup: ...
 
 ```python
 class GimpGroup:
-    def __init__(self, name: Any): ...
+    def __init__(self, name: Any) -> None: ...
 ```
 
 ### GimpGroup().__repr__
@@ -496,7 +496,7 @@ def __repr__(self) -> str: ...
 #### Signature
 
 ```python
-def add_layer(self, layer: GimpLayer | GimpGroup): ...
+def add_layer(self, layer: GimpLayer | GimpGroup) -> None: ...
 ```
 
 ### GimpGroup().get_group
@@ -513,7 +513,7 @@ def get_group(self, idx: int) -> GimpGroup: ...
 
 ## applyMask
 
-[Show source in gimpXcfDocument.py:563](../../../gimpformats/gimpXcfDocument.py#L563)
+[Show source in gimpXcfDocument.py:566](../../../gimpformats/gimpXcfDocument.py#L566)
 
 Apply a grayscale Pillow mask to an RGBA NumPy image.
 
@@ -525,7 +525,7 @@ Apply a grayscale Pillow mask to an RGBA NumPy image.
 
 ```python
 def applyMask(
-    im: np.ndarray, mask_im: Image.Image, offsets: tuple[int, int] = (0, 0)
+    im: np.ndarray, mask_im: Image.Image | None, offsets: tuple[int, int] = (0, 0)
 ) -> np.ndarray: ...
 ```
 
@@ -533,7 +533,7 @@ def applyMask(
 
 ## blendModeLookup
 
-[Show source in gimpXcfDocument.py:558](../../../gimpformats/gimpXcfDocument.py#L558)
+[Show source in gimpXcfDocument.py:561](../../../gimpformats/gimpXcfDocument.py#L561)
 
 Look up the blend mode from the lookup table.
 
@@ -551,7 +551,7 @@ def blendModeLookup(blend_type: GimpBlendMode) -> BlendMode: ...
 
 ## make_thumbnail
 
-[Show source in gimpXcfDocument.py:552](../../../gimpformats/gimpXcfDocument.py#L552)
+[Show source in gimpXcfDocument.py:555](../../../gimpformats/gimpXcfDocument.py#L555)
 
 #### Signature
 
@@ -563,10 +563,10 @@ def make_thumbnail(image: Image.Image) -> None: ...
 
 ## pil2np
 
-[Show source in gimpXcfDocument.py:548](../../../gimpformats/gimpXcfDocument.py#L548)
+[Show source in gimpXcfDocument.py:549](../../../gimpformats/gimpXcfDocument.py#L549)
 
 #### Signature
 
 ```python
-def pil2np(image: Image.Image): ...
+def pil2np(image: Image.Image | None) -> np.ndarray: ...
 ```

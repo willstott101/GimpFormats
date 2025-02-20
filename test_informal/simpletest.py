@@ -18,6 +18,5 @@ project = GimpDocument("test_files/base24.xcf")
 wilber = Image.open("test_files/gimp-wilber.png")
 newProj = GimpDocument()
 newProj.newLayer("wilber", wilber)
-for _layer in newProj.layers:
-	pass
+
 # newProj.saveNew("test_files/wilber.xcf")

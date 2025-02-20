@@ -33,7 +33,7 @@ class GimpVbrBrush:
 
 ### GimpVbrBrush().__eq__
 
-[Show source in GimpVbrBrush.py:137](../../../gimpformats/GimpVbrBrush.py#L137)
+[Show source in GimpVbrBrush.py:138](../../../gimpformats/GimpVbrBrush.py#L138)
 
 Perform a comparison.
 
@@ -45,7 +45,7 @@ def __eq__(self, other: object) -> bool: ...
 
 ### GimpVbrBrush().__repr__
 
-[Show source in GimpVbrBrush.py:128](../../../gimpformats/GimpVbrBrush.py#L128)
+[Show source in GimpVbrBrush.py:129](../../../gimpformats/GimpVbrBrush.py#L129)
 
 Get a textual representation of this object.
 
@@ -57,7 +57,7 @@ def __repr__(self) -> str: ...
 
 ### GimpVbrBrush().__str__
 
-[Show source in GimpVbrBrush.py:124](../../../gimpformats/GimpVbrBrush.py#L124)
+[Show source in GimpVbrBrush.py:125](../../../gimpformats/GimpVbrBrush.py#L125)
 
 Get a textual representation of this object.
 
@@ -80,7 +80,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, dataIn: bytearray) -> None: ...
+def decode(self, dataIn: bytearray | bytes) -> None: ...
 ```
 
 ### GimpVbrBrush().encode
@@ -133,5 +133,7 @@ Save this gimp image to a file.
 #### Signature
 
 ```python
-def save(self, tofileName: BytesIO | str | Path, toExtension=None) -> None: ...
+def save(
+    self, tofileName: BytesIO | str | Path, toExtension: str | None = None
+) -> None: ...
 ```

@@ -42,7 +42,7 @@ class IO:
 
 	def __init__(
 		self,
-		data: bytearray | None = None,
+		data: bytearray | bytes | None = None,
 		idx: int = 0,
 		littleEndian: bool = False,
 		boolSize: int = 8,
@@ -76,7 +76,9 @@ class IO:
 	@property
 	def data(self) -> bytearray:
 		"""Return data."""
-		return self._data
+		if isinstance(self._data, bytearray):
+			return self._data
+		return bytearray(self._data)
 
 	@data.setter
 	def data(self, data: bytearray) -> None:

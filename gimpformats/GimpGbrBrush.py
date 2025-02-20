@@ -132,10 +132,10 @@ class GimpGbrBrush:
 		"""
 		# Infer extension from filename if not provided
 		if extension is None:
-			extension = Path(filename).suffix.lstrip(".") if filename else None
+			extension = Path(filename).suffix if filename else None
 
 		# Save as image if extension is provided and not "gbr"
-		if extension and extension != "gbr" and self.image:
+		if extension and extension != ".gbr" and self.image:
 			self.image.save(filename)
 			self.image.close()
 		else:

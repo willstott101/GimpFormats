@@ -40,7 +40,7 @@ class GimpPatPattern:
 		if fileName is not None:
 			self.load(fileName)
 
-	def load(self, fileName: BytesIO | str) -> None:
+	def load(self, fileName: BytesIO | str | Path) -> None:
 		"""Load a gimp file.
 
 		:param fileName: can be a file name or a file-like object
@@ -48,7 +48,7 @@ class GimpPatPattern:
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray | bytes, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		Args:
@@ -92,8 +92,8 @@ class GimpPatPattern:
 		ioBuf.u32 = len(self.image.mode)
 		ioBuf.addbytearray("GPAT")
 		ioBuf.addbytearray(self.name.encode("utf-8"))
-		if self._rawImage is None:
-			rawImage = self.image.tobytearray(encoder_name="raw")
+		if self._rawImage is None and self.image:
+			rawImage = self.image.tobytes(encoder_name="raw")
 		else:
 			rawImage = self._rawImage
 		ioBuf.addbytearray(rawImage)
@@ -120,12 +120,15 @@ class GimpPatPattern:
 
 	def save(self, tofileName: Path | str | BytesIO, toExtension: str | None = None) -> None:
 		"""Save this gimp image to a file."""
+
 		asImage = False
+
 		if toExtension is None:
-			toExtension = str(tofileName).rsplit(".", 1)
-			toExtension = toExtension[-1] if len(toExtension) > 1 else None
-		if toExtension is not None and toExtension != "pat":
+			toExtension = Path(str(tofileName)).suffix or None
+
+		if toExtension and toExtension != ".pat":
 			asImage = True
+
 		if asImage and self.image is not None:
 			self.image.save(tofileName)
 		else:

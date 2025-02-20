@@ -44,7 +44,7 @@ Get a textual representation of this object.
 #### Signature
 
 ```python
-def __repr__(self): ...
+def __repr__(self) -> str: ...
 ```
 
 ### GimpPoint().__str__

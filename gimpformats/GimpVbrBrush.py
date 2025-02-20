@@ -51,7 +51,7 @@ class GimpVbrBrush:
 		"""Parametric brush converted to a useable PIL image."""
 		raise NotImplementedError  # TODO:
 
-	def decode(self, dataIn: bytearray) -> None:
+	def decode(self, dataIn: bytearray | bytes) -> None:
 		"""Decode a byte buffer.
 
 		:param dataIn: data buffer to decode
@@ -81,7 +81,7 @@ class GimpVbrBrush:
 			msg = f"Unknown version {self.version}"
 			raise RuntimeError(msg)
 
-	def encode(self) -> bytearray:
+	def encode(self) -> bytes:
 		"""Encode to a raw data stream."""
 		data = []
 		data.append("GIMP-VBR")
@@ -104,15 +104,16 @@ class GimpVbrBrush:
 			data.append(str(self.angle))
 		return ("\n".join(data) + "\n").encode("utf-8")
 
-	def save(self, tofileName: BytesIO | str | Path, toExtension=None) -> None:
+	def save(self, tofileName: BytesIO | str | Path, toExtension: str | None = None) -> None:
 		"""Save this gimp image to a file."""
 
-		# Do we save as image or raw bytearray
+		# Determine whether to save as an image or raw bytearray
 		asImage = False
+
 		if toExtension is None:
-			toExtension = tofileName.rsplit(".", 1)
-			toExtension = toExtension[-1] if len(toExtension) > 1 else None
-		if toExtension is not None and toExtension != "vbr":
+			toExtension = Path(str(tofileName)).suffix or None
+
+		if toExtension and toExtension != ".vbr":
 			asImage = True
 
 		# Write out

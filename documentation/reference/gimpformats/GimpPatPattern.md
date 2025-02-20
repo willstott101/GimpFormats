@@ -34,7 +34,7 @@ class GimpPatPattern:
 
 ### GimpPatPattern().__repr__
 
-[Show source in GimpPatPattern.py:138](../../../gimpformats/GimpPatPattern.py#L138)
+[Show source in GimpPatPattern.py:141](../../../gimpformats/GimpPatPattern.py#L141)
 
 Get a textual representation of this object.
 
@@ -46,7 +46,7 @@ def __repr__(self) -> str: ...
 
 ### GimpPatPattern().__str__
 
-[Show source in GimpPatPattern.py:134](../../../gimpformats/GimpPatPattern.py#L134)
+[Show source in GimpPatPattern.py:137](../../../gimpformats/GimpPatPattern.py#L137)
 
 Get a textual representation of this object.
 
@@ -81,7 +81,7 @@ Decode a byte buffer.
 #### Signature
 
 ```python
-def decode(self, data: bytearray, index: int = 0) -> int: ...
+def decode(self, data: bytearray | bytes, index: int = 0) -> int: ...
 ```
 
 ### GimpPatPattern().encode
@@ -133,7 +133,7 @@ Load a gimp file.
 #### Signature
 
 ```python
-def load(self, fileName: BytesIO | str) -> None: ...
+def load(self, fileName: BytesIO | str | Path) -> None: ...
 ```
 
 ### GimpPatPattern().save

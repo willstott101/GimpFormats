@@ -29,12 +29,14 @@ class GimpImageLevel(GimpIOBase):
 		self._tiles = None  # tile PIL images
 		self._image = None
 
-	def decode(self, data: bytearray, index: int = 0) -> int:
+	def decode(self, data: bytearray | bytes | None, index: int = 0) -> int:
 		"""Decode a byte buffer.
 
 		:param data: data buffer to decode
 		:param index: index within the buffer to start at
 		"""
+		if data is None:
+			return -1
 		ioBuf = IO(data, index)
 		# print 'Decoding image level at',ioBuf.index
 		self.width = ioBuf.u32
@@ -75,8 +77,8 @@ class GimpImageLevel(GimpIOBase):
 		ioBuf = IO()
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
-		dataIndex = ioBuf.index + self.pointerSize * (len(self.tiles) + 1)
-		for tile in self.tiles:
+		dataIndex = ioBuf.index + self.pointerSize * (len(self.tiles or []) + 1)
+		for tile in self.tiles or []:
 			ioBuf.addbytearray(self._pointerEncode(dataIndex + dataioBuf.index))
 			data = tile.tobytearray()
 			if self.doc.compression == 0:  # none
