@@ -75,10 +75,12 @@ class IO:
 
 	@property
 	def data(self) -> bytearray:
-		"""Return data."""
+		"""Return data as a mutable bytearray."""
 		if isinstance(self._data, bytearray):
 			return self._data
-		return bytearray(self._data)
+		if not hasattr(self, "_converted_data"):  # Cache converted bytearray
+			self._converted_data = bytearray(self._data)
+		return self._converted_data
 
 	@data.setter
 	def data(self, data: bytearray) -> None:

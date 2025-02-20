@@ -183,7 +183,7 @@ def __len__(self) -> int: ...
 
 ### IO()._read
 
-[Show source in binaryiotools.py:121](../../../gimpformats/binaryiotools.py#L121)
+[Show source in binaryiotools.py:123](../../../gimpformats/binaryiotools.py#L123)
 
 General formatted read.
 
@@ -195,7 +195,7 @@ def _read(self, size: int, fmt: str) -> Any: ...
 
 ### IO()._readUntil
 
-[Show source in binaryiotools.py:763](../../../gimpformats/binaryiotools.py#L763)
+[Show source in binaryiotools.py:765](../../../gimpformats/binaryiotools.py#L765)
 
 Read a sequence of chars in a set encoding until a set char.
 
@@ -212,7 +212,7 @@ def _readUntil(self, until: str, encoding: str = "A") -> str: ...
 
 ### IO()._sz754
 
-[Show source in binaryiotools.py:695](../../../gimpformats/binaryiotools.py#L695)
+[Show source in binaryiotools.py:697](../../../gimpformats/binaryiotools.py#L697)
 
 Read the next string conforming to IEEE 754 and advance the index.
 
@@ -230,7 +230,7 @@ def _sz754(self, encoding: str) -> str: ...
 
 ### IO()._sz754set
 
-[Show source in binaryiotools.py:717](../../../gimpformats/binaryiotools.py#L717)
+[Show source in binaryiotools.py:719](../../../gimpformats/binaryiotools.py#L719)
 
 _sz754set.
 
@@ -242,7 +242,7 @@ def _sz754set(self, sz754: Any, _encoding: str) -> None: ...
 
 ### IO()._write
 
-[Show source in binaryiotools.py:111](../../../gimpformats/binaryiotools.py#L111)
+[Show source in binaryiotools.py:113](../../../gimpformats/binaryiotools.py#L113)
 
 General formatted write.
 
@@ -254,7 +254,7 @@ def _write(self, size: int, fmt: str, data: Any) -> None: ...
 
 ### IO().addbytearray
 
-[Show source in binaryiotools.py:664](../../../gimpformats/binaryiotools.py#L664)
+[Show source in binaryiotools.py:666](../../../gimpformats/binaryiotools.py#L666)
 
 Add some raw bytearray and advance the index.
 
@@ -272,7 +272,7 @@ def addbytearray(self, iobytearray: Any) -> None: ...
 
 ### IO().beginContext
 
-[Show source in binaryiotools.py:100](../../../gimpformats/binaryiotools.py#L100)
+[Show source in binaryiotools.py:102](../../../gimpformats/binaryiotools.py#L102)
 
 Start a new context where the index can be changed all you want...
 
@@ -286,7 +286,7 @@ def beginContext(self, newIndex: int) -> None: ...
 
 ### IO().bool16
 
-[Show source in binaryiotools.py:178](../../../gimpformats/binaryiotools.py#L178)
+[Show source in binaryiotools.py:180](../../../gimpformats/binaryiotools.py#L180)
 
 Get bool16.
 
@@ -299,7 +299,7 @@ def bool16(self) -> bool: ...
 
 ### IO().bool16
 
-[Show source in binaryiotools.py:183](../../../gimpformats/binaryiotools.py#L183)
+[Show source in binaryiotools.py:185](../../../gimpformats/binaryiotools.py#L185)
 
 Set bool16.
 
@@ -312,7 +312,7 @@ def bool16(self, ioBool: bool) -> None: ...
 
 ### IO().bool32
 
-[Show source in binaryiotools.py:188](../../../gimpformats/binaryiotools.py#L188)
+[Show source in binaryiotools.py:190](../../../gimpformats/binaryiotools.py#L190)
 
 Get bool32.
 
@@ -325,7 +325,7 @@ def bool32(self) -> bool: ...
 
 ### IO().bool32
 
-[Show source in binaryiotools.py:193](../../../gimpformats/binaryiotools.py#L193)
+[Show source in binaryiotools.py:195](../../../gimpformats/binaryiotools.py#L195)
 
 Set bool32.
 
@@ -338,7 +338,7 @@ def bool32(self, ioBool: bool) -> None: ...
 
 ### IO().bool64
 
-[Show source in binaryiotools.py:198](../../../gimpformats/binaryiotools.py#L198)
+[Show source in binaryiotools.py:200](../../../gimpformats/binaryiotools.py#L200)
 
 Get bool64.
 
@@ -351,7 +351,7 @@ def bool64(self) -> bool: ...
 
 ### IO().bool64
 
-[Show source in binaryiotools.py:203](../../../gimpformats/binaryiotools.py#L203)
+[Show source in binaryiotools.py:205](../../../gimpformats/binaryiotools.py#L205)
 
 Set bool64.
 
@@ -364,7 +364,7 @@ def bool64(self, ioBool: bool) -> None: ...
 
 ### IO().bool8
 
-[Show source in binaryiotools.py:168](../../../gimpformats/binaryiotools.py#L168)
+[Show source in binaryiotools.py:170](../../../gimpformats/binaryiotools.py#L170)
 
 Get bool8.
 
@@ -377,7 +377,7 @@ def bool8(self) -> bool: ...
 
 ### IO().bool8
 
-[Show source in binaryiotools.py:173](../../../gimpformats/binaryiotools.py#L173)
+[Show source in binaryiotools.py:175](../../../gimpformats/binaryiotools.py#L175)
 
 Set a bool8.
 
@@ -390,7 +390,7 @@ def bool8(self, ioBool: bool) -> None: ...
 
 ### IO().boolean
 
-[Show source in binaryiotools.py:141](../../../gimpformats/binaryiotools.py#L141)
+[Show source in binaryiotools.py:143](../../../gimpformats/binaryiotools.py#L143)
 
 Return bool.
 
@@ -403,7 +403,7 @@ def boolean(self) -> bool: ...
 
 ### IO().boolean
 
-[Show source in binaryiotools.py:154](../../../gimpformats/binaryiotools.py#L154)
+[Show source in binaryiotools.py:156](../../../gimpformats/binaryiotools.py#L156)
 
 Set bool.
 
@@ -416,7 +416,7 @@ def boolean(self, ioBool: bool) -> None: ...
 
 ### IO().byte
 
-[Show source in binaryiotools.py:208](../../../gimpformats/binaryiotools.py#L208)
+[Show source in binaryiotools.py:210](../../../gimpformats/binaryiotools.py#L210)
 
 Get byte.
 
@@ -429,7 +429,7 @@ def byte(self) -> Any: ...
 
 ### IO().byte
 
-[Show source in binaryiotools.py:213](../../../gimpformats/binaryiotools.py#L213)
+[Show source in binaryiotools.py:215](../../../gimpformats/binaryiotools.py#L215)
 
 Set byte.
 
@@ -442,7 +442,7 @@ def byte(self, byte: Any) -> None: ...
 
 ### IO().cString
 
-[Show source in binaryiotools.py:852](../../../gimpformats/binaryiotools.py#L852)
+[Show source in binaryiotools.py:854](../../../gimpformats/binaryiotools.py#L854)
 
 Read a sequence of chars until the next null byte.
 
@@ -455,7 +455,7 @@ def cString(self) -> str: ...
 
 ### IO().cString
 
-[Show source in binaryiotools.py:857](../../../gimpformats/binaryiotools.py#L857)
+[Show source in binaryiotools.py:859](../../../gimpformats/binaryiotools.py#L859)
 
 Set a sequence of chars and add a null byte.
 
@@ -468,7 +468,7 @@ def cString(self, text: str) -> None: ...
 
 ### IO().cStringA
 
-[Show source in binaryiotools.py:863](../../../gimpformats/binaryiotools.py#L863)
+[Show source in binaryiotools.py:865](../../../gimpformats/binaryiotools.py#L865)
 
 Read a sequence of chars until the next null byte in ascii.
 
@@ -481,7 +481,7 @@ def cStringA(self) -> str: ...
 
 ### IO().cStringA
 
-[Show source in binaryiotools.py:868](../../../gimpformats/binaryiotools.py#L868)
+[Show source in binaryiotools.py:870](../../../gimpformats/binaryiotools.py#L870)
 
 Set a sequence of chars and add a null byte in ascii.
 
@@ -494,7 +494,7 @@ def cStringA(self, text: str) -> None: ...
 
 ### IO().cStringU
 
-[Show source in binaryiotools.py:885](../../../gimpformats/binaryiotools.py#L885)
+[Show source in binaryiotools.py:887](../../../gimpformats/binaryiotools.py#L887)
 
 Read a sequence of chars until the next null byte in utf-8.
 
@@ -507,7 +507,7 @@ def cStringU(self) -> str: ...
 
 ### IO().cStringU
 
-[Show source in binaryiotools.py:890](../../../gimpformats/binaryiotools.py#L890)
+[Show source in binaryiotools.py:892](../../../gimpformats/binaryiotools.py#L892)
 
 Set a sequence of chars and add a null byte in utf-8.
 
@@ -520,7 +520,7 @@ def cStringU(self, text: str) -> None: ...
 
 ### IO().cStringW
 
-[Show source in binaryiotools.py:874](../../../gimpformats/binaryiotools.py#L874)
+[Show source in binaryiotools.py:876](../../../gimpformats/binaryiotools.py#L876)
 
 Read a sequence of chars until the next null byte in ucs-2.
 
@@ -533,7 +533,7 @@ def cStringW(self) -> str: ...
 
 ### IO().cStringW
 
-[Show source in binaryiotools.py:879](../../../gimpformats/binaryiotools.py#L879)
+[Show source in binaryiotools.py:881](../../../gimpformats/binaryiotools.py#L881)
 
 Set a sequence of chars and add a null byte in ucs-2.
 
@@ -548,7 +548,7 @@ def cStringW(self, text: str) -> None: ...
 
 [Show source in binaryiotools.py:76](../../../gimpformats/binaryiotools.py#L76)
 
-Return data.
+Return data as a mutable bytearray.
 
 #### Signature
 
@@ -559,7 +559,7 @@ def data(self) -> bytearray: ...
 
 ### IO().data
 
-[Show source in binaryiotools.py:83](../../../gimpformats/binaryiotools.py#L83)
+[Show source in binaryiotools.py:85](../../../gimpformats/binaryiotools.py#L85)
 
 Set data.
 
@@ -572,7 +572,7 @@ def data(self, data: bytearray) -> None: ...
 
 ### IO().double
 
-[Show source in binaryiotools.py:608](../../../gimpformats/binaryiotools.py#L608)
+[Show source in binaryiotools.py:610](../../../gimpformats/binaryiotools.py#L610)
 
 Get a double.
 
@@ -585,7 +585,7 @@ def double(self) -> float: ...
 
 ### IO().double
 
-[Show source in binaryiotools.py:613](../../../gimpformats/binaryiotools.py#L613)
+[Show source in binaryiotools.py:615](../../../gimpformats/binaryiotools.py#L615)
 
 Set a double.
 
@@ -598,7 +598,7 @@ def double(self, floating: float) -> None: ...
 
 ### IO().dword
 
-[Show source in binaryiotools.py:248](../../../gimpformats/binaryiotools.py#L248)
+[Show source in binaryiotools.py:250](../../../gimpformats/binaryiotools.py#L250)
 
 Get a dword.
 
@@ -611,7 +611,7 @@ def dword(self) -> Any: ...
 
 ### IO().dword
 
-[Show source in binaryiotools.py:253](../../../gimpformats/binaryiotools.py#L253)
+[Show source in binaryiotools.py:255](../../../gimpformats/binaryiotools.py#L255)
 
 Set a dword.
 
@@ -624,7 +624,7 @@ def dword(self, dword: Any) -> None: ...
 
 ### IO().endContext
 
-[Show source in binaryiotools.py:107](../../../gimpformats/binaryiotools.py#L107)
+[Show source in binaryiotools.py:109](../../../gimpformats/binaryiotools.py#L109)
 
 Restore the index to the previous location where it was when	beginContext() was called.
 
@@ -636,7 +636,7 @@ def endContext(self) -> None: ...
 
 ### IO().float32
 
-[Show source in binaryiotools.py:408](../../../gimpformats/binaryiotools.py#L408)
+[Show source in binaryiotools.py:410](../../../gimpformats/binaryiotools.py#L410)
 
 Get a float32.
 
@@ -649,7 +649,7 @@ def float32(self) -> float: ...
 
 ### IO().float32
 
-[Show source in binaryiotools.py:415](../../../gimpformats/binaryiotools.py#L415)
+[Show source in binaryiotools.py:417](../../../gimpformats/binaryiotools.py#L417)
 
 Set a float32.
 
@@ -662,7 +662,7 @@ def float32(self, float32: float) -> None: ...
 
 ### IO().float32be
 
-[Show source in binaryiotools.py:618](../../../gimpformats/binaryiotools.py#L618)
+[Show source in binaryiotools.py:620](../../../gimpformats/binaryiotools.py#L620)
 
 Read the next 32 bit float and advance the index.
 
@@ -675,7 +675,7 @@ def float32be(self) -> float: ...
 
 ### IO().float32be
 
-[Show source in binaryiotools.py:623](../../../gimpformats/binaryiotools.py#L623)
+[Show source in binaryiotools.py:625](../../../gimpformats/binaryiotools.py#L625)
 
 Set a 32 bit float.
 
@@ -688,7 +688,7 @@ def float32be(self, float32be: float) -> None: ...
 
 ### IO().float32le
 
-[Show source in binaryiotools.py:628](../../../gimpformats/binaryiotools.py#L628)
+[Show source in binaryiotools.py:630](../../../gimpformats/binaryiotools.py#L630)
 
 Read the next 32 bit float and advance the index.
 
@@ -701,7 +701,7 @@ def float32le(self) -> float: ...
 
 ### IO().float32le
 
-[Show source in binaryiotools.py:633](../../../gimpformats/binaryiotools.py#L633)
+[Show source in binaryiotools.py:635](../../../gimpformats/binaryiotools.py#L635)
 
 Set a 32 bit float.
 
@@ -714,7 +714,7 @@ def float32le(self, float32le: float) -> None: ...
 
 ### IO().float64
 
-[Show source in binaryiotools.py:423](../../../gimpformats/binaryiotools.py#L423)
+[Show source in binaryiotools.py:425](../../../gimpformats/binaryiotools.py#L425)
 
 Get a float64.
 
@@ -727,7 +727,7 @@ def float64(self) -> float: ...
 
 ### IO().float64
 
-[Show source in binaryiotools.py:430](../../../gimpformats/binaryiotools.py#L430)
+[Show source in binaryiotools.py:432](../../../gimpformats/binaryiotools.py#L432)
 
 Set a float64.
 
@@ -740,7 +740,7 @@ def float64(self, float64: float) -> None: ...
 
 ### IO().float64be
 
-[Show source in binaryiotools.py:638](../../../gimpformats/binaryiotools.py#L638)
+[Show source in binaryiotools.py:640](../../../gimpformats/binaryiotools.py#L640)
 
 Read the next 64 bit float and advance the index.
 
@@ -753,7 +753,7 @@ def float64be(self) -> float: ...
 
 ### IO().float64be
 
-[Show source in binaryiotools.py:643](../../../gimpformats/binaryiotools.py#L643)
+[Show source in binaryiotools.py:645](../../../gimpformats/binaryiotools.py#L645)
 
 Set a 64 bit float.
 
@@ -766,7 +766,7 @@ def float64be(self, float64be: float) -> None: ...
 
 ### IO().float64le
 
-[Show source in binaryiotools.py:648](../../../gimpformats/binaryiotools.py#L648)
+[Show source in binaryiotools.py:650](../../../gimpformats/binaryiotools.py#L650)
 
 Read the next 64 bit float and advance the index.
 
@@ -779,7 +779,7 @@ def float64le(self) -> float: ...
 
 ### IO().float64le
 
-[Show source in binaryiotools.py:653](../../../gimpformats/binaryiotools.py#L653)
+[Show source in binaryiotools.py:655](../../../gimpformats/binaryiotools.py#L655)
 
 Set a 64 bit float.
 
@@ -792,7 +792,7 @@ def float64le(self, float64le: float) -> None: ...
 
 ### IO().floating
 
-[Show source in binaryiotools.py:598](../../../gimpformats/binaryiotools.py#L598)
+[Show source in binaryiotools.py:600](../../../gimpformats/binaryiotools.py#L600)
 
 Get a float.
 
@@ -805,7 +805,7 @@ def floating(self) -> float: ...
 
 ### IO().floating
 
-[Show source in binaryiotools.py:603](../../../gimpformats/binaryiotools.py#L603)
+[Show source in binaryiotools.py:605](../../../gimpformats/binaryiotools.py#L605)
 
 Set a float.
 
@@ -818,7 +818,7 @@ def floating(self, floating: float) -> None: ...
 
 ### IO().getbytearray
 
-[Show source in binaryiotools.py:658](../../../gimpformats/binaryiotools.py#L658)
+[Show source in binaryiotools.py:660](../../../gimpformats/binaryiotools.py#L660)
 
 Grab some raw bytearray and advance the index.
 
@@ -830,7 +830,7 @@ def getbytearray(self, nbytearray: int): ...
 
 ### IO().i16
 
-[Show source in binaryiotools.py:318](../../../gimpformats/binaryiotools.py#L318)
+[Show source in binaryiotools.py:320](../../../gimpformats/binaryiotools.py#L320)
 
 Get an int16.
 
@@ -843,7 +843,7 @@ def i16(self) -> int: ...
 
 ### IO().i16
 
-[Show source in binaryiotools.py:325](../../../gimpformats/binaryiotools.py#L325)
+[Show source in binaryiotools.py:327](../../../gimpformats/binaryiotools.py#L327)
 
 Set an int16.
 
@@ -856,7 +856,7 @@ def i16(self, i16: int) -> None: ...
 
 ### IO().i16be
 
-[Show source in binaryiotools.py:508](../../../gimpformats/binaryiotools.py#L508)
+[Show source in binaryiotools.py:510](../../../gimpformats/binaryiotools.py#L510)
 
 Read the next signed int16 and advance the index.
 
@@ -869,7 +869,7 @@ def i16be(self) -> int: ...
 
 ### IO().i16be
 
-[Show source in binaryiotools.py:513](../../../gimpformats/binaryiotools.py#L513)
+[Show source in binaryiotools.py:515](../../../gimpformats/binaryiotools.py#L515)
 
 Set the int16.
 
@@ -882,7 +882,7 @@ def i16be(self, i16be: int) -> None: ...
 
 ### IO().i16le
 
-[Show source in binaryiotools.py:498](../../../gimpformats/binaryiotools.py#L498)
+[Show source in binaryiotools.py:500](../../../gimpformats/binaryiotools.py#L500)
 
 Read the next signed int16 and advance the index.
 
@@ -895,7 +895,7 @@ def i16le(self) -> int: ...
 
 ### IO().i16le
 
-[Show source in binaryiotools.py:503](../../../gimpformats/binaryiotools.py#L503)
+[Show source in binaryiotools.py:505](../../../gimpformats/binaryiotools.py#L505)
 
 Set the int16.
 
@@ -908,7 +908,7 @@ def i16le(self, i16le: int) -> None: ...
 
 ### IO().i32
 
-[Show source in binaryiotools.py:348](../../../gimpformats/binaryiotools.py#L348)
+[Show source in binaryiotools.py:350](../../../gimpformats/binaryiotools.py#L350)
 
 Get an int32.
 
@@ -921,7 +921,7 @@ def i32(self) -> int: ...
 
 ### IO().i32
 
-[Show source in binaryiotools.py:355](../../../gimpformats/binaryiotools.py#L355)
+[Show source in binaryiotools.py:357](../../../gimpformats/binaryiotools.py#L357)
 
 Set an int32.
 
@@ -934,7 +934,7 @@ def i32(self, i32: int) -> None: ...
 
 ### IO().i32be
 
-[Show source in binaryiotools.py:548](../../../gimpformats/binaryiotools.py#L548)
+[Show source in binaryiotools.py:550](../../../gimpformats/binaryiotools.py#L550)
 
 Read the next signed int32 and advance the index.
 
@@ -947,7 +947,7 @@ def i32be(self) -> int: ...
 
 ### IO().i32be
 
-[Show source in binaryiotools.py:553](../../../gimpformats/binaryiotools.py#L553)
+[Show source in binaryiotools.py:555](../../../gimpformats/binaryiotools.py#L555)
 
 Set the int32.
 
@@ -960,7 +960,7 @@ def i32be(self, i32be: int) -> None: ...
 
 ### IO().i32le
 
-[Show source in binaryiotools.py:538](../../../gimpformats/binaryiotools.py#L538)
+[Show source in binaryiotools.py:540](../../../gimpformats/binaryiotools.py#L540)
 
 Read the next signed int32 and advance the index.
 
@@ -973,7 +973,7 @@ def i32le(self) -> int: ...
 
 ### IO().i32le
 
-[Show source in binaryiotools.py:543](../../../gimpformats/binaryiotools.py#L543)
+[Show source in binaryiotools.py:545](../../../gimpformats/binaryiotools.py#L545)
 
 Set the int32.
 
@@ -986,7 +986,7 @@ def i32le(self, i32le: int) -> None: ...
 
 ### IO().i64
 
-[Show source in binaryiotools.py:378](../../../gimpformats/binaryiotools.py#L378)
+[Show source in binaryiotools.py:380](../../../gimpformats/binaryiotools.py#L380)
 
 Get an int64.
 
@@ -999,7 +999,7 @@ def i64(self) -> int: ...
 
 ### IO().i64
 
-[Show source in binaryiotools.py:385](../../../gimpformats/binaryiotools.py#L385)
+[Show source in binaryiotools.py:387](../../../gimpformats/binaryiotools.py#L387)
 
 Set an int64.
 
@@ -1012,7 +1012,7 @@ def i64(self, i64: int) -> None: ...
 
 ### IO().i64be
 
-[Show source in binaryiotools.py:588](../../../gimpformats/binaryiotools.py#L588)
+[Show source in binaryiotools.py:590](../../../gimpformats/binaryiotools.py#L590)
 
 Read the next signed int64 and advance the index.
 
@@ -1025,7 +1025,7 @@ def i64be(self) -> int: ...
 
 ### IO().i64be
 
-[Show source in binaryiotools.py:593](../../../gimpformats/binaryiotools.py#L593)
+[Show source in binaryiotools.py:595](../../../gimpformats/binaryiotools.py#L595)
 
 Set the int64.
 
@@ -1038,7 +1038,7 @@ def i64be(self, i64be: int) -> None: ...
 
 ### IO().i64le
 
-[Show source in binaryiotools.py:578](../../../gimpformats/binaryiotools.py#L578)
+[Show source in binaryiotools.py:580](../../../gimpformats/binaryiotools.py#L580)
 
 Read the next signed int64 and advance the index.
 
@@ -1051,7 +1051,7 @@ def i64le(self) -> int: ...
 
 ### IO().i64le
 
-[Show source in binaryiotools.py:583](../../../gimpformats/binaryiotools.py#L583)
+[Show source in binaryiotools.py:585](../../../gimpformats/binaryiotools.py#L585)
 
 Set the int64.
 
@@ -1064,7 +1064,7 @@ def i64le(self, i64le: int) -> None: ...
 
 ### IO().i8
 
-[Show source in binaryiotools.py:288](../../../gimpformats/binaryiotools.py#L288)
+[Show source in binaryiotools.py:290](../../../gimpformats/binaryiotools.py#L290)
 
 Get an int8.
 
@@ -1077,7 +1077,7 @@ def i8(self) -> int: ...
 
 ### IO().i8
 
-[Show source in binaryiotools.py:295](../../../gimpformats/binaryiotools.py#L295)
+[Show source in binaryiotools.py:297](../../../gimpformats/binaryiotools.py#L297)
 
 Set an int8.
 
@@ -1090,7 +1090,7 @@ def i8(self, i8: int) -> None: ...
 
 ### IO().i8be
 
-[Show source in binaryiotools.py:468](../../../gimpformats/binaryiotools.py#L468)
+[Show source in binaryiotools.py:470](../../../gimpformats/binaryiotools.py#L470)
 
 Read the next signed int8 and advance the index.
 
@@ -1103,7 +1103,7 @@ def i8be(self) -> int: ...
 
 ### IO().i8be
 
-[Show source in binaryiotools.py:473](../../../gimpformats/binaryiotools.py#L473)
+[Show source in binaryiotools.py:475](../../../gimpformats/binaryiotools.py#L475)
 
 Set the int8.
 
@@ -1116,7 +1116,7 @@ def i8be(self, i8be: int) -> None: ...
 
 ### IO().i8le
 
-[Show source in binaryiotools.py:458](../../../gimpformats/binaryiotools.py#L458)
+[Show source in binaryiotools.py:460](../../../gimpformats/binaryiotools.py#L460)
 
 Read the next signed int8 and advance the index.
 
@@ -1129,7 +1129,7 @@ def i8le(self) -> int: ...
 
 ### IO().i8le
 
-[Show source in binaryiotools.py:463](../../../gimpformats/binaryiotools.py#L463)
+[Show source in binaryiotools.py:465](../../../gimpformats/binaryiotools.py#L465)
 
 Set the int8.
 
@@ -1142,7 +1142,7 @@ def i8le(self, i8le: int) -> None: ...
 
 ### IO().index
 
-[Show source in binaryiotools.py:90](../../../gimpformats/binaryiotools.py#L90)
+[Show source in binaryiotools.py:92](../../../gimpformats/binaryiotools.py#L92)
 
 Return data.
 
@@ -1155,7 +1155,7 @@ def index(self) -> int: ...
 
 ### IO().index
 
-[Show source in binaryiotools.py:95](../../../gimpformats/binaryiotools.py#L95)
+[Show source in binaryiotools.py:97](../../../gimpformats/binaryiotools.py#L97)
 
 Set index.
 
@@ -1168,7 +1168,7 @@ def index(self, index: int) -> None: ...
 
 ### IO().qword
 
-[Show source in binaryiotools.py:268](../../../gimpformats/binaryiotools.py#L268)
+[Show source in binaryiotools.py:270](../../../gimpformats/binaryiotools.py#L270)
 
 Get a qword.
 
@@ -1181,7 +1181,7 @@ def qword(self) -> Any: ...
 
 ### IO().qword
 
-[Show source in binaryiotools.py:273](../../../gimpformats/binaryiotools.py#L273)
+[Show source in binaryiotools.py:275](../../../gimpformats/binaryiotools.py#L275)
 
 Set a qword.
 
@@ -1194,7 +1194,7 @@ def qword(self, qword: Any) -> None: ...
 
 ### IO().setbytearray
 
-[Show source in binaryiotools.py:673](../../../gimpformats/binaryiotools.py#L673)
+[Show source in binaryiotools.py:675](../../../gimpformats/binaryiotools.py#L675)
 
 Add some raw bytearray and advance the index.
 
@@ -1212,7 +1212,7 @@ def setbytearray(self, iobytearray: Any) -> None: ...
 
 ### IO().sz754
 
-[Show source in binaryiotools.py:723](../../../gimpformats/binaryiotools.py#L723)
+[Show source in binaryiotools.py:725](../../../gimpformats/binaryiotools.py#L725)
 
 sz754.
 
@@ -1225,7 +1225,7 @@ def sz754(self) -> Any: ...
 
 ### IO().sz754
 
-[Show source in binaryiotools.py:728](../../../gimpformats/binaryiotools.py#L728)
+[Show source in binaryiotools.py:730](../../../gimpformats/binaryiotools.py#L730)
 
 Set sz754.
 
@@ -1238,7 +1238,7 @@ def sz754(self, sz754: Any) -> None: ...
 
 ### IO().sz754A
 
-[Show source in binaryiotools.py:733](../../../gimpformats/binaryiotools.py#L733)
+[Show source in binaryiotools.py:735](../../../gimpformats/binaryiotools.py#L735)
 
 sz754A.
 
@@ -1251,7 +1251,7 @@ def sz754A(self) -> Any: ...
 
 ### IO().sz754A
 
-[Show source in binaryiotools.py:738](../../../gimpformats/binaryiotools.py#L738)
+[Show source in binaryiotools.py:740](../../../gimpformats/binaryiotools.py#L740)
 
 Set sz754A.
 
@@ -1264,7 +1264,7 @@ def sz754A(self, sz754: Any) -> None: ...
 
 ### IO().sz754U
 
-[Show source in binaryiotools.py:753](../../../gimpformats/binaryiotools.py#L753)
+[Show source in binaryiotools.py:755](../../../gimpformats/binaryiotools.py#L755)
 
 sz754U.
 
@@ -1277,7 +1277,7 @@ def sz754U(self) -> Any: ...
 
 ### IO().sz754U
 
-[Show source in binaryiotools.py:758](../../../gimpformats/binaryiotools.py#L758)
+[Show source in binaryiotools.py:760](../../../gimpformats/binaryiotools.py#L760)
 
 Set sz754U.
 
@@ -1290,7 +1290,7 @@ def sz754U(self, sz754: Any) -> None: ...
 
 ### IO().sz754W
 
-[Show source in binaryiotools.py:743](../../../gimpformats/binaryiotools.py#L743)
+[Show source in binaryiotools.py:745](../../../gimpformats/binaryiotools.py#L745)
 
 sz754W.
 
@@ -1303,7 +1303,7 @@ def sz754W(self) -> Any: ...
 
 ### IO().sz754W
 
-[Show source in binaryiotools.py:748](../../../gimpformats/binaryiotools.py#L748)
+[Show source in binaryiotools.py:750](../../../gimpformats/binaryiotools.py#L750)
 
 Set sz754W.
 
@@ -1316,7 +1316,7 @@ def sz754W(self, sz754: Any) -> None: ...
 
 ### IO().textLine
 
-[Show source in binaryiotools.py:792](../../../gimpformats/binaryiotools.py#L792)
+[Show source in binaryiotools.py:794](../../../gimpformats/binaryiotools.py#L794)
 
 Read a sequence of chars until the next new line char.
 
@@ -1329,7 +1329,7 @@ def textLine(self) -> str: ...
 
 ### IO().textLine
 
-[Show source in binaryiotools.py:800](../../../gimpformats/binaryiotools.py#L800)
+[Show source in binaryiotools.py:802](../../../gimpformats/binaryiotools.py#L802)
 
 Set a sequence of chars until the next new line char.
 
@@ -1342,7 +1342,7 @@ def textLine(self, text: str) -> None: ...
 
 ### IO().textLineA
 
-[Show source in binaryiotools.py:807](../../../gimpformats/binaryiotools.py#L807)
+[Show source in binaryiotools.py:809](../../../gimpformats/binaryiotools.py#L809)
 
 Read a sequence of chars until the next new line char in ascii.
 
@@ -1355,7 +1355,7 @@ def textLineA(self) -> str: ...
 
 ### IO().textLineA
 
-[Show source in binaryiotools.py:815](../../../gimpformats/binaryiotools.py#L815)
+[Show source in binaryiotools.py:817](../../../gimpformats/binaryiotools.py#L817)
 
 Set a sequence of chars until the next new line char in ascii.
 
@@ -1368,7 +1368,7 @@ def textLineA(self, text: str) -> None: ...
 
 ### IO().textLineU
 
-[Show source in binaryiotools.py:837](../../../gimpformats/binaryiotools.py#L837)
+[Show source in binaryiotools.py:839](../../../gimpformats/binaryiotools.py#L839)
 
 Read a sequence of chars until the next new line char in utf-8.
 
@@ -1381,7 +1381,7 @@ def textLineU(self) -> str: ...
 
 ### IO().textLineU
 
-[Show source in binaryiotools.py:845](../../../gimpformats/binaryiotools.py#L845)
+[Show source in binaryiotools.py:847](../../../gimpformats/binaryiotools.py#L847)
 
 Set a sequence of chars until the next new line char in utf-8.
 
@@ -1394,7 +1394,7 @@ def textLineU(self, text: str) -> None: ...
 
 ### IO().textLineW
 
-[Show source in binaryiotools.py:822](../../../gimpformats/binaryiotools.py#L822)
+[Show source in binaryiotools.py:824](../../../gimpformats/binaryiotools.py#L824)
 
 Read a sequence of chars until the next new line char in ucs-2.
 
@@ -1407,7 +1407,7 @@ def textLineW(self) -> str: ...
 
 ### IO().textLineW
 
-[Show source in binaryiotools.py:830](../../../gimpformats/binaryiotools.py#L830)
+[Show source in binaryiotools.py:832](../../../gimpformats/binaryiotools.py#L832)
 
 Set a sequence of chars until the next new line char in ucs-2.
 
@@ -1420,7 +1420,7 @@ def textLineW(self, text: str) -> None: ...
 
 ### IO().u16
 
-[Show source in binaryiotools.py:333](../../../gimpformats/binaryiotools.py#L333)
+[Show source in binaryiotools.py:335](../../../gimpformats/binaryiotools.py#L335)
 
 Get an uint16.
 
@@ -1433,7 +1433,7 @@ def u16(self) -> int: ...
 
 ### IO().u16
 
-[Show source in binaryiotools.py:340](../../../gimpformats/binaryiotools.py#L340)
+[Show source in binaryiotools.py:342](../../../gimpformats/binaryiotools.py#L342)
 
 Set an unint16.
 
@@ -1446,7 +1446,7 @@ def u16(self, u16: int) -> None: ...
 
 ### IO().u16be
 
-[Show source in binaryiotools.py:478](../../../gimpformats/binaryiotools.py#L478)
+[Show source in binaryiotools.py:480](../../../gimpformats/binaryiotools.py#L480)
 
 Read the next uint16 and advance the index.
 
@@ -1459,7 +1459,7 @@ def u16be(self) -> int: ...
 
 ### IO().u16be
 
-[Show source in binaryiotools.py:483](../../../gimpformats/binaryiotools.py#L483)
+[Show source in binaryiotools.py:485](../../../gimpformats/binaryiotools.py#L485)
 
 Set the uint16.
 
@@ -1472,7 +1472,7 @@ def u16be(self, u16be: int) -> None: ...
 
 ### IO().u16le
 
-[Show source in binaryiotools.py:488](../../../gimpformats/binaryiotools.py#L488)
+[Show source in binaryiotools.py:490](../../../gimpformats/binaryiotools.py#L490)
 
 Read the next uint16 and advance the index.
 
@@ -1485,7 +1485,7 @@ def u16le(self) -> int: ...
 
 ### IO().u16le
 
-[Show source in binaryiotools.py:493](../../../gimpformats/binaryiotools.py#L493)
+[Show source in binaryiotools.py:495](../../../gimpformats/binaryiotools.py#L495)
 
 Set the uint16.
 
@@ -1498,7 +1498,7 @@ def u16le(self, u16le: int) -> None: ...
 
 ### IO().u32
 
-[Show source in binaryiotools.py:363](../../../gimpformats/binaryiotools.py#L363)
+[Show source in binaryiotools.py:365](../../../gimpformats/binaryiotools.py#L365)
 
 Get a uint32.
 
@@ -1511,7 +1511,7 @@ def u32(self) -> int: ...
 
 ### IO().u32
 
-[Show source in binaryiotools.py:370](../../../gimpformats/binaryiotools.py#L370)
+[Show source in binaryiotools.py:372](../../../gimpformats/binaryiotools.py#L372)
 
 Set a unint32.
 
@@ -1524,7 +1524,7 @@ def u32(self, u32: int) -> None: ...
 
 ### IO().u32be
 
-[Show source in binaryiotools.py:518](../../../gimpformats/binaryiotools.py#L518)
+[Show source in binaryiotools.py:520](../../../gimpformats/binaryiotools.py#L520)
 
 Read the next uint32 and advance the index.
 
@@ -1537,7 +1537,7 @@ def u32be(self) -> int: ...
 
 ### IO().u32be
 
-[Show source in binaryiotools.py:523](../../../gimpformats/binaryiotools.py#L523)
+[Show source in binaryiotools.py:525](../../../gimpformats/binaryiotools.py#L525)
 
 Set the uint32.
 
@@ -1550,7 +1550,7 @@ def u32be(self, u32be: int) -> None: ...
 
 ### IO().u32le
 
-[Show source in binaryiotools.py:528](../../../gimpformats/binaryiotools.py#L528)
+[Show source in binaryiotools.py:530](../../../gimpformats/binaryiotools.py#L530)
 
 Read the next uint32 and advance the index.
 
@@ -1563,7 +1563,7 @@ def u32le(self) -> int: ...
 
 ### IO().u32le
 
-[Show source in binaryiotools.py:533](../../../gimpformats/binaryiotools.py#L533)
+[Show source in binaryiotools.py:535](../../../gimpformats/binaryiotools.py#L535)
 
 Set the uint32.
 
@@ -1576,7 +1576,7 @@ def u32le(self, u32le: int) -> None: ...
 
 ### IO().u64
 
-[Show source in binaryiotools.py:393](../../../gimpformats/binaryiotools.py#L393)
+[Show source in binaryiotools.py:395](../../../gimpformats/binaryiotools.py#L395)
 
 Get a uint64.
 
@@ -1589,7 +1589,7 @@ def u64(self) -> int: ...
 
 ### IO().u64
 
-[Show source in binaryiotools.py:400](../../../gimpformats/binaryiotools.py#L400)
+[Show source in binaryiotools.py:402](../../../gimpformats/binaryiotools.py#L402)
 
 Set a uint64.
 
@@ -1602,7 +1602,7 @@ def u64(self, u64: int) -> None: ...
 
 ### IO().u64be
 
-[Show source in binaryiotools.py:558](../../../gimpformats/binaryiotools.py#L558)
+[Show source in binaryiotools.py:560](../../../gimpformats/binaryiotools.py#L560)
 
 Read the next uint64 and advance the index.
 
@@ -1615,7 +1615,7 @@ def u64be(self) -> int: ...
 
 ### IO().u64be
 
-[Show source in binaryiotools.py:563](../../../gimpformats/binaryiotools.py#L563)
+[Show source in binaryiotools.py:565](../../../gimpformats/binaryiotools.py#L565)
 
 Set the uint64.
 
@@ -1628,7 +1628,7 @@ def u64be(self, u64be: int) -> None: ...
 
 ### IO().u64le
 
-[Show source in binaryiotools.py:568](../../../gimpformats/binaryiotools.py#L568)
+[Show source in binaryiotools.py:570](../../../gimpformats/binaryiotools.py#L570)
 
 Read the next uint64 and advance the index.
 
@@ -1641,7 +1641,7 @@ def u64le(self) -> int: ...
 
 ### IO().u64le
 
-[Show source in binaryiotools.py:573](../../../gimpformats/binaryiotools.py#L573)
+[Show source in binaryiotools.py:575](../../../gimpformats/binaryiotools.py#L575)
 
 Set the uint64.
 
@@ -1654,7 +1654,7 @@ def u64le(self, u64le: int) -> None: ...
 
 ### IO().u8
 
-[Show source in binaryiotools.py:303](../../../gimpformats/binaryiotools.py#L303)
+[Show source in binaryiotools.py:305](../../../gimpformats/binaryiotools.py#L305)
 
 Get an unsigned int.
 
@@ -1667,7 +1667,7 @@ def u8(self) -> int: ...
 
 ### IO().u8
 
-[Show source in binaryiotools.py:310](../../../gimpformats/binaryiotools.py#L310)
+[Show source in binaryiotools.py:312](../../../gimpformats/binaryiotools.py#L312)
 
 Set an unsigned int.
 
@@ -1680,7 +1680,7 @@ def u8(self, u8: int) -> None: ...
 
 ### IO().u8be
 
-[Show source in binaryiotools.py:438](../../../gimpformats/binaryiotools.py#L438)
+[Show source in binaryiotools.py:440](../../../gimpformats/binaryiotools.py#L440)
 
 Read the next uint8 and advance the index.
 
@@ -1693,7 +1693,7 @@ def u8be(self) -> int: ...
 
 ### IO().u8be
 
-[Show source in binaryiotools.py:443](../../../gimpformats/binaryiotools.py#L443)
+[Show source in binaryiotools.py:445](../../../gimpformats/binaryiotools.py#L445)
 
 Set the uint8.
 
@@ -1706,7 +1706,7 @@ def u8be(self, u8be: int) -> None: ...
 
 ### IO().u8le
 
-[Show source in binaryiotools.py:448](../../../gimpformats/binaryiotools.py#L448)
+[Show source in binaryiotools.py:450](../../../gimpformats/binaryiotools.py#L450)
 
 Read the next uint8 and advance the index.
 
@@ -1719,7 +1719,7 @@ def u8le(self) -> int: ...
 
 ### IO().u8le
 
-[Show source in binaryiotools.py:453](../../../gimpformats/binaryiotools.py#L453)
+[Show source in binaryiotools.py:455](../../../gimpformats/binaryiotools.py#L455)
 
 Set the uint8.
 
@@ -1732,7 +1732,7 @@ def u8le(self, u8le: int) -> None: ...
 
 ### IO().unsignedByte
 
-[Show source in binaryiotools.py:218](../../../gimpformats/binaryiotools.py#L218)
+[Show source in binaryiotools.py:220](../../../gimpformats/binaryiotools.py#L220)
 
 Get unsigned byte.
 
@@ -1745,7 +1745,7 @@ def unsignedByte(self) -> Any: ...
 
 ### IO().unsignedByte
 
-[Show source in binaryiotools.py:223](../../../gimpformats/binaryiotools.py#L223)
+[Show source in binaryiotools.py:225](../../../gimpformats/binaryiotools.py#L225)
 
 Set unsigned byte.
 
@@ -1758,7 +1758,7 @@ def unsignedByte(self, byte: Any) -> None: ...
 
 ### IO().unsignedDword
 
-[Show source in binaryiotools.py:258](../../../gimpformats/binaryiotools.py#L258)
+[Show source in binaryiotools.py:260](../../../gimpformats/binaryiotools.py#L260)
 
 Get a unsigned dword.
 
@@ -1771,7 +1771,7 @@ def unsignedDword(self) -> Any: ...
 
 ### IO().unsignedDword
 
-[Show source in binaryiotools.py:263](../../../gimpformats/binaryiotools.py#L263)
+[Show source in binaryiotools.py:265](../../../gimpformats/binaryiotools.py#L265)
 
 Set an unsigned dword.
 
@@ -1784,7 +1784,7 @@ def unsignedDword(self, unsignedDword: Any) -> None: ...
 
 ### IO().unsignedQword
 
-[Show source in binaryiotools.py:278](../../../gimpformats/binaryiotools.py#L278)
+[Show source in binaryiotools.py:280](../../../gimpformats/binaryiotools.py#L280)
 
 Get an unsigned qword.
 
@@ -1797,7 +1797,7 @@ def unsignedQword(self) -> Any: ...
 
 ### IO().unsignedQword
 
-[Show source in binaryiotools.py:283](../../../gimpformats/binaryiotools.py#L283)
+[Show source in binaryiotools.py:285](../../../gimpformats/binaryiotools.py#L285)
 
 Set an unsigned qword.
 
@@ -1810,7 +1810,7 @@ def unsignedQword(self, unsignedQword: Any) -> None: ...
 
 ### IO().unsignedWord
 
-[Show source in binaryiotools.py:238](../../../gimpformats/binaryiotools.py#L238)
+[Show source in binaryiotools.py:240](../../../gimpformats/binaryiotools.py#L240)
 
 Get an unsigned word.
 
@@ -1823,7 +1823,7 @@ def unsignedWord(self) -> Any: ...
 
 ### IO().unsignedWord
 
-[Show source in binaryiotools.py:243](../../../gimpformats/binaryiotools.py#L243)
+[Show source in binaryiotools.py:245](../../../gimpformats/binaryiotools.py#L245)
 
 Set an unsigned word.
 
@@ -1836,7 +1836,7 @@ def unsignedWord(self, unsignedWord: Any) -> None: ...
 
 ### IO().word
 
-[Show source in binaryiotools.py:228](../../../gimpformats/binaryiotools.py#L228)
+[Show source in binaryiotools.py:230](../../../gimpformats/binaryiotools.py#L230)
 
 Get a word.
 
@@ -1849,7 +1849,7 @@ def word(self) -> Any: ...
 
 ### IO().word
 
-[Show source in binaryiotools.py:233](../../../gimpformats/binaryiotools.py#L233)
+[Show source in binaryiotools.py:235](../../../gimpformats/binaryiotools.py#L235)
 
 Set a word.
 
