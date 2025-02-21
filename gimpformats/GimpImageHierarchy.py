@@ -103,7 +103,7 @@ class GimpImageHierarchy(GimpIOBase):
 			msg = "Unsupported PIL image type."
 			raise NotImplementedError(msg)
 		self.bpp = len(image.mode)
-		self._levelPtrs = None
+		self._levelPtrs = []
 
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""

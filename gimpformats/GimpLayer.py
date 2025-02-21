@@ -59,14 +59,15 @@ class GimpLayer(GimpIOBase):
 
 		Args:
 		----
-			data (bytearray): data buffer to decode
-			index (int, optional): index within the buffer to start at]. Defaults to 0.
+			data (bytearray): the entire gimp document data to decode
+			index (int, optional): index within the buffer to start at. Defaults to 0.
 
 		Returns:
 		-------
 			int: offset
 
 		"""
+
 		if data is None:
 			return -1
 		# Create a new IO buffer
@@ -118,6 +119,7 @@ class GimpLayer(GimpIOBase):
 		ioBuf.addbytearray(self._pointerEncode(dataAreaIndex + dataAreaIO.index))
 		ioBuf.addbytearray(dataAreaIO)
 		# Return the data
+
 		return ioBuf.data
 
 	@property
@@ -148,7 +150,7 @@ class GimpLayer(GimpIOBase):
 		self.height = image.height
 		self.width = image.width
 		if image.mode not in self.PIL_MODE_TO_LAYER_MODE:
-			raise NotImplementedError('No way of handlng PIL image mode "' + image.mode + '"')
+			raise NotImplementedError('No way of handling PIL image mode "' + image.mode + '"')
 		self.colorMode = self.PIL_MODE_TO_LAYER_MODE[image.mode]
 		if not self.name and isinstance(image, str):
 			# try to use a fileName as the name

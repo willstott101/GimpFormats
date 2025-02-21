@@ -43,7 +43,7 @@ class Precision:
 		NOTE: will not mess with development versions 5 or 6
 		"""
 		if gimpVersion < 4:
-			if self.bits != 8 or not (self.gamma) or isinstance(self.numberFormat, int):
+			if self.bits != 8 or not (self.gamma) or self.numberFormat is int:
 				raise RuntimeError(
 					f"Illegal precision ({self}" + f") for gimp version {gimpVersion}"
 				)
@@ -53,7 +53,7 @@ class Precision:
 					raise RuntimeError(
 						f"Illegal precision ({self}" + f") for gimp version {gimpVersion}"
 					)
-				if isinstance(self.numberFormat, int):
+				if self.numberFormat is int:
 					code = (8, 16, 32).index(self.bits)
 				else:
 					code = (16, 32).index(self.bits) + 2
@@ -64,7 +64,7 @@ class Precision:
 				msg = f"Cannot save to gimp developer version {gimpVersion}"
 				raise NotImplementedError(msg)
 			else:  # version 7 or above
-				if isinstance(self.numberFormat, int):
+				if self.numberFormat is int:
 					code = (8, 16, 32).index(self.bits)
 				else:
 					code = (16, 32, 64).index(self.bits) + 2

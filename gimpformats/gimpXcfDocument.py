@@ -166,6 +166,7 @@ class GimpDocument(GimpIOBase):
 		self._layerPtr = []
 		self._layers = []
 		# Get the layers and add the pointers to them
+
 		while True:
 			ptr = self._pointerDecode(ioBuf)
 			if ptr == 0:
@@ -219,7 +220,9 @@ class GimpDocument(GimpIOBase):
 		self.precision.encode(self.version, ioBuf)
 		# List of properties
 		ioBuf.addbytearray(self._propertiesEncode())
-		dataAreaIdx = ioBuf.index + self.pointerSize * (len(self.raw_layers) + len(self._channels))
+		dataAreaIdx = (
+			ioBuf.index
+		)  ## + self.pointerSize * (len(self.raw_layers) + len(self._channels))
 		dataAreaIO = IO()
 		# Set the layers and add the pointers to them
 		for layer in self.raw_layers:
@@ -256,13 +259,13 @@ class GimpDocument(GimpIOBase):
 				layer = GimpLayer(self)
 				layer.decode(self._data, ptr)
 				self._layers.append(layer)
-			# add a reference back to this object so it doesn't go away while array is in use
-			self._layers.parent = self
-			# override some internal methods so we can do more with them
-			self._layers._actualDelitem_ = self._layers.__delitem__
-			self._layers.__delitem__ = self.deleteRawLayer
-			self._layers._actualSetitem_ = self._layers.__setitem__
-			self._layers.__setitem__ = self.setRawLayer
+			# # add a reference back to this object so it doesn't go away while array is in use
+			# self._layers.parent = self
+			# # override some internal methods so we can do more with them
+			# self._layers._actualDelitem_ = self._layers.__delitem__
+			# self._layers.__delitem__ = self.deleteRawLayer
+			# self._layers._actualSetitem_ = self._layers.__setitem__
+			# self._layers.__setitem__ = self.setRawLayer
 		return self._layers
 
 	def getLayer(self, index: int) -> GimpLayer | GimpGroup:
@@ -349,10 +352,10 @@ class GimpDocument(GimpIOBase):
 
 		# Save not yet implemented so for now throw
 		# an except so we don't corrupt the file
-		raise NotImplementedError
+		# raise NotImplementedError
 
-		# self.forceFullyLoaded()
-		# utils.save(self.encode(), filename or self.fileName)
+		self.forceFullyLoaded()
+		utils.save(self.encode(), filename or self.fileName)
 
 	def saveNew(self, filename: str | None = None) -> NoReturn:
 		"""Save a new gimp image to a file."""
@@ -371,7 +374,7 @@ class GimpDocument(GimpIOBase):
 		"""Get a textual representation of this object."""
 		return (
 			f"<GimpDocument fileName={self.fileName!r}, version={self.version!r}, "
-			f"width={self.width}, height={self.height}, no_layers={len(self.raw_layers)}"
+			f"width={self.width}, height={self.height}, no_layers={len(self.raw_layers)} "
 			f"baseColorMode={self.baseColorMode!r}, precision={self.precision!r}>"
 		)
 

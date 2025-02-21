@@ -36,7 +36,6 @@ class GimpImageLevel(GimpIOBase):
 		if data is None:
 			return -1
 		ioBuf = IO(data, index)
-		# print 'Decoding image level at',ioBuf.index
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
 		if self.width != self.parent.width or self.height != self.parent.height:

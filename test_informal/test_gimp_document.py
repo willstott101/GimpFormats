@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.dirname(THISDIR))
 from gimpformats.gimpXcfDocument import GimpDocument
 
 FILES = THISDIR.parent / "test_files"
+save_enabled = False
 
 
 def p_section(text: str):
@@ -72,8 +73,24 @@ gimp_img.image
 # print(f"Layer Deleted. Remaining layers: {len(gimp_img.raw_layers)}")
 
 # 4. Test save/load functionality
+if save_enabled:
+	p_section("Save as 'base24Copy', and open 'base24Copy'")
+	print("Saving...")
+	gimp_img.save((FILES / "base24Copy.xcf"))
+	print("Opening...")
+	gimp_img.load((FILES / "base24Copy.xcf"))
+
+	root_group = gimp_img.walkTree()
+	p_header(f"Walking through tree structure: `{root_group.name}`")
+
+	for idx, children in enumerate(root_group.children):
+		print(idx, children)
+
+	print("Generating image, should take a couple seconds...")
+	gimp_img.image.show()
+
+
 p_section("Open '64x64.xcf'")
-# gimp_img.save((FILES/"base24Copy.xcf"))
 gimp_img.load((FILES / "64x64.xcf").as_posix())  # Provide an actual path to test loading
 print(f"Image Loaded: {gimp_img.fileName}")
 

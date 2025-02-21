@@ -506,7 +506,8 @@ class GimpIOBase:
 		ioBuf = IO(boolSize=32)
 		if _prop_cmp(prop, ImageProperties.PROP_COLORMAP):
 			if self.colorMap is not None and self.colorMap:
-				ioBuf.u32 = ImageProperties.PROP_COLORMAP.value
+				pass
+				# ioBuf.u32 = ImageProperties.PROP_COLORMAP.value
 				# ioBuf.addbytearray(self._colormapEncode_())
 		elif _prop_cmp(
 			prop, [ImageProperties.PROP_ACTIVE_LAYER, ImageProperties.PROP_ACTIVE_CHANNEL]

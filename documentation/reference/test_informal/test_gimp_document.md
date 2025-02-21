@@ -17,7 +17,7 @@
 
 ## p_header
 
-[Show source in test_gimp_document.py:22](../../../test_informal/test_gimp_document.py#L22)
+[Show source in test_gimp_document.py:23](../../../test_informal/test_gimp_document.py#L23)
 
 #### Signature
 
@@ -29,7 +29,7 @@ def p_header(text: str): ...
 
 ## p_section
 
-[Show source in test_gimp_document.py:15](../../../test_informal/test_gimp_document.py#L15)
+[Show source in test_gimp_document.py:16](../../../test_informal/test_gimp_document.py#L16)
 
 #### Signature
 

@@ -9,21 +9,24 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-THISDIR = str(Path(__file__).resolve().parent)
+import pytest
 
 from gimpformats.GimpGtpToolPreset import GimpGtpToolPreset
 
-dut = GimpGtpToolPreset()
+THISDIR = str(Path(__file__).resolve().parent)
+
+project = GimpGtpToolPreset()
 
 
-def test_smudgeRough() -> None:
+@pytest.mark.parametrize("base_name", ["Smudge-Rough", "4_3-Landscape"])
+def test_roundtrip(base_name: str) -> None:
 	"""test smudge rough."""
-	dut.load(f"{THISDIR}/Smudge-Rough.gtp")
+	project.load(f"{THISDIR}/{base_name}.gtp")
 	# test round-trip compatibility
-	dut.save(f"{THISDIR}/actualOutput_Smudge-Rough.gtp")
-	original = open(f"{THISDIR}/Smudge-Rough.gtp", "rb")
-	actual = open(f"{THISDIR}/actualOutput_Smudge-Rough.gtp", "rb")
+	project.save(f"{THISDIR}/actualOutput_{base_name}.gtp")
+	original = open(f"{THISDIR}/{base_name}.gtp", "rb")
+	actual = open(f"{THISDIR}/actualOutput_{base_name}.gtp", "rb")
 	assert actual.read() == original.read().replace(b"\r\n", b"\n")
 	original.close()
 	actual.close()
-	os.remove(f"{THISDIR}/actualOutput_Smudge-Rough.gtp")
+	os.remove(f"{THISDIR}/actualOutput_{base_name}.gtp")

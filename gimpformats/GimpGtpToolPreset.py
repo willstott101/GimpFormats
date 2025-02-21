@@ -36,20 +36,6 @@ class ParenFileValue:
 			self.value = value
 		self.children = children
 
-	def _addValue(self, bufArray: str) -> None:
-		if self.name is None:  # first value is the name
-			self.name = bufArray
-		if bufArray:
-			bufArray = "".join(bufArray)
-			if bufArray in ("yes", "no"):  # boolean
-				self.value.append(bufArray == "yes")
-			elif bufArray[0].isdigit():
-				self.value.append(float(bufArray))
-			elif bufArray[0] == '"':
-				self.value.append(bufArray[1:-1])
-			else:
-				raise RuntimeError('What kind of value is "' + bufArray + '"?')
-
 	def __str__(self) -> str:
 		"""Get a textual representation of this object."""
 		return self.__repr__()
