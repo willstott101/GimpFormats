@@ -19,7 +19,7 @@ Compression: CompressionMode.RLE
 Horizontal Resolution: 300.0
 Vertical Resolution: 300.0
 Unique Id: 00000003
-Units: 1
+Units: Units.Millimetres
 Group Item Flags: 0
 Position Locked: False
 Opacity: 1.0
@@ -59,9 +59,9 @@ Layers:
 	Group Item Flags: 0
 	Position Locked: False
 	Opacity: 1.0
-	Color Tag: 0
-	Composite Mode: -1
-	Composite Space: -1
+	Color Tag: TagColor.None_Color
+	Composite Mode: CompositeMode.Intersection
+	Composite Space: CompositeSpace.LAB
 	Blend Space: 0
 	Vectors Version: 0
 	Active Vector Index: 0
@@ -89,9 +89,9 @@ Layers:
 	Group Item Flags: 0
 	Position Locked: False
 	Opacity: 1.0
-	Color Tag: 0
-	Composite Mode: -1
-	Composite Space: -1
+	Color Tag: TagColor.None_Color
+	Composite Mode: CompositeMode.Intersection
+	Composite Space: CompositeSpace.LAB
 	Blend Space: 0
 	Vectors Version: 0
 	Active Vector Index: 0
@@ -119,7 +119,7 @@ Channels:
 	Group Item Flags: 0
 	Position Locked: False
 	Opacity: 0.5
-	Color Tag: 0
+	Color Tag: TagColor.None_Color
 	Composite Mode: CompositeMode.Union
 	Composite Space: CompositeSpace.RGB_linear
 	Color: [0.0, 0.0, 0.0]
