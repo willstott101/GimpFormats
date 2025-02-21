@@ -117,7 +117,7 @@ class GimpIOBase:
 
 ### GimpIOBase().__repr__
 
-[Show source in GimpIOBase.py:712](../../../gimpformats/GimpIOBase.py#L712)
+[Show source in GimpIOBase.py:711](../../../gimpformats/GimpIOBase.py#L711)
 
 Get a textual representation of this object.
 
@@ -129,7 +129,7 @@ def __repr__(self) -> str: ...
 
 ### GimpIOBase().__str__
 
-[Show source in GimpIOBase.py:708](../../../gimpformats/GimpIOBase.py#L708)
+[Show source in GimpIOBase.py:707](../../../gimpformats/GimpIOBase.py#L707)
 
 Get a textual representation of this object.
 
@@ -207,7 +207,7 @@ def _parasitesEncode(self) -> bytearray: ...
 
 ### GimpIOBase()._propertiesDecode
 
-[Show source in GimpIOBase.py:686](../../../gimpformats/GimpIOBase.py#L686)
+[Show source in GimpIOBase.py:685](../../../gimpformats/GimpIOBase.py#L685)
 
 Decode a list of properties.
 
@@ -223,7 +223,7 @@ def _propertiesDecode(self, ioBuf: IO) -> int: ...
 
 ### GimpIOBase()._propertiesEncode
 
-[Show source in GimpIOBase.py:699](../../../gimpformats/GimpIOBase.py#L699)
+[Show source in GimpIOBase.py:698](../../../gimpformats/GimpIOBase.py#L698)
 
 Encode a list of properties.
 
@@ -361,7 +361,7 @@ def expanded(self, expanded: bool) -> None: ...
 
 ### GimpIOBase().full_repr
 
-[Show source in GimpIOBase.py:723](../../../gimpformats/GimpIOBase.py#L723)
+[Show source in GimpIOBase.py:722](../../../gimpformats/GimpIOBase.py#L722)
 
 Get a textual representation of this object.
 
@@ -431,7 +431,7 @@ def tattoo(self, tattoo: Any | None) -> None: ...
 
 ## GimpUserUnits
 
-[Show source in GimpIOBase.py:800](../../../gimpformats/GimpIOBase.py#L800)
+[Show source in GimpIOBase.py:799](../../../gimpformats/GimpIOBase.py#L799)
 
 User-defined measurement units.
 
@@ -444,7 +444,7 @@ class GimpUserUnits:
 
 ### GimpUserUnits().__str__
 
-[Show source in GimpIOBase.py:847](../../../gimpformats/GimpIOBase.py#L847)
+[Show source in GimpIOBase.py:846](../../../gimpformats/GimpIOBase.py#L846)
 
 Get a textual representation of this object.
 
@@ -456,7 +456,7 @@ def __str__(self) -> str: ...
 
 ### GimpUserUnits().decode
 
-[Show source in GimpIOBase.py:812](../../../gimpformats/GimpIOBase.py#L812)
+[Show source in GimpIOBase.py:811](../../../gimpformats/GimpIOBase.py#L811)
 
 Decode a byte buffer.
 
@@ -479,7 +479,7 @@ def decode(self, data: bytearray, index: int = 0) -> int: ...
 
 ### GimpUserUnits().encode
 
-[Show source in GimpIOBase.py:835](../../../gimpformats/GimpIOBase.py#L835)
+[Show source in GimpIOBase.py:834](../../../gimpformats/GimpIOBase.py#L834)
 
 Convert this object to raw bytearray.
 
@@ -491,7 +491,7 @@ def encode(self) -> bytearray: ...
 
 ### GimpUserUnits().full_repr
 
-[Show source in GimpIOBase.py:851](../../../gimpformats/GimpIOBase.py#L851)
+[Show source in GimpIOBase.py:850](../../../gimpformats/GimpIOBase.py#L850)
 
 Get a textual representation of this object.
 

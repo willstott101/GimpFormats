@@ -506,7 +506,7 @@ class GimpIOBase:
 		ioBuf = IO(boolSize=32)
 		if _prop_cmp(prop, ImageProperties.PROP_COLORMAP):
 			if self.colorMap is not None and self.colorMap:
-				ioBuf.u32 = ImageProperties.PROP_COLORMAP
+				ioBuf.u32 = ImageProperties.PROP_COLORMAP.value
 				# ioBuf.addbytearray(self._colormapEncode_())
 		elif _prop_cmp(
 			prop, [ImageProperties.PROP_ACTIVE_LAYER, ImageProperties.PROP_ACTIVE_CHANNEL]
@@ -580,8 +580,8 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_GUIDES):
 			if self.guidelines is not None and self.guidelines:
 				pass
-				# ioBuf.u32 = ImageProperties.PROP_GUIDES
-				# ioBuf.addbytearray(self._guidelinesEncode_())
+				# ioBuf.u32 = ImageProperties.PROP_GUIDES.value
+				# ioBuf.addbytearray(self._guidelinesEncode())
 		elif _prop_cmp(prop, ImageProperties.PROP_RESOLUTION):
 			if self.horizontalResolution is not None and self.verticalResolution is not None:
 				ioBuf.u32 = ImageProperties.PROP_RESOLUTION.value
@@ -600,21 +600,20 @@ class GimpIOBase:
 				ioBuf.u32 = list(Units).index(self.units)
 		elif _prop_cmp(prop, ImageProperties.PROP_PATHS):
 			if self.paths is not None and self.paths:
-				# ioBuf.u32 = ImageProperties.PROP_PATHS
+				pass
+				# ioBuf.u32 = ImageProperties.PROP_PATHS.value
 				# ioBuf.u32 = len(self.paths)
-				"""
-				for path in self.paths:
-					ioBuf.append(self._pathEncode_(path))
-				"""
+				# for path in self.paths:
+				# 	ioBuf.append(self._pathEncode_(path))
 		elif _prop_cmp(prop, ImageProperties.PROP_USER_UNIT):
 			if self.userUnits is not None:
 				pass
-				# ioBuf.u32 = ImageProperties.PROP_USER_UNIT
+				# ioBuf.u32 = ImageProperties.PROP_USER_UNIT.value
 				# ioBuf.addbytearray(self._userUnitsEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_VECTORS):
 			if self.vectors is not None and self.vectors:
 				pass
-				# ioBuf.u32 = ImageProperties.PROP_VECTORS
+				# ioBuf.u32 = ImageProperties.PROP_VECTORS.value
 				# ioBuf.addbytearray(self._vectorsEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_TEXT_LAYER_FLAGS):
 			if self.textLayerFlags is not None:
@@ -632,7 +631,7 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_ITEM_PATH):
 			if self.itemPath is not None:
 				pass
-				# ioBuf.u32 = ImageProperties.PROP_ITEM_PATH
+				# ioBuf.u32 = ImageProperties.PROP_ITEM_PATH.value
 				# ioBuf.addbytearray(self._itemPathEncode_())
 		elif _prop_cmp(prop, ImageProperties.PROP_GROUP_ITEM_FLAGS):
 			if self.groupItemFlags is not None:
@@ -801,7 +800,7 @@ class GimpUserUnits:
 	"""User-defined measurement units."""
 
 	def __init__(self) -> None:
-		self.factor: int = 0
+		self.factor: float = 0
 		self.numDigits: int = 0
 		self.id = ""
 		self.symbol = ""

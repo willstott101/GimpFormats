@@ -83,7 +83,6 @@ class GimpImageLevel(GimpIOBase):
 				pass
 			elif self.doc.compression == CompressionMode.RLE:  # RLE
 				data = self._encodeRLE(data, self.bpp)
-				# raise RuntimeError('RLE Compression is a work in progress!')
 			elif self.doc.compression == CompressionMode.Zlib:  # zip
 				data = zlib.compress(data)
 			else:
@@ -209,7 +208,6 @@ class GimpImageLevel(GimpIOBase):
 					idx += nRepeats
 			return ret
 
-		# if there is only one channel, encode and return it directly
 		if bpp == 1:
 			return rleEncodeChan(data)
 
