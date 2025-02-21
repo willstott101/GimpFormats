@@ -25,19 +25,9 @@ image_extensions = [
 	".raw",
 	".heif",
 	".heic",
-	".eps",
-	".ai",
 	".pdf",
 	".avif",
 	".exr",
-	".dng",
-	".pbm",
-	".ppm",
-	".pgm",
-	".wbmp",
-	".xpm",
-	".flif",
-	".ico",
 ]
 
 

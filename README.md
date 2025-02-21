@@ -69,40 +69,62 @@ Iterate the image and report the contents of each group followed by the first
 level children of the image
 
 ```python
-"""List data on groups followed by the direct children of a gimp xcf document
-"""
-layers = project.layers
-index = 0
-print("## Group info...")
-while index < len(layers):
-	layerOrGroup = layers[index]
-	if layerOrGroup.isGroup:
-		index += 1
-		while layers[index].itemPath is not None:
-			print("Group \"" + layerOrGroup.name + "\" contains Layer \"" + layers[index].name + "\"")
-			layers.pop(index)
-	else:
-		index += 1
+"""Output Gimp Layers and Groups."""
 
-print("## Document direct children...")
-for layerOrGroup in layers:
-	print("\"" + layerOrGroup.name + "\" is a " + ("Group" if layerOrGroup.isGroup else "Layer"))
+from __future__ import annotations
 
+from gimpformats.gimpXcfDocument import GimpDocument, GimpGroup
+
+# ruff: noqa: T201
+
+
+def cat_group(group: GimpGroup, i: int = 0) -> None:
+	"""Output layers in group."""
+	for idx, child in enumerate(group.children):
+		if isinstance(child, GimpGroup):
+			print("\t" * i, idx, child.layer_options)
+			cat_group(child, i + 1)
+		else:
+			print("\t" * i, idx, child)
+
+
+def catXCF(file: str) -> None:
+	"""Open an .xcf file into a layered image."""
+	project = GimpDocument(file)
+	root_goup = project.walkTree()
+	print()
+	print("=" * 60)
+	print("=", project.fileName)
+	print("=" * 60)
+	cat_group(root_goup)
+
+
+catXCF("test_files/test.xcf")
+catXCF("test_files/base24.xcf")
 ```
 
 Example output:
 
 ```none
-## Group info...
-Group "Layer Group" contains Layer "Layer"
-Group "Layer Group" contains Layer "Layer2"
-## Document direct children...
-"bg #1" is a Layer
-"bg" is a Layer
-"bg #2" is a Layer
-"Transformation" is a Layer
-"Layer Group" is a Group
-"Background" is a Layer
+
+============================================================
+= test.xcf
+============================================================
+ 0 <GimpLayer name=Layer Group uniqueId='00000003', itemPath=None, visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=0, yOffset=0, positionLocked=False, isGroup=True, groupItemFlags=1, locked=False, lockAlpha=False, editingMask=False>
+         0 <GimpLayer name=Background uniqueId='00000002', itemPath=[0, 0], visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=0, yOffset=0, positionLocked=False, isGroup=None, groupItemFlags=0, locked=False, lockAlpha=False, editingMask=False>
+
+============================================================
+= base24.xcf
+============================================================
+ 0 <GimpLayer name=bg #1 uniqueId='00000006', itemPath=None, visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=115, yOffset=115, positionLocked=False, isGroup=None, groupItemFlags=0, locked=False, lockAlpha=False, editingMask=False>
+ 1 <GimpLayer name=bg uniqueId='00000005', itemPath=None, visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=64, yOffset=64, positionLocked=False, isGroup=None, groupItemFlags=0, locked=False, lockAlpha=False, editingMask=False>
+ 2 <GimpLayer name=bg #2 uniqueId='00000007', itemPath=None, visible=False, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=0, yOffset=0, positionLocked=False, isGroup=None, groupItemFlags=0, locked=False, lockAlpha=False, editingMask=False>
+ 3 <GimpLayer name=Transformation uniqueId='0000001e', itemPath=None, visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=295, yOffset=292, positionLocked=False, isGroup=None,
+groupItemFlags=0, locked=False, lockAlpha=False, editingMask=False>
+ 4 <GimpLayer name=Layer Group uniqueId='00000021', itemPath=None, visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=0, yOffset=0, positionLocked=False, isGroup=True, groupItemFlags=1, locked=False, lockAlpha=False, editingMask=False>
+         0 <GimpLayer name=Layer uniqueId='0000001f', itemPath=[4, 0], visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=0, yOffset=0, positionLocked=False, isGroup=None, groupItemFlags=0, locked=False, lockAlpha=False, editingMask=False>
+         1 <GimpLayer name=Layer2 uniqueId='00000020', itemPath=[4, 1], visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=0, yOffset=0, positionLocked=False, isGroup=None, groupItemFlags=0, locked=False, lockAlpha=False, editingMask=False>
+ 5 <GimpLayer name=Background uniqueId='00000002', itemPath=None, visible=True, opacity=1.00, blendMode=GimpBlendMode.NORMAL, xOffset=0, yOffset=0, positionLocked=False, isGroup=None, groupItemFlags=0, locked=False, lockAlpha=False, editingMask=False>
 ```
 
 ## Next tasks (see below)

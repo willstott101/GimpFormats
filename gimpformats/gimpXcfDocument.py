@@ -237,8 +237,8 @@ class GimpDocument(GimpIOBase):
 		"""Make sure everything is fully loaded from the file."""
 		for layer in self.raw_layers:
 			layer.forceFullyLoaded()
-		for channel in self._channels:
-			channel.forceFullyLoaded()
+		# for channel in self._channels:
+		# 	channel.forceFullyLoaded()
 		# no longer try to get the data from file
 		self._layerPtr = None
 		self._channelPtr = None

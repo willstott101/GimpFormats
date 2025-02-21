@@ -78,13 +78,13 @@ class GimpImageLevel(GimpIOBase):
 		dataIndex = ioBuf.index + self.pointerSize * (len(self.tiles or []) + 1)
 		for tile in self.tiles or []:
 			ioBuf.addbytearray(self._pointerEncode(dataIndex + dataioBuf.index))
-			data = tile.tobytearray()
-			if self.doc.compression == 0:  # none
+			data = tile.tobytes()
+			if self.doc.compression == CompressionMode.None_Compression:  # none
 				pass
-			elif self.doc.compression == 1:  # RLE
+			elif self.doc.compression == CompressionMode.RLE:  # RLE
 				data = self._encodeRLE(data, self.bpp)
 				# raise RuntimeError('RLE Compression is a work in progress!')
-			elif self.doc.compression == 2:  # zip
+			elif self.doc.compression == CompressionMode.Zlib:  # zip
 				data = zlib.compress(data)
 			else:
 				msg = f"ERR: unsupported compression mode {self.doc.compression}"
@@ -179,14 +179,14 @@ class GimpImageLevel(GimpIOBase):
 				c = data[idx]
 			return idx - startIdx
 
-		def rleEncodeChan(data: bytearray) -> list:
+		def rleEncodeChan(data: bytearray) -> bytearray:
 			"""Rle encode a single channel of data."""
-			ret = []
+			ret = bytearray()
 			idx = 0
 			while idx < len(data):
-				nRepeats = countSame(data, 0)
+				nRepeats = countSame(data, idx)
 				if nRepeats == 1:  # different bytearray
-					nDifferences = countDifferent(data, 1)
+					nDifferences = countDifferent(data, idx)
 					if nDifferences <= 127:  # short run of different bytearray
 						ret.append(129 + nRepeats - 1)
 						ret.append(data[idx])
@@ -212,18 +212,21 @@ class GimpImageLevel(GimpIOBase):
 		# if there is only one channel, encode and return it directly
 		if bpp == 1:
 			return rleEncodeChan(data)
+
 		# split into channels
 		dataByChannel = []
 		for chan in range(bpp):
-			chanData = []
-			for index in range(chan, bpp, len(data)):
+			chanData = bytearray()
+			for index in range(chan, len(data), bpp):
 				chanData.append(data[index])
 			dataByChannel.append(chanData)
+
 		# encode each channel
-		for dbc in dataByChannel:  # iterate through 2d array
-			dbc = rleEncodeChan(dbc)
-		# join and return
-		return "".join("".join(str(x)) for x in dataByChannel)
+		encodedChannels = bytearray()
+		for dbc in dataByChannel:  # iterate through channels
+			encodedChannels.extend(rleEncodeChan(dbc))
+
+		return encodedChannels
 
 	@property
 	def bpp(self) -> int:

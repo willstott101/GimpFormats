@@ -439,7 +439,7 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_PARASITES):
 			self._parasitesDecode(data)
 		elif _prop_cmp(prop, ImageProperties.PROP_UNIT):
-			self.units = ioBuf.u32
+			self.units = list(Units)[ioBuf.u32]
 		elif _prop_cmp(prop, ImageProperties.PROP_PATHS):
 			_numPaths = ioBuf.u32
 			"""
@@ -474,11 +474,11 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_FLOAT_OPACITY):
 			self.opacity = ioBuf.float32
 		elif _prop_cmp(prop, ImageProperties.PROP_COLOR_TAG):
-			self.colorTag = ioBuf.u32
+			self.colorTag = list(TagColor)[ioBuf.u32]
 		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_MODE):
-			self.compositeMode = ioBuf.i32
+			self.compositeMode = list(CompositeMode)[ioBuf.i32]
 		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_SPACE):
-			self.compositeSpace = ioBuf.i32
+			self.compositeSpace = list(CompositeSpace)[ioBuf.i32]
 		elif _prop_cmp(prop, ImageProperties.PROP_BLEND_SPACE):
 			self.blendSpace = ioBuf.u32
 		elif _prop_cmp(prop, ImageProperties.PROP_FLOAT_COLOR):
@@ -528,7 +528,7 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_MODE):
 			if self.blendMode is not None:
 				ioBuf.u32 = ImageProperties.PROP_MODE.value
-				ioBuf.u32 = self.blendMode
+				ioBuf.u32 = list(GimpBlendMode).index(self.blendMode)
 		elif _prop_cmp(prop, ImageProperties.PROP_VISIBLE):
 			if self.visible is not None:
 				ioBuf.u32 = ImageProperties.PROP_VISIBLE.value
@@ -576,7 +576,7 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_COMPRESSION):
 			if self.compression is not None:
 				ioBuf.u32 = ImageProperties.PROP_COMPRESSION.value
-				ioBuf.u32 = self.compression
+				ioBuf.u32 = list(CompressionMode).index(self.compression)
 		elif _prop_cmp(prop, ImageProperties.PROP_GUIDES):
 			if self.guidelines is not None and self.guidelines:
 				pass
@@ -597,7 +597,7 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_UNIT):
 			if self.units is not None:
 				ioBuf.u32 = ImageProperties.PROP_UNIT.value
-				ioBuf.u32 = self.units
+				ioBuf.u32 = list(Units).index(self.units)
 		elif _prop_cmp(prop, ImageProperties.PROP_PATHS):
 			if self.paths is not None and self.paths:
 				# ioBuf.u32 = ImageProperties.PROP_PATHS
@@ -649,15 +649,15 @@ class GimpIOBase:
 		elif _prop_cmp(prop, ImageProperties.PROP_COLOR_TAG):
 			if self.colorTag is not None:
 				ioBuf.u32 = ImageProperties.PROP_COLOR_TAG.value
-				ioBuf.u32 = self.colorTag
+				ioBuf.u32 = list(TagColor).index(self.colorTag)
 		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_MODE):
 			if self.compositeMode is not None:
 				ioBuf.u32 = ImageProperties.PROP_COMPOSITE_MODE.value
-				ioBuf.i32 = self.compositeMode
+				ioBuf.i32 = list(CompositeMode).index(self.compositeMode)
 		elif _prop_cmp(prop, ImageProperties.PROP_COMPOSITE_SPACE):
 			if self.compositeSpace is not None:
 				ioBuf.u32 = ImageProperties.PROP_COMPOSITE_SPACE.value
-				ioBuf.i32 = self.compositeSpace
+				ioBuf.i32 = list(CompositeSpace).index(self.compositeSpace)
 		elif _prop_cmp(prop, ImageProperties.PROP_BLEND_SPACE):
 			if self.blendSpace is not None:
 				ioBuf.u32 = ImageProperties.PROP_BLEND_SPACE.value

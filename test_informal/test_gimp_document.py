@@ -73,6 +73,7 @@ gimp_img.image
 
 # 4. Test save/load functionality
 p_section("Open '64x64.xcf'")
+# gimp_img.save((FILES/"base24Copy.xcf"))
 gimp_img.load((FILES / "64x64.xcf").as_posix())  # Provide an actual path to test loading
 print(f"Image Loaded: {gimp_img.fileName}")
 
