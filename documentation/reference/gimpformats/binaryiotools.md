@@ -85,7 +85,6 @@
     - [IO().index](#io()index-1)
     - [IO().qword](#io()qword)
     - [IO().qword](#io()qword-1)
-    - [IO().setbytearray](#io()setbytearray)
     - [IO().sz754](#io()sz754)
     - [IO().sz754](#io()sz754-1)
     - [IO().sz754A](#io()sz754a)
@@ -195,7 +194,7 @@ def _read(self, size: int, fmt: str) -> Any: ...
 
 ### IO()._readUntil
 
-[Show source in binaryiotools.py:765](../../../gimpformats/binaryiotools.py#L765)
+[Show source in binaryiotools.py:759](../../../gimpformats/binaryiotools.py#L759)
 
 Read a sequence of chars in a set encoding until a set char.
 
@@ -212,7 +211,7 @@ def _readUntil(self, until: str, encoding: str = "A") -> str: ...
 
 ### IO()._sz754
 
-[Show source in binaryiotools.py:697](../../../gimpformats/binaryiotools.py#L697)
+[Show source in binaryiotools.py:691](../../../gimpformats/binaryiotools.py#L691)
 
 Read the next string conforming to IEEE 754 and advance the index.
 
@@ -230,7 +229,7 @@ def _sz754(self, encoding: str) -> str: ...
 
 ### IO()._sz754set
 
-[Show source in binaryiotools.py:719](../../../gimpformats/binaryiotools.py#L719)
+[Show source in binaryiotools.py:713](../../../gimpformats/binaryiotools.py#L713)
 
 _sz754set.
 
@@ -258,11 +257,9 @@ def _write(self, size: int, fmt: str, data: Any) -> None: ...
 
 Add some raw bytearray and advance the index.
 
-alias for setbytearray()
-
 #### Arguments
 
-- `bytearray` - can be a string, bytearray, or another IO object
+- `iobytearray` - Can be a string, bytearray, bytes, or another IOBuffer object.
 
 #### Signature
 
@@ -442,7 +439,7 @@ def byte(self, byte: Any) -> None: ...
 
 ### IO().cString
 
-[Show source in binaryiotools.py:854](../../../gimpformats/binaryiotools.py#L854)
+[Show source in binaryiotools.py:848](../../../gimpformats/binaryiotools.py#L848)
 
 Read a sequence of chars until the next null byte.
 
@@ -455,7 +452,7 @@ def cString(self) -> str: ...
 
 ### IO().cString
 
-[Show source in binaryiotools.py:859](../../../gimpformats/binaryiotools.py#L859)
+[Show source in binaryiotools.py:853](../../../gimpformats/binaryiotools.py#L853)
 
 Set a sequence of chars and add a null byte.
 
@@ -468,7 +465,7 @@ def cString(self, text: str) -> None: ...
 
 ### IO().cStringA
 
-[Show source in binaryiotools.py:865](../../../gimpformats/binaryiotools.py#L865)
+[Show source in binaryiotools.py:859](../../../gimpformats/binaryiotools.py#L859)
 
 Read a sequence of chars until the next null byte in ascii.
 
@@ -481,7 +478,7 @@ def cStringA(self) -> str: ...
 
 ### IO().cStringA
 
-[Show source in binaryiotools.py:870](../../../gimpformats/binaryiotools.py#L870)
+[Show source in binaryiotools.py:864](../../../gimpformats/binaryiotools.py#L864)
 
 Set a sequence of chars and add a null byte in ascii.
 
@@ -494,7 +491,7 @@ def cStringA(self, text: str) -> None: ...
 
 ### IO().cStringU
 
-[Show source in binaryiotools.py:887](../../../gimpformats/binaryiotools.py#L887)
+[Show source in binaryiotools.py:881](../../../gimpformats/binaryiotools.py#L881)
 
 Read a sequence of chars until the next null byte in utf-8.
 
@@ -507,7 +504,7 @@ def cStringU(self) -> str: ...
 
 ### IO().cStringU
 
-[Show source in binaryiotools.py:892](../../../gimpformats/binaryiotools.py#L892)
+[Show source in binaryiotools.py:886](../../../gimpformats/binaryiotools.py#L886)
 
 Set a sequence of chars and add a null byte in utf-8.
 
@@ -520,7 +517,7 @@ def cStringU(self, text: str) -> None: ...
 
 ### IO().cStringW
 
-[Show source in binaryiotools.py:876](../../../gimpformats/binaryiotools.py#L876)
+[Show source in binaryiotools.py:870](../../../gimpformats/binaryiotools.py#L870)
 
 Read a sequence of chars until the next null byte in ucs-2.
 
@@ -533,7 +530,7 @@ def cStringW(self) -> str: ...
 
 ### IO().cStringW
 
-[Show source in binaryiotools.py:881](../../../gimpformats/binaryiotools.py#L881)
+[Show source in binaryiotools.py:875](../../../gimpformats/binaryiotools.py#L875)
 
 Set a sequence of chars and add a null byte in ucs-2.
 
@@ -1192,27 +1189,9 @@ Set a qword.
 def qword(self, qword: Any) -> None: ...
 ```
 
-### IO().setbytearray
-
-[Show source in binaryiotools.py:675](../../../gimpformats/binaryiotools.py#L675)
-
-Add some raw bytearray and advance the index.
-
-alias for addbytearray()
-
-#### Arguments
-
-- `iobytearray` - can be a string, bytearray, or another IO object
-
-#### Signature
-
-```python
-def setbytearray(self, iobytearray: Any) -> None: ...
-```
-
 ### IO().sz754
 
-[Show source in binaryiotools.py:725](../../../gimpformats/binaryiotools.py#L725)
+[Show source in binaryiotools.py:719](../../../gimpformats/binaryiotools.py#L719)
 
 sz754.
 
@@ -1225,7 +1204,7 @@ def sz754(self) -> Any: ...
 
 ### IO().sz754
 
-[Show source in binaryiotools.py:730](../../../gimpformats/binaryiotools.py#L730)
+[Show source in binaryiotools.py:724](../../../gimpformats/binaryiotools.py#L724)
 
 Set sz754.
 
@@ -1238,7 +1217,7 @@ def sz754(self, sz754: Any) -> None: ...
 
 ### IO().sz754A
 
-[Show source in binaryiotools.py:735](../../../gimpformats/binaryiotools.py#L735)
+[Show source in binaryiotools.py:729](../../../gimpformats/binaryiotools.py#L729)
 
 sz754A.
 
@@ -1251,7 +1230,7 @@ def sz754A(self) -> Any: ...
 
 ### IO().sz754A
 
-[Show source in binaryiotools.py:740](../../../gimpformats/binaryiotools.py#L740)
+[Show source in binaryiotools.py:734](../../../gimpformats/binaryiotools.py#L734)
 
 Set sz754A.
 
@@ -1264,7 +1243,7 @@ def sz754A(self, sz754: Any) -> None: ...
 
 ### IO().sz754U
 
-[Show source in binaryiotools.py:755](../../../gimpformats/binaryiotools.py#L755)
+[Show source in binaryiotools.py:749](../../../gimpformats/binaryiotools.py#L749)
 
 sz754U.
 
@@ -1277,7 +1256,7 @@ def sz754U(self) -> Any: ...
 
 ### IO().sz754U
 
-[Show source in binaryiotools.py:760](../../../gimpformats/binaryiotools.py#L760)
+[Show source in binaryiotools.py:754](../../../gimpformats/binaryiotools.py#L754)
 
 Set sz754U.
 
@@ -1290,7 +1269,7 @@ def sz754U(self, sz754: Any) -> None: ...
 
 ### IO().sz754W
 
-[Show source in binaryiotools.py:745](../../../gimpformats/binaryiotools.py#L745)
+[Show source in binaryiotools.py:739](../../../gimpformats/binaryiotools.py#L739)
 
 sz754W.
 
@@ -1303,7 +1282,7 @@ def sz754W(self) -> Any: ...
 
 ### IO().sz754W
 
-[Show source in binaryiotools.py:750](../../../gimpformats/binaryiotools.py#L750)
+[Show source in binaryiotools.py:744](../../../gimpformats/binaryiotools.py#L744)
 
 Set sz754W.
 
@@ -1316,7 +1295,7 @@ def sz754W(self, sz754: Any) -> None: ...
 
 ### IO().textLine
 
-[Show source in binaryiotools.py:794](../../../gimpformats/binaryiotools.py#L794)
+[Show source in binaryiotools.py:788](../../../gimpformats/binaryiotools.py#L788)
 
 Read a sequence of chars until the next new line char.
 
@@ -1329,7 +1308,7 @@ def textLine(self) -> str: ...
 
 ### IO().textLine
 
-[Show source in binaryiotools.py:802](../../../gimpformats/binaryiotools.py#L802)
+[Show source in binaryiotools.py:796](../../../gimpformats/binaryiotools.py#L796)
 
 Set a sequence of chars until the next new line char.
 
@@ -1342,7 +1321,7 @@ def textLine(self, text: str) -> None: ...
 
 ### IO().textLineA
 
-[Show source in binaryiotools.py:809](../../../gimpformats/binaryiotools.py#L809)
+[Show source in binaryiotools.py:803](../../../gimpformats/binaryiotools.py#L803)
 
 Read a sequence of chars until the next new line char in ascii.
 
@@ -1355,7 +1334,7 @@ def textLineA(self) -> str: ...
 
 ### IO().textLineA
 
-[Show source in binaryiotools.py:817](../../../gimpformats/binaryiotools.py#L817)
+[Show source in binaryiotools.py:811](../../../gimpformats/binaryiotools.py#L811)
 
 Set a sequence of chars until the next new line char in ascii.
 
@@ -1368,7 +1347,7 @@ def textLineA(self, text: str) -> None: ...
 
 ### IO().textLineU
 
-[Show source in binaryiotools.py:839](../../../gimpformats/binaryiotools.py#L839)
+[Show source in binaryiotools.py:833](../../../gimpformats/binaryiotools.py#L833)
 
 Read a sequence of chars until the next new line char in utf-8.
 
@@ -1381,7 +1360,7 @@ def textLineU(self) -> str: ...
 
 ### IO().textLineU
 
-[Show source in binaryiotools.py:847](../../../gimpformats/binaryiotools.py#L847)
+[Show source in binaryiotools.py:841](../../../gimpformats/binaryiotools.py#L841)
 
 Set a sequence of chars until the next new line char in utf-8.
 
@@ -1394,7 +1373,7 @@ def textLineU(self, text: str) -> None: ...
 
 ### IO().textLineW
 
-[Show source in binaryiotools.py:824](../../../gimpformats/binaryiotools.py#L824)
+[Show source in binaryiotools.py:818](../../../gimpformats/binaryiotools.py#L818)
 
 Read a sequence of chars until the next new line char in ucs-2.
 
@@ -1407,7 +1386,7 @@ def textLineW(self) -> str: ...
 
 ### IO().textLineW
 
-[Show source in binaryiotools.py:832](../../../gimpformats/binaryiotools.py#L832)
+[Show source in binaryiotools.py:826](../../../gimpformats/binaryiotools.py#L826)
 
 Set a sequence of chars until the next new line char in ucs-2.
 

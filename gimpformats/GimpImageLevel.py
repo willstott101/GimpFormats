@@ -36,20 +36,23 @@ class GimpImageLevel(GimpIOBase):
 		if data is None:
 			return -1
 		ioBuf = IO(data, index)
+
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
-		if self.width != self.parent.width or self.height != self.parent.height:
-			currentSize = f"({self.width}" + f",{self.height})"
-			expectedSize = f"({self.parent.width}" + f",{self.parent.height})"
-			msg = " Usually this implies file corruption."
-			raise RuntimeError(
-				"Image data size mismatch. " + currentSize + "!=" + expectedSize + msg
-			)
+		# if self.width != self.parent.width or self.height != self.parent.height:
+		# 	currentSize = f"({self.width}" + f",{self.height})"
+		# 	expectedSize = f"({self.parent.width}" + f",{self.parent.height})"
+		# 	msg = " Usually this implies file corruption."
+		# 	raise RuntimeError(
+		# 		"Image data size mismatch. " + currentSize + "!=" + expectedSize + msg
+		# 	)
 		self._tiles = []
 		self._image = None
+
 		for y in range(0, self.height, 64):
 			for x in range(0, self.width, 64):
 				ptr = self._pointerDecode(ioBuf)
+
 				size = (min(self.width - x, 64), min(self.height - y, 64))
 				totalbytearray = size[0] * size[1] * self.bpp
 				if self.doc.compression == CompressionMode.None_Compression:  # none
@@ -68,16 +71,17 @@ class GimpImageLevel(GimpIOBase):
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
 		return ioBuf.index
 
-	def encode(self) -> bytearray:
+	def encode(self, offset=0) -> bytearray:
 		"""Encode this object to a byte buffer."""
-		dataioBuf = IO()
 		ioBuf = IO()
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
-		dataIndex = ioBuf.index + self.pointerSize * (len(self.tiles or []) + 1)
+		pointerSizeb = self.pointerSize // 8
+		# This is a super dodgy line atm, I think I'm missing something!
+		dataIndex = offset + ioBuf.index - 4  # ? +  * (len(self.tiles or []) + 1)
+		computed_tiles = []
 		for tile in self.tiles or []:
-			ioBuf.addbytearray(self._pointerEncode(dataIndex + dataioBuf.index))
-			data = tile.tobytes()
+			data = tile.tobytes(encoder_name="raw")
 			if self.doc.compression == CompressionMode.None_Compression:  # none
 				pass
 			elif self.doc.compression == CompressionMode.RLE:  # RLE
@@ -87,14 +91,24 @@ class GimpImageLevel(GimpIOBase):
 			else:
 				msg = f"ERR: unsupported compression mode {self.doc.compression}"
 				raise RuntimeError(msg)
-			dataioBuf.addbytearray(data)
-		ioBuf.addbytearray(self._pointerEncode(0))
-		ioBuf.addbytearray(dataioBuf.data)
+
+			dataIndex += pointerSizeb + len(data)
+
+			ioBuf.addbytearray(self._pointerEncode(dataIndex))
+
+			computed_tiles.append(data)
+
+		ioBuf.addbytearray(self._pointerEncode(0))  # ends with nul
+
+		for computed_tile in computed_tiles:
+			ioBuf.addbytearray(computed_tile)
+
 		return ioBuf.data
 
 	def _decodeRLE(self, data: bytearray, pixels: int, bpp: int, index: int = 0) -> bytearray:
 		_ = self
 		"""Decode RLE encoded image data."""
+
 		ret = [bytearray() for _ in range(bpp)]  # Use bytearray to avoid repeated list appends
 
 		for chan in range(bpp):

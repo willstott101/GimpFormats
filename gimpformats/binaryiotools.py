@@ -666,33 +666,27 @@ class IO:
 	def addbytearray(self, iobytearray: Any) -> None:
 		"""Add some raw bytearray and advance the index.
 
-		alias for setbytearray()
-
-		:param bytearray: can be a string, bytearray, or another IO object
+		:param iobytearray: Can be a string, bytearray, bytes, or another IOBuffer object.
 		"""
-		self.setbytearray(iobytearray)
 
-	def setbytearray(self, iobytearray: Any) -> None:
-		"""Add some raw bytearray and advance the index.
-
-		alias for addbytearray()
-
-		:param iobytearray: can be a string, bytearray, or another IO object
-		"""
-		if isinstance(iobytearray, IO):
-			iobytearray = iobytearray.data
 		if isinstance(iobytearray, str):
-			iobytearray = bytearray(iobytearray, encoding="utf-8")
-		if self.index >= len(self.data):
-			# if we're at the end, simply extend the buffer
-			self.data.extend(iobytearray)
-			self.index += len(iobytearray)
-		else:
-			if self.index + len(iobytearray) >= len(self.data):
-				self.data.extend(bytearray((self.index + len(iobytearray)) - len(self.data)))
-			for ioByte in iobytearray:
-				self.data[self.index] = ioByte
-				self.index += 1
+			iobytearray = iobytearray.encode("utf-8")
+		if isinstance(iobytearray, bytes):
+			iobytearray = bytearray(iobytearray)
+
+		if not isinstance(iobytearray, bytearray):
+			raise TypeError(f"Unsupported type {type(iobytearray)} for addbytearray")
+
+		new_size = self.index + len(iobytearray)
+
+		# # Expand buffer if needed
+		if new_size > len(self.data):
+			self.data.extend(bytearray(new_size - len(self.data)))
+
+		# Insert data at the correct index
+		self.data[self.index : new_size] = iobytearray
+
+		self.index = new_size  # Move index forward\
 
 	def _sz754(self, encoding: str) -> str:
 		"""Read the next string conforming to IEEE 754 and advance the index.
@@ -719,7 +713,7 @@ class IO:
 	def _sz754set(self, sz754: Any, _encoding: str) -> None:
 		"""_sz754set."""
 		self.u32 = len(sz754)
-		self.setbytearray(sz754)
+		self.addbytearray(sz754)
 		self.u8 = 0
 
 	@property
@@ -802,9 +796,9 @@ class IO:
 	@textLine.setter
 	def textLine(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char."""
-		self.setbytearray(text)
+		self.addbytearray(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
-			self.setbytearray("\n")
+			self.addbytearray("\n")
 
 	@property
 	def textLineA(self) -> str:
@@ -817,9 +811,9 @@ class IO:
 	@textLineA.setter
 	def textLineA(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in ascii."""
-		self.setbytearray(text)
+		self.addbytearray(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
-			self.setbytearray("\n")
+			self.addbytearray("\n")
 
 	@property
 	def textLineW(self) -> str:
@@ -832,9 +826,9 @@ class IO:
 	@textLineW.setter
 	def textLineW(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in ucs-2."""
-		self.setbytearray(text)
+		self.addbytearray(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
-			self.setbytearray("\0\n")
+			self.addbytearray("\0\n")
 
 	@property
 	def textLineU(self) -> str:
@@ -847,9 +841,9 @@ class IO:
 	@textLineU.setter
 	def textLineU(self, text: str) -> None:
 		"""Set a sequence of chars until the next new line char in utf-8."""
-		self.setbytearray(text)
+		self.addbytearray(text)
 		if isinstance(text, (int, float)) or text[-1] != "\n":
-			self.setbytearray("\n")
+			self.addbytearray("\n")
 
 	@property
 	def cString(self) -> str:
@@ -859,8 +853,8 @@ class IO:
 	@cString.setter
 	def cString(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte."""
-		self.setbytearray(text)
-		self.setbytearray("\0")
+		self.addbytearray(text)
+		self.addbytearray("\0")
 
 	@property
 	def cStringA(self) -> str:
@@ -870,8 +864,8 @@ class IO:
 	@cStringA.setter
 	def cStringA(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in ascii."""
-		self.setbytearray(text)
-		self.setbytearray("\0")
+		self.addbytearray(text)
+		self.addbytearray("\0")
 
 	@property
 	def cStringW(self) -> str:
@@ -881,8 +875,8 @@ class IO:
 	@cStringW.setter
 	def cStringW(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in ucs-2."""
-		self.setbytearray(text)
-		self.setbytearray("\0\0")
+		self.addbytearray(text)
+		self.addbytearray("\0\0")
 
 	@property
 	def cStringU(self) -> str:
@@ -892,5 +886,5 @@ class IO:
 	@cStringU.setter
 	def cStringU(self, text: str) -> None:
 		"""Set a sequence of chars and add a null byte in utf-8."""
-		self.setbytearray(text)
-		self.setbytearray("\0")
+		self.addbytearray(text)
+		self.addbytearray("\0")
