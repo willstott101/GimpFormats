@@ -125,17 +125,13 @@ class IO:
 		try:
 			data = struct.unpack(fmt, self.data[self.index : self.index + size])[0]
 		except (DeprecationWarning, struct.error) as upstream:
-			raise RuntimeError(
-				str(fmt)
-				+ " "
-				+ str(size)
-				+ " "
-				+ str(self.index)
-				+ " "
-				+ str(len(self.data))
-				+ " "
-				+ str(self.data[self.index : self.index + size])
-			) from upstream
+			rep: bytes = self.index.to_bytes(8, "big")
+			msg = (
+				f"{fmt} {size} {self.index} ({rep}) "
+				f"\n{len(self.data)} {self.data[self.index : self.index + size]}"
+			)
+
+			raise RuntimeError(msg) from upstream
 		# Move the pointer forward
 		self.index += size
 		return data

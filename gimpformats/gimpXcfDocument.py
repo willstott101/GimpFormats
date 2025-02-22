@@ -13,7 +13,7 @@ Currently not supporting:
 from __future__ import annotations
 
 from io import BytesIO
-from typing import Any, NoReturn
+from typing import Any, NoReturn, TypeVar
 
 import numpy as np
 from blendmodes.blend import BlendType as BlendMode
@@ -28,6 +28,8 @@ from gimpformats.GimpIOBase import GimpBlendMode, GimpIOBase, camel_to_pascal_wi
 from gimpformats.GimpLayer import GimpLayer
 from gimpformats.GimpPrecision import Precision
 from gimpformats.utils import repr_indent_lines
+
+T = TypeVar("T")
 
 
 class GimpGroup:
@@ -69,8 +71,33 @@ class GimpDocument(GimpIOBase):
 	self.precision = None # Precision object
 	self._data = None
 
-	See:
-		https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
+
+	The image structure always starts at offset 0 in the XCF file.
+
+	byte[9]     "gimp xcf " File type identification
+	byte[4]     version     XCF version
+	byte        0            Zero marks the end of the version tag.
+	uint32      width        Width of canvas
+	uint32      height       Height of canvas
+	uint32      base_type    Color mode of the image; one of
+								0: RGB color; 1: Grayscale; 2: Indexed color
+	uint32      precision    Image precision; this field is only present for
+							XCF 4 or over (since GIMP 2.10.0).
+	property-list        Image properties
+	,-----------------   Repeat once for each layer, topmost layer first:
+	| pointer lptr       Pointer to the layer structure.
+	`--
+	pointer   0           Zero marks the end of the array of layer pointers.
+	,------------------  Repeat once for each channel, in no particular order:
+	| pointer cptr       Pointer to the channel structure.
+	`--
+	pointer   0           Zero marks the end of the array of channel pointers.
+	,------------------  Repeat once for each path, in no particular order:
+	| pointer cptr       Pointer to the vectors structure.
+	`--
+	pointer   0           Zero marks the end of the array of vectors pointers.
+
+
 	"""
 
 	def __init__(self, fileName: BytesIO | str | None = None) -> None:
@@ -92,10 +119,10 @@ class GimpDocument(GimpIOBase):
 			https://gitlab.gnome.org/GNOME/gimp/blob/master/devel-docs/xcf.txt
 		"""
 		GimpIOBase.__init__(self, self)
-		self._layers = []
-		self._layerPtr = []
-		self._channels = []
-		self._channelPtr = []
+		self._layers: list[GimpLayer] = []
+		self._layerPtr: list[int] = []
+		self._channels: list[GimpChannel] = []
+		self._channelPtr: list[int] = []
 		self.version = 11  # This is the most recent version
 		self.width = 0
 		self.height = 0
@@ -114,33 +141,69 @@ class GimpDocument(GimpIOBase):
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
+	def iterablePointerDecoder(self, ioBuf: IO, cls: type[T]) -> tuple[list[int], list[T]]:
+		"""Iterate over a pointer as defined in the spec. This method is responsible for
+		returning a list of int pointers (representing indexes in the XCF), and a list of types
+		representing the data.
+
+		EG.
+
+		,-----------------
+		| pointer lptr       layer structure.
+		`--
+		pointer   0
+
+		:param IO ioBuf: The raw buffer representing the XCF doc
+		:param T obj: create instances of this type (and decode into this)
+		:return tuple[list[int], list[T]]:  list of int pointers (representing indexes
+		in the XCF), and a list of types representing the data.
+		"""
+		pointers = []
+		elems = []
+		while True:
+			ptr = self._pointerDecode(ioBuf)
+			if ptr == 0:
+				break
+			pointers.append(ptr)
+			elem = cls(self)
+			elem.decode(ioBuf.data, ptr)
+			elems.append(elem)
+
+		return pointers, elems
+
 	def decode(self, data: bytearray | bytes, index: int = 0) -> int:
-		"""Decode a byte buffer.
+		"""Decode the XCF Header to a GimpDocument.
 
-		Steps:
-		Create a new IO buffer
-		Check that the file is a valid gimp xcf
-		Grab the file version
-		Grab other attributes as outlined in the spec
-		Get precision data using the class and ioBuf buffer
-		List of properties
-		Get the layers and add the pointers to them
-		Get the channels and add the pointers to them
-		Return the offset
+		:param bytearray | bytes data: raw bytes representing the GimpDocument/XCF
+		:param int index: An optional start index, only set this if you know what you're doing :)
 
-		Args:
-		----
-			data (bytearray): data buffer to decode
-			index (int, optional): index within the buffer to start at]. Defaults to 0.
+		Note that this decode function is somewhat lazy with what is decoded. For example,
+		for the layers, the pointers and basic layer info is decoded, in addition to the
+		pointers to the image_hierarchy and masks. However, the actual image data is not loaded.
 
-		Raises:
-		------
-			RuntimeError: "Not a valid GIMP file"
+		Image data will be fetched when when calling descendants `.image` method as
+		appropriate
 
-		Returns:
-		-------
-			int: offset
-
+		byte[9]     "gimp xcf "
+		byte[4]     version
+		byte        0
+		uint32      width
+		uint32      height
+		uint32      base_type
+		uint32      precision
+		property-list        Image properties
+		,-----------------
+		| pointer lptr       layer structure.
+		`--
+		pointer   0
+		,------------------
+		| pointer cptr       channel structure.
+		`--
+		pointer   0
+		,------------------
+		| pointer cptr       vectors structure.
+		`--
+		pointer   0
 		"""
 		# Create a new IO buffer
 		ioBuf = IO(data, index)
@@ -154,54 +217,53 @@ class GimpDocument(GimpIOBase):
 			self.version = 0
 		else:
 			self.version = int(version[1:])
-		# Grab other attributes as outlined in the spec
+		# Grab the width, height, baseColorMode and the precision data
 		self.width = ioBuf.u32
 		self.height = ioBuf.u32
 		self.baseColorMode = ioBuf.u32
-		# Get precision data using the class and ioBuf buffer
 		self.precision = Precision()
 		self.precision.decode(self.version, ioBuf)
-		# List of properties
-		self._propertiesDecode(ioBuf)
-		self._layerPtr = []
-		self._layers = []
-		# Get the layers and add the pointers to them
 
-		while True:
-			ptr = self._pointerDecode(ioBuf)
-			if ptr == 0:
-				break
-			self._layerPtr.append(ptr)
-			layer = GimpLayer(self)
-			layer.decode(ioBuf.data, ptr)
-			self._layers.append(layer)
-		# Get the channels and add the pointers to them
-		self._channelPtr = []
-		self._channels = []
-		while True:
-			ptr = self._pointerDecode(ioBuf)
-			if ptr == 0:
-				break
-			self._channelPtr.append(ptr)
-			chnl = GimpChannel(self)
-			chnl.decode(ioBuf.data, ptr)
-			self._channels.append(chnl)
-		# Return the offset
+		# Decode the list of properties, as noted in the spec this should be nul terminated
+		self._propertiesDecode(ioBuf)
+
+		# Get the layers and add the pointers to them, this should be nul terminated
+		self._layerPtr, self._layers = self.iterablePointerDecoder(ioBuf, GimpLayer)
+
+		# Get the channels and add the pointers to them, this should be nul terminated
+		self._channelPtr, self._channels = self.iterablePointerDecoder(ioBuf, GimpChannel)
+
+		# Return the offset representing the end of the XCF header
 		return ioBuf.index
 
 	def encode(self) -> bytearray:
 		"""Encode to bytearray.
 
-		Steps:
-		Create a new IO buffer
-		The file is a valid gimp xcf
-		Set the file version
-		Set other attributes as outlined in the spec
-		Set precision data using the class and ioBuf buffer
-		List of properties
-		Set the layers and add the pointers to them
-		Set the channels and add the pointers to them
-		Return the data
+		Similarly to decode, we must start by constructing the XCF header, though we must
+		then add the bytes returned when calling descendants `.encode` method as
+		appropriate
+
+
+		byte[9]     "gimp xcf "
+		byte[4]     version
+		byte        0
+		uint32      width
+		uint32      height
+		uint32      base_type
+		uint32      precision
+		property-list        Image properties
+		,-----------------
+		| pointer lptr       layer structure.
+		`--
+		pointer   0
+		,------------------
+		| pointer cptr       channel structure.
+		`--
+		pointer   0
+		,------------------
+		| pointer cptr       vectors structure.
+		`--
+		pointer   0
 
 		"""
 		# Create a new IO buffer
