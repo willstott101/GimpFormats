@@ -22,6 +22,7 @@ from PIL import Image
 
 from gimpformats import utils
 from gimpformats.binaryiotools import IO
+from gimpformats.enums import ImageProperties
 from gimpformats.GimpChannel import GimpChannel
 from gimpformats.GimpImageHierarchy import GimpImageHierarchy
 from gimpformats.GimpIOBase import GimpBlendMode, GimpIOBase, camel_to_pascal_with_spaces
@@ -282,7 +283,7 @@ class GimpDocument(GimpIOBase):
 			self.precision = Precision()
 		self.precision.encode(self.version, ioBuf)
 		# List of properties
-		ioBuf.addbytearray(self._propertiesEncode())
+		ioBuf.addbytearray(self._propertiesEncode(ImageProperties))
 		dataAreaIdx = (
 			ioBuf.index
 		)  ## + self.pointerSize * (len(self.raw_layers) + len(self._channels))

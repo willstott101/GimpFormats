@@ -5,6 +5,8 @@ from __future__ import annotations
 import struct
 from typing import Any
 
+from aenum import Enum
+
 from gimpformats.binaryiotools import IO
 from gimpformats.enums import (
 	AllProps,
@@ -418,7 +420,7 @@ class GimpIOBase:
 				ioBuf.byte = self.color[2]
 		elif _prop_cmp(prop, AllProps.PROP_COMPRESSION):
 			if self.compression is not None:
-				ioBuf.u32 = list(CompressionMode).index(self.compression)
+				ioBuf.byte = list(CompressionMode).index(self.compression)
 		elif _prop_cmp(prop, AllProps.PROP_GUIDES):
 			if self.guidelines is not None and self.guidelines:
 				pass
@@ -523,11 +525,10 @@ class GimpIOBase:
 			if prop == 0:
 				break
 			propData = ioBuf.getbytearray(dataLength)
-
 			self._propertyDecode(prop, propData)
 		return ioBuf.index
 
-	def _propertiesEncode(self) -> bytearray:
+	def _propertiesEncode(self, enum: Enum = AllProps) -> bytearray:
 		"""Encode a list of properties.
 
 		uint32  prop_type   	Type identification
@@ -536,7 +537,7 @@ class GimpIOBase:
 
 		"""
 		ioBuf = IO()
-		for prop_type in [x.value for x in AllProps]:
+		for prop_type in [x.value for x in enum]:
 			encodedProp = self._propertyEncode(prop_type) if prop_type != 0 else b""
 
 			if len(encodedProp) > 0:
