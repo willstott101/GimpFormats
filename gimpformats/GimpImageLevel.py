@@ -81,7 +81,7 @@ class GimpImageLevel(GimpIOBase):
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
 		return ioBuf.index
 
-	def encode(self, offset:int=0) -> bytearray:
+	def encode(self, offset: int = 0) -> bytearray:
 		"""Encode this object to a byte buffer."""
 		ioBuf = IO()
 		ioBuf.u32 = self.width

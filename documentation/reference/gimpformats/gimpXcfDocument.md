@@ -472,10 +472,6 @@ Look up the blend mode from the lookup table.
 def blendModeLookup(blend_type: GimpBlendMode) -> BlendMode: ...
 ```
 
-#### See also
-
-- [GimpBlendMode](./GimpIOBase.md#gimpblendmode)
-
 
 
 ## make_thumbnail

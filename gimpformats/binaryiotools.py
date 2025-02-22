@@ -669,6 +669,8 @@ class IO:
 		:param iobytearray: Can be a string, bytearray, bytes, or another IOBuffer object.
 		"""
 
+		if isinstance(iobytearray, IO):
+			iobytearray = iobytearray.data
 		if isinstance(iobytearray, str):
 			iobytearray = iobytearray.encode("utf-8")
 		if isinstance(iobytearray, bytes):

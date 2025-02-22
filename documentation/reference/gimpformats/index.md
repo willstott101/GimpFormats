@@ -10,6 +10,7 @@
 ## Modules
 
 - [Binaryiotools](./binaryiotools.md)
+- [Enums](./enums.md)
 - [Gimpchannel](./GimpChannel.md)
 - [Gimpgbrbrush](./GimpGbrBrush.md)
 - [Gimpggrgradient](./GimpGgrGradient.md)
