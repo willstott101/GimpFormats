@@ -138,6 +138,7 @@ class GimpDocument(GimpIOBase):
 
 		:param fileName: can be a file name or a file-like object
 		"""
+		# self.__init__()
 		self.fileName, data = utils.fileOpen(fileName)
 		self.decode(data)
 
@@ -456,7 +457,7 @@ class GimpDocument(GimpIOBase):
 			for attr in attrs
 			if getattr(self, attr) is not None
 		]
-		ret.append(GimpIOBase.full_repr(self))
+		ret.append(super().full_repr())
 		if self._layerPtr:
 			ret.append("Layers:")
 			for layer in self.raw_layers:

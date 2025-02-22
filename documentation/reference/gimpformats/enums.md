@@ -5,14 +5,43 @@
 > Auto-generated documentation for [gimpformats.enums](../../../gimpformats/enums.py) module.
 
 - [Enums](#enums)
+  - [AllProps](#allprops)
+  - [ChannelProperties](#channelproperties)
   - [ColorMode](#colormode)
   - [CompositeMode](#compositemode)
   - [CompositeSpace](#compositespace)
   - [CompressionMode](#compressionmode)
+  - [GeneralProperties](#generalproperties)
   - [GimpBlendMode](#gimpblendmode)
   - [ImageProperties](#imageproperties)
+  - [LayerProperties](#layerproperties)
   - [TagColor](#tagcolor)
   - [Units](#units)
+  - [merge_to](#merge_to)
+
+## AllProps
+
+[Show source in enums.py:205](../../../gimpformats/enums.py#L205)
+
+#### Signature
+
+```python
+class AllProps(Enum): ...
+```
+
+
+
+## ChannelProperties
+
+[Show source in enums.py:173](../../../gimpformats/enums.py#L173)
+
+#### Signature
+
+```python
+class ChannelProperties(Enum): ...
+```
+
+
 
 ## ColorMode
 
@@ -62,6 +91,18 @@ class CompressionMode(Enum): ...
 
 
 
+## GeneralProperties
+
+[Show source in enums.py:140](../../../gimpformats/enums.py#L140)
+
+#### Signature
+
+```python
+class GeneralProperties(Enum): ...
+```
+
+
+
 ## GimpBlendMode
 
 [Show source in enums.py:51](../../../gimpformats/enums.py#L51)
@@ -99,12 +140,24 @@ class GimpBlendMode(Enum): ...
 
 ## ImageProperties
 
-[Show source in enums.py:134](../../../gimpformats/enums.py#L134)
+[Show source in enums.py:155](../../../gimpformats/enums.py#L155)
 
 #### Signature
 
 ```python
 class ImageProperties(Enum): ...
+```
+
+
+
+## LayerProperties
+
+[Show source in enums.py:184](../../../gimpformats/enums.py#L184)
+
+#### Signature
+
+```python
+class LayerProperties(Enum): ...
 ```
 
 
@@ -129,4 +182,16 @@ class TagColor(Enum): ...
 
 ```python
 class Units(Enum): ...
+```
+
+
+
+## merge_to
+
+[Show source in enums.py:134](../../../gimpformats/enums.py#L134)
+
+#### Signature
+
+```python
+def merge_to(src: Enum, dest: Enum): ...
 ```

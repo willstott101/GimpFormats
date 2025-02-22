@@ -18,6 +18,7 @@ classifiers = [
 	"Topic :: Utilities",
 ]
 dependencies = [
+	"aenum>=3.1.15",
 	"blendmodes>=2025",
 	"brackettree>=0.2.5",
 	"loguru>=0.7.3",
