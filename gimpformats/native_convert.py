@@ -31,10 +31,13 @@ image_extensions = [
 ]
 
 
-def _convert_xcf_to_flat_image_windows(xcf_path: str, output_path: str) -> list[str] | None:
+def _convert_xcf_to_flat_image(xcf_path: str, output_path: str) -> list[str] | None:
 	common_gimp_paths = [
 		r"C:\Program Files\GIMP 2\bin\gimp-console-2.10.exe",
 		r"C:\Program Files (x86)\GIMP 2\bin\gimp-console-2.10.exe",
+		"/bin/gimp-console",
+		"/usr/bin/gimp-console",
+		"/usr/local/bin/gimp-console",
 	]
 
 	gimp_path = None
@@ -60,12 +63,13 @@ def _convert_xcf_to_flat_image_windows(xcf_path: str, output_path: str) -> list[
 	]
 
 
-def convert_xcf_to_flat_image(xcf_path: str, output_path: str) -> None:
+def convert_xcf_to_flat_image(xcf_path: str, output_path: str, *, run_anyway=False) -> None:
 	"""Convert an xcf file given by `xcf_path` to some flat image (such
 	as a jpg, png etc) given by `output_path`.
 
 	:param str xcf_path: path to a source xcf file
 	:param str output_path: path to an output file (eg a png)
+	:param bool run_anyway: force running this, unsafe!
 	"""
 	# Ensure the input .xcf path exists
 	if not Path(xcf_path).is_file():
@@ -73,17 +77,26 @@ def convert_xcf_to_flat_image(xcf_path: str, output_path: str) -> None:
 		return
 
 	output_path = shlex.quote(output_path)
-	if Path(output_path).suffix not in image_extensions:
-		logger.error(f"Output file not supported: {image_extensions}")
+	_suf = Path(output_path).suffix
+	if _suf not in image_extensions:
+		logger.error(f"Output file extension `{_suf}` not supported: {image_extensions}")
 		return
 
 	# Check if the OS is Windows
+	platform_supported = sys.platform in ("win32", "linux")
 	command = None
-	if sys.platform == "win32":
-		command = _convert_xcf_to_flat_image_windows(xcf_path, output_path)
+	if platform_supported or (not platform_supported and run_anyway):
+		if sys.platform in ("linux",) and _suf in (".avif", "fuck_knows"):
+			logger.error(f"{_suf} is not supported in this system")
+			return
+		command = _convert_xcf_to_flat_image(xcf_path, output_path)
 
+	if not platform_supported and run_anyway:
+		logger.warning(
+			f"this script may not be supported on `{sys.platform}`, "
+			"pass run_anyway=True to override this"
+		)
 	if command is None:
-		logger.error(f"Sorry, this script is not supported on {sys.platform}")
 		return
 
 	try:

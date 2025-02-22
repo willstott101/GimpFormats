@@ -21,7 +21,7 @@
 
 ## AllProps
 
-[Show source in enums.py:205](../../../gimpformats/enums.py#L205)
+[Show source in enums.py:206](../../../gimpformats/enums.py#L206)
 
 #### Signature
 
@@ -33,7 +33,7 @@ class AllProps(Enum): ...
 
 ## ChannelProperties
 
-[Show source in enums.py:173](../../../gimpformats/enums.py#L173)
+[Show source in enums.py:174](../../../gimpformats/enums.py#L174)
 
 #### Signature
 
@@ -45,7 +45,7 @@ class ChannelProperties(Enum): ...
 
 ## ColorMode
 
-[Show source in enums.py:6](../../../gimpformats/enums.py#L6)
+[Show source in enums.py:7](../../../gimpformats/enums.py#L7)
 
 #### Signature
 
@@ -57,7 +57,7 @@ class ColorMode(Enum): ...
 
 ## CompositeMode
 
-[Show source in enums.py:19](../../../gimpformats/enums.py#L19)
+[Show source in enums.py:20](../../../gimpformats/enums.py#L20)
 
 #### Signature
 
@@ -69,7 +69,7 @@ class CompositeMode(Enum): ...
 
 ## CompositeSpace
 
-[Show source in enums.py:26](../../../gimpformats/enums.py#L26)
+[Show source in enums.py:27](../../../gimpformats/enums.py#L27)
 
 #### Signature
 
@@ -81,7 +81,7 @@ class CompositeSpace(Enum): ...
 
 ## CompressionMode
 
-[Show source in enums.py:44](../../../gimpformats/enums.py#L44)
+[Show source in enums.py:45](../../../gimpformats/enums.py#L45)
 
 #### Signature
 
@@ -93,7 +93,7 @@ class CompressionMode(Enum): ...
 
 ## GeneralProperties
 
-[Show source in enums.py:140](../../../gimpformats/enums.py#L140)
+[Show source in enums.py:141](../../../gimpformats/enums.py#L141)
 
 #### Signature
 
@@ -105,7 +105,7 @@ class GeneralProperties(Enum): ...
 
 ## GimpBlendMode
 
-[Show source in enums.py:51](../../../gimpformats/enums.py#L51)
+[Show source in enums.py:52](../../../gimpformats/enums.py#L52)
 
 #### Attributes
 
@@ -140,7 +140,7 @@ class GimpBlendMode(Enum): ...
 
 ## ImageProperties
 
-[Show source in enums.py:155](../../../gimpformats/enums.py#L155)
+[Show source in enums.py:156](../../../gimpformats/enums.py#L156)
 
 #### Signature
 
@@ -152,7 +152,7 @@ class ImageProperties(Enum): ...
 
 ## LayerProperties
 
-[Show source in enums.py:184](../../../gimpformats/enums.py#L184)
+[Show source in enums.py:185](../../../gimpformats/enums.py#L185)
 
 #### Signature
 
@@ -164,7 +164,7 @@ class LayerProperties(Enum): ...
 
 ## TagColor
 
-[Show source in enums.py:32](../../../gimpformats/enums.py#L32)
+[Show source in enums.py:33](../../../gimpformats/enums.py#L33)
 
 #### Signature
 
@@ -176,7 +176,7 @@ class TagColor(Enum): ...
 
 ## Units
 
-[Show source in enums.py:12](../../../gimpformats/enums.py#L12)
+[Show source in enums.py:13](../../../gimpformats/enums.py#L13)
 
 #### Signature
 
@@ -188,7 +188,7 @@ class Units(Enum): ...
 
 ## merge_to
 
-[Show source in enums.py:134](../../../gimpformats/enums.py#L134)
+[Show source in enums.py:135](../../../gimpformats/enums.py#L135)
 
 #### Signature
 

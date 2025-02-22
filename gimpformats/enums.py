@@ -3,6 +3,7 @@ from __future__ import annotations
 from aenum import Enum, extend_enum
 
 
+# pyright: reportGeneralTypeIssues=false
 class ColorMode(Enum):
 	RGB = "RGB"
 	Grayscale = "Grayscale"
@@ -128,7 +129,7 @@ class GimpBlendMode(Enum):
 
 	# Since XCF 10 60-61
 	SPLIT = "Split"
-	PASS_THROUGH = "Pass through"
+	PASS_THROUGH = "Pass through"  # noqa: S105
 
 
 def merge_to(src: Enum, dest: Enum):

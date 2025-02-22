@@ -195,7 +195,7 @@ Decode a parentheses-based file format.
 #### Signature
 
 ```python
-def parenFileDecode(data: bytearray) -> list[ParenFileValue]: ...
+def parenFileDecode(data: bytearray | bytes) -> list[ParenFileValue]: ...
 ```
 
 #### See also

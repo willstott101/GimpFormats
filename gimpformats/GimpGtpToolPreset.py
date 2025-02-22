@@ -66,7 +66,7 @@ class ParenFileValue:
 		return "".join(ret)
 
 
-def parenFileDecode(data: bytearray) -> list[ParenFileValue]:
+def parenFileDecode(data: bytearray | bytes) -> list[ParenFileValue]:
 	"""Decode a parentheses-based file format.
 
 	(possibly "scheme" language?)

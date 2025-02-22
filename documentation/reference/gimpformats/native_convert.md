@@ -9,7 +9,7 @@
 
 ## convert_xcf_to_flat_image
 
-[Show source in native_convert.py:63](../../../gimpformats/native_convert.py#L63)
+[Show source in native_convert.py:66](../../../gimpformats/native_convert.py#L66)
 
 Convert an xcf file given by `xcf_path` to some flat image (such
 as a jpg, png etc) given by `output_path`.
@@ -18,9 +18,12 @@ as a jpg, png etc) given by `output_path`.
 
 - `xcf_path` *str* - path to a source xcf file
 - `output_path` *str* - path to an output file (eg a png)
+- `run_anyway` *bool* - force running this, unsafe!
 
 #### Signature
 
 ```python
-def convert_xcf_to_flat_image(xcf_path: str, output_path: str) -> None: ...
+def convert_xcf_to_flat_image(
+    xcf_path: str, output_path: str, run_anyway=False
+) -> None: ...
 ```

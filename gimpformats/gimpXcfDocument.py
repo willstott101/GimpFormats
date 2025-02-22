@@ -377,7 +377,7 @@ class GimpDocument(GimpIOBase):
 
 	def deleteRawLayer(self, index: int) -> None:
 		"""Delete a layer."""
-		self._layers.remove(index)
+		self._layers.pop(index)
 
 	def walkTree(self) -> GimpGroup:
 		root_group = GimpGroup(

@@ -6,8 +6,6 @@
 
 #### Attributes
 
-- `encoded` - Test encoding and decoding: gimp_img.encode
-
 - `root_group` - Test walking through tree structure: gimp_img.walkTree()
 
 
