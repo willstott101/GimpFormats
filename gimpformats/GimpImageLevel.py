@@ -18,6 +18,16 @@ class GimpImageLevel(GimpIOBase):
 	"""Gets packed pixels from a gimp image.
 
 	This represents a single level in an imageHierarchy
+
+	The level structure for the first level is laid out as follows:
+
+	uint32      width  Width of the pixel array
+	uint32      height Height of the pixel array
+	,----------------- Repeat for each of the ceil(width/64)*ceil(height/64) tiles
+	| pointer   tptr   Pointer to tile data
+	`--
+	pointer     0      Zero marks the end of the array of tile pointers.
+
 	"""
 
 	def __init__(self, parent: Any) -> None:
@@ -71,14 +81,14 @@ class GimpImageLevel(GimpIOBase):
 		_ = self._pointerDecode(ioBuf)  # list ends with nul character
 		return ioBuf.index
 
-	def encode(self, offset=0) -> bytearray:
+	def encode(self, offset:int=0) -> bytearray:
 		"""Encode this object to a byte buffer."""
 		ioBuf = IO()
 		ioBuf.u32 = self.width
 		ioBuf.u32 = self.height
 		pointerSizeb = self.pointerSize // 8
-		# This is a super dodgy line atm, I think I'm missing something!
-		dataIndex = offset + ioBuf.index - 4  # ? +  * (len(self.tiles or []) + 1)
+
+		dataIndex = offset + ioBuf.index + pointerSizeb * (len(self.tiles or []) + 1)
 		computed_tiles = []
 		for tile in self.tiles or []:
 			data = tile.tobytes(encoder_name="raw")
@@ -92,9 +102,8 @@ class GimpImageLevel(GimpIOBase):
 				msg = f"ERR: unsupported compression mode {self.doc.compression}"
 				raise RuntimeError(msg)
 
-			dataIndex += pointerSizeb + len(data)
-
 			ioBuf.addbytearray(self._pointerEncode(dataIndex))
+			dataIndex += len(data)
 
 			computed_tiles.append(data)
 

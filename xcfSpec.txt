@@ -1,3 +1,7 @@
+Most up to date version of this doc is at https://developer.gimp.org/core/standards/xcf/
+Archive: https://web.archive.org/web/20250121084535/https://developer.gimp.org/core/standards/xcf/
+
+
 ====================================
 DOCUMENTATION OF THE XCF FILE FORMAT
 ====================================
