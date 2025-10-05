@@ -151,7 +151,7 @@ class GeneralProperties(Enum):
 	PROP_VISIBLE = 8
 	PROP_TATTOO = 20
 	# PROP_ITEM_SET_ITEM = 41
-	# PROP_LOCK_VISIBILITY = 42
+	PROP_LOCK_VISIBILITY = 42
 
 
 class ImageProperties(Enum):

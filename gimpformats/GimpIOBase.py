@@ -67,6 +67,7 @@ class GimpIOBase:
 		self.isGroup = None
 		self.groupItemFlags: int = 0
 		self.positionLocked: bool = False
+		self.visibilityLocked: bool = False
 		self.opacity: float = 1.0
 		self.colorTag: TagColor = TagColor.Blue
 		self.compositeMode: CompositeMode = CompositeMode.Union
@@ -320,6 +321,8 @@ class GimpIOBase:
 			self.groupItemFlags = ioBuf.u32
 		elif _prop_cmp(prop, AllProps.PROP_LOCK_POSITION):
 			self.positionLocked = ioBuf.boolean
+		elif _prop_cmp(prop, AllProps.PROP_LOCK_VISIBILITY):
+			self.visibilityLocked = ioBuf.boolean
 		elif _prop_cmp(prop, AllProps.PROP_FLOAT_OPACITY):
 			self.opacity = ioBuf.float32
 		elif _prop_cmp(prop, AllProps.PROP_COLOR_TAG):
@@ -479,6 +482,9 @@ class GimpIOBase:
 		elif _prop_cmp(prop, AllProps.PROP_LOCK_POSITION):
 			if self.positionLocked is not None and self.positionLocked:
 				ioBuf.boolean = self.positionLocked
+		elif _prop_cmp(prop, AllProps.PROP_LOCK_VISIBILITY):
+			if self.visibilityLocked is not None and self.visibilityLocked:
+				ioBuf.boolean = self.visibilityLocked
 		elif _prop_cmp(prop, AllProps.PROP_FLOAT_OPACITY):
 			if self.opacity is not None and isinstance(self.opacity, float):
 				ioBuf.float32 = self.opacity
