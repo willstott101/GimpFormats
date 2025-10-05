@@ -26,8 +26,9 @@ class CompositeMode(Enum):
 
 class CompositeSpace(Enum):
 	RGB_linear = "RGB (linear)"
-	RGB_perceptual = "RGB (perceptual)"
+	RGB_profile = "RGB (from color profile)"
 	LAB = "LAB"
+	RGB_perceptual = "RGB (perceptual)"
 
 
 class TagColor(Enum):
